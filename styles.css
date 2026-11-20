@@ -48,6 +48,10 @@
   --md-shadow-tint: rgba(169, 55, 20, 0.12);
 }
 
+@view-transition {
+  navigation: auto;
+}
+
 /* Terracota Solar — Dark */
 [data-seed="terracota"][data-mode="dark"] {
   --md-primary: #ffb59e;
@@ -233,6 +237,7 @@ html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
+  overflow-x: clip;
   background-color: var(--md-surface);
   color: var(--md-on-surface);
   font-family: var(--font-body);
@@ -241,6 +246,50 @@ body {
   -webkit-font-smoothing: antialiased;
   transition: background-color var(--dur-med) var(--ease-standard),
               color var(--dur-med) var(--ease-standard);
+}
+
+main {
+  view-transition-name: yuko-stage;
+}
+
+@keyframes yukoSceneOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes yukoSceneIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+::view-transition-old(yuko-topbar),
+::view-transition-new(yuko-topbar) {
+  animation: none;
+}
+
+::view-transition-old(yuko-stage) {
+  animation: yukoSceneOut var(--dur-med) var(--ease-standard) both;
+}
+
+::view-transition-new(yuko-stage) {
+  animation: yukoSceneIn var(--dur-med) var(--ease-standard) both;
+}
+
+:root[data-motion="calm"]::view-transition-old(yuko-stage),
+:root[data-motion="calm"]::view-transition-new(yuko-stage) {
+  animation: none !important;
 }
 
 h1, h2, h3 { font-family: var(--font-display); margin: 0; }
@@ -299,6 +348,11 @@ input:focus-visible,
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
 }
 
 .container {
@@ -319,6 +373,7 @@ input:focus-visible,
 }
 
 .top-bar {
+  view-transition-name: yuko-topbar;
   max-width: 1148px;
   margin-inline: auto;
   display: flex;
@@ -347,6 +402,7 @@ input:focus-visible,
 }
 
 .brand-mark {
+  view-transition-name: yuko-logo;
   width: 38px;
   height: 38px;
   display: grid;
@@ -358,6 +414,10 @@ input:focus-visible,
   transition: transform var(--dur-med) var(--ease-spring),
               border-radius var(--dur-fast) var(--ease-standard),
               background-color var(--dur-med) var(--ease-standard);
+}
+
+.site-footer .brand-mark {
+  view-transition-name: none;
 }
 
 .brand-mark img {
@@ -786,6 +846,125 @@ input:focus-visible,
   transform: scale(1.02);
 }
 
+/* Hero Animated SVG Choreography */
+@keyframes circuitFlow {
+  from { stroke-dashoffset: 0; }
+  to   { stroke-dashoffset: -48; }
+}
+
+@keyframes heroPetalSpin {
+  from { rotate: 0deg; }
+  to   { rotate: 360deg; }
+}
+
+.hero-arch-left,
+.hero-arch-right,
+.hero-medallion-petals,
+.hero-circuit-lines,
+.hero-card-executor,
+.hero-card-reviewers,
+.hero-pill-support {
+  transform-box: fill-box;
+  transform-origin: center;
+  will-change: transform;
+}
+
+.hero-arch-left {
+  transform-origin: bottom center;
+  transform: translate3d(
+    calc(var(--hero-mx, 0) * -8px),
+    calc(var(--hero-my, 0) * -5px + var(--hero-scroll, 0) * -14px),
+    0
+  );
+  transition: transform 220ms var(--ease-standard);
+}
+
+.hero-arch-right {
+  transform-origin: bottom center;
+  transform: translate3d(
+    calc(var(--hero-mx, 0) * 10px),
+    calc(var(--hero-my, 0) * 6px + var(--hero-scroll, 0) * 18px),
+    0
+  );
+  transition: transform 220ms var(--ease-standard);
+}
+
+.hero-medallion-petals {
+  transform: translate3d(
+    calc(var(--hero-mx, 0) * 6px),
+    calc(var(--hero-my, 0) * 6px + var(--hero-scroll, 0) * -10px),
+    0
+  );
+  animation: heroPetalSpin 32s linear infinite;
+  transition: transform 200ms var(--ease-standard);
+}
+
+.hero-circuit-lines {
+  stroke-dasharray: 6 6;
+  transform: translate3d(
+    calc(var(--hero-mx, 0) * 4px),
+    calc(var(--hero-my, 0) * 4px + var(--hero-scroll, 0) * -6px),
+    0
+  );
+  animation: circuitFlow 3.2s linear infinite;
+  transition: transform 200ms var(--ease-standard);
+}
+
+.hero-card-executor {
+  translate:
+    calc(var(--hero-mx, 0) * -12px)
+    calc(var(--hero-my, 0) * -9px + var(--hero-scroll, 0) * -16px);
+  transition: translate 220ms var(--ease-standard);
+}
+
+.hero-card-reviewers {
+  translate:
+    calc(var(--hero-mx, 0) * 14px)
+    calc(var(--hero-my, 0) * -11px + var(--hero-scroll, 0) * 14px);
+  transition: translate 220ms var(--ease-standard);
+}
+
+.hero-pill-support {
+  translate:
+    calc(var(--hero-mx, 0) * 9px)
+    calc(var(--hero-my, 0) * 10px + var(--hero-scroll, 0) * -22px);
+  transition: translate 220ms var(--ease-standard);
+}
+
+[data-motion="calm"] .hero-arch-left,
+[data-motion="calm"] .hero-arch-right,
+[data-motion="calm"] .hero-medallion-petals,
+[data-motion="calm"] .hero-circuit-lines {
+  transform: none !important;
+  rotate: none !important;
+  animation: none !important;
+}
+
+[data-motion="calm"] .hero-card-executor,
+[data-motion="calm"] .hero-card-reviewers,
+[data-motion="calm"] .hero-pill-support {
+  translate: none !important;
+  animation: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-arch-left,
+  .hero-arch-right,
+  .hero-medallion-petals,
+  .hero-circuit-lines {
+    transform: none !important;
+    rotate: none !important;
+    animation: none !important;
+  }
+
+  .hero-card-executor,
+  .hero-card-reviewers,
+  .hero-pill-support {
+    translate: none !important;
+    animation: none !important;
+  }
+}
+
 .hero-art-caption {
   display: flex;
   flex-wrap: wrap;
@@ -812,7 +991,7 @@ input:focus-visible,
 }
 
 /* ==========================================================================
-   Yukon (Canadá) — Experiência Linear Panorâmica Material You 3 Expressive
+   Yukon (Canadá) — Scrollytelling Cinemático (Firewatch + INVERSA)
    ========================================================================== */
 .yukon-section {
   padding-block: 24px 64px;
@@ -821,20 +1000,63 @@ input:focus-visible,
 .yukon-experience {
   position: relative;
   border-radius: 40px;
-  overflow: hidden;
   background-color: var(--md-surface-container-low);
   box-shadow: 0 28px 70px -34px var(--md-shadow-tint);
   transition: background-color var(--dur-med) var(--ease-standard);
 }
 
-.yukon-panorama {
+.yukon-scrolly {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+@media (min-width: 960px) {
+  .yukon-scrolly {
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 28px;
+    align-items: start;
+  }
+}
+
+.yukon-sticky-stage {
   position: relative;
-  min-height: 460px;
+  top: auto;
+  min-width: 0;
+}
+
+@media (min-width: 960px) {
+  .yukon-sticky-stage {
+    position: sticky;
+    top: 88px;
+  }
+}
+
+.yukon-panorama {
+  --yukon-mood-aurora: 0;
+  --yukon-mood-stars: 0;
+  --yukon-mood-sun-opacity: 0.94;
+  --yukon-mood-sun-x: 0px;
+  --yukon-mood-sun-y: 0px;
+  position: relative;
+  border-radius: 36px;
+  overflow: hidden;
+  min-height: 520px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: clamp(24px, 4vw, 44px);
-  overflow: hidden;
+  padding: clamp(20px, 3vw, 34px);
+  background-color: var(--md-surface-container-low);
+  border: 1px solid var(--md-outline-variant);
+  box-shadow: 0 28px 70px -34px var(--md-shadow-tint);
+}
+
+@media (max-width: 959.98px) {
+  .yukon-panorama {
+    min-height: 300px;
+    border-radius: 28px;
+  }
 }
 
 .yukon-svg-bg {
@@ -848,11 +1070,14 @@ input:focus-visible,
 
 .yukon-sun,
 .yukon-aurora,
+.yukon-stars,
+.yukon-clouds,
 .yukon-ridge-far,
 .yukon-ridge-mid,
-.yukon-ridge-near {
-  transition: transform var(--dur-med) var(--ease-spring),
-              opacity var(--dur-med) var(--ease-standard),
+.yukon-ridge-near,
+.yukon-pines {
+  will-change: transform, opacity;
+  transition: opacity var(--dur-med) var(--ease-standard),
               fill var(--dur-med) var(--ease-standard);
 }
 
@@ -869,34 +1094,122 @@ input:focus-visible,
   );
 }
 
-.yukon-panorama[data-yukon-mood="alvorada"] .yukon-sun {
-  transform: translate(0px, 0px) scale(1);
-  opacity: 0.92;
-}
-.yukon-panorama[data-yukon-mood="alvorada"] .yukon-aurora {
-  opacity: 0;
-}
-
-.yukon-panorama[data-yukon-mood="travessia"] .yukon-sun {
-  transform: translate(160px, -48px) scale(0.84);
-  opacity: 0.8;
-}
-.yukon-panorama[data-yukon-mood="travessia"] .yukon-aurora {
-  opacity: 0.16;
-}
-.yukon-panorama[data-yukon-mood="travessia"] .yukon-ridge-mid {
-  transform: translateX(-14px);
+.yukon-panorama[data-yukon-mood="alvorada"] {
+  --yukon-mood-aurora: 0;
+  --yukon-mood-stars: 0;
+  --yukon-mood-sun-opacity: 0.94;
+  --yukon-mood-sun-x: 0px;
+  --yukon-mood-sun-y: 0px;
 }
 
-.yukon-panorama[data-yukon-mood="boreal"] .yukon-sun {
-  transform: translate(260px, 85px) scale(0.65);
-  opacity: 0.25;
+.yukon-panorama[data-yukon-mood="travessia"] {
+  --yukon-mood-aurora: 0.24;
+  --yukon-mood-stars: 0.18;
+  --yukon-mood-sun-opacity: 0.78;
+  --yukon-mood-sun-x: 64px;
+  --yukon-mood-sun-y: 18px;
 }
-.yukon-panorama[data-yukon-mood="boreal"] .yukon-aurora {
-  opacity: 0.85;
+
+.yukon-panorama[data-yukon-mood="boreal"] {
+  --yukon-mood-aurora: 0.9;
+  --yukon-mood-stars: 0.88;
+  --yukon-mood-sun-opacity: 0.24;
+  --yukon-mood-sun-x: 130px;
+  --yukon-mood-sun-y: 68px;
 }
-.yukon-panorama[data-yukon-mood="boreal"] .yukon-ridge-near {
-  transform: translateY(6px);
+
+.yukon-sun {
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: translate3d(
+    calc(var(--yukon-progress, 0) * 165px + var(--yukon-mood-sun-x, 0px) * (1 - var(--yukon-progress, 0))),
+    calc(var(--yukon-progress, 0) * 82px + var(--yukon-mood-sun-y, 0px) * (1 - var(--yukon-progress, 0))),
+    0
+  ) scale(calc(1 - var(--yukon-progress, 0) * 0.28));
+  opacity: clamp(0.18, calc(var(--yukon-mood-sun-opacity, 0.94) - var(--yukon-progress, 0) * 0.45), 0.96);
+}
+
+.yukon-aurora {
+  transform: translate3d(
+    calc(var(--yukon-progress, 0) * -28px),
+    calc(var(--yukon-progress, 0) * -12px),
+    0
+  );
+  opacity: clamp(0, max(var(--yukon-mood-aurora, 0), calc((var(--yukon-progress, 0) - 0.28) * 1.35)), 0.92);
+}
+
+.yukon-stars {
+  transform: translate3d(
+    calc(var(--yukon-progress, 0) * 14px),
+    calc(var(--yukon-progress, 0) * -18px),
+    0
+  );
+  opacity: clamp(0, max(var(--yukon-mood-stars, 0), calc((var(--yukon-progress, 0) - 0.35) * 1.45)), 0.9);
+}
+
+.yukon-clouds {
+  transform: translate3d(
+    calc(var(--yukon-progress, 0) * -56px),
+    calc(var(--yukon-progress, 0) * -10px),
+    0
+  );
+  opacity: clamp(0.2, calc(0.88 - var(--yukon-progress, 0) * 0.46), 0.9);
+}
+
+.yukon-ridge-far {
+  transform: translate3d(
+    calc(var(--yukon-progress, 0) * -12px),
+    calc(var(--yukon-progress, 0) * 8px),
+    0
+  );
+}
+
+.yukon-ridge-mid {
+  transform: translate3d(
+    calc(var(--yukon-progress, 0) * 18px),
+    calc(var(--yukon-progress, 0) * 16px),
+    0
+  );
+}
+
+.yukon-ridge-near {
+  transform: translate3d(
+    calc(var(--yukon-progress, 0) * -26px),
+    calc(var(--yukon-progress, 0) * 24px),
+    0
+  );
+}
+
+.yukon-pines {
+  transform: translate3d(
+    calc(var(--yukon-progress, 0) * 30px),
+    calc(var(--yukon-progress, 0) * 32px),
+    0
+  );
+}
+
+[data-motion="calm"] .yukon-sun,
+[data-motion="calm"] .yukon-aurora,
+[data-motion="calm"] .yukon-stars,
+[data-motion="calm"] .yukon-clouds,
+[data-motion="calm"] .yukon-ridge-far,
+[data-motion="calm"] .yukon-ridge-mid,
+[data-motion="calm"] .yukon-ridge-near,
+[data-motion="calm"] .yukon-pines {
+  transform: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .yukon-sun,
+  .yukon-aurora,
+  .yukon-stars,
+  .yukon-clouds,
+  .yukon-ridge-far,
+  .yukon-ridge-mid,
+  .yukon-ridge-near,
+  .yukon-pines {
+    transform: none !important;
+  }
 }
 
 .yukon-header-row {
@@ -906,11 +1219,11 @@ input:focus-visible,
   flex-wrap: wrap;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 20px;
+  gap: 16px;
 }
 
 .yukon-intro {
-  max-width: 560px;
+  max-width: 540px;
   padding: 16px 20px;
   border-radius: var(--shape-lg);
   background: linear-gradient(
@@ -919,6 +1232,12 @@ input:focus-visible,
     color-mix(in srgb, var(--md-surface-container-low) 68%, transparent)
   );
   backdrop-filter: blur(6px);
+}
+
+@media (max-width: 959.98px) {
+  .yukon-intro {
+    padding: 12px 16px;
+  }
 }
 
 .yukon-kicker {
@@ -933,7 +1252,7 @@ input:focus-visible,
 }
 
 .yukon-title {
-  font-size: clamp(1.85rem, 3.6vw, 2.75rem);
+  font-size: clamp(1.55rem, 3.1vw, 2.35rem);
   font-weight: 700;
   letter-spacing: -0.03em;
   line-height: 1.1;
@@ -943,7 +1262,7 @@ input:focus-visible,
 
 .yukon-lead {
   margin: 0;
-  font-size: 1rem;
+  font-size: 0.96rem;
   color: var(--md-on-surface-variant);
   max-width: 48ch;
 }
@@ -954,7 +1273,164 @@ input:focus-visible,
 }
 
 .yukon-horizon-spacer {
-  height: clamp(150px, 22vw, 230px);
+  min-height: 44px;
+  flex: 1 1 auto;
+}
+
+/* INVERSA-style Circular Progress HUD inside Yukon Panorama Footer */
+.yukon-progress-hud {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: auto;
+  padding: 12px 16px;
+  border-radius: var(--shape-xl);
+  background: color-mix(in srgb, var(--md-surface-container-lowest) 84%, transparent);
+  border: 1px solid color-mix(in srgb, var(--md-outline-variant) 85%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.yukon-ring-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.yukon-ring-svg {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  transform: rotate(-90deg);
+}
+
+.yukon-ring-track {
+  fill: none;
+  stroke: var(--md-surface-container-highest);
+  stroke-width: 4;
+}
+
+.yukon-ring-fill {
+  fill: none;
+  stroke: var(--md-primary);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 125.66;
+  stroke-dashoffset: calc(125.66 * (1 - var(--yukon-progress, 0)));
+  transition: stroke var(--dur-med) var(--ease-standard);
+}
+
+#yukonStepBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border-radius: var(--shape-pill);
+  background-color: var(--md-primary-container);
+  color: var(--md-on-primary-container);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+/* Scrollytelling Chapters Column */
+.yukon-chapters {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.yukon-chapter {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px 22px;
+  border-radius: var(--shape-xl);
+  background-color: var(--md-surface-container-low);
+  border: 1.5px solid var(--md-outline-variant);
+  color: var(--md-on-surface);
+  opacity: 0.62;
+  cursor: pointer;
+  text-align: left;
+  transition: opacity var(--dur-med) var(--ease-standard),
+              background-color var(--dur-med) var(--ease-standard),
+              border-color var(--dur-med) var(--ease-standard),
+              transform var(--dur-med) var(--ease-spring),
+              box-shadow var(--dur-med) var(--ease-standard);
+}
+
+@media (min-width: 960px) {
+  .yukon-chapter {
+    min-height: 34vh;
+    padding: 28px 30px;
+  }
+}
+
+@media (max-width: 959.98px) {
+  .yukon-chapter {
+    min-height: auto;
+    padding: 18px 20px;
+    border-radius: var(--shape-lg);
+  }
+}
+
+.yukon-chapter:hover {
+  opacity: 0.88;
+}
+
+.yukon-chapter:focus-visible {
+  outline: 2px solid var(--md-primary);
+  outline-offset: 3px;
+  opacity: 1;
+}
+
+.yukon-chapter.is-active {
+  opacity: 1;
+  background-color: var(--md-surface-container-lowest);
+  border-color: var(--md-primary);
+  box-shadow: 0 18px 44px -22px var(--md-shadow-tint),
+              inset 4px 0 0 0 var(--md-primary);
+}
+
+@media (min-width: 960px) {
+  .yukon-chapter.is-active {
+    transform: translateX(-3px);
+  }
+}
+
+.yukon-chapter-kicker,
+.yukon-chapter .yukon-step-num {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--md-on-surface-variant);
+  transition: color var(--dur-med) var(--ease-standard);
+}
+
+.yukon-chapter.is-active .yukon-chapter-kicker,
+.yukon-chapter.is-active .yukon-step-num {
+  color: var(--md-primary);
+}
+
+.yukon-chapter .yukon-chapter-title {
+  font-size: clamp(1.22rem, 2vw, 1.52rem);
+  margin-bottom: 4px;
+}
+
+.yukon-chapter .yukon-chapter-body {
+  font-size: 0.95rem;
 }
 
 /* Linear Narrative Progression welded beneath the Yukon panorama */
