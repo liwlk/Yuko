@@ -5,7 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Yuko — Comunidade Técnica &amp; Ciclo de Entrega Assistida · Manual v1.0</title>
   <meta name="description" content="A Yuko aproxima desenvolvedores independentes e microempresas brasileiras por meio de um ciclo colaborativo, assistido e tecnicamente validado de desenvolvimento de software." />
-  <link rel="stylesheet" href="./styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..800;1,9..40,400..700&family=JetBrains+Mono:wght@500;700&display=swap" />
+  <link rel="stylesheet" href="./styles.css?v=4" />
   <script>
     (function(){try{var r=document.documentElement,s=localStorage.getItem("yuko_seed"),m=localStorage.getItem("yuko_mode"),t=localStorage.getItem("yuko_motion");if(s)r.setAttribute("data-seed",s);if(m)r.setAttribute("data-mode",m);if(t)r.setAttribute("data-motion",t);}catch(e){}})();
   </script>
@@ -112,56 +115,69 @@
           </div>
         </div>
 
-        <!-- Dynamic Material You Editorial Illustration for Yuko -->
+        <!-- Dynamic Material You 3 Expressive Editorial Illustration for Yuko -->
         <aside class="hero-art-card" aria-label="Ilustração institucional da Yuko">
           <figure class="hero-art-frame">
-            <svg viewBox="0 0 640 480" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ilustração Material You de desenvolvimento colaborativo e arquitetura modular na Yuko">
+            <svg viewBox="0 0 640 480" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Composição Material You 3 Expressive simbolizando arquitetura modular, revisão por pares e sustentação coletiva da Yuko">
               <defs>
                 <linearGradient id="heroBgGrad" x1="0" y1="0" x2="640" y2="480" gradientUnits="userSpaceOnUse">
                   <stop offset="0%" stop-color="var(--md-surface-container-low)"/>
-                  <stop offset="100%" stop-color="var(--md-primary-container)" stop-opacity="0.45"/>
+                  <stop offset="100%" stop-color="var(--md-primary-container)" stop-opacity="0.52"/>
+                </linearGradient>
+                <linearGradient id="heroOrbGrad" x1="180" y1="90" x2="460" y2="390" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="var(--md-primary-container)"/>
+                  <stop offset="100%" stop-color="var(--md-secondary-container)"/>
                 </linearGradient>
               </defs>
+
               <rect width="640" height="480" fill="url(#heroBgGrad)"/>
 
-              <!-- Architectural Arches (M3 Expressive Silhouettes) -->
-              <path d="M56 480V220C56 158 106 108 168 108C230 108 280 158 280 220V480H56Z" fill="var(--md-surface-container-highest)" opacity="0.65"/>
-              <path d="M396 480V172C396 119 439 76 492 76C545 76 588 119 588 172V480H396Z" fill="var(--md-secondary-container)" opacity="0.72"/>
-              <circle cx="516" cy="96" r="46" fill="var(--md-tertiary-container)" opacity="0.85"/>
+              <!-- Subtle Architectural Arches -->
+              <path d="M52 480V228C52 162 106 108 172 108C238 108 292 162 292 228V480H52Z" fill="var(--md-surface-container-highest)" opacity="0.58"/>
+              <path d="M348 480V172C348 112 397 64 457 64C517 64 566 112 566 172V480H348Z" fill="var(--md-secondary-container)" opacity="0.56"/>
 
-              <!-- Flowing Collaborative Bridge Path -->
-              <path d="M0 398C96 398 116 340 198 340C274 340 288 388 366 388C452 388 470 302 560 302H640V480H0V398Z" fill="var(--md-surface-container-lowest)" opacity="0.92"/>
-              <path d="M0 426C106 426 146 374 236 374C320 374 352 422 442 422C522 422 562 356 640 356V480H0V426Z" fill="var(--md-secondary-container)" opacity="0.65"/>
+              <!-- Soft Organic Base Horizon -->
+              <path d="M0 374C135 344 240 398 370 372C485 348 560 326 640 342V480H0V374Z" fill="var(--md-surface-container-lowest)" opacity="0.88"/>
+              <path d="M0 416C150 388 290 440 435 412C530 394 590 382 640 392V480H0V416Z" fill="var(--md-secondary-container)" opacity="0.52"/>
 
-              <!-- Modular Software Foundation Blocks -->
-              <rect x="196" y="254" width="88" height="86" rx="22" fill="var(--md-secondary-container)" stroke="var(--md-outline-variant)" stroke-width="2"/>
-              <rect x="284" y="254" width="96" height="86" rx="22" fill="var(--md-primary-container)" stroke="var(--md-outline-variant)" stroke-width="2"/>
-              <rect x="236" y="168" width="96" height="86" rx="22" fill="var(--md-secondary)" opacity="0.88"/>
-              <rect x="332" y="176" width="84" height="78" rx="20" fill="var(--md-tertiary-container)" stroke="var(--md-outline-variant)" stroke-width="2"/>
-
-              <!-- Interlocking Keystone Module (Yuko Core) -->
-              <g transform="translate(364 98) rotate(8)">
-                <rect width="74" height="74" rx="18" fill="var(--md-primary)"/>
-                <circle cx="24" cy="24" r="6" fill="var(--md-on-primary)" opacity="0.9"/>
-                <circle cx="50" cy="50" r="6" fill="var(--md-on-primary)" opacity="0.9"/>
-                <path d="M24 30V46C24 48.2 25.8 50 28 50H44" stroke="var(--md-on-primary)" stroke-width="3.5" stroke-linecap="round"/>
+              <!-- Central Material 3 Expressive 12-Petal Scalloped Medallion -->
+              <g transform="translate(320 228)">
+                <path d="M0 -132C18 -132 29 -111 46 -106C63 -101 82 -115 95 -102C108 -89 94 -70 99 -53C104 -36 125 -25 125 -7C125 11 104 22 99 39C94 56 108 75 95 88C82 101 63 87 46 92C29 97 18 118 0 118C-18 118 -29 97 -46 92C-63 87 -82 101 -95 88C-108 75 -94 56 -99 39C-104 22 -125 11 -125 -7C-125 -25 -104 -36 -99 -53C-94 -70 -108 -89 -95 -102C-82 -115 -63 -101 -46 -106C-29 -111 -18 -132 0 -132Z" fill="url(#heroOrbGrad)" opacity="0.92"/>
+                <circle cx="0" cy="-7" r="76" fill="var(--md-surface-container-lowest)" stroke="var(--md-outline-variant)" stroke-width="1.5"/>
+                <circle cx="0" cy="-7" r="52" fill="var(--md-primary)"/>
+                <!-- Stylized Yuko Core Node Geometry -->
+                <circle cx="0" cy="-7" r="14" fill="var(--md-on-primary)"/>
+                <path d="M0 -42V-25M0 11V28M-35 -7H-18M18 -7H35M-24 -31L-12 -19M12 5L24 17M24 -31L12 -19M-12 5L-24 17" stroke="var(--md-on-primary)" stroke-width="5.5" stroke-linecap="round"/>
               </g>
 
-              <!-- Stylized Peer Collaboration Figures -->
-              <!-- Left Builder (Reviewing & Supporting Arch) -->
-              <circle cx="144" cy="236" r="18" fill="var(--md-on-surface)"/>
-              <path d="M116 338V282C116 266 129 254 144 254C161 254 174 266 176 282L198 292" stroke="var(--md-on-surface)" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M126 340L122 392M160 340L168 386" stroke="var(--md-on-surface)" stroke-width="14" stroke-linecap="round"/>
+              <!-- Interlocking 3-Stage Peer Review & Support Circuit -->
+              <path d="M168 182C210 182 222 221 258 221M472 152C428 152 414 221 382 221M320 342V376" stroke="var(--md-primary)" stroke-width="3" stroke-dasharray="6 6" stroke-linecap="round" opacity="0.65"/>
 
-              <!-- Right Builder (Placing Keystone Module) -->
-              <circle cx="468" cy="144" r="17" fill="var(--md-primary)"/>
-              <path d="M494 252L482 188C478 172 464 164 448 168L420 176" stroke="var(--md-primary)" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M466 250L446 306M494 250L508 308" stroke="var(--md-primary)" stroke-width="14" stroke-linecap="round"/>
+              <!-- Left Card: Executor / Escopo -->
+              <g transform="translate(86 134)">
+                <rect width="108" height="92" rx="24" fill="var(--md-surface-container-lowest)" stroke="var(--md-outline-variant)" stroke-width="1.5"/>
+                <rect x="18" y="20" width="38" height="12" rx="6" fill="var(--md-primary-container)"/>
+                <rect x="18" y="42" width="72" height="10" rx="5" fill="var(--md-surface-container-highest)"/>
+                <rect x="18" y="60" width="52" height="10" rx="5" fill="var(--md-surface-container-highest)"/>
+                <circle cx="84" cy="26" r="8" fill="var(--md-primary)"/>
+              </g>
 
-              <!-- Foreground Partner Connecting Loop -->
-              <circle cx="496" cy="300" r="16" fill="var(--md-tertiary)"/>
-              <path d="M518 394V342C518 326 506 316 492 316L450 326" stroke="var(--md-tertiary)" stroke-width="16" stroke-linecap="round"/>
-              <circle cx="384" cy="306" r="24" fill="var(--md-surface-container-lowest)" stroke="var(--md-primary)" stroke-width="8"/>
+              <!-- Right Card: 2+ Pares Revisores -->
+              <g transform="translate(446 106)">
+                <rect width="112" height="94" rx="24" fill="var(--md-tertiary-container)" stroke="var(--md-outline-variant)" stroke-width="1.5"/>
+                <circle cx="34" cy="38" r="13" fill="var(--md-tertiary)"/>
+                <circle cx="56" cy="38" r="13" fill="var(--md-primary)"/>
+                <rect x="20" y="62" width="72" height="12" rx="6" fill="var(--md-surface-container-lowest)" opacity="0.88"/>
+              </g>
+
+              <!-- Bottom Pill: Sustentação & Entrega Registrada -->
+              <g transform="translate(216 364)">
+                <rect width="208" height="58" rx="29" fill="var(--md-secondary-container)" stroke="var(--md-outline-variant)" stroke-width="1.5"/>
+                <circle cx="30" cy="29" r="14" fill="var(--md-primary)"/>
+                <path d="M24 29L28 33L36 25" stroke="var(--md-on-primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <rect x="58" y="20" width="120" height="8" rx="4" fill="var(--md-on-secondary-container)" opacity="0.72"/>
+                <rect x="58" y="34" width="84" height="7" rx="3.5" fill="var(--md-on-secondary-container)" opacity="0.4"/>
+              </g>
             </svg>
           </figure>
           <div class="hero-art-caption">
@@ -588,6 +604,6 @@
   </footer>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <script src="./app.js"></script>
+  <script src="./app.js?v=4"></script>
 </body>
 </html>
