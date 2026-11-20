@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-seed="terracota" data-mode="light" data-motion="expressive">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ciclo de Entrega Assistida, Papéis &amp; Rastreabilidade — Yuko</title>
+  <meta name="description" content="As 6 etapas do Ciclo de Entrega Assistida, papéis operacionais, regras de continuidade e registro formal rastreável da Yuko." />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="top-bar-wrap">
+    <header class="top-bar" aria-label="Navegação principal">
+      <a href="./index.html" class="brand">
+        <span class="brand-mark"><img src="./assets/yuko-logo.jpg" alt="Logotipo da Yuko" /></span>
+        <span>Yuko</span>
+      </a>
+      <nav class="nav-links" aria-label="Seções e subpáginas">
+        <a href="./index.html">Início</a>
+        <a href="./extensoes.html">Extensões &amp; Frentes</a>
+        <a href="./ciclo.html" aria-current="page">Ciclo &amp; Papéis</a>
+        <a href="./governanca.html">Qualidade &amp; LGPD</a>
+        <a href="./manual.html">Manual v1.0</a>
+      </nav>
+      <div class="bar-controls">
+        <div class="seed-dots" role="group" aria-label="Semente de cor dinâmica">
+          <button class="seed-dot" data-seed="terracota" aria-pressed="true" title="Terracota Solar"></button>
+          <button class="seed-dot" data-seed="botanico" aria-pressed="false" title="Botânico Vivo"></button>
+          <button class="seed-dot" data-seed="oceanico" aria-pressed="false" title="Índigo Oceânico"></button>
+          <button class="seed-dot" data-seed="ameixa" aria-pressed="false" title="Ameixa Editorial"></button>
+        </div>
+        <button id="modeToggleBtn" class="icon-btn" type="button" aria-label="Alternar modo claro e escuro">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+          </svg>
+        </button>
+        <a href="./manual.html" class="btn btn-primary btn-sm bar-cta">Manual v1.0</a>
+      </div>
+    </header>
+    <nav class="mobile-nav" aria-label="Navegação móvel">
+      <a href="./index.html">Início</a>
+      <a href="./extensoes.html">Extensões</a>
+      <a href="./ciclo.html" aria-current="page">Ciclo 6 Etapas</a>
+      <a href="./governanca.html">Qualidade &amp; LGPD</a>
+      <a href="./manual.html">Manual v1.0</a>
+    </nav>
+  </div>
+
+  <main id="topo">
+    <section class="sub-hero">
+      <div class="container">
+        <div class="hero-eyebrow"><span>Seções 7, 8 e 9 do Manual</span><span aria-hidden="true">·</span><span>Núcleo Operacional</span></div>
+        <h1 class="sub-hero-title">O <span class="accent-word">Ciclo</span> de Entrega Assistida</h1>
+        <p class="hero-lead">
+          Nenhuma solução é disponibilizada a uma microempresa sem passar por concepção compartilhada, revisão independente por múltiplos pares, homologação e designação formal de suporte.
+        </p>
+        <div class="hero-actions" style="margin-bottom:0">
+          <a href="#etapas" class="btn btn-primary">As 6 Etapas</a>
+          <a href="#papeis" class="btn btn-tonal">Papéis &amp; Continuidade</a>
+          <a href="#registro" class="btn btn-outline">Registro Formal</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seção 8: As 6 Etapas -->
+    <section id="etapas" class="section" style="padding-top:24px">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Seção 8 · Fluxo de Ponta a Ponta</div>
+          <h2 class="section-title">Seis etapas do acolhimento à sustentação</h2>
+        </div>
+
+        <div class="grid-3">
+          <article class="m3-card tonal-primary">
+            <div>
+              <h3>8.1 Demanda — Entrada &amp; Priorização</h3>
+              <p>Entrada por Prospecção Contextual Ativa (Yuko Field) ou Acolhimento Passivo. Triagem conjunta avalia aderência temática, capacidade disponível e impacto no negócio.</p>
+            </div>
+            <span class="card-code">etapa 01 · viabilidade</span>
+          </article>
+
+          <article class="m3-card">
+            <div>
+              <h3>8.2 Escopo &amp; Critérios de Aceitação</h3>
+              <p>O responsável traduz a demanda em documento sintético de escopo contendo parâmetros funcionais objetivos e claros que definem quando a solução está apta.</p>
+            </div>
+            <span class="card-code">etapa 02 · contrato técnico</span>
+          </article>
+
+          <article class="m3-card">
+            <div>
+              <h3>8.3 Construção</h3>
+              <p>Desenvolvimento modular com versionamento central, commits semânticos e documentação mínima para leitura rápida por outros membros.</p>
+            </div>
+            <span class="card-code">etapa 03 · engenharia</span>
+          </article>
+
+          <article class="m3-card tonal-secondary">
+            <div>
+              <h3>8.4 Peer Review Obrigatório</h3>
+              <p>Revisão cruzada por no mínimo 2 desenvolvedores independentes: legibilidade, segurança elementar, aderência aos critérios e ausência de débitos críticos.</p>
+            </div>
+            <span class="card-code">etapa 04 · 2+ revisores</span>
+          </article>
+
+          <article class="m3-card">
+            <div>
+              <h3>8.5 Testes &amp; Homologação</h3>
+              <p>Testes funcionais, responsividade, desempenho e integridade em simulação/staging. Apontamentos retornam à Etapa 3 para saneamento pelo executor.</p>
+            </div>
+            <span class="card-code">etapa 05 · staging</span>
+          </article>
+
+          <article class="m3-card tonal-tertiary">
+            <div>
+              <h3>8.6 Entrega &amp; Suporte Definido</h3>
+              <p>Homologação perante a microempresa. O encerramento só é autorizado após a designação nominal do Responsável de Suporte e registro da janela de acompanhamento.</p>
+            </div>
+            <span class="card-code">etapa 06 · condição indispensável</span>
+          </article>
+        </div>
+
+        <div class="lab-panel" style="margin-top:24px">
+          <div class="grid-2">
+            <div>
+              <h3 style="margin-bottom:10px">Critérios de Triagem da Demanda</h3>
+              <ul class="clean-list">
+                <li><strong>Aderência Temática:</strong> problema concreto solucionável com engenharia direta, rejeitando complexidade desproporcional.</li>
+                <li><strong>Capacidade Operacional:</strong> disponibilidade real de executor e revisores com domínio técnico.</li>
+                <li><strong>Impacto Prático:</strong> ganho tangível de eficiência operacional, automação ou posicionamento.</li>
+              </ul>
+            </div>
+            <div>
+              <h3 style="margin-bottom:10px">Critérios de Priorização em Fila</h3>
+              <ul class="clean-list">
+                <li><strong>Criticidade Operacional:</strong> urgência objetiva em gargalos essenciais da microempresa.</li>
+                <li><strong>Maturidade do Problema:</strong> clareza das regras de negócio e conversão em critérios de aceitação.</li>
+                <li><strong>Baixo Risco Externo:</strong> preferência por menor dependência de terceiros ou integrações instáveis.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seção 7: Papéis & Continuidade -->
+    <section id="papeis" class="section">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Seção 7 · Modelo em Implantação</div>
+          <h2 class="section-title">Papéis funcionais e continuidade operacional</h2>
+          <p class="section-desc">Atribuições distribuídas contextualmente a cada iniciativa para garantir respaldo sem criar sobrecarga gerencial.</p>
+        </div>
+
+        <div class="grid-3">
+          <article class="m3-card">
+            <h3>7.1 Desenvolvedor Executor / Lead</h3>
+            <p>Assume a liderança operacional da entrega: levantamento preliminar de escopo, codificação principal e interlocução com revisores e a microempresa parceira.</p>
+          </article>
+          <article class="m3-card tonal-primary">
+            <h3>7.2 Desenvolvedores Revisores</h3>
+            <p>Múltiplos pares designados para avaliar criticamente os artefatos. Nenhuma entrega institucional pode ser chancelada com apenas um parecer técnico.</p>
+          </article>
+          <article class="m3-card tonal-secondary">
+            <h3>7.3 Responsável de Suporte</h3>
+            <p>Papel obrigatório atribuído antes da conclusão formal: acompanha a estabilização inicial, corrige bugs imediatos e zela pela operação no período acordado.</p>
+          </article>
+        </div>
+
+        <div class="grid-2" style="margin-top:20px">
+          <article class="m3-card">
+            <h3>Transição de Contexto Compulsória</h3>
+            <p>Antes de qualquer afastamento programado, o integrante deve sincronizar todo o código no repositório remoto, detalhar o estado das tarefas, listar decisões arquiteturais e registrar impedimentos. É vedada a retenção de código, dados ou credenciais em máquinas locais.</p>
+          </article>
+          <article class="m3-card tonal-tertiary">
+            <h3>Abandono (5 dias úteis) &amp; Proteção</h3>
+            <p>Após inércia superior a 5 dias úteis sem justificativa, registra-se vacância na issue com revogação de acessos e reatribuição imediata. Revisores e a frente de organização assumem transitoriamente para proteger a microempresa parceira.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seção 9: Registro Formal -->
+    <section id="registro" class="section">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Seção 9 · Rastreabilidade</div>
+          <h2 class="section-title">Registro formal obrigatório de parcerias e demandas</h2>
+          <p class="section-desc">É terminantemente vedada a assunção de projetos sob a bandeira da Yuko com alinhamentos exclusivamente verbais que não culminem em registro rastreável.</p>
+        </div>
+
+        <div class="m3-card">
+          <h3>Elementos Mínimos de Cada Issue de Projeto</h3>
+          <ul class="clean-list">
+            <li>Identificador único da demanda ou projeto no sistema oficial de issue tracking;</li>
+            <li>Caracterização do escopo acordado e critérios de aceitação validados;</li>
+            <li>Identificação nominal do desenvolvedor executor e dos desenvolvedores revisores;</li>
+            <li>Apontamento nominal do responsável de suporte designado para a fase pós-entrega;</li>
+            <li>Registro dos pareceres de aprovação técnica resultantes da revisão por pares;</li>
+            <li>Datas, links para repositórios pertinentes e documentação de transição entregue à microempresa.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div>
+          <a href="./index.html" class="brand">
+            <span class="brand-mark"><img src="./assets/yuko-logo.jpg" alt="Logotipo da Yuko" /></span>
+            <span>Yuko</span>
+          </a>
+          <p class="footer-summary">Metodologia de entrega assistida com revisão por múltiplos pares e rastreabilidade contínua.</p>
+          <a href="./governanca.html" class="btn btn-primary btn-sm">Avançar para Qualidade &amp; LGPD →</a>
+        </div>
+        <div class="footer-cols">
+          <div>
+            <div class="footer-col-title">Subpáginas</div>
+            <div class="footer-col-links">
+              <a href="./index.html">Início</a>
+              <a href="./extensoes.html">Extensões &amp; Frentes</a>
+              <a href="./ciclo.html">Ciclo &amp; Papéis</a>
+              <a href="./governanca.html">Qualidade &amp; LGPD</a>
+              <a href="./manual.html">Manual v1.0</a>
+            </div>
+          </div>
+          <div>
+            <div class="footer-col-title">Nesta Página</div>
+            <div class="footer-col-links">
+              <a href="#etapas">6 Etapas</a>
+              <a href="#papeis">Papéis &amp; Continuidade</a>
+              <a href="#registro">Registro Formal</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-monument">
+        <div class="footer-monument-head">
+          <span class="footer-ref-kicker">Manual Institucional v1.0 · Ciclo de Entrega Assistida</span>
+          <div class="footer-monument-logo"><img src="./assets/yuko-logo.jpg" alt="Marca Yuko" /></div>
+        </div>
+        <span class="footer-wordmark">YUKO</span>
+        <div class="footer-monument-sub">
+          <span class="footer-monument-tagline">Demanda → Escopo → Construção → Peer Review (2+) → Homologação → Entrega &amp; Suporte</span>
+          <div class="footer-token-row">
+            <span class="footer-token-chip">seção 7</span>
+            <span class="footer-token-chip">seção 8</span>
+            <span class="footer-token-chip">seção 9</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer-inner">
+        <span><strong>Yuko</strong> · Manual Institucional v1.0</span>
+        <div class="footer-links"><a href="./index.html">Início</a><a href="./extensoes.html">Extensões</a><a href="./governanca.html">Governança</a></div>
+      </div>
+    </div>
+  </footer>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="./app.js"></script>
+</body>
+</html>
