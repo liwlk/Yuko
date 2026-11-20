@@ -18,8 +18,8 @@
   --shape-2xl: 40px;
   --shape-pill: 9999px;
 
-  --font-display: "Plus Jakarta Sans", "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
-  --font-body: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-display: "DM Sans", system-ui, -apple-system, sans-serif;
+  --font-body: "DM Sans", system-ui, -apple-system, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
   /* Default Seed: Terracota Solar (Light) */
@@ -311,7 +311,7 @@ button, input { font-family: inherit; }
   gap: 10px;
   text-decoration: none;
   color: var(--md-on-surface);
-  font-weight: 800;
+  font-weight: 700;
   font-size: 1.125rem;
   letter-spacing: -0.02em;
   flex-shrink: 0;
@@ -364,7 +364,7 @@ button, input { font-family: inherit; }
   text-decoration: none;
   color: var(--md-on-surface-variant);
   font-size: 0.88rem;
-  font-weight: 650;
+  font-weight: 600;
   padding: 8px 13px;
   border-radius: var(--shape-pill);
   white-space: nowrap;
@@ -464,7 +464,7 @@ button, input { font-family: inherit; }
 .mobile-nav a {
   text-decoration: none;
   font-size: 0.82rem;
-  font-weight: 650;
+  font-weight: 600;
   padding: 7px 14px;
   border-radius: var(--shape-pill);
   background-color: var(--md-surface-container);
@@ -489,7 +489,7 @@ button, input { font-family: inherit; }
   gap: 10px;
   border: none;
   cursor: pointer;
-  font-weight: 650;
+  font-weight: 600;
   font-size: 0.95rem;
   letter-spacing: 0.005em;
   text-decoration: none;
@@ -627,30 +627,30 @@ button, input { font-family: inherit; }
 }
 
 .hero-title {
-  font-size: clamp(2.4rem, 4.9vw, 4.1rem);
-  font-weight: 800;
-  letter-spacing: -0.038em;
-  line-height: 1.04;
+  font-size: clamp(2.35rem, 4.35vw, 3.65rem);
+  font-weight: 700;
+  letter-spacing: -0.032em;
+  line-height: 1.12;
   color: var(--md-on-surface);
   margin-bottom: 22px;
 }
 
 .sub-hero-title {
-  font-size: clamp(2.1rem, 4.2vw, 3.35rem);
-  font-weight: 800;
-  letter-spacing: -0.035em;
-  line-height: 1.07;
+  font-size: clamp(2.05rem, 4vw, 3.15rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.12;
   margin-bottom: 16px;
 }
 
 .hero-title .accent-word,
 .sub-hero-title .accent-word {
   display: inline-block;
-  padding: 0 14px 4px;
+  padding: 2px 14px 4px;
   margin-inline: 2px;
   background-color: var(--md-primary-container);
   color: var(--md-on-primary-container);
-  border-radius: 22px;
+  border-radius: 18px;
   transition: background-color var(--dur-med) var(--ease-standard),
               color var(--dur-med) var(--ease-standard);
 }
@@ -688,7 +688,7 @@ button, input { font-family: inherit; }
   display: block;
   font-family: var(--font-display);
   font-size: 1.3rem;
-  font-weight: 800;
+  font-weight: 700;
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.02em;
   color: var(--md-on-surface);
@@ -852,20 +852,20 @@ button, input { font-family: inherit; }
 
 .yukon-kicker {
   display: inline-block;
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font-family: var(--font-display);
+  font-size: 0.82rem;
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--md-primary);
   margin-bottom: 10px;
 }
 
 .yukon-title {
-  font-size: clamp(1.85rem, 3.6vw, 2.85rem);
-  font-weight: 800;
+  font-size: clamp(1.85rem, 3.6vw, 2.75rem);
+  font-weight: 700;
   letter-spacing: -0.03em;
-  line-height: 1.08;
+  line-height: 1.1;
   color: var(--md-on-surface);
   margin-bottom: 10px;
 }
@@ -951,16 +951,17 @@ button, input { font-family: inherit; }
 }
 
 .yukon-step-num {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-family: var(--font-display);
+  font-size: 0.76rem;
   font-weight: 700;
+  letter-spacing: 0.04em;
   opacity: 0.8;
 }
 
 .yukon-step-label {
   font-family: var(--font-display);
   font-size: 1rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.015em;
 }
 
@@ -986,7 +987,7 @@ button, input { font-family: inherit; }
 
 .yukon-chapter-title {
   font-size: clamp(1.35rem, 2.4vw, 1.85rem);
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.025em;
   margin-bottom: 8px;
   color: var(--md-on-surface);
@@ -1018,7 +1019,7 @@ button, input { font-family: inherit; }
 
 .section-kicker {
   font-size: 0.84rem;
-  font-weight: 750;
+  font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--md-primary);
@@ -1027,7 +1028,7 @@ button, input { font-family: inherit; }
 
 .section-title {
   font-size: clamp(1.85rem, 3.5vw, 2.75rem);
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.03em;
   line-height: 1.12;
   margin-bottom: 14px;
@@ -1102,7 +1103,7 @@ button, input { font-family: inherit; }
 
 .feature-card h3 {
   font-size: 1.35rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.02em;
   margin-bottom: 10px;
 }
@@ -1191,7 +1192,7 @@ button, input { font-family: inherit; }
 
 .m3-card h3 {
   font-size: 1.25rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.02em;
 }
 
@@ -1243,7 +1244,7 @@ button, input { font-family: inherit; }
 
 .clean-list li::before {
   content: "✓";
-  font-weight: 800;
+  font-weight: 700;
   color: var(--md-primary);
   flex-shrink: 0;
 }
@@ -1281,7 +1282,7 @@ button, input { font-family: inherit; }
 .control-table th {
   width: 220px;
   font-family: var(--font-display);
-  font-weight: 750;
+  font-weight: 700;
   color: var(--md-primary);
   background-color: var(--md-surface-container);
 }
@@ -1326,7 +1327,7 @@ button, input { font-family: inherit; }
 
 .control-group-title {
   font-size: 0.88rem;
-  font-weight: 750;
+  font-weight: 700;
   color: var(--md-on-surface-variant);
   margin-bottom: 12px;
 }
@@ -1346,7 +1347,7 @@ button, input { font-family: inherit; }
   border: 1.5px solid var(--md-outline-variant);
   background-color: var(--md-surface-container-lowest);
   color: var(--md-on-surface);
-  font-weight: 650;
+  font-weight: 600;
   font-size: 0.9rem;
   cursor: pointer;
   transition: all var(--dur-fast) var(--ease-spring);
@@ -1401,7 +1402,7 @@ button, input { font-family: inherit; }
   border-radius: 18px;
   border: 1px solid var(--md-outline-variant);
   font-size: 0.88rem;
-  font-weight: 650;
+  font-weight: 600;
 }
 
 .surface-step code {
@@ -1472,7 +1473,7 @@ button, input { font-family: inherit; }
 .audience-title {
   font-family: var(--font-display);
   font-size: 1.85rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.03em;
   margin: 14px 0 8px;
 }
@@ -1499,7 +1500,7 @@ button, input { font-family: inherit; }
 
 .cta-banner h2 {
   font-size: clamp(1.75rem, 3.2vw, 2.45rem);
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.03em;
   margin-bottom: 10px;
 }
@@ -1543,7 +1544,7 @@ button, input { font-family: inherit; }
 .footer-col-title {
   font-family: var(--font-display);
   font-size: 0.82rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--md-primary);
@@ -1596,7 +1597,7 @@ button, input { font-family: inherit; }
   border-radius: var(--shape-pill);
   background-color: var(--md-primary-container);
   color: var(--md-on-primary-container);
-  font-family: var(--font-mono);
+  font-family: var(--font-display);
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.04em;
@@ -1636,7 +1637,7 @@ button, input { font-family: inherit; }
   display: block;
   font-family: var(--font-display);
   font-size: clamp(3.4rem, 13vw, 9.25rem);
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.05em;
   line-height: 0.88;
   color: var(--md-on-surface);
@@ -1656,7 +1657,7 @@ button, input { font-family: inherit; }
 
 .footer-monument-tagline {
   font-size: 0.96rem;
-  font-weight: 650;
+  font-weight: 600;
   color: var(--md-on-surface-variant);
 }
 
