@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { motion, useMotionValue, useSpring } from 'motion/react';
+import { scrollToTarget } from '../scripts/lenis-manager';
 
 export type YukonMood = 'alvorada' | 'travessia' | 'boreal';
 
@@ -23,7 +25,7 @@ export interface YukonExperienceProps {
 }
 
 const MOOD_ORDER: readonly YukonMood[] = ['alvorada', 'travessia', 'boreal'];
-const RING_RADIUS = 20;
+const RING_RADIUS = 17;
 const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS;
 
 function clamp(val: number, min: number, max: number): number {
@@ -37,11 +39,13 @@ function getAutoMoodForIndex(index: number, chapter?: YukonChapter): YukonMood {
   return 'boreal';
 }
 
-function isReducedMotion(): boolean {
-  if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
-    return false;
-  }
-  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function isMotionPaused(): boolean {
+  if (typeof window === 'undefined' || typeof document === 'undefined') return false;
+  const calm = document.documentElement.getAttribute('data-motion') === 'calm';
+  const reduced =
+    typeof window.matchMedia === 'function' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  return calm || reduced;
 }
 
 export default function YukonExperience({ chapters, moodLabels }: YukonExperienceProps) {
@@ -51,10 +55,34 @@ export default function YukonExperience({ chapters, moodLabels }: YukonExperienc
   const scrollyRef = useRef<HTMLDivElement>(null);
   const panoramaRef = useRef<HTMLDivElement>(null);
   const ringFillRef = useRef<SVGCircleElement>(null);
-  const chapterRefs = useRef<(HTMLElement | null)[]>([]);
-  const intersectingMapRef = useRef<Map<number, IntersectionObserverEntry>>(new Map());
   const moodManuallyLockedRef = useRef(false);
   const clickLockUntilRef = useRef(0);
+
+  const rawMx = useMotionValue(0);
+  const rawMy = useMotionValue(0);
+  const springMx = useSpring(rawMx, { stiffness: 120, damping: 24, mass: 0.6 });
+  const springMy = useSpring(rawMy, { stiffness: 120, damping: 24, mass: 0.6 });
+
+  useEffect(() => {
+    const syncPointerVars = () => {
+      const el = panoramaRef.current;
+      if (!el) return;
+      if (isMotionPaused()) {
+        el.style.setProperty('--yukon-mx', '0');
+        el.style.setProperty('--yukon-my', '0');
+        return;
+      }
+      el.style.setProperty('--yukon-mx', springMx.get().toFixed(4));
+      el.style.setProperty('--yukon-my', springMy.get().toFixed(4));
+    };
+
+    const unsubX = springMx.on('change', syncPointerVars);
+    const unsubY = springMy.on('change', syncPointerVars);
+    return () => {
+      unsubX();
+      unsubY();
+    };
+  }, [springMx, springMy]);
 
   const applyProgress = useCallback((progress: number) => {
     const p = clamp(progress, 0, 1);
@@ -83,128 +111,84 @@ export default function YukonExperience({ chapters, moodLabels }: YukonExperienc
     [chapters]
   );
 
-  const computeFallbackProgress = useCallback((): number => {
+  const getScrollRange = useCallback(() => {
     const scrollyEl = scrollyRef.current;
-    if (!scrollyEl || typeof window === 'undefined') return 0;
+    if (!scrollyEl || typeof window === 'undefined') {
+      return { startY: 0, travel: 1, progress: 0 };
+    }
     const rect = scrollyEl.getBoundingClientRect();
-    if (!rect.height) return 0;
     const vh = window.innerHeight || 800;
-    const stickyTop = 88;
-    const travel = rect.height - vh * 0.72;
-    const raw =
-      travel > 80
-        ? (stickyTop - rect.top) / travel
-        : (vh - rect.top) / Math.max(1, vh + rect.height);
-    return clamp(raw, 0, 1);
+    const stickyTop = window.innerWidth >= 960 ? 82 : 72;
+    const scrollyAbsTop = window.scrollY + rect.top;
+    const startY = scrollyAbsTop - stickyTop;
+    const endY = scrollyAbsTop + rect.height - vh;
+    const travel = Math.max(120, endY - startY);
+    const progress = clamp((window.scrollY - startY) / travel, 0, 1);
+    return { startY, travel, progress };
   }, []);
 
-  const updateActiveFromViewport = useCallback(
-    (progressFallback?: number) => {
+  const updateActiveFromProgress = useCallback(
+    (progressVal?: number) => {
       if (!chapters.length || typeof window === 'undefined') return;
       if (typeof performance !== 'undefined' && performance.now() < clickLockUntilRef.current) {
         return;
       }
 
-      const vh = window.innerHeight || 800;
-      const focusY = vh * 0.42;
-      let bestIdx: number | null = null;
-      let bestDist = Infinity;
-
-      intersectingMapRef.current.forEach((entry, idx) => {
-        if (!entry.isIntersecting) return;
-        const rect = entry.target.getBoundingClientRect();
-        const center = rect.top + rect.height * 0.5;
-        const dist = Math.abs(center - focusY);
-        if (dist < bestDist) {
-          bestDist = dist;
-          bestIdx = idx;
-        }
-      });
-
-      if (bestIdx !== null) {
-        activateChapter(bestIdx);
-        return;
-      }
-
       const p =
-        typeof progressFallback === 'number' ? progressFallback : computeFallbackProgress();
-      const fallbackIdx = clamp(Math.floor(p * chapters.length), 0, chapters.length - 1);
-      activateChapter(fallbackIdx);
+        typeof progressVal === 'number' ? clamp(progressVal, 0, 1) : getScrollRange().progress;
+      const idx = clamp(
+        Math.floor(clamp(p, 0, 0.9999) * chapters.length),
+        0,
+        chapters.length - 1
+      );
+      activateChapter(idx);
     },
-    [activateChapter, chapters.length, computeFallbackProgress]
+    [activateChapter, chapters.length, getScrollRange]
   );
 
   useEffect(() => {
     if (typeof window === 'undefined' || typeof document === 'undefined') return;
 
-    applyProgress(0);
+    const initialP = getScrollRange().progress;
+    applyProgress(initialP);
+    updateActiveFromProgress(initialP);
+
     const scrollyEl = scrollyRef.current;
     let stInstance: ScrollTrigger | null = null;
-    let observer: IntersectionObserver | null = null;
 
     if (scrollyEl) {
       try {
         gsap.registerPlugin(ScrollTrigger);
+        const stickyTop = window.innerWidth >= 960 ? 82 : 72;
         stInstance = ScrollTrigger.create({
           trigger: scrollyEl,
-          start: 'top 88px',
-          end: 'bottom 72%',
+          start: `top ${stickyTop}px`,
+          end: 'bottom bottom',
           onUpdate: (self) => {
             applyProgress(self.progress);
-            updateActiveFromViewport(self.progress);
+            updateActiveFromProgress(self.progress);
           },
         });
       } catch {
-        // Safe fallback in JSDOM/headless environments without full layout metrics
-      }
-    }
-
-    if (typeof IntersectionObserver !== 'undefined' && chapters.length > 0) {
-      try {
-        const intersectingMap = intersectingMapRef.current;
-        observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              const rawIdx = Number((entry.target as HTMLElement).dataset.yukonChapter);
-              if (Number.isInteger(rawIdx)) {
-                intersectingMap.set(rawIdx, entry);
-              }
-            });
-            updateActiveFromViewport();
-          },
-          {
-            root: null,
-            rootMargin: '-22% 0px -35% 0px',
-            threshold: [0, 0.2, 0.5, 0.8, 1],
-          }
-        );
-
-        chapterRefs.current.forEach((el) => {
-          if (el) observer?.observe(el);
-        });
-      } catch {
-        // Safe fallback if IntersectionObserver is incomplete
+        // Fallback handled by scroll listener
       }
     }
 
     const handleNativeSync = () => {
-      const p = computeFallbackProgress();
+      const p = getScrollRange().progress;
       applyProgress(p);
-      updateActiveFromViewport(p);
+      updateActiveFromProgress(p);
     };
 
     window.addEventListener('scroll', handleNativeSync, { passive: true });
     window.addEventListener('resize', handleNativeSync, { passive: true });
 
-    const intersectingSnapshot = intersectingMapRef.current;
     return () => {
       stInstance?.kill();
-      observer?.disconnect();
-      intersectingSnapshot.clear();
       window.removeEventListener('scroll', handleNativeSync);
       window.removeEventListener('resize', handleNativeSync);
     };
-  }, [applyProgress, chapters.length, computeFallbackProgress, updateActiveFromViewport]);
+  }, [applyProgress, getScrollRange, updateActiveFromProgress]);
 
   const handleSelectMood = (nextMood: YukonMood) => {
     moodManuallyLockedRef.current = true;
@@ -218,22 +202,50 @@ export default function YukonExperience({ chapters, moodLabels }: YukonExperienc
   };
 
   const handleSelectChapter = (idx: number, shouldScroll = true) => {
-    if (typeof performance !== 'undefined') {
-      clickLockUntilRef.current = performance.now() + 650;
-    }
-    activateChapter(idx);
-    const totalSteps = Math.max(1, chapters.length - 1);
-    applyProgress(chapters.length > 1 ? idx / totalSteps : 0);
+    if (!chapters.length) return;
+    const clampedIdx = clamp(Math.trunc(idx), 0, chapters.length - 1);
 
-    if (shouldScroll) {
-      const target = chapterRefs.current[idx];
-      if (target && typeof target.scrollIntoView === 'function') {
-        target.scrollIntoView({
-          behavior: isReducedMotion() ? 'auto' : 'smooth',
-          block: 'center',
+    if (typeof performance !== 'undefined') {
+      clickLockUntilRef.current = performance.now() + 720;
+    }
+
+    activateChapter(clampedIdx);
+
+    const targetProgress =
+      chapters.length <= 1
+        ? 0
+        : clampedIdx === 0
+          ? 0
+          : clampedIdx === chapters.length - 1
+            ? 0.96
+            : (clampedIdx + 0.38) / chapters.length;
+
+    applyProgress(targetProgress);
+
+    if (shouldScroll && typeof window !== 'undefined') {
+      const { startY, travel } = getScrollRange();
+      if (travel > 120) {
+        const targetY = Math.max(0, startY + targetProgress * travel);
+        scrollToTarget(targetY, {
+          duration: isMotionPaused() ? 0 : 0.85,
         });
       }
     }
+  };
+
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (isMotionPaused() || !panoramaRef.current) return;
+    const rect = panoramaRef.current.getBoundingClientRect();
+    if (!rect.width || !rect.height) return;
+    const nx = clamp((e.clientX - rect.left) / rect.width - 0.5, -0.5, 0.5) * 2;
+    const ny = clamp((e.clientY - rect.top) / rect.height - 0.5, -0.5, 0.5) * 2;
+    rawMx.set(nx);
+    rawMy.set(ny);
+  };
+
+  const handlePointerLeave = () => {
+    rawMx.set(0);
+    rawMy.set(0);
   };
 
   const totalCount = Math.max(chapters.length, 1);
@@ -241,18 +253,19 @@ export default function YukonExperience({ chapters, moodLabels }: YukonExperienc
 
   return (
     <div ref={scrollyRef} className="yukon-scrolly">
-      {/* Coluna Esquerda: Palco Sticky Panorâmico */}
-      <aside className="yukon-sticky-stage" aria-label="Cenário atmosférico de Yukon">
+      <div className="yukon-sticky-stage" aria-label="Cenário atmosférico e etapas em Yukon">
         <div
           ref={panoramaRef}
           id="yukonPanorama"
           className="yukon-panorama"
           data-yukon-mood={mood}
+          onPointerMove={handlePointerMove}
+          onPointerLeave={handlePointerLeave}
         >
-          {/* Theme-Responsive Firewatch-Style Parallax Yukon SVG (6 camadas) */}
+          {/* Full-Bleed Animated Yukon Panoramic Illustration (Material You Token-Driven) */}
           <svg
             className="yukon-svg-bg"
-            viewBox="0 0 1200 640"
+            viewBox="0 0 1440 760"
             preserveAspectRatio="xMidYMid slice"
             aria-hidden="true"
           >
@@ -262,192 +275,246 @@ export default function YukonExperience({ chapters, moodLabels }: YukonExperienc
                 x1="0"
                 y1="0"
                 x2="0"
-                y2="640"
+                y2="760"
                 gradientUnits="userSpaceOnUse"
               >
                 <stop offset="0%" stopColor="var(--md-surface-container-low)" />
                 <stop
-                  offset="50%"
+                  offset="48%"
                   stopColor="var(--md-primary-container)"
-                  stopOpacity="0.58"
+                  stopOpacity="0.68"
                 />
                 <stop offset="100%" stopColor="var(--md-surface-container)" />
               </linearGradient>
+
+              <radialGradient id="yukonSunHalo" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stopColor="var(--md-surface-container-lowest)" stopOpacity="0.95" />
+                <stop offset="45%" stopColor="var(--md-primary-container)" stopOpacity="0.56" />
+                <stop offset="100%" stopColor="var(--md-primary-container)" stopOpacity="0" />
+              </radialGradient>
+
               <linearGradient
                 id="yukonAuroraGrad"
                 x1="0"
-                y1="40"
-                x2="1200"
-                y2="290"
+                y1="50"
+                x2="1440"
+                y2="340"
                 gradientUnits="userSpaceOnUse"
               >
                 <stop offset="0%" stopColor="var(--md-primary)" stopOpacity="0.06" />
-                <stop offset="42%" stopColor="var(--md-primary)" stopOpacity="0.52" />
-                <stop offset="76%" stopColor="var(--md-tertiary)" stopOpacity="0.42" />
-                <stop offset="100%" stopColor="var(--md-primary)" stopOpacity="0.06" />
+                <stop offset="32%" stopColor="var(--md-primary)" stopOpacity="0.58" />
+                <stop offset="68%" stopColor="var(--md-tertiary)" stopOpacity="0.48" />
+                <stop offset="100%" stopColor="var(--md-primary)" stopOpacity="0.08" />
               </linearGradient>
+
               <linearGradient
                 id="yukonRiverGrad"
-                x1="600"
-                y1="360"
-                x2="600"
-                y2="640"
+                x1="720"
+                y1="420"
+                x2="720"
+                y2="760"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop offset="0%" stopColor="var(--md-primary-container)" />
-                <stop offset="100%" stopColor="var(--md-surface-container)" />
+                <stop offset="0%" stopColor="var(--md-primary-container)" stopOpacity="0.96" />
+                <stop offset="55%" stopColor="var(--md-secondary-container)" stopOpacity="0.88" />
+                <stop offset="100%" stopColor="var(--md-surface-container-high)" stopOpacity="0.95" />
+              </linearGradient>
+
+              <linearGradient
+                id="yukonMistGrad"
+                x1="0"
+                y1="380"
+                x2="0"
+                y2="540"
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop offset="0%" stopColor="var(--md-surface-container-lowest)" stopOpacity="0" />
+                <stop offset="50%" stopColor="var(--md-surface-container-lowest)" stopOpacity="0.34" />
+                <stop offset="100%" stopColor="var(--md-surface-container-lowest)" stopOpacity="0" />
               </linearGradient>
             </defs>
 
-            {/* 1. Céu */}
-            <rect width="1200" height="640" fill="url(#yukonSkyGrad)" />
+            {/* 1. Céu Ártico */}
+            <rect width="1440" height="760" fill="url(#yukonSkyGrad)" />
 
-            {/* 2. Estrelas (Noite Boreal) */}
+            {/* 2. Estrelas Boreais */}
             <g className="yukon-stars">
-              <circle cx="110" cy="76" r="2.2" fill="var(--md-primary-container)" opacity="0.85" />
-              <circle cx="218" cy="122" r="1.6" fill="var(--md-tertiary-container)" opacity="0.78" />
-              <circle cx="334" cy="64" r="2.4" fill="var(--md-primary-container)" opacity="0.9" />
-              <circle cx="468" cy="96" r="1.8" fill="var(--md-secondary-container)" opacity="0.72" />
-              <circle cx="592" cy="54" r="2.6" fill="var(--md-tertiary-container)" opacity="0.88" />
-              <circle cx="716" cy="108" r="1.7" fill="var(--md-primary-container)" opacity="0.76" />
-              <circle cx="842" cy="68" r="2.3" fill="var(--md-primary-container)" opacity="0.85" />
-              <circle cx="956" cy="134" r="1.8" fill="var(--md-tertiary-container)" opacity="0.8" />
-              <circle cx="1078" cy="82" r="2.5" fill="var(--md-primary-container)" opacity="0.92" />
-              <circle cx="164" cy="186" r="1.5" fill="var(--md-secondary-container)" opacity="0.68" />
-              <circle cx="640" cy="148" r="1.6" fill="var(--md-primary-container)" opacity="0.74" />
-              <circle cx="1020" cy="176" r="1.5" fill="var(--md-tertiary-container)" opacity="0.7" />
+              <circle cx="118" cy="86" r="2.2" fill="var(--md-primary-container)" opacity="0.88" />
+              <circle cx="242" cy="136" r="1.6" fill="var(--md-tertiary-container)" opacity="0.78" />
+              <circle cx="384" cy="72" r="2.4" fill="var(--md-primary-container)" opacity="0.92" />
+              <circle cx="518" cy="108" r="1.8" fill="var(--md-secondary-container)" opacity="0.75" />
+              <circle cx="662" cy="64" r="2.6" fill="var(--md-tertiary-container)" opacity="0.9" />
+              <circle cx="798" cy="116" r="1.8" fill="var(--md-primary-container)" opacity="0.8" />
+              <circle cx="942" cy="74" r="2.4" fill="var(--md-primary-container)" opacity="0.86" />
+              <circle cx="1096" cy="142" r="1.9" fill="var(--md-tertiary-container)" opacity="0.82" />
+              <circle cx="1234" cy="88" r="2.5" fill="var(--md-primary-container)" opacity="0.92" />
+              <circle cx="1352" cy="156" r="1.7" fill="var(--md-secondary-container)" opacity="0.76" />
+              <circle cx="192" cy="204" r="1.5" fill="var(--md-secondary-container)" opacity="0.68" />
+              <circle cx="728" cy="168" r="1.7" fill="var(--md-primary-container)" opacity="0.78" />
+              <circle cx="1160" cy="198" r="1.6" fill="var(--md-tertiary-container)" opacity="0.74" />
             </g>
 
-            {/* 3. Aurora Boreal */}
+            {/* 3. Aurora Boreal em Camadas */}
             <g className="yukon-aurora">
               <path
-                d="M-40 185C180 105 360 235 610 148C860 62 1010 205 1240 120V265C990 310 830 185 590 258C350 330 170 225 -40 280Z"
+                d="M-60 220C210 120 430 275 730 165C1030 55 1210 235 1500 130V310C1195 365 995 215 705 298C415 385 190 265 -60 330Z"
                 fill="url(#yukonAuroraGrad)"
               />
               <path
-                d="M80 125C290 70 470 165 730 98C940 44 1080 135 1220 88V175C1050 205 900 132 700 178C460 232 270 145 80 185Z"
+                d="M90 145C350 75 565 195 875 112C1130 45 1295 162 1465 104V212C1255 248 1075 156 835 214C545 280 315 170 90 220Z"
                 fill="url(#yukonAuroraGrad)"
-                opacity="0.62"
+                opacity="0.68"
               />
             </g>
 
-            {/* 4. Sol Nórdico */}
+            {/* 4. Sol Nórdico + Halo */}
             <g className="yukon-sun">
-              <circle cx="740" cy="250" r="118" fill="var(--md-primary-container)" opacity="0.54" />
-              <circle cx="740" cy="250" r="60" fill="var(--md-surface-container-lowest)" opacity="0.92" />
+              <circle cx="885" cy="265" r="195" fill="url(#yukonSunHalo)" />
+              <circle cx="885" cy="265" r="62" fill="var(--md-surface-container-lowest)" opacity="0.94" />
             </g>
 
-            {/* 5. Nuvens & Névoa */}
+            {/* 5. Nuvens Altas */}
             <g className="yukon-clouds">
               <path
-                d="M60 232C115 212 185 214 238 232C280 218 345 224 388 242H30C40 238 50 235 60 232Z"
+                d="M90 258C155 234 240 236 304 258C354 242 432 250 484 270H54C66 265 78 261 90 258Z"
                 fill="var(--md-surface-container-lowest)"
-                opacity="0.48"
+                opacity="0.52"
               />
               <path
-                d="M810 198C872 174 958 176 1016 198C1068 182 1138 188 1185 210H772C786 205 798 201 810 198Z"
+                d="M960 218C1032 192 1134 195 1204 218C1266 200 1350 208 1406 232H916C932 226 946 222 960 218Z"
                 fill="var(--md-surface-container-lowest)"
-                opacity="0.42"
-              />
-              <path
-                d="M0 356C220 336 410 368 640 350C860 334 1030 358 1200 344V392H0V356Z"
-                fill="var(--md-surface-container-low)"
-                opacity="0.34"
+                opacity="0.46"
               />
             </g>
 
-            {/* 6. Cordilheira Distante */}
-            <path
-              className="yukon-ridge-far"
-              d="M0 370L130 264L255 328L410 222L565 322L735 236L895 316L1060 218L1200 298V640H0V370Z"
-              fill="var(--md-secondary-container)"
-              opacity="0.88"
+            {/* 6. Cordilheira Distante de Yukon + Cristas Nevadas */}
+            <g className="yukon-ridge-far">
+              <path
+                d="M0 438L145 304L290 384L475 246L660 374L860 264L1050 364L1255 240L1440 338V760H0V438Z"
+                fill="var(--md-secondary-container)"
+                opacity="0.9"
+              />
+              {/* Cristas iluminadas pela alvorada alinhadas às encostas */}
+              <path
+                d="M475 246L545 294L505 320L486 290Z M860 264L930 301L888 326L870 295Z M1255 240L1325 277L1284 304L1266 274Z"
+                fill="var(--md-surface-container-lowest)"
+                opacity="0.28"
+              />
+            </g>
+
+            {/* 7. Névoa de Vale */}
+            <rect
+              className="yukon-valley-mist"
+              x="-60"
+              y="380"
+              width="1560"
+              height="160"
+              fill="url(#yukonMistGrad)"
             />
 
-            {/* 7. Cordilheira Média */}
+            {/* 8. Cordilheira Média */}
             <path
               className="yukon-ridge-mid"
-              d="M0 412L165 304L310 382L475 278L645 378L810 286L995 364L1200 276V640H0V412Z"
+              d="M0 486L190 352L365 446L565 322L770 438L975 330L1195 426L1440 318V760H0V486Z"
               fill="var(--md-secondary)"
-              opacity="0.54"
+              opacity="0.58"
             />
 
-            {/* 8. Vale e Rio Yukon */}
+            {/* 9. Planície do Vale & Rio Yukon sinuoso */}
             <path
-              d="M0 426C280 404 540 416 1200 404V640H0V426Z"
+              d="M0 492C340 468 680 482 1440 468V760H0V492Z"
               fill="var(--md-surface-container-high)"
             />
-            <path
-              d="M685 410C620 428 740 454 630 482C505 512 730 546 585 590C525 608 490 626 475 640H775C810 600 710 562 745 522C782 478 675 450 725 410H685Z"
-              fill="url(#yukonRiverGrad)"
-              opacity="0.95"
-            />
+            <g className="yukon-river">
+              <path
+                d="M808 474C726 498 886 534 736 574C578 614 854 662 678 724C616 744 574 754 554 760H938C988 708 860 658 906 604C958 544 824 512 878 474H808Z"
+                fill="url(#yukonRiverGrad)"
+              />
+              <path
+                d="M780 518C796 518 824 522 838 522 M712 586C742 582 786 588 808 586 M694 662C742 656 798 666 832 662"
+                stroke="var(--md-surface-container-lowest)"
+                strokeWidth="3"
+                strokeLinecap="round"
+                opacity="0.45"
+              />
+            </g>
 
-            {/* 9. Cordilheira Próxima */}
+            {/* 10. Encostas Próximas */}
             <g className="yukon-ridge-near">
               <path
-                d="M0 354L115 390L225 446L375 508L455 640H0V354Z"
+                d="M0 404L140 452L275 518L455 596L550 760H0V404Z"
                 fill="var(--md-primary)"
                 opacity="0.34"
               />
               <path
-                d="M1200 338L1070 390L930 458L820 532L785 640H1200V338Z"
+                d="M1440 388L1285 452L1115 534L985 624L944 760H1440V388Z"
                 fill="var(--md-primary)"
                 opacity="0.42"
               />
               <path
-                d="M0 512C175 478 320 542 480 588C680 642 930 530 1200 564V640H0V512Z"
+                d="M0 598C210 558 380 634 575 688C815 754 1115 620 1440 658V760H0V598Z"
                 fill="var(--md-surface-container)"
               />
             </g>
 
-            {/* 10. Silhueta de Pinheiros Boreais */}
+            {/* 11. Silhuetas de Pinheiros Boreais em Primeiro Plano */}
             <g className="yukon-pines">
               <path
-                d="M24 640V514L4 514L28 476L12 476L34 440L56 476L40 476L64 514L44 514V640Z"
+                d="M28 760V596L4 596L34 548L14 548L40 502L66 548L46 548L76 596L52 596V760Z"
                 fill="var(--md-secondary)"
-                opacity="0.72"
+                opacity="0.76"
               />
               <path
-                d="M74 640V544L56 544L78 510L64 510L84 478L104 510L90 510L112 544L94 544V640Z"
-                fill="var(--md-primary)"
-                opacity="0.58"
-              />
-              <path
-                d="M134 640V562L118 562L138 532L126 532L144 504L162 532L150 532L170 562L154 562V640Z"
-                fill="var(--md-secondary)"
-                opacity="0.64"
-              />
-              <path
-                d="M196 640V580L184 580L200 556L190 556L205 532L220 556L210 556L226 580L214 580V640Z"
-                fill="var(--md-primary)"
-                opacity="0.48"
-              />
-              <path
-                d="M982 640V574L968 574L986 548L975 548L991 522L1007 548L996 548L1014 574L1000 574V640Z"
-                fill="var(--md-primary)"
-                opacity="0.52"
-              />
-              <path
-                d="M1044 640V552L1026 552L1048 518L1034 518L1054 486L1074 518L1060 518L1082 552L1064 552V640Z"
-                fill="var(--md-secondary)"
-                opacity="0.68"
-              />
-              <path
-                d="M1112 640V522L1090 522L1116 482L1098 482L1122 444L1146 482L1128 482L1154 522L1132 522V640Z"
+                d="M92 760V632L70 632L96 590L80 590L104 550L128 590L112 590L138 632L116 632V760Z"
                 fill="var(--md-primary)"
                 opacity="0.62"
               />
               <path
-                d="M1168 640V548L1152 548L1172 516L1160 516L1178 488L1196 516L1184 516L1200 542V640Z"
+                d="M164 760V656L144 656L168 618L154 618L176 582L198 618L184 618L208 656L188 656V760Z"
                 fill="var(--md-secondary)"
-                opacity="0.76"
+                opacity="0.66"
               />
+              <path
+                d="M238 760V682L224 682L242 652L230 652L248 622L266 652L254 652L272 682L258 682V760Z"
+                fill="var(--md-primary)"
+                opacity="0.52"
+              />
+              <path
+                d="M1180 760V674L1164 674L1185 642L1172 642L1191 610L1210 642L1197 642L1218 674L1202 674V760Z"
+                fill="var(--md-primary)"
+                opacity="0.54"
+              />
+              <path
+                d="M1254 760V646L1232 646L1258 604L1242 604L1266 564L1290 604L1274 604L1300 646L1278 646V760Z"
+                fill="var(--md-secondary)"
+                opacity="0.7"
+              />
+              <path
+                d="M1336 760V608L1310 608L1340 558L1318 558L1348 510L1378 558L1356 558L1386 608L1360 608V760Z"
+                fill="var(--md-primary)"
+                opacity="0.64"
+              />
+              <path
+                d="M1404 760V642L1384 642L1408 602L1394 602L1416 566L1438 602L1424 602L1444 636V760Z"
+                fill="var(--md-secondary)"
+                opacity="0.78"
+              />
+            </g>
+
+            {/* 12. Partículas Atmosféricas Sutis */}
+            <g className="yukon-particles">
+              <circle cx="290" cy="270" r="2.2" fill="var(--md-surface-container-lowest)" opacity="0.55" />
+              <circle cx="520" cy="310" r="1.8" fill="var(--md-primary-container)" opacity="0.65" />
+              <circle cx="760" cy="240" r="2.4" fill="var(--md-surface-container-lowest)" opacity="0.5" />
+              <circle cx="1010" cy="300" r="2" fill="var(--md-tertiary-container)" opacity="0.62" />
+              <circle cx="1220" cy="275" r="2.1" fill="var(--md-surface-container-lowest)" opacity="0.52" />
             </g>
           </svg>
 
           <div className="yukon-sky-scrim" aria-hidden="true" />
+          <div className="yukon-floor-scrim" aria-hidden="true" />
 
+          {/* Barra Superior Minimalista sobre o Céu de Yukon */}
           <div className="yukon-header-row">
             <div className="yukon-intro">
               <span className="yukon-kicker">Yukon, Canadá</span>
@@ -455,121 +522,154 @@ export default function YukonExperience({ chapters, moodLabels }: YukonExperienc
                 Experiência em Yukon: resiliência em território aberto
               </h2>
               <p className="yukon-lead">
-                A origem do nome Yuko reflete o horizonte canadense de Yukon — vastidão exploratória, sobriedade e software sólido para ambientes reais.
+                Vastidão exploratória, sobriedade e software sólido para ambientes reais.
               </p>
             </div>
 
-            <div className="yukon-mood-switch">
-              <div
-                className="connected-group"
-                role="group"
-                aria-label="Momento da expedição em Yukon"
-              >
-                {MOOD_ORDER.map((moodKey) => (
-                  <button
-                    key={moodKey}
-                    className="connected-btn"
-                    type="button"
-                    data-yukon-mood={moodKey}
-                    aria-pressed={mood === moodKey}
-                    onClick={() => handleSelectMood(moodKey)}
+            <div className="yukon-hud-cluster">
+              <div className="yukon-mood-switch">
+                <div
+                  className="connected-group yukon-glass-group"
+                  role="group"
+                  aria-label="Momento da expedição em Yukon"
+                >
+                  {MOOD_ORDER.map((moodKey) => (
+                    <button
+                      key={moodKey}
+                      className="connected-btn"
+                      type="button"
+                      data-yukon-mood={moodKey}
+                      aria-pressed={mood === moodKey}
+                      onClick={() => handleSelectMood(moodKey)}
+                    >
+                      {moodLabels[moodKey]}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="yukon-progress-hud">
+                <div className="yukon-ring-wrap">
+                  <svg
+                    className="yukon-ring-svg"
+                    width="40"
+                    height="40"
+                    viewBox="0 0 40 40"
+                    aria-hidden="true"
                   >
-                    {moodLabels[moodKey]}
-                  </button>
-                ))}
+                    <circle className="yukon-ring-track" cx="20" cy="20" r={RING_RADIUS} fill="none" />
+                    <circle
+                      ref={ringFillRef}
+                      id="yukonRingFill"
+                      className="yukon-ring-fill"
+                      cx="20"
+                      cy="20"
+                      r={RING_RADIUS}
+                      fill="none"
+                      strokeDasharray={RING_CIRCUMFERENCE.toFixed(2)}
+                      strokeDashoffset={RING_CIRCUMFERENCE.toFixed(2)}
+                    />
+                  </svg>
+                  <span id="yukonStepBadge" className="yukon-step-badge">
+                    {stepBadgeText}
+                  </span>
+                </div>
+                <button
+                  id="yukonMoodLabel"
+                  className="yukon-mood-label"
+                  type="button"
+                  aria-live="polite"
+                  onClick={handleCycleMood}
+                  title="Alternar momento atmosférico em Yukon"
+                >
+                  {moodLabels[mood]}
+                </button>
               </div>
             </div>
           </div>
 
-          <div className="yukon-progress-hud">
-            <div className="yukon-ring-wrap">
-              <svg
-                className="yukon-ring-svg"
-                width="48"
-                height="48"
-                viewBox="0 0 48 48"
-                aria-hidden="true"
-              >
-                <circle className="yukon-ring-track" cx="24" cy="24" r="20" fill="none" />
-                <circle
-                  ref={ringFillRef}
-                  id="yukonRingFill"
-                  className="yukon-ring-fill"
-                  cx="24"
-                  cy="24"
-                  r="20"
-                  fill="none"
-                  strokeDasharray={RING_CIRCUMFERENCE.toFixed(2)}
-                  strokeDashoffset={RING_CIRCUMFERENCE.toFixed(2)}
-                />
-              </svg>
-              <span id="yukonStepBadge" className="yukon-step-badge">
-                {stepBadgeText}
-              </span>
+          {/* Dock Inferior de Cards Translúcidos Incorporados à Imagem de Yukon */}
+          <div className="yukon-dock-wrap">
+            {/* Seletor compacto mobile para navegar rapidamente entre os 4 marcos */}
+            <div className="yukon-mobile-tabs" role="tablist" aria-label="Selecionar etapa em Yukon">
+              {chapters.map((chapter, idx) => {
+                const isActive = idx === activeIdx;
+                return (
+                  <button
+                    key={`tab-${chapter.id ?? chapter.index ?? idx}`}
+                    type="button"
+                    role="tab"
+                    aria-selected={isActive}
+                    className={`yukon-mobile-tab${isActive ? ' is-active' : ''}`}
+                    onClick={() => handleSelectChapter(idx, true)}
+                  >
+                    {String(idx + 1).padStart(2, '0')}
+                  </button>
+                );
+              })}
             </div>
-            <button
-              id="yukonMoodLabel"
-              className="yukon-mood-label"
-              type="button"
-              aria-live="polite"
-              onClick={handleCycleMood}
-            >
-              {moodLabels[mood]}
-            </button>
+
+            <div className="yukon-chapters" aria-label="Marcos da jornada em Yukon">
+              {chapters.map((chapter, idx) => {
+                const isActive = idx === activeIdx;
+                const isLast = idx === chapters.length - 1;
+                const kickerText =
+                  chapter.kicker ?? chapter.tag ?? `${String(idx + 1).padStart(2, '0')}`;
+
+                return (
+                  <motion.article
+                    key={chapter.id ?? chapter.index ?? chapter.title}
+                    className={`yukon-chapter${isActive ? ' is-active' : ''}`}
+                    data-yukon-chapter={idx}
+                    aria-current={isActive ? 'step' : undefined}
+                    initial={false}
+                    animate={{
+                      opacity: isActive ? 1 : 0.78,
+                      y: isActive ? 0 : 4,
+                    }}
+                    transition={{
+                      duration: 0.34,
+                      ease: [0.2, 0, 0, 1],
+                    }}
+                    onClick={(e) => {
+                      if ((e.target as HTMLElement).closest('a, button')) return;
+                      handleSelectChapter(idx, true);
+                    }}
+                  >
+                    <div className="yukon-chapter-top">
+                      <span className="yukon-chapter-kicker">{kickerText}</span>
+                      <span className="yukon-chapter-pulse" aria-hidden="true" />
+                    </div>
+
+                    <h3 className="yukon-chapter-title">
+                      <button
+                        type="button"
+                        className="yukon-chapter-trigger"
+                        aria-pressed={isActive}
+                        onClick={() => handleSelectChapter(idx, true)}
+                      >
+                        {chapter.title}
+                      </button>
+                    </h3>
+
+                    <p className="yukon-chapter-body">{chapter.body}</p>
+
+                    {isLast && isActive && (
+                      <div className="yukon-chapter-actions">
+                        <a
+                          href={chapter.ctaHref ?? '/extensoes/'}
+                          className="btn btn-tonal btn-sm"
+                        >
+                          {chapter.ctaLabel ?? 'Explorar Extensões →'}
+                        </a>
+                      </div>
+                    )}
+                  </motion.article>
+                );
+              })}
+            </div>
           </div>
         </div>
-      </aside>
-
-      {/* Coluna Direita: Capítulos em Scrollytelling */}
-      <div className="yukon-chapters" aria-label="Marcos da jornada em Yukon">
-        {chapters.map((chapter, idx) => {
-          const isActive = idx === activeIdx;
-          const isLast = idx === chapters.length - 1;
-          const kickerText =
-            chapter.kicker ?? chapter.tag ?? `${String(idx + 1).padStart(2, '0')}`;
-
-          return (
-            <article
-              key={chapter.id ?? chapter.index ?? chapter.title}
-              ref={(el) => {
-                chapterRefs.current[idx] = el;
-              }}
-              className={`yukon-chapter${isActive ? ' is-active' : ''}`}
-              data-yukon-chapter={idx}
-              aria-current={isActive ? 'step' : undefined}
-              onClick={(e) => {
-                if ((e.target as HTMLElement).closest('a, button')) return;
-                handleSelectChapter(idx, true);
-              }}
-            >
-              <div className="yukon-chapter-meta">
-                <span className="yukon-chapter-kicker">{kickerText}</span>
-              </div>
-              <h3 className="yukon-chapter-title">
-                <button
-                  type="button"
-                  className="yukon-chapter-trigger"
-                  aria-pressed={isActive}
-                  onClick={() => handleSelectChapter(idx, true)}
-                >
-                  {chapter.title}
-                </button>
-              </h3>
-              <p className="yukon-chapter-body">{chapter.body}</p>
-
-              {isLast && (
-                <div className="yukon-chapter-actions">
-                  <a
-                    href={chapter.ctaHref ?? '/extensoes/'}
-                    className="btn btn-tonal btn-sm"
-                  >
-                    {chapter.ctaLabel ?? 'Explorar Extensões →'}
-                  </a>
-                </div>
-              )}
-            </article>
-          );
-        })}
       </div>
     </div>
   );
