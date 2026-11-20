@@ -3,27 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cadência — Paisagens Sonoras Adaptativas · Material You 3 Expressive</title>
-  <meta name="description" content="Cadência é um estúdio de bem-estar sonoro e foco diário desenhado integralmente em Material You 3 Expressive com cores dinâmicas, formas orgânicas e física de mola." />
+  <title>Yuko — Comunidade Técnica &amp; Ciclo de Entrega Assistida · Manual v1.0</title>
+  <meta name="description" content="A Yuko aproxima desenvolvedores independentes e microempresas brasileiras por meio de um ciclo colaborativo, assistido e tecnicamente validado de desenvolvimento de software." />
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
-  <!-- Floating Capsule Top App Bar -->
   <div class="top-bar-wrap">
     <header class="top-bar" aria-label="Navegação principal">
-      <a href="#topo" class="brand">
-        <span class="brand-mark" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2.5C13.8 2.5 14.9 4.5 16.6 5.1C18.3 5.7 20.4 4.8 21.3 6.4C22.2 8 20.6 9.8 20.9 11.6C21.2 13.4 23 14.7 22.4 16.4C21.8 18.1 19.5 18.1 18.2 19.4C16.9 20.7 16.9 23 15.2 23.6C13.5 24.2 12.2 22.4 10.4 22.1C8.6 21.8 6.8 23.4 5.2 22.5C3.6 21.6 4.5 19.5 3.9 17.8C3.3 16.1 1.3 15 1.3 13.2C1.3 11.4 3.3 10.3 3.9 8.6C4.5 6.9 3.6 4.8 5.2 3.9C6.8 3 8.6 4.6 10.4 4.3C11.1 4.2 11.5 2.5 12 2.5Z"/>
-          </svg>
+      <a href="./index.html" class="brand">
+        <span class="brand-mark">
+          <img src="./assets/yuko-logo.jpg" alt="Logotipo da Yuko" />
         </span>
-        <span>Cadência</span>
+        <span>Yuko</span>
       </a>
 
-      <nav class="nav-links" aria-label="Seções">
-        <a href="#formas">Formas</a>
-        <a href="#sistema">Material 3 Lab</a>
-        <a href="#planos">Planos</a>
+      <nav class="nav-links" aria-label="Seções e subpáginas">
+        <a href="./index.html" aria-current="page">Início</a>
+        <a href="./extensoes.html">Extensões &amp; Frentes</a>
+        <a href="./ciclo.html">Ciclo &amp; Papéis</a>
+        <a href="./governanca.html">Qualidade &amp; LGPD</a>
+        <a href="./manual.html">Manual v1.0</a>
       </nav>
 
       <div class="bar-controls">
@@ -35,15 +34,23 @@
         </div>
 
         <button id="modeToggleBtn" class="icon-btn" type="button" aria-label="Alternar modo claro e escuro" title="Alternar Claro/Escuro">
-          <svg id="modeIconSun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
             <circle cx="12" cy="12" r="4"/>
             <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
           </svg>
         </button>
 
-        <a href="#planos" class="btn btn-primary btn-sm">Experimentar</a>
+        <a href="./manual.html" class="btn btn-primary btn-sm bar-cta">Manual v1.0</a>
       </div>
     </header>
+
+    <nav class="mobile-nav" aria-label="Navegação móvel">
+      <a href="./index.html" aria-current="page">Início</a>
+      <a href="./extensoes.html">Extensões</a>
+      <a href="./ciclo.html">Ciclo 6 Etapas</a>
+      <a href="./governanca.html">Qualidade &amp; LGPD</a>
+      <a href="./manual.html">Manual v1.0</a>
+    </nav>
   </div>
 
   <main id="topo">
@@ -52,150 +59,145 @@
       <div class="container hero-grid">
         <div>
           <div class="hero-eyebrow">
-            <span>Material You 3 Expressive</span>
+            <span>Manual Institucional da Yuko</span>
             <span aria-hidden="true">·</span>
-            <span>Edição Sonora</span>
+            <span>Versão 1.0</span>
           </div>
 
           <h1 class="hero-title">
-            Som que <span class="accent-word">respira</span> no ritmo do seu dia.
+            Software com <span class="accent-word">respaldo</span> coletivo para microempresas.
           </h1>
 
           <p class="hero-lead">
-            Cadência transforma ruído ambiente em paisagens sonoras vivas. Uma experiência tátil onde formas orgânicas, cores adaptativas e física de mola respondem ao seu estado de atenção.
+            A Yuko é uma marca e comunidade técnica brasileira concebida para aproximar desenvolvedores independentes e microempresas, estruturando essa relação por meio de um ciclo colaborativo, assistido e tecnicamente validado — fruto da evolução de NYX e Expliance.
           </p>
 
           <div class="hero-actions">
             <div class="split-btn">
-              <button id="heroStartBtn" class="btn btn-primary split-btn-main" type="button">
-                Iniciar sessão sonora
-              </button>
-              <button id="splitMenuBtn" class="btn btn-primary split-btn-side" type="button" aria-expanded="false" aria-controls="splitMenu" aria-label="Escolher modo rápido">
+              <a href="./ciclo.html" class="btn btn-primary split-btn-main">
+                Conhecer o Ciclo Assistido
+              </a>
+              <button id="splitMenuBtn" class="btn btn-primary split-btn-side" type="button" aria-expanded="false" aria-controls="splitMenu" aria-label="Abrir atalhos das subpáginas">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                   <polyline points="6 9 12 15 18 9"/>
                 </svg>
               </button>
               <div id="splitMenu" class="split-menu" role="menu">
-                <button type="button" data-quick-mood="foco">Foco Profundo · 25 min</button>
-                <button type="button" data-quick-mood="leitura">Leitura Calma · 40 min</button>
-                <button type="button" data-quick-mood="criativa">Pausa Criativa · 15 min</button>
-                <button type="button" data-quick-mood="sono">Sono Sereno · 60 min</button>
+                <a href="./extensoes.html">Extensões &amp; 6 Frentes</a>
+                <a href="./ciclo.html#papeis">Papéis &amp; Rastreabilidade</a>
+                <a href="./governanca.html">Qualidade, Segurança &amp; LGPD</a>
+                <a href="./manual.html#glossario">Glossário Institucional</a>
               </div>
             </div>
 
-            <a href="#sistema" class="btn btn-tonal">Explorar Design System</a>
+            <a href="./manual.html" class="btn btn-tonal">Consultar Manual v1.0</a>
           </div>
 
-          <div class="hero-metrics" aria-label="Indicadores do sistema">
+          <div class="hero-metrics" aria-label="Indicadores estruturais da Yuko">
             <div class="metric-pill">
-              <span class="metric-val">4×2</span>
-              <span class="metric-label">Temas dinâmicos</span>
+              <span class="metric-val">6 Etapas</span>
+              <span class="metric-label">Entrega Assistida</span>
             </div>
             <div class="metric-pill">
-              <span class="metric-val">0 dB</span>
-              <span class="metric-label">Distrações visuais</span>
+              <span class="metric-val">2+ Pares</span>
+              <span class="metric-label">Peer Review obrigatório</span>
             </div>
             <div class="metric-pill">
-              <span class="metric-val">100%</span>
-              <span class="metric-label">Síntese local</span>
+              <span class="metric-val">6 Frentes</span>
+              <span class="metric-label">Atuação institucional</span>
             </div>
           </div>
         </div>
 
-        <!-- Interactive Live Player Card -->
-        <aside id="studioCard" class="studio-card" aria-label="Estúdio sonoro interativo">
+        <!-- Interactive Yuko Institutional Explorer Card -->
+        <aside id="studioCard" class="studio-card" aria-label="Explorador interativo do Ciclo da Yuko">
           <div class="studio-top">
-            <span class="studio-badge" id="studioStateBadge">Estúdio Pronto</span>
-            <span class="studio-timer" id="studioTimer">25:00</span>
+            <span class="studio-badge" id="studioStateBadge">Etapa 1 · Demanda</span>
+            <span class="studio-timer" id="studioTimer">Etapa 01 / 06</span>
           </div>
 
           <div class="studio-visual">
-            <div class="scallop-wrap" id="scallopToggle" role="button" tabindex="0" aria-label="Tocar ou pausar paisagem sonora">
+            <div class="scallop-wrap" id="scallopToggle" role="button" tabindex="0" aria-label="Avançar etapa do Ciclo de Entrega Assistida">
               <svg class="scallop-svg" viewBox="0 0 120 120" fill="currentColor" aria-hidden="true">
                 <path d="M60 4C67.5 4 72.1 12.6 79.2 14.5C86.3 16.4 94.3 10.6 99.6 15.9C104.9 21.2 99.1 29.2 101 36.3C102.9 43.4 111.5 48 111.5 55.5C111.5 63 102.9 67.6 101 74.7C99.1 81.8 104.9 89.8 99.6 95.1C94.3 100.4 86.3 94.6 79.2 96.5C72.1 98.4 67.5 107 60 107C52.5 107 47.9 98.4 40.8 96.5C33.7 94.6 25.7 100.4 20.4 95.1C15.1 89.8 20.9 81.8 19 74.7C17.1 67.6 8.5 63 8.5 55.5C8.5 48 17.1 43.4 19 36.3C20.9 29.2 15.1 21.2 20.4 15.9C25.7 10.6 33.7 16.4 40.8 14.5C47.9 12.6 52.5 4 60 4Z"/>
               </svg>
-              <button id="playPauseBtn" class="scallop-play-btn" type="button" aria-label="Reproduzir paisagem sonora">
-                <svg id="playIcon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-                  <polygon points="7 4 20 12 7 20 7 4"/>
-                </svg>
-              </button>
+              <div class="scallop-logo-pill">
+                <img src="./assets/yuko-logo.jpg" alt="Símbolo da Yuko" />
+              </div>
             </div>
 
             <div class="track-meta">
-              <h3 id="trackTitle">Chuva de Argila</h3>
-              <p id="trackSubtitle">Harmônicos quentes em 174 Hz · Foco Profundo</p>
-              <div class="eq-bars" id="eqBars" aria-hidden="true">
-                <span class="eq-bar"></span>
-                <span class="eq-bar"></span>
-                <span class="eq-bar"></span>
-                <span class="eq-bar"></span>
-                <span class="eq-bar"></span>
-                <span class="eq-bar"></span>
-                <span class="eq-bar"></span>
-                <span class="eq-bar"></span>
-                <span class="eq-bar"></span>
-                <span class="eq-bar"></span>
+              <h3 id="trackTitle">1. Demanda &amp; Triagem</h3>
+              <p id="trackSubtitle">Prospecção ativa via Yuko Field ou acolhimento passivo com análise de viabilidade e criticidade.</p>
+              <div class="stage-dots" id="stageDots" aria-hidden="true">
+                <span class="stage-dot active"></span>
+                <span class="stage-dot"></span>
+                <span class="stage-dot"></span>
+                <span class="stage-dot"></span>
+                <span class="stage-dot"></span>
+                <span class="stage-dot"></span>
               </div>
             </div>
           </div>
 
-          <div class="chip-row" role="group" aria-label="Modo de atmosfera">
-            <button class="m3-chip" type="button" data-mood="foco" aria-pressed="true">Foco Profundo</button>
-            <button class="m3-chip" type="button" data-mood="leitura" aria-pressed="false">Leitura Calma</button>
-            <button class="m3-chip" type="button" data-mood="criativa" aria-pressed="false">Pausa Criativa</button>
-            <button class="m3-chip" type="button" data-mood="sono" aria-pressed="false">Sono Sereno</button>
+          <div class="chip-row" role="group" aria-label="Pilares do Manual Institucional">
+            <button class="m3-chip" type="button" data-pillar="ciclo" aria-pressed="true">Ciclo 6 Etapas</button>
+            <button class="m3-chip" type="button" data-pillar="linhagem" aria-pressed="false">NYX → Expliance</button>
+            <button class="m3-chip" type="button" data-pillar="pilares" aria-pressed="false">Yukon · Oslo · Verona</button>
+            <button class="m3-chip" type="button" data-pillar="discord" aria-pressed="false">Comunidade Discord</button>
           </div>
 
           <div class="slider-box">
             <div class="slider-head">
-              <label for="densitySlider">Densidade atmosférica</label>
-              <strong id="densityVal">64%</strong>
+              <label for="densitySlider">Navegar pelo Ciclo de Entrega Assistida</label>
+              <strong id="densityVal">Etapa 1/6</strong>
             </div>
-            <input id="densitySlider" class="m3-range" type="range" min="15" max="100" value="64" />
+            <input id="densitySlider" class="m3-range" type="range" min="1" max="6" step="1" value="1" />
           </div>
         </aside>
       </div>
     </section>
 
-    <!-- Expressive Shapes Showcase -->
-    <section id="formas" class="section">
+    <!-- 3 Expressive Asymmetric Feature Modules -->
+    <section id="pilares" class="section">
       <div class="container">
         <div class="section-head">
-          <div class="section-kicker">Arquitetura Expressiva</div>
-          <h2 class="section-title">Formas que comunicam estado, não apenas molduras</h2>
+          <div class="section-kicker">Síntese Institucional</div>
+          <h2 class="section-title">Estrutura pensada para entrega profissional sem burocracia impeditiva</h2>
           <p class="section-desc">
-            No Material 3 Expressive, cada silhueta carrega intenção: arcos acolhem rituais contínuos, pílulas convidam ao toque e superfícies tonais substituem bordas pesadas.
+            A Yuko absorve a experimentação de NYX e a sistematização de Expliance em um modelo enxuto de parceria assistida, registro formal e revisão cruzada por pares.
           </p>
         </div>
 
         <div class="features-grid">
-          <article class="feature-card feature-arch">
+          <a href="./extensoes.html" class="feature-card feature-arch">
             <div>
               <div class="feature-shape-icon" aria-hidden="true">
                 <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                  <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+                  <circle cx="12" cy="12" r="9"/>
+                  <path d="M12 3v18M3 12h18"/>
                 </svg>
               </div>
-              <h3>Ritmo Circadiano</h3>
-              <p>A paleta e os timbres acompanham a curva natural de energia da manhã até a noite, sem notificações invasivas.</p>
+              <h3>Extensões &amp; 6 Frentes</h3>
+              <p>Field, Dev, Make, Place, Work e Inline operam em sincronia com as seis frentes herdadas de NYX e Expliance — da prospecção à segurança.</p>
             </div>
-            <span class="feature-tag">shape.arch · 180px top</span>
-          </article>
+            <span class="feature-tag">ver subpágina · extensões →</span>
+          </a>
 
-          <article class="feature-card feature-xl">
+          <a href="./ciclo.html" class="feature-card feature-xl">
             <div>
               <div class="feature-shape-icon" aria-hidden="true">
                 <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                  <path d="M3 12h3l3-7 4 14 3-7h5"/>
+                  <path d="M4 12h4l3-7 4 14 3-7h2"/>
                 </svg>
               </div>
-              <h3>Síntese Tátil em Tempo Real</h3>
-              <p>Controles com resposta elástica ajustam calor, reverberação e cadência respiratória instantaneamente via Web Audio local.</p>
+              <h3>Ciclo de Entrega Assistida</h3>
+              <p>Nenhuma solução é entregue sem passar por Demanda, Escopo, Construção, Peer Review obrigatório por 2+ pares, Homologação e Suporte designado.</p>
             </div>
-            <span class="feature-tag">shape.extra-large · 34px</span>
-          </article>
+            <span class="feature-tag">ver subpágina · ciclo &amp; papéis →</span>
+          </a>
 
-          <article class="feature-card feature-soft">
+          <a href="./governanca.html" class="feature-card feature-soft">
             <div>
               <div class="feature-shape-icon" aria-hidden="true">
                 <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
@@ -203,23 +205,23 @@
                   <path d="M8 10V7a4 4 0 0 1 8 0v3"/>
                 </svg>
               </div>
-              <h3>Privacidade por Padrão</h3>
-              <p>Nenhuma gravação de microfone ou telemetria comportamental. Seus ciclos de foco permanecem exclusivamente no dispositivo.</p>
+              <h3>Qualidade, Segurança &amp; LGPD</h3>
+              <p>Definition of Done, commits semânticos, blindagem contra SQLi/XSS, sigilo técnico, dados sintéticos em testes e conformidade com a Lei nº 13.709/2018.</p>
             </div>
-            <span class="feature-tag">shape.asymmetric · 80px</span>
-          </article>
+            <span class="feature-tag">ver subpágina · governança →</span>
+          </a>
         </div>
       </div>
     </section>
 
-    <!-- Live Material You 3 Expressive System Lab -->
+    <!-- Material You 3 Expressive Interactive Lab & Subpages Hub -->
     <section id="sistema" class="section">
       <div class="container">
         <div class="section-head">
-          <div class="section-kicker">Laboratório Ao Vivo</div>
-          <h2 class="section-title">Explore os tokens do Material You 3 Expressive</h2>
+          <div class="section-kicker">Sistema Visual &amp; Navegação</div>
+          <h2 class="section-title">Personalize a leitura e acesse todas as seções do Manual v1.0</h2>
           <p class="section-desc">
-            Alterne a semente de cor, o modo de luminância e a física de movimento para inspecionar como toda a página recalcula papéis de superfície em tempo real.
+            Suas preferências de semente de cor, modo claro/escuro e física de movimento permanecem salvas entre todas as subpáginas institucionais da Yuko.
           </p>
         </div>
 
@@ -264,37 +266,38 @@
               </div>
 
               <div class="control-group">
-                <div class="control-group-title">3. Morfismo de Forma ao Toque (passe ou clique)</div>
+                <div class="control-group-title">3. Acesso Direto às Subpáginas da Yuko</div>
                 <div class="shape-gallery">
-                  <button class="morph-pill" type="button">Pílula → Folha</button>
-                  <button class="morph-pill" type="button">Botão Tonal</button>
-                  <button class="morph-pill" type="button">Estado Ativo</button>
+                  <a class="morph-pill" href="./extensoes.html">Extensões &amp; Frentes</a>
+                  <a class="morph-pill" href="./ciclo.html">Ciclo &amp; Papéis</a>
+                  <a class="morph-pill" href="./governanca.html">Qualidade &amp; LGPD</a>
+                  <a class="morph-pill" href="./manual.html">Manual v1.0 Completo</a>
                 </div>
               </div>
             </div>
 
             <div class="control-group">
-              <div class="control-group-title">Escala Tonal de Superfícies (Elevation without Heavy Shadows)</div>
+              <div class="control-group-title">Pilares da Identidade Yuko (Seção 4 do Manual)</div>
               <div class="surface-ladder">
                 <div class="surface-step step-lowest">
-                  <span>Surface Container Lowest</span>
-                  <code>--md-surface-container-lowest</code>
+                  <span>Yukon (Canadá) · Resiliência &amp; Exploração</span>
+                  <code>4.1 Pilares</code>
                 </div>
                 <div class="surface-step step-low">
-                  <span>Surface Container Low</span>
-                  <code>--md-surface-container-low</code>
+                  <span>Oslo (Noruega) · Minimalismo &amp; Precisão</span>
+                  <code>4.1 Pilares</code>
                 </div>
                 <div class="surface-step step-base">
-                  <span>Surface Container</span>
-                  <code>--md-surface-container</code>
+                  <span>Verona (Itália) · Solidez &amp; Registro Formal</span>
+                  <code>4.1 Pilares</code>
                 </div>
                 <div class="surface-step step-high">
-                  <span>Surface Container High</span>
-                  <code>--md-surface-container-high</code>
+                  <span>Minimalismo Instrumental · Alto Contraste</span>
+                  <code>4.2 Visual</code>
                 </div>
                 <div class="surface-step step-highest">
-                  <span>Surface Container Highest</span>
-                  <code>--md-surface-container-highest</code>
+                  <span>6 Extensões · Field, Dev, Make, Place, Work, Inline</span>
+                  <code>4.3 Extensões</code>
                 </div>
               </div>
             </div>
@@ -303,48 +306,54 @@
       </div>
     </section>
 
-    <!-- Plans Section -->
-    <section id="planos" class="section">
+    <!-- Two Audiences Section (Microempresas vs Desenvolvedores) -->
+    <section id="atuacao" class="section">
       <div class="container">
         <div class="plans-header">
           <div>
-            <div class="section-kicker">Planos Transparentes</div>
-            <h2 class="section-title" style="margin-bottom:0">Comece leve, evolua no seu tempo</h2>
+            <div class="section-kicker">Propósito Institucional (Seção 3)</div>
+            <h2 class="section-title" style="margin-bottom:0">Mitigando a assimetria técnica nos dois lados</h2>
           </div>
 
-          <div class="connected-group" role="group" aria-label="Ciclo de cobrança">
-            <button class="connected-btn" type="button" data-billing="mensal" aria-pressed="true">Mensal</button>
-            <button class="connected-btn" type="button" data-billing="anual" aria-pressed="false">Anual · −25%</button>
+          <div class="connected-group" role="group" aria-label="Destacar público">
+            <button class="connected-btn" type="button" data-audience="desenvolvedor" aria-pressed="true">Desenvolvedores</button>
+            <button class="connected-btn" type="button" data-audience="microempresa" aria-pressed="false">Microempresas</button>
           </div>
         </div>
 
         <div class="plans-grid">
-          <article class="plan-card">
+          <article id="cardMicroempresa" class="plan-card">
             <div>
-              <span class="studio-badge" style="background:var(--md-secondary-container); color:var(--md-on-secondary-container)">Essencial</span>
-              <div class="plan-price">R$ 0 <span>/ para sempre</span></div>
-              <p style="margin:0 0 20px; color:var(--md-on-surface-variant)">Ideal para sessões diárias de foco e leitura com síntese local.</p>
-              <ul class="plan-list">
-                <li>✓ 4 paisagens sonoras adaptativas</li>
-                <li>✓ Temas dinâmicos Claro e Escuro</li>
-                <li>✓ Temporizador Pomodoro tátil</li>
+              <span class="studio-badge" style="background:var(--md-secondary-container); color:var(--md-on-secondary-container)">Microempresas Parceiras</span>
+              <h3 class="audience-title">Continuidade &amp; Respaldo</h3>
+              <p style="margin:0 0 20px; color:var(--md-on-surface-variant)">
+                Elimina a volatilidade e entregas sem documentação por meio de critérios claros, validação coletiva e sustentação pós-entrega.
+              </p>
+              <ul class="clean-list">
+                <li>Prospecção contextual via Yuko Field ou acolhimento direto</li>
+                <li>Escopo sintético com critérios objetivos de aceitação</li>
+                <li>Proteção contra abandono: transição compulsória e chancela coletiva</li>
+                <li>Responsável de Suporte designado e sigilo técnico conforme LGPD</li>
               </ul>
             </div>
-            <button class="btn btn-outline plan-cta" type="button" data-plan="Essencial">Criar conta gratuita</button>
+            <a href="./ciclo.html" class="btn btn-outline">Ver fluxo completo do ciclo</a>
           </article>
 
-          <article class="plan-card featured">
+          <article id="cardDesenvolvedor" class="plan-card featured">
             <div>
-              <span class="studio-badge" style="background:var(--md-surface-container-lowest); color:var(--md-on-surface)">Estúdio Completo</span>
-              <div class="plan-price"><span id="studioPriceVal" style="font-size:2.75rem; opacity:1">R$ 24</span> <span id="studioPricePeriod">/ mês</span></div>
-              <p style="margin:0 0 20px; opacity:0.9">Para quem projeta, escreve ou estuda com áudio espacial e automações circadianas.</p>
-              <ul class="plan-list">
-                <li>✓ Camadas binaurais e áudio espacial offline</li>
-                <li>✓ Exportação de tokens de humor para Figma</li>
-                <li>✓ Rotinas automáticas do amanhecer ao sono</li>
+              <span class="studio-badge" style="background:var(--md-surface-container-lowest); color:var(--md-on-surface)">Desenvolvedores Independentes</span>
+              <h3 class="audience-title">Autonomia com Pares</h3>
+              <p style="margin:0 0 20px; opacity:0.92">
+                Supera o isolamento na sustentação e a sobrecarga em revisões críticas sem vínculo empregatício ou burocracia corporativa.
+              </p>
+              <ul class="clean-list">
+                <li>Liberdade de stack em ecossistemas maduros e consolidados</li>
+                <li>Peer Review obrigatório por 2+ pares antes de toda liberação</li>
+                <li>Operação coordenada no Discord e issues formalmente rastreáveis</li>
+                <li>Reaproveitamento aberto de utilitários, bibliotecas e boas práticas</li>
               </ul>
             </div>
-            <button class="btn btn-primary plan-cta" type="button" data-plan="Estúdio Completo">Testar 14 dias grátis</button>
+            <a href="./governanca.html" class="btn btn-primary">Ver padrões técnicos &amp; ética</a>
           </article>
         </div>
       </div>
@@ -355,12 +364,12 @@
       <div class="container">
         <div class="cta-banner">
           <div>
-            <h2>Pronto para levar este sistema para o seu produto?</h2>
+            <h2>Consulte o Manual Institucional da Yuko — v1.0 na íntegra</h2>
             <p>
-              Todos os tokens, papéis tonais e especificações de frames desta landing page estão documentados em <code>DESIGN.md</code> para replicação direta no Figma.
+              Acesse o quadro de controle do documento, ressalvas jurídicas, as 14 seções normativas, o glossário institucional pesquisável e a declaração de fechamento.
             </p>
           </div>
-          <a href="#topo" class="btn btn-primary">Voltar ao estúdio</a>
+          <a href="./manual.html" class="btn btn-primary">Abrir Manual v1.0</a>
         </div>
       </div>
     </section>
@@ -370,75 +379,77 @@
     <div class="container">
       <div class="footer-top">
         <div>
-          <a href="#topo" class="brand">
-            <span class="brand-mark" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2.5C13.8 2.5 14.9 4.5 16.6 5.1C18.3 5.7 20.4 4.8 21.3 6.4C22.2 8 20.6 9.8 20.9 11.6C21.2 13.4 23 14.7 22.4 16.4C21.8 18.1 19.5 18.1 18.2 19.4C16.9 20.7 16.9 23 15.2 23.6C13.5 24.2 12.2 22.4 10.4 22.1C8.6 21.8 6.8 23.4 5.2 22.5C3.6 21.6 4.5 19.5 3.9 17.8C3.3 16.1 1.3 15 1.3 13.2C1.3 11.4 3.3 10.3 3.9 8.6C4.5 6.9 3.6 4.8 5.2 3.9C6.8 3 8.6 4.6 10.4 4.3C11.1 4.2 11.5 2.5 12 2.5Z"/>
-              </svg>
+          <a href="./index.html" class="brand">
+            <span class="brand-mark">
+              <img src="./assets/yuko-logo.jpg" alt="Logotipo da Yuko" />
             </span>
-            <span>Cadência</span>
+            <span>Yuko</span>
           </a>
           <p class="footer-summary">
-            Estrutura de landing page em <strong>Material You 3 Expressive</strong> com cores dinâmicas, superfícies tonais em camadas e física de mola — pronta para adaptação em repositório GitHub e deploy na Vercel.
+            A Yuko firma-se como um compromisso coletivo de valorização do talento técnico independente e de fortalecimento das microempresas brasileiras, transformando esforço individual em sustentação compartilhada, integridade operacional e maturidade contínua.
           </p>
           <a href="#topo" class="btn btn-tonal btn-sm">Voltar ao topo</a>
         </div>
 
         <div class="footer-cols">
           <div>
-            <div class="footer-col-title">Experiência</div>
+            <div class="footer-col-title">Subpáginas</div>
             <div class="footer-col-links">
-              <a href="#topo">Estúdio Vivo</a>
-              <a href="#formas">Formas Expressivas</a>
-              <a href="#sistema">Material 3 Lab</a>
-              <a href="#planos">Planos</a>
+              <a href="./index.html">Visão Geral</a>
+              <a href="./extensoes.html">Extensões &amp; 6 Frentes</a>
+              <a href="./ciclo.html">Ciclo de Entrega Assistida</a>
+              <a href="./governanca.html">Qualidade, Segurança &amp; LGPD</a>
+              <a href="./manual.html">Manual Institucional v1.0</a>
             </div>
           </div>
           <div>
-            <div class="footer-col-title">Arquitetura</div>
+            <div class="footer-col-title">Extensões da Marca</div>
             <div class="footer-col-links">
-              <a href="#sistema">4 Sementes Dinâmicas</a>
-              <a href="#sistema">Escala Tonal</a>
-              <a href="#formas">Silhuetas M3</a>
-              <a href="#planos">Ciclo Conectado</a>
+              <a href="./extensoes.html#extensoes">Yuko Field &amp; Yuko Dev</a>
+              <a href="./extensoes.html#extensoes">Yuko Make &amp; Yuko Place</a>
+              <a href="./extensoes.html#extensoes">Yuko Work &amp; Yuko Inline</a>
+              <a href="./manual.html#glossario">Glossário Institucional</a>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="footer-monument" aria-label="Nome de referência do projeto">
+      <div class="footer-monument" aria-label="Nome institucional de referência">
         <div class="footer-monument-head">
-          <span class="footer-ref-kicker">Referência do Tema · Material You 3 Expressive</span>
-          <svg class="footer-monument-emblem" viewBox="0 0 120 120" fill="currentColor" aria-hidden="true">
-            <path d="M60 4C67.5 4 72.1 12.6 79.2 14.5C86.3 16.4 94.3 10.6 99.6 15.9C104.9 21.2 99.1 29.2 101 36.3C102.9 43.4 111.5 48 111.5 55.5C111.5 63 102.9 67.6 101 74.7C99.1 81.8 104.9 89.8 99.6 95.1C94.3 100.4 86.3 94.6 79.2 96.5C72.1 98.4 67.5 107 60 107C52.5 107 47.9 98.4 40.8 96.5C33.7 94.6 25.7 100.4 20.4 95.1C15.1 89.8 20.9 81.8 19 74.7C17.1 67.6 8.5 63 8.5 55.5C8.5 48 17.1 43.4 19 36.3C20.9 29.2 15.1 21.2 20.4 15.9C25.7 10.6 33.7 16.4 40.8 14.5C47.9 12.6 52.5 4 60 4Z"/>
-          </svg>
+          <span class="footer-ref-kicker">Manual Institucional v1.0 · Yukon · Oslo · Verona</span>
+          <div class="footer-monument-logo">
+            <img src="./assets/yuko-logo.jpg" alt="Marca Yuko" />
+          </div>
         </div>
 
-        <span class="footer-wordmark">CADÊNCIA</span>
+        <span class="footer-wordmark">YUKO</span>
 
         <div class="footer-monument-sub">
-          <span class="footer-monument-tagline">Cadência · Paisagens Sonoras Adaptativas — Modelo Base M3 Expressive</span>
+          <span class="footer-monument-tagline">Comunidade Técnica Brasileira · Ciclo Colaborativo e Entrega Assistida por Pares</span>
           <div class="footer-token-row">
-            <span class="footer-token-chip">shape.scallop</span>
-            <span class="footer-token-chip">color.dynamic-seed</span>
-            <span class="footer-token-chip">motion.spring</span>
+            <span class="footer-token-chip">yuko.field</span>
+            <span class="footer-token-chip">yuko.dev</span>
+            <span class="footer-token-chip">yuko.make</span>
+            <span class="footer-token-chip">yuko.place</span>
+            <span class="footer-token-chip">yuko.work</span>
+            <span class="footer-token-chip">yuko.inline</span>
           </div>
         </div>
       </div>
 
       <div class="footer-inner">
-        <span><strong>Cadência</strong> · Estrutura base inspirada no Material You 3 Expressive</span>
+        <span><strong>Yuko</strong> · Manual Institucional v1.0 (Edição Inicial de Formalização)</span>
         <div class="footer-links">
-          <a href="#formas">Formas</a>
-          <a href="#sistema">Tokens</a>
-          <a href="#planos">Planos</a>
+          <a href="./extensoes.html">Extensões</a>
+          <a href="./ciclo.html">Ciclo</a>
+          <a href="./governanca.html">Governança</a>
+          <a href="./manual.html">Manual</a>
         </div>
       </div>
     </div>
   </footer>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
-
   <script src="./app.js"></script>
 </body>
 </html>
