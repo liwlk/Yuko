@@ -3,17 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Yuko — Comunidade Técnica &amp; Ciclo de Entrega Assistida · Manual v1.0</title>
-  <meta name="description" content="A Yuko aproxima desenvolvedores independentes e microempresas brasileiras por meio de um ciclo colaborativo, assistido e tecnicamente validado de desenvolvimento de software." />
+  <title>Yuko — Comunidade Técnica Brasileira &amp; Entrega Assistida</title>
+  <meta name="description" content="A Yuko conecta desenvolvedores independentes e microempresas para criar software sob medida, validado por múltiplos pares e com suporte garantido após a entrega." />
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..800;1,9..40,400..700&family=JetBrains+Mono:wght@500;700&display=swap" />
-  <link rel="stylesheet" href="./styles.css?v=5" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&family=JetBrains+Mono:wght@500;700&display=swap" />
+  <link rel="stylesheet" href="./styles.css?v=6" />
   <script>
-    (function(){try{var r=document.documentElement,s=localStorage.getItem("yuko_seed"),m=localStorage.getItem("yuko_mode"),t=localStorage.getItem("yuko_motion");if(s)r.setAttribute("data-seed",s);if(m)r.setAttribute("data-mode",m);if(t)r.setAttribute("data-motion",t);}catch(e){}})();
+    (function(){try{var r=document.documentElement,s=localStorage.getItem("yuko_seed"),m=localStorage.getItem("yuko_mode"),t=localStorage.getItem("yuko_motion");if(["terracota","botanico","oceanico","ameixa"].indexOf(s)>-1)r.setAttribute("data-seed",s);if(["light","dark"].indexOf(m)>-1)r.setAttribute("data-mode",m);if(["expressive","calm"].indexOf(t)>-1)r.setAttribute("data-motion",t);}catch(e){}})();
   </script>
 </head>
 <body>
+  <a class="skip-link" href="#topo">Pular para o conteúdo</a>
+
   <div class="top-bar-wrap">
     <header class="top-bar" aria-label="Navegação principal">
       <a href="./index.html" class="brand">
@@ -25,49 +28,45 @@
 
       <nav class="nav-links" aria-label="Seções e subpáginas">
         <a href="./index.html" aria-current="page">Início</a>
-        <a href="./extensoes.html">Extensões &amp; Frentes</a>
-        <a href="./ciclo.html">Ciclo &amp; Papéis</a>
+        <a href="./extensoes.html">Extensões</a>
+        <a href="./ciclo.html">Ciclo</a>
         <a href="./governanca.html">Qualidade &amp; LGPD</a>
         <a href="./manual.html">Manual v1.0</a>
       </nav>
 
       <div class="bar-controls">
         <div class="seed-dots" role="group" aria-label="Semente de cor dinâmica">
-          <button class="seed-dot" data-seed="terracota" aria-pressed="true" title="Terracota Solar" aria-label="Tema Terracota Solar"></button>
-          <button class="seed-dot" data-seed="botanico" aria-pressed="false" title="Botânico Vivo" aria-label="Tema Botânico Vivo"></button>
-          <button class="seed-dot" data-seed="oceanico" aria-pressed="false" title="Índigo Oceânico" aria-label="Tema Índigo Oceânico"></button>
-          <button class="seed-dot" data-seed="ameixa" aria-pressed="false" title="Ameixa Editorial" aria-label="Tema Ameixa Editorial"></button>
+          <button class="seed-dot" type="button" data-seed="terracota" aria-pressed="true" title="Terracota Solar" aria-label="Tema Terracota Solar"></button>
+          <button class="seed-dot" type="button" data-seed="botanico" aria-pressed="false" title="Botânico Vivo" aria-label="Tema Botânico Vivo"></button>
+          <button class="seed-dot" type="button" data-seed="oceanico" aria-pressed="false" title="Índigo Oceânico" aria-label="Tema Índigo Oceânico"></button>
+          <button class="seed-dot" type="button" data-seed="ameixa" aria-pressed="false" title="Ameixa Editorial" aria-label="Tema Ameixa Editorial"></button>
         </div>
 
-        <button id="modeToggleBtn" class="icon-btn" type="button" aria-label="Alternar modo claro e escuro" title="Alternar Claro/Escuro">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <button id="modeToggleBtn" class="icon-btn" type="button" aria-label="Alternar modo claro e escuro" title="Alternar Claro/Escuro" aria-pressed="false">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
             <circle cx="12" cy="12" r="4"/>
             <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
           </svg>
         </button>
-
-        <a href="./manual.html" class="btn btn-primary btn-sm bar-cta">Manual v1.0</a>
       </div>
     </header>
 
     <nav class="mobile-nav" aria-label="Navegação móvel">
       <a href="./index.html" aria-current="page">Início</a>
       <a href="./extensoes.html">Extensões</a>
-      <a href="./ciclo.html">Ciclo 6 Etapas</a>
+      <a href="./ciclo.html">Ciclo</a>
       <a href="./governanca.html">Qualidade &amp; LGPD</a>
       <a href="./manual.html">Manual v1.0</a>
     </nav>
   </div>
 
   <main id="topo">
-    <!-- Asymmetric Hero Section -->
+    <!-- Hero Section -->
     <section class="hero">
       <div class="container hero-grid">
         <div>
           <div class="hero-eyebrow">
-            <span>Manual Institucional da Yuko</span>
-            <span aria-hidden="true">·</span>
-            <span>Versão 1.0</span>
+            <span>Comunidade Técnica Brasileira</span>
           </div>
 
           <h1 class="hero-title">
@@ -75,7 +74,7 @@
           </h1>
 
           <p class="hero-lead">
-            A Yuko é uma marca e comunidade técnica brasileira concebida para aproximar desenvolvedores independentes e microempresas, estruturando essa relação por meio de um ciclo colaborativo, assistido e tecnicamente validado — fruto da evolução de NYX e Expliance.
+            A Yuko conecta desenvolvedores independentes e microempresas para criar software sob medida, validado por múltiplos pares e com suporte garantido após a entrega.
           </p>
 
           <div class="hero-actions">
@@ -83,16 +82,16 @@
               <a href="./ciclo.html" class="btn btn-primary split-btn-main">
                 Conhecer o Ciclo Assistido
               </a>
-              <button id="splitMenuBtn" class="btn btn-primary split-btn-side" type="button" aria-expanded="false" aria-controls="splitMenu" aria-label="Abrir atalhos das subpáginas">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <button id="splitMenuBtn" class="btn btn-primary split-btn-side" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="splitMenu" aria-label="Abrir atalhos das subpáginas">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <polyline points="6 9 12 15 18 9"/>
                 </svg>
               </button>
               <div id="splitMenu" class="split-menu" role="menu">
-                <a href="./extensoes.html">Extensões &amp; 6 Frentes</a>
-                <a href="./ciclo.html#papeis">Papéis &amp; Rastreabilidade</a>
-                <a href="./governanca.html">Qualidade, Segurança &amp; LGPD</a>
-                <a href="./manual.html#glossario">Glossário Institucional</a>
+                <a href="./extensoes.html" role="menuitem">Extensões &amp; Frentes</a>
+                <a href="./ciclo.html#papeis" role="menuitem">Papéis &amp; Rastreabilidade</a>
+                <a href="./governanca.html" role="menuitem">Qualidade &amp; LGPD</a>
+                <a href="./manual.html#glossario" role="menuitem">Glossário Institucional</a>
               </div>
             </div>
 
@@ -105,20 +104,20 @@
               <span class="metric-label">Entrega Assistida</span>
             </div>
             <div class="metric-pill">
-              <span class="metric-val">2+ Pares</span>
-              <span class="metric-label">Peer Review obrigatório</span>
+              <span class="metric-val">2+ Revisores</span>
+              <span class="metric-label">Revisão cruzada de código</span>
             </div>
             <div class="metric-pill">
-              <span class="metric-val">6 Frentes</span>
-              <span class="metric-label">Atuação institucional</span>
+              <span class="metric-val">Suporte definido</span>
+              <span class="metric-label">Garantia pós-entrega</span>
             </div>
           </div>
         </div>
 
-        <!-- Dynamic Material You 3 Expressive Editorial Illustration for Yuko -->
+        <!-- Dynamic Editorial Illustration for Yuko -->
         <aside class="hero-art-card" aria-label="Ilustração institucional da Yuko">
           <figure class="hero-art-frame">
-            <svg viewBox="0 0 640 480" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Composição Material You 3 Expressive simbolizando arquitetura modular, revisão por pares e sustentação coletiva da Yuko">
+            <svg viewBox="0 0 640 480" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Composição visual simbolizando arquitetura modular, revisão por pares e sustentação coletiva da Yuko">
               <defs>
                 <linearGradient id="heroBgGrad" x1="0" y1="0" x2="640" y2="480" gradientUnits="userSpaceOnUse">
                   <stop offset="0%" stop-color="var(--md-surface-container-low)"/>
@@ -140,7 +139,7 @@
               <path d="M0 374C135 344 240 398 370 372C485 348 560 326 640 342V480H0V374Z" fill="var(--md-surface-container-lowest)" opacity="0.88"/>
               <path d="M0 416C150 388 290 440 435 412C530 394 590 382 640 392V480H0V416Z" fill="var(--md-secondary-container)" opacity="0.52"/>
 
-              <!-- Central Material 3 Expressive 12-Petal Scalloped Medallion -->
+              <!-- Central 12-Petal Scalloped Medallion -->
               <g transform="translate(320 228)">
                 <path d="M0 -132C18 -132 29 -111 46 -106C63 -101 82 -115 95 -102C108 -89 94 -70 99 -53C104 -36 125 -25 125 -7C125 11 104 22 99 39C94 56 108 75 95 88C82 101 63 87 46 92C29 97 18 118 0 118C-18 118 -29 97 -46 92C-63 87 -82 101 -95 88C-108 75 -94 56 -99 39C-104 22 -125 11 -125 -7C-125 -25 -104 -36 -99 -53C-94 -70 -108 -89 -95 -102C-82 -115 -63 -101 -46 -106C-29 -111 -18 -132 0 -132Z" fill="url(#heroOrbGrad)" opacity="0.92"/>
                 <circle cx="0" cy="-7" r="76" fill="var(--md-surface-container-lowest)" stroke="var(--md-outline-variant)" stroke-width="1.5"/>
@@ -245,7 +244,7 @@
 
             <div class="yukon-header-row">
               <div class="yukon-intro">
-                <span class="yukon-kicker">Seção 4.1 · 60.72° N · 135.05° W · Território de Yukon, Canadá</span>
+                <span class="yukon-kicker">60.72° N · 135.05° W · Território de Yukon, Canadá</span>
                 <h2 class="yukon-title">Experiência em Yukon: resiliência em território aberto</h2>
                 <p class="yukon-lead">
                   A origem do nome Yuko reflete o horizonte canadense de Yukon — vastidão exploratória, sobriedade e software sólido para ambientes reais.
@@ -288,12 +287,10 @@
               </div>
             </div>
 
-            <div class="yukon-chapter-band" aria-live="polite">
-              <div>
+            <div class="yukon-chapter-band">
+              <div class="yukon-chapter-copy" aria-live="polite">
                 <div class="yukon-chapter-meta">
-                  <span id="yukonChapterTag" class="studio-badge">Marco 01 · Resiliência (Seção 4.1 &amp; 10.1)</span>
-                  <span id="yukonTokenA" class="footer-token-chip">seção 4.1 · yukon</span>
-                  <span id="yukonTokenB" class="footer-token-chip">seção 10.1 · simplicidade</span>
+                  <span id="yukonChapterTag" class="studio-badge">Marco 01 · Resiliência</span>
                 </div>
                 <h3 id="yukonChapterTitle" class="yukon-chapter-title">Construção sólida em ambientes exigentes</h3>
                 <p id="yukonChapterBody" class="yukon-chapter-body">
@@ -316,10 +313,10 @@
     <section id="pilares" class="section">
       <div class="container">
         <div class="section-head">
-          <div class="section-kicker">Síntese Institucional</div>
-          <h2 class="section-title">Estrutura pensada para entrega profissional sem burocracia impeditiva</h2>
+          <div class="section-kicker">Como funciona</div>
+          <h2 class="section-title">Entrega profissional sem burocracia</h2>
           <p class="section-desc">
-            A Yuko absorve a experimentação de NYX e a sistematização de Expliance em um modelo enxuto de parceria assistida, registro formal e revisão cruzada por pares.
+            Escopo claro, revisão por pares e suporte definido em um ciclo único.
           </p>
         </div>
 
@@ -332,10 +329,10 @@
                   <path d="M12 3v18M3 12h18"/>
                 </svg>
               </div>
-              <h3>Extensões &amp; 6 Frentes</h3>
-              <p>Field, Dev, Make, Place, Work e Inline operam em sincronia com as seis frentes herdadas de NYX e Expliance — da prospecção à segurança.</p>
+              <h3>Extensões &amp; Frentes</h3>
+              <p>Field, Dev, Make, Place, Work e Inline organizam cada entrega em conjunto com as seis frentes de atuação — da prospecção à segurança.</p>
             </div>
-            <span class="feature-tag">ver subpágina · extensões →</span>
+            <span class="feature-tag">Explorar extensões →</span>
           </a>
 
           <a href="./ciclo.html" class="feature-card feature-xl">
@@ -346,9 +343,9 @@
                 </svg>
               </div>
               <h3>Ciclo de Entrega Assistida</h3>
-              <p>Nenhuma solução é entregue sem passar por Demanda, Escopo, Construção, Peer Review obrigatório por 2+ pares, Homologação e Suporte designado.</p>
+              <p>Nenhuma solução é entregue sem passar por Demanda, Escopo, Construção, revisão por 2+ pares, Homologação e Suporte designado.</p>
             </div>
-            <span class="feature-tag">ver subpágina · ciclo &amp; papéis →</span>
+            <span class="feature-tag">Ver as 6 etapas →</span>
           </a>
 
           <a href="./governanca.html" class="feature-card feature-soft">
@@ -360,102 +357,10 @@
                 </svg>
               </div>
               <h3>Qualidade, Segurança &amp; LGPD</h3>
-              <p>Definition of Done, commits semânticos, blindagem contra SQLi/XSS, sigilo técnico, dados sintéticos em testes e conformidade com a Lei nº 13.709/2018.</p>
+              <p>Critérios de pronto, commits semânticos, proteção contra falhas comuns, sigilo técnico, dados sintéticos em testes e conformidade com a LGPD.</p>
             </div>
-            <span class="feature-tag">ver subpágina · governança →</span>
+            <span class="feature-tag">Ver qualidade e LGPD →</span>
           </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Material You 3 Expressive Interactive Lab & Subpages Hub -->
-    <section id="sistema" class="section">
-      <div class="container">
-        <div class="section-head">
-          <div class="section-kicker">Sistema Visual &amp; Navegação</div>
-          <h2 class="section-title">Personalize a leitura e acesse todas as seções do Manual v1.0</h2>
-          <p class="section-desc">
-            Suas preferências de semente de cor, modo claro/escuro e física de movimento permanecem salvas entre todas as subpáginas institucionais da Yuko.
-          </p>
-        </div>
-
-        <div class="lab-panel">
-          <div class="lab-grid">
-            <div class="lab-controls">
-              <div class="control-group">
-                <div class="control-group-title">1. Semente de Cor Dinâmica</div>
-                <div class="seed-cards">
-                  <button class="seed-card-btn" type="button" data-seed="terracota" aria-pressed="true">
-                    <span class="swatch-circle" style="background:#a93714"></span>
-                    Terracota Solar
-                  </button>
-                  <button class="seed-card-btn" type="button" data-seed="botanico" aria-pressed="false">
-                    <span class="swatch-circle" style="background:#276841"></span>
-                    Botânico Vivo
-                  </button>
-                  <button class="seed-card-btn" type="button" data-seed="oceanico" aria-pressed="false">
-                    <span class="swatch-circle" style="background:#1d5796"></span>
-                    Índigo Oceânico
-                  </button>
-                  <button class="seed-card-btn" type="button" data-seed="ameixa" aria-pressed="false">
-                    <span class="swatch-circle" style="background:#7d3b66"></span>
-                    Ameixa Editorial
-                  </button>
-                </div>
-              </div>
-
-              <div class="control-group">
-                <div class="control-group-title">2. Polaridade &amp; Física de Movimento</div>
-                <div style="display:flex; flex-wrap:wrap; gap:12px;">
-                  <div class="connected-group" role="group" aria-label="Modo de cor">
-                    <button class="connected-btn" type="button" data-set-mode="light" aria-pressed="true">Claro</button>
-                    <button class="connected-btn" type="button" data-set-mode="dark" aria-pressed="false">Escuro</button>
-                  </div>
-
-                  <div class="connected-group" role="group" aria-label="Curva de movimento">
-                    <button class="connected-btn" type="button" data-set-motion="expressive" aria-pressed="true">Mola Expressiva</button>
-                    <button class="connected-btn" type="button" data-set-motion="calm" aria-pressed="false">Linear Calmo</button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="control-group">
-                <div class="control-group-title">3. Acesso Direto às Subpáginas da Yuko</div>
-                <div class="shape-gallery">
-                  <a class="morph-pill" href="./extensoes.html">Extensões &amp; Frentes</a>
-                  <a class="morph-pill" href="./ciclo.html">Ciclo &amp; Papéis</a>
-                  <a class="morph-pill" href="./governanca.html">Qualidade &amp; LGPD</a>
-                  <a class="morph-pill" href="./manual.html">Manual v1.0 Completo</a>
-                </div>
-              </div>
-            </div>
-
-            <div class="control-group">
-              <div class="control-group-title">Pilares da Identidade Yuko (Seção 4 do Manual)</div>
-              <div class="surface-ladder">
-                <div class="surface-step step-lowest">
-                  <span>Yukon (Canadá) · Resiliência &amp; Exploração</span>
-                  <code>4.1 Pilares</code>
-                </div>
-                <div class="surface-step step-low">
-                  <span>Oslo (Noruega) · Minimalismo &amp; Precisão</span>
-                  <code>4.1 Pilares</code>
-                </div>
-                <div class="surface-step step-base">
-                  <span>Verona (Itália) · Solidez &amp; Registro Formal</span>
-                  <code>4.1 Pilares</code>
-                </div>
-                <div class="surface-step step-high">
-                  <span>Minimalismo Instrumental · Alto Contraste</span>
-                  <code>4.2 Visual</code>
-                </div>
-                <div class="surface-step step-highest">
-                  <span>6 Extensões · Field, Dev, Make, Place, Work, Inline</span>
-                  <code>4.3 Extensões</code>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </section>
@@ -465,29 +370,24 @@
       <div class="container">
         <div class="plans-header">
           <div>
-            <div class="section-kicker">Propósito Institucional (Seção 3)</div>
-            <h2 class="section-title" style="margin-bottom:0">Mitigando a assimetria técnica nos dois lados</h2>
-          </div>
-
-          <div class="connected-group" role="group" aria-label="Destacar público">
-            <button class="connected-btn" type="button" data-audience="desenvolvedor" aria-pressed="true">Desenvolvedores</button>
-            <button class="connected-btn" type="button" data-audience="microempresa" aria-pressed="false">Microempresas</button>
+            <div class="section-kicker">Para quem é</div>
+            <h2 class="section-title" style="margin-bottom:0">Segurança para microempresas, autonomia para desenvolvedores</h2>
           </div>
         </div>
 
         <div class="plans-grid">
           <article id="cardMicroempresa" class="plan-card">
             <div>
-              <span class="studio-badge" style="background:var(--md-secondary-container); color:var(--md-on-secondary-container)">Microempresas Parceiras</span>
+              <span class="studio-badge">Microempresas Parceiras</span>
               <h3 class="audience-title">Continuidade &amp; Respaldo</h3>
-              <p style="margin:0 0 20px; color:var(--md-on-surface-variant)">
+              <p>
                 Elimina a volatilidade e entregas sem documentação por meio de critérios claros, validação coletiva e sustentação pós-entrega.
               </p>
               <ul class="clean-list">
-                <li>Prospecção contextual via Yuko Field ou acolhimento direto</li>
-                <li>Escopo sintético com critérios objetivos de aceitação</li>
-                <li>Proteção contra abandono: transição compulsória e chancela coletiva</li>
-                <li>Responsável de Suporte designado e sigilo técnico conforme LGPD</li>
+                <li><span>Prospecção contextual via Yuko Field ou acolhimento direto</span></li>
+                <li><span>Escopo sintético com critérios objetivos de aceitação</span></li>
+                <li><span>Proteção contra abandono: transição assistida e chancela coletiva</span></li>
+                <li><span>Responsável de suporte designado e sigilo técnico conforme LGPD</span></li>
               </ul>
             </div>
             <a href="./ciclo.html" class="btn btn-outline">Ver fluxo completo do ciclo</a>
@@ -495,16 +395,16 @@
 
           <article id="cardDesenvolvedor" class="plan-card featured">
             <div>
-              <span class="studio-badge" style="background:var(--md-surface-container-lowest); color:var(--md-on-surface)">Desenvolvedores Independentes</span>
+              <span class="studio-badge">Desenvolvedores Independentes</span>
               <h3 class="audience-title">Autonomia com Pares</h3>
-              <p style="margin:0 0 20px; opacity:0.92">
+              <p>
                 Supera o isolamento na sustentação e a sobrecarga em revisões críticas sem vínculo empregatício ou burocracia corporativa.
               </p>
               <ul class="clean-list">
-                <li>Liberdade de stack em ecossistemas maduros e consolidados</li>
-                <li>Peer Review obrigatório por 2+ pares antes de toda liberação</li>
-                <li>Operação coordenada no Discord e issues formalmente rastreáveis</li>
-                <li>Reaproveitamento aberto de utilitários, bibliotecas e boas práticas</li>
+                <li><span>Liberdade de stack em ecossistemas maduros e consolidados</span></li>
+                <li><span>Revisão por 2+ pares antes de qualquer liberação</span></li>
+                <li><span>Operação coordenada no Discord e issues rastreáveis</span></li>
+                <li><span>Reaproveitamento aberto de utilitários, bibliotecas e boas práticas</span></li>
               </ul>
             </div>
             <a href="./governanca.html" class="btn btn-primary">Ver padrões técnicos &amp; ética</a>
@@ -518,9 +418,9 @@
       <div class="container">
         <div class="cta-banner">
           <div>
-            <h2>Consulte o Manual Institucional da Yuko — v1.0 na íntegra</h2>
+            <h2>Consulte o Manual Institucional da Yuko — v1.0</h2>
             <p>
-              Acesse o quadro de controle do documento, ressalvas jurídicas, as 14 seções normativas, o glossário institucional pesquisável e a declaração de fechamento.
+              Acesse o controle documental, as diretrizes operacionais, o glossário pesquisável e os compromissos públicos da comunidade.
             </p>
           </div>
           <a href="./manual.html" class="btn btn-primary">Abrir Manual v1.0</a>
@@ -540,37 +440,37 @@
             <span>Yuko</span>
           </a>
           <p class="footer-summary">
-            A Yuko firma-se como um compromisso coletivo de valorização do talento técnico independente e de fortalecimento das microempresas brasileiras, transformando esforço individual em sustentação compartilhada, integridade operacional e maturidade contínua.
+            Compromisso coletivo de valorização do talento técnico independente e de fortalecimento das microempresas brasileiras por meio de entrega assistida e sustentação compartilhada.
           </p>
           <a href="#topo" class="btn btn-tonal btn-sm">Voltar ao topo</a>
         </div>
 
         <div class="footer-cols">
           <div>
-            <div class="footer-col-title">Subpáginas</div>
+            <div class="footer-col-title">Navegação</div>
             <div class="footer-col-links">
-              <a href="./index.html">Visão Geral</a>
-              <a href="./extensoes.html">Extensões &amp; 6 Frentes</a>
-              <a href="./ciclo.html">Ciclo de Entrega Assistida</a>
-              <a href="./governanca.html">Qualidade, Segurança &amp; LGPD</a>
-              <a href="./manual.html">Manual Institucional v1.0</a>
+              <a href="./index.html">Início</a>
+              <a href="./extensoes.html">Extensões</a>
+              <a href="./ciclo.html">Ciclo</a>
+              <a href="./governanca.html">Qualidade &amp; LGPD</a>
+              <a href="./manual.html">Manual v1.0</a>
             </div>
           </div>
           <div>
-            <div class="footer-col-title">Extensões da Marca</div>
+            <div class="footer-col-title">Nesta Página</div>
             <div class="footer-col-links">
-              <a href="./extensoes.html#extensoes">Yuko Field &amp; Yuko Dev</a>
-              <a href="./extensoes.html#extensoes">Yuko Make &amp; Yuko Place</a>
-              <a href="./extensoes.html#extensoes">Yuko Work &amp; Yuko Inline</a>
-              <a href="./manual.html#glossario">Glossário Institucional</a>
+              <a href="#yukon">Experiência Yukon</a>
+              <a href="#pilares">Como funciona</a>
+              <a href="#atuacao">Para quem é</a>
+              <a href="./manual.html#glossario">Glossário</a>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="footer-monument" aria-label="Nome institucional de referência">
+      <div class="footer-monument">
         <div class="footer-monument-head">
-          <span class="footer-ref-kicker">Manual Institucional v1.0 · Yukon · Oslo · Verona</span>
+          <span class="footer-ref-kicker">Comunidade Técnica Brasileira · Yukon · Oslo · Verona</span>
           <div class="footer-monument-logo">
             <img src="./assets/yuko-logo.jpg" alt="Marca Yuko" />
           </div>
@@ -579,31 +479,20 @@
         <span class="footer-wordmark">YUKO</span>
 
         <div class="footer-monument-sub">
-          <span class="footer-monument-tagline">Comunidade Técnica Brasileira · Ciclo Colaborativo e Entrega Assistida por Pares</span>
-          <div class="footer-token-row">
-            <span class="footer-token-chip">yuko.field</span>
-            <span class="footer-token-chip">yuko.dev</span>
-            <span class="footer-token-chip">yuko.make</span>
-            <span class="footer-token-chip">yuko.place</span>
-            <span class="footer-token-chip">yuko.work</span>
-            <span class="footer-token-chip">yuko.inline</span>
-          </div>
+          <span class="footer-monument-tagline">Ciclo Colaborativo e Entrega Assistida por Pares</span>
         </div>
       </div>
 
       <div class="footer-inner">
-        <span><strong>Yuko</strong> · Manual Institucional v1.0 (Edição Inicial de Formalização)</span>
+        <span><strong>Yuko</strong> · Manual Institucional v1.0</span>
         <div class="footer-links">
-          <a href="./extensoes.html">Extensões</a>
-          <a href="./ciclo.html">Ciclo</a>
-          <a href="./governanca.html">Governança</a>
-          <a href="./manual.html">Manual</a>
+          <a href="#topo">Topo</a>
         </div>
       </div>
     </div>
   </footer>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <script src="./app.js?v=5"></script>
+  <script src="./app.js?v=6"></script>
 </body>
 </html>
