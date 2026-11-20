@@ -100,127 +100,78 @@
   }
 
   // ------------------------------------------------------------------------
-  // 3. Home Hero Interactive Explorer (Ciclo 6 Etapas + Pilares do Manual)
+  // 3. Experiência em Yukon (Canadá) — Atmosfera & Pilares Interativos
   // ------------------------------------------------------------------------
-  const cycleStages = [
-    {
-      badge: "Etapa 1 · Demanda",
-      title: "1. Demanda & Triagem",
-      subtitle: "Prospecção ativa via Yuko Field ou acolhimento passivo com análise de viabilidade e criticidade.",
-    },
-    {
-      badge: "Etapa 2 · Escopo",
-      title: "2. Escopo & Critérios",
-      subtitle: "Documento sintético com critérios objetivos de aceitação e abertura de registro formal rastreável.",
-    },
-    {
-      badge: "Etapa 3 · Construção",
-      title: "3. Construção Modular",
-      subtitle: "Codificação em stacks consolidadas com linting automatizado, commits semânticos e dados sintéticos.",
-    },
-    {
-      badge: "Etapa 4 · Peer Review",
-      title: "4. Revisão por Pares",
-      subtitle: "Validação cruzada obrigatória por 2+ desenvolvedores independentes antes da homologação.",
-    },
-    {
-      badge: "Etapa 5 · Homologação",
-      title: "5. Testes & Homologação",
-      subtitle: "Verificação funcional, responsividade, segurança contra SQLi/XSS e auditoria de dependências em staging.",
-    },
-    {
-      badge: "Etapa 6 · Sustentação",
-      title: "6. Entrega & Suporte",
-      subtitle: "Homologação com a microempresa e designação obrigatória do Responsável de Suporte pós-entrega.",
-    },
-  ];
+  const yukonMoods = {
+    alvorada: "Alvorada em Whitehorse · Prospecção Contextual via Yuko Field",
+    travessia: "Travessia do Rio Yukon · Construção Modular & Peer Review",
+    boreal: "Noite Boreal · Sustentação Assistida & Estabilidade Pós-Entrega",
+  };
 
-  const pillarPresets = {
-    ciclo: {
-      stage: 1,
-      badge: "Ciclo de Entrega Assistida",
-      title: "1. Demanda & Triagem",
-      subtitle: "Prospecção ativa via Yuko Field ou acolhimento passivo com análise de viabilidade e criticidade.",
+  const yukonPillars = {
+    resiliencia: {
+      tag: "Pilar 01 · Resiliência",
+      title: "Construção sólida em ambientes exigentes",
+      body: "Assim como a travessia do território de Yukon exige preparo e ausência de excessos, a Yuko rejeita pilhas complexas e lock-in. Cada solução nasce enxuta, testada em staging e sustentada por pares.",
+      tokenA: "seção 4.1 · yukon",
+      tokenB: "seção 10.1 · simplicidade",
     },
-    linhagem: {
-      stage: 2,
-      badge: "Linhagem · NYX → Expliance → Yuko",
-      title: "Herança & Desburocratização",
-      subtitle: "Absorve a experimentação da fase NYX e a governança da Expliance em um ciclo produtivo enxuto.",
+    vastidao: {
+      tag: "Pilar 02 · Vastidão Exploratória",
+      title: "Imersão real nas dores da microempresa",
+      body: "Pela frente Yuko Field, os integrantes vão a campo com entrevistas e validação contextual antes de escrever código — transformando problemas operacionais reais em critérios objetivos de aceitação.",
+      tokenA: "seção 4.3 · yuko field",
+      tokenB: "seção 8.1 · demanda",
     },
-    pilares: {
-      stage: 3,
-      badge: "Identidade · Yukon · Oslo · Verona",
-      title: "Minimalismo Instrumental",
-      subtitle: "Resiliência (Yukon), limpeza comunicacional (Oslo) e solidez institucional formal (Verona).",
+    sobriedade: {
+      tag: "Pilar 03 · Sobriedade Estrutural",
+      title: "Minimalismo instrumental sem ruído",
+      body: "A sobriedade de Yukon dialoga com a clareza de Oslo: documentação enxuta e útil, commits semânticos rastreáveis e zero burocracia impeditiva para equipes independentes.",
+      tokenA: "seção 4.2 · minimalismo",
+      tokenB: "seção 14.1 · gestão enxuta",
     },
-    discord: {
-      stage: 4,
-      badge: "Comunidade · Ambiente Discord",
-      title: "Operação Síncrona & Assíncrona",
-      subtitle: "Canais institucionais, técnicos e operacionais pautados por comunicação construtiva e respeito.",
+    rede: {
+      tag: "Pilar 04 · Construção em Rede",
+      title: "Nenhuma entrega caminha isolada",
+      body: "Todo projeto passa por revisão cruzada de no mínimo dois desenvolvedores independentes e conta com transição compulsória para proteger a microempresa parceira contra qualquer ruptura.",
+      tokenA: "seção 7.4 · continuidade",
+      tokenB: "seção 8.4 · peer review",
     },
   };
 
-  const studioCard = document.getElementById("studioCard");
-  const badgeEl = document.getElementById("studioStateBadge");
-  const counterEl = document.getElementById("studioTimer");
-  const titleEl = document.getElementById("trackTitle");
-  const subtitleEl = document.getElementById("trackSubtitle");
-  const stageSlider = document.getElementById("densitySlider");
-  const stageVal = document.getElementById("densityVal");
-  const stageDots = Array.from(document.querySelectorAll("#stageDots .stage-dot"));
+  const yukonArtFrame = document.getElementById("yukonArtFrame");
+  const yukonHudText = document.getElementById("yukonHudText");
+  const yukonSpotTag = document.getElementById("yukonSpotTag");
+  const yukonSpotTitle = document.getElementById("yukonSpotTitle");
+  const yukonSpotBody = document.getElementById("yukonSpotBody");
+  const yukonTokenA = document.getElementById("yukonTokenA");
+  const yukonTokenB = document.getElementById("yukonTokenB");
 
-  function renderCycleStage(stepNumber) {
-    const idx = Math.max(1, Math.min(6, Number(stepNumber))) - 1;
-    const data = cycleStages[idx];
-    if (!data) return;
-    if (badgeEl) badgeEl.textContent = data.badge;
-    if (counterEl) counterEl.textContent = `Etapa 0${idx + 1} / 06`;
-    if (titleEl) titleEl.textContent = data.title;
-    if (subtitleEl) subtitleEl.textContent = data.subtitle;
-    if (stageVal) stageVal.textContent = `Etapa ${idx + 1}/6`;
-    if (stageSlider) stageSlider.value = String(idx + 1);
-    stageDots.forEach((dot, i) => dot.classList.toggle("active", i <= idx));
-  }
-
-  if (stageSlider) {
-    stageSlider.addEventListener("input", () => {
-      renderCycleStage(stageSlider.value);
-      document.querySelectorAll("[data-pillar]").forEach((c) => {
-        c.setAttribute("aria-pressed", c.dataset.pillar === "ciclo" ? "true" : "false");
+  document.querySelectorAll("[data-yukon-mood]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const mood = btn.dataset.yukonMood;
+      document.querySelectorAll("[data-yukon-mood]").forEach((b) => {
+        b.setAttribute("aria-pressed", b.dataset.yukonMood === mood ? "true" : "false");
       });
-    });
-  }
-
-  document.querySelectorAll("[data-pillar]").forEach((chip) => {
-    chip.addEventListener("click", () => {
-      const key = chip.dataset.pillar;
-      document.querySelectorAll("[data-pillar]").forEach((c) => {
-        c.setAttribute("aria-pressed", c.dataset.pillar === key ? "true" : "false");
-      });
-      const preset = pillarPresets[key];
-      if (!preset) return;
-      if (key === "ciclo") {
-        renderCycleStage(1);
-      } else {
-        if (badgeEl) badgeEl.textContent = preset.badge;
-        if (counterEl) counterEl.textContent = "Manual v1.0";
-        if (titleEl) titleEl.textContent = preset.title;
-        if (subtitleEl) subtitleEl.textContent = preset.subtitle;
-        if (stageVal) stageVal.textContent = `Seção ativa`;
-        stageDots.forEach((dot, i) => dot.classList.toggle("active", i < preset.stage));
-      }
-      studioCard?.classList.add("playing");
-      setTimeout(() => studioCard?.classList.remove("playing"), 1200);
+      if (yukonArtFrame) yukonArtFrame.setAttribute("data-yukon-mood", mood);
+      if (yukonHudText && yukonMoods[mood]) yukonHudText.textContent = yukonMoods[mood];
     });
   });
 
-  document.getElementById("scallopToggle")?.addEventListener("click", () => {
-    const next = stageSlider ? (Number(stageSlider.value) % 6) + 1 : 1;
-    renderCycleStage(next);
-    studioCard?.classList.toggle("playing");
-    showToast(`Ciclo Assistido: Etapa ${next} de 6`);
+  document.querySelectorAll("[data-yukon-pillar]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const key = btn.dataset.yukonPillar;
+      const data = yukonPillars[key];
+      if (!data) return;
+      document.querySelectorAll("[data-yukon-pillar]").forEach((b) => {
+        b.setAttribute("aria-pressed", b.dataset.yukonPillar === key ? "true" : "false");
+      });
+      if (yukonSpotTag) yukonSpotTag.textContent = data.tag;
+      if (yukonSpotTitle) yukonSpotTitle.textContent = data.title;
+      if (yukonSpotBody) yukonSpotBody.textContent = data.body;
+      if (yukonTokenA) yukonTokenA.textContent = data.tokenA;
+      if (yukonTokenB) yukonTokenB.textContent = data.tokenB;
+    });
   });
 
   // ------------------------------------------------------------------------
