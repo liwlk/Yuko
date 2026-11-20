@@ -1,0 +1,32 @@
+{
+  "name": "yuko-web",
+  "version": "2.0.0",
+  "description": "Site institucional da Yuko em Astro, React, TypeScript, Tailwind CSS v4, Motion, GSAP e Lenis, seguindo o padrão Material You 3 Expressive.",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@astrojs/react": "^7.1.9",
+    "@tailwindcss/vite": "^4.3.5",
+    "astro": "^7.4.13",
+    "gsap": "^3.15.1",
+    "lenis": "^1.3.27",
+    "motion": "^14.14.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "tailwindcss": "^4.3.5"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "eslint": "^10.15.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.73.0"
+  }
+}

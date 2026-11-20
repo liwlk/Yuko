@@ -1,0 +1,138 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import GlossaryExplorer from '../components/GlossaryExplorer';
+import {
+  CONTROL_TABLE,
+  MANUAL_ORIGINS,
+  GLOSSARY_TERMS,
+} from '../data/yuko';
+
+const glossaryTerms = GLOSSARY_TERMS.map((item) => ({
+  term: item.term,
+  definition: item.definition,
+  tone: (item.tone === 'tonal-primary'
+    ? 'primary'
+    : item.tone === 'tonal-secondary'
+      ? 'secondary'
+      : item.tone === 'tonal-tertiary'
+        ? 'tertiary'
+        : 'default') as 'default' | 'primary' | 'secondary' | 'tertiary',
+}));
+---
+
+<BaseLayout
+  title="Manual Institucional da Yuko — v1.0 & Glossário"
+  description="Quadro de controle do Manual Institucional da Yuko v1.0, ressalvas jurídicas, linhagem NYX e Expliance, gestão enxuta e glossário institucional pesquisável."
+  currentPath="/manual/"
+  footerVariant="compact"
+  nextHref="/"
+  nextLabel="Voltar ao Início →"
+>
+  <section class="sub-hero">
+    <div class="container">
+      <div class="hero-eyebrow">
+        <span>Documento Institucional Aberto</span>
+        <span aria-hidden="true">·</span>
+        <span>Versão 1.0</span>
+      </div>
+      <h1 class="sub-hero-title">
+        Manual Institucional da <span class="accent-word">Yuko</span> — v1.0
+      </h1>
+      <p class="hero-lead">
+        Referência normativa, metodológica e operacional de uso comunitário para os projetos e iniciativas em implantação na Yuko.
+      </p>
+      <div class="hero-actions" style="margin-bottom:0">
+        <a href="#controle" class="btn btn-primary">Quadro de Controle</a>
+        <a href="#origem" class="btn btn-tonal">Ressalvas &amp; Linhagem</a>
+        <a href="#glossario" class="btn btn-outline">Glossário</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quadro de Controle -->
+  <section id="controle" class="section" style="padding-top:24px">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Metadados Normativos</div>
+        <h2 class="section-title">Quadro de Controle do Documento</h2>
+      </div>
+
+      <div class="control-table-wrap">
+        <table class="control-table">
+          <caption class="sr-only">
+            Metadados normativos e de versão do Manual Institucional da Yuko v1.0
+          </caption>
+          <tbody>
+            {CONTROL_TABLE.map((row) => (
+              <tr>
+                <th scope="row">{row.label}</th>
+                <td>{row.value}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ressalvas, Linhagem & Guia -->
+  <section id="origem" class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Fundamentos &amp; Mapa</div>
+        <h2 class="section-title">Ressalvas Jurídicas, Linhagem &amp; Gestão Enxuta</h2>
+      </div>
+
+      <div class="grid-2">
+        {MANUAL_ORIGINS.map((card) => (
+          <article class={card.tone === 'default' ? 'm3-card' : `m3-card ${card.tone}`}>
+            {card.links ? (
+              <div>
+                <h3>{card.title}</h3>
+                <ul class="clean-list" style="margin-top:12px">
+                  {card.links.map((link) => (
+                    <li>
+                      <span>
+                        <a href={link.href}>
+                          <strong>{link.label}</strong>
+                        </a>{' '}
+                        — {link.description}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <>
+                <h3>{card.title}</h3>
+                {card.paragraphs?.map((paragraph) => (
+                  <p>{paragraph}</p>
+                ))}
+                {card.lineage?.map((entry) => (
+                  <p>
+                    <strong>{entry.label}:</strong> {entry.text}
+                  </p>
+                ))}
+              </>
+            )}
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Glossário Institucional -->
+  <section id="glossario" class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Glossário Institucional</div>
+        <h2 class="section-title">Termos oficiais do Manual v1.0</h2>
+        <p class="section-desc">
+          Consulte rapidamente definições normativas, papéis operacionais e critérios de entrega da Yuko.
+        </p>
+      </div>
+
+      <GlossaryExplorer client:load terms={glossaryTerms} />
+    </div>
+  </section>
+</BaseLayout>

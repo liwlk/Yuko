@@ -1,0 +1,140 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import {
+  CYCLE_STAGES,
+  TRIAGE_CRITERIA,
+  ROLES,
+  CONTINUITY_RULES,
+  REGISTRY_COL_A,
+  REGISTRY_COL_B,
+} from '../data/yuko';
+---
+
+<BaseLayout
+  title="Ciclo de Entrega Assistida, Papéis & Rastreabilidade — Yuko"
+  description="As 6 etapas do Ciclo de Entrega Assistida, papéis operacionais, regras de continuidade e registro formal rastreável da Yuko."
+  currentPath="/ciclo/"
+  footerVariant="compact"
+  nextHref="/governanca/"
+  nextLabel="Avançar para Qualidade & LGPD →"
+>
+  <section class="sub-hero">
+    <div class="container">
+      <div class="hero-eyebrow">
+        <span>Núcleo Operacional</span>
+        <span aria-hidden="true">·</span>
+        <span>Entrega Assistida</span>
+      </div>
+      <h1 class="sub-hero-title">
+        O <span class="accent-word">Ciclo</span> de Entrega Assistida
+      </h1>
+      <p class="hero-lead">
+        Nenhuma solução chega à microempresa sem passar por escopo claro, revisão por múltiplos pares, homologação em testes e suporte nominal definido.
+      </p>
+      <div class="hero-actions" style="margin-bottom:0">
+        <a href="#etapas" class="btn btn-primary">As 6 Etapas</a>
+        <a href="#papeis" class="btn btn-tonal">Papéis &amp; Continuidade</a>
+        <a href="#registro" class="btn btn-outline">Registro Formal</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- As 6 Etapas -->
+  <section id="etapas" class="section" style="padding-top:24px">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Fluxo de Ponta a Ponta</div>
+        <h2 class="section-title">Seis etapas do acolhimento à entrega</h2>
+      </div>
+
+      <div class="grid-3">
+        {CYCLE_STAGES.map((stage) => (
+          <article class={stage.tone === 'default' ? 'm3-card' : `m3-card ${stage.tone}`}>
+            <div>
+              <h3>{stage.title}</h3>
+              <p>{stage.description}</p>
+            </div>
+            <span class="card-code">{stage.code}</span>
+          </article>
+        ))}
+      </div>
+
+      <div class="lab-panel" style="margin-top:24px">
+        <h3 style="margin-bottom:14px">Critérios de Triagem e Priorização</h3>
+        <ul class="clean-list">
+          {TRIAGE_CRITERIA.map((criterion) => (
+            <li>
+              <span>
+                <strong>{criterion.title}:</strong> {criterion.description}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Papéis & Continuidade -->
+  <section id="papeis" class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Modelo Operacional</div>
+        <h2 class="section-title">Papéis funcionais e continuidade</h2>
+        <p class="section-desc">
+          Atribuições distribuídas por iniciativa para garantir respaldo técnico sem sobrecarga gerencial.
+        </p>
+      </div>
+
+      <div class="grid-3">
+        {ROLES.map((role) => (
+          <article class={role.tone === 'default' ? 'm3-card' : `m3-card ${role.tone}`}>
+            <h3>{role.title}</h3>
+            <p>{role.description}</p>
+          </article>
+        ))}
+      </div>
+
+      <div class="grid-2" style="margin-top:20px">
+        {CONTINUITY_RULES.map((rule) => (
+          <article class={rule.tone === 'default' ? 'm3-card' : `m3-card ${rule.tone}`}>
+            <h3>{rule.title}</h3>
+            <p>{rule.description}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Registro Formal -->
+  <section id="registro" class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Rastreabilidade</div>
+        <h2 class="section-title">Registro formal obrigatório</h2>
+        <p class="section-desc">
+          É vedado assumir projetos sob a bandeira da Yuko apenas por alinhamento verbal; toda iniciativa exige registro rastreável.
+        </p>
+      </div>
+
+      <div class="m3-card">
+        <h3>Elementos Mínimos de Cada Issue</h3>
+        <div class="grid-2">
+          <ul class="clean-list">
+            {REGISTRY_COL_A.map((item) => (
+              <li>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+          <ul class="clean-list">
+            {REGISTRY_COL_B.map((item) => (
+              <li>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

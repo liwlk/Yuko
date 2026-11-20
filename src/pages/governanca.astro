@@ -1,0 +1,141 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import {
+  DOD_ITEMS,
+  STACK_ITEMS,
+  SECURITY_CARDS,
+  LGPD_ITEMS,
+  CONFLICT_STEPS,
+} from '../data/yuko';
+---
+
+<BaseLayout
+  title="Qualidade, Segurança, LGPD & Ética — Yuko Institucional"
+  description="Padrões de engenharia, Definition of Done, segurança de aplicação, LGPD (Lei nº 13.709/2018) e mediação de conflitos na Yuko."
+  currentPath="/governanca/"
+  footerVariant="compact"
+  nextHref="/manual/"
+  nextLabel="Ler Manual Completo v1.0 →"
+>
+  <section class="sub-hero">
+    <div class="container">
+      <div class="hero-eyebrow">
+        <span>Engenharia &amp; Ética</span>
+        <span aria-hidden="true">·</span>
+        <span>Diretrizes Técnicas</span>
+      </div>
+      <h1 class="sub-hero-title">
+        Qualidade, <span class="accent-word">Segurança</span> &amp; Conformidade LGPD
+      </h1>
+      <p class="hero-lead">
+        Critérios técnicos de aceitação, stack sustentável, proteção de aplicações, conformidade com a Lei Geral de Proteção de Dados e mediação comunitária.
+      </p>
+      <div class="hero-actions" style="margin-bottom:0">
+        <a href="#engenharia" class="btn btn-primary">Engenharia &amp; DoD</a>
+        <a href="#seguranca" class="btn btn-tonal">Segurança</a>
+        <a href="#privacidade" class="btn btn-outline">LGPD &amp; Mediação</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bloco 01: Padrões de Engenharia & Segurança -->
+  <section id="engenharia" class="section" style="padding-top:24px">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Bloco 01 · Engenharia &amp; Segurança</div>
+        <h2 class="section-title">Padrões de Engenharia &amp; Segurança</h2>
+        <p class="section-desc">
+          Soluções proporcionais à microempresa, com código limpo, pilhas maduras e proteção desde a base.
+        </p>
+      </div>
+
+      <div class="grid-2">
+        <article class="m3-card tonal-primary">
+          <div>
+            <h3>Checklist de Entrega (DoD)</h3>
+            <ul class="clean-list" style="margin-top:14px">
+              {DOD_ITEMS.map((item) => (
+                <li>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <span class="card-code">definition of done</span>
+        </article>
+
+        <article class="m3-card">
+          <div>
+            <h3>Stack &amp; Commits</h3>
+            <ul class="clean-list" style="margin-top:14px">
+              {STACK_ITEMS.map((item) => (
+                <li>
+                  <span>
+                    <strong>{item.title}:</strong> {item.description}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <span class="card-code">engenharia sustentável</span>
+        </article>
+      </div>
+
+      <div id="seguranca" class="grid-3" style="margin-top:24px">
+        {SECURITY_CARDS.map((card, idx) => (
+          <article class={idx === 1 ? 'm3-card tonal-secondary' : 'm3-card'}>
+            <div>
+              <h3>{card.title}</h3>
+              <p>{card.description}</p>
+            </div>
+            <span class="card-code">{card.code}</span>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Bloco 02: Privacidade (LGPD) & Mediação -->
+  <section id="privacidade" class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Bloco 02 · Lei nº 13.709/2018 e Conduta</div>
+        <h2 class="section-title">Privacidade (LGPD) &amp; Mediação</h2>
+      </div>
+
+      <div class="grid-2">
+        <article class="m3-card tonal-tertiary">
+          <div>
+            <h3>Conformidade com a LGPD</h3>
+            <ul class="clean-list" style="margin-top:14px">
+              {LGPD_ITEMS.map((item) => (
+                <li>
+                  <span>
+                    <strong>{item.title}:</strong> {item.description}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <span class="card-code">lgpd · proteção de dados</span>
+        </article>
+
+        <article class="m3-card">
+          <div>
+            <h3>Mediação de Conflitos em 3 Etapas</h3>
+            <ul class="clean-list" style="margin-top:14px">
+              {CONFLICT_STEPS.map((step) => (
+                <li>
+                  <span>
+                    <strong>{step.title}:</strong> {step.description}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <span class="card-code">ética · resolução</span>
+        </article>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

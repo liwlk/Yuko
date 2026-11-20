@@ -1,20 +1,29 @@
-# Yuko Institucional — Material You 3 Expressive Design System
+# Yuko Institucional — Material You 3 Expressive Design System (v2.0)
 
-Estrutura institucional da **Yuko** baseada integralmente no **Manual Institucional da Yuko — v1.0**, preservando a linguagem visual, layout e interatividade **Material You 3 Expressive** com alto contraste, acessibilidade por teclado e movimento reduzido.
+Sistema de design e arquitetura frontend da **Yuko** baseado integralmente no **Manual Institucional da Yuko — v1.0**, evoluído para **Node.js + Astro + React 19 + TypeScript + Tailwind CSS v4 + Motion + GSAP (`ScrollTrigger`) + Lenis + ESLint**, preservando alto contraste, acessibilidade por teclado e suporte completo a movimento reduzido.
 
-## Arquitetura Multi-Página
-- `index.html`: Visão geral institucional, Hero com ilustração SVG dinâmica responsiva ao tema e coreografia 60fps, seção interativa **Experiência em Yukon (Canadá)** (`#yukon`) em scrollytelling sticky com 4 capítulos e 3 atmosferas, módulos assimétricos de entrada e seção comparativa para Microempresas vs. Desenvolvedores.
-- `extensoes.html`: Pilares conceituais (Yukon, Oslo, Verona), diretrizes visuais, as 6 extensões (`Yuko Field`, `Yuko Dev`, `Yuko Make`, `Yuko Place`, `Yuko Work`, `Yuko Inline`), as 6 frentes de atuação, regras do servidor Discord e rodapé compacto (`.site-footer-compact`).
-- `ciclo.html`: As 6 etapas do Ciclo de Entrega Assistida, triagem/priorização, papéis operacionais (Executor, 2+ Revisores, Suporte), transição compulsória, registro formal em issues e rodapé compacto.
-- `governanca.html`: Simplicidade arquitetural, Definition of Done, linting, commits semânticos, diretrizes de stack e segurança (SQLi, XSS, `.env.example`, HTTPS/TLS, Argon2/bcrypt), LGPD (Lei nº 13.709/2018), resolução de conflitos em 3 etapas e rodapé compacto.
-- `manual.html`: Quadro de controle do documento responsivo, instruções de consulta, ressalvas jurídicas, linhagem NYX → Expliance, gestão enxuta, glossário institucional pesquisável (com contagem de resultados e estado vazio) e rodapé compacto.
+## Arquitetura Multi-Rota (`trailingSlash: true`)
 
-## Motion, Scrollytelling & Transições (`v=7`)
-- **MPA View Transitions**: `@view-transition { navigation: auto; }` ativado em todas as rotas (`styles.css?v=7` + `app.js?v=7`), preservando transições suaves entre páginas estáticas com suporte automático a `prefers-reduced-motion`.
-- **Hero SVG Choreography (60fps)**: Em dispositivos sem `prefers-reduced-motion: reduce`, `app.js` interpola via `requestAnimationFrame` + `lerp` as variáveis CSS `--hero-scroll` (`0..1` ao longo do `.hero`) e `--hero-mx` / `--hero-my` (`-1..1` pelo ponteiro sobre `.hero-art-card`, zerando ao sair), com amplitude atenuada quando `[data-motion="calm"]`.
-- **Yukon Scrollytelling Sticky (Firewatch + INVERSA)**: O container `.yukon-scrolly` mantém `#yukonPanorama` fixo em viewport desktop enquanto `--yukon-progress` (`0..1`) dirige o anel circular `#yukonRingFill` e as camadas parallax. Um `IntersectionObserver` (com fallback por progresso de scroll) ativa `.is-active` nos 4 capítulos `.yukon-chapter[data-yukon-chapter]`, atualiza `#yukonStepBadge` (`01 / 04`–`04 / 04`) e alterna automaticamente `data-yukon-mood` (`0,1 → alvorada`, `2 → travessia`, `3 → boreal`), respeitando travamento manual via botões `data-yukon-mood` (`#yukonMoodLabel`).
+- **`/` (`src/pages/index.astro`)**: Visão geral institucional, Hero com ilustração vetorial responsiva ao tema e coreografia 60fps, **Experiência em Yukon (Canadá)** (`#yukon`) em scrollytelling sticky com 4 capítulos e 3 atmosferas, módulos assimétricos de entrada e seção comparativa Microempresas vs. Desenvolvedores.
+- **`/extensoes/` (`src/pages/extensoes.astro`)**: Painel unificado de identidade conceitual (Yukon, Oslo, Verona) e diretrizes visuais, grade das 6 extensões (`Yuko Field`, `Yuko Dev`, `Yuko Make`, `Yuko Place`, `Yuko Work`, `Yuko Inline`), painel estruturado das 6 frentes de atuação, painel tonal do servidor Discord e rodapé compacto (`footerVariant="compact"`).
+- **`/ciclo/` (`src/pages/ciclo.astro`)**: As 6 etapas do Ciclo de Entrega Assistida, critérios de triagem/priorização, papéis operacionais (Executor, 2+ Revisores, Responsável de Suporte), regras de continuidade (transição compulsória e abandono em 5 dias úteis), os 6 elementos mínimos do registro formal em issue e rodapé compacto.
+- **`/governanca/` (`src/pages/governanca.astro`)**: Bloco 01 com Checklist de Entrega (DoD), Stack & Commits Semânticos e Blindagem/Segredos/Auditoria (SQLi, XSS, `.env.example`, HTTPS/TLS, Argon2/bcrypt); Bloco 02 com Privacidade LGPD (Lei nº 13.709/2018) e Mediação de Conflitos em 3 etapas; rodapé compacto.
+- **`/manual/` (`src/pages/manual.astro`)**: Quadro de controle responsivo (`<table class="control-table">` com `<caption class="sr-only">` e `<th scope="row">`), ressalvas jurídicas, linhagem `NYX → Expliance → Yuko`, implantação gradual/gestão enxuta, guia rápido de navegação, ilhas React (`<GlossaryExplorer client:load />`) para filtragem acessível em tempo real e rodapé compacto.
 
-## Tokens, Acessibilidade & Assets
-- **Identidade & Ícone**: `assets/favicon.svg` minimalista em alto contraste (`#231916` com 8 pétalas radiais em `#fef8ec`).
-- **Temas Dinâmicos**: 4 sementes (`terracota`, `botanico`, `oceanico`, `ameixa`) × 2 polaridades (`light`, `dark`) validadas em `localStorage` e persistidas entre subpáginas.
-- **Acessibilidade & Motion**: `.skip-link`, `.sr-only`, `:focus-visible` global, `scroll-margin-top: 96px`, navegação por teclado (`Escape`, `ArrowUp`/`ArrowDown`) e fechamento por `focusout` em `#splitMenu`, além de suporte a `[data-motion="calm"]` e `@media (prefers-reduced-motion: reduce)`.
+## Stack Tecnológica & Camada de Dados
+
+- **Fonte Única de Conteúdo (`src/data/yuko.ts`)**: Todos os textos normativos, listas, tabelas e termos do glossário são exportados com tipagem TypeScript estrita (`IDENTITY_PILLARS`, `VISUAL_RULES`, `EXTENSIONS`, `FRONTS`, `DISCORD_CHANNELS`, `CYCLE_STAGES`, `TRIAGE_CRITERIA`, `ROLES`, `CONTINUITY_RULES`, `REGISTRY_COL_A`, `REGISTRY_COL_B`, `DOD_ITEMS`, `STACK_ITEMS`, `SECURITY_CARDS`, `LGPD_ITEMS`, `CONFLICT_STEPS`, `CONTROL_TABLE`, `MANUAL_ORIGINS`, `GLOSSARY_TERMS`).
+- **Layout Compartilhado (`src/layouts/BaseLayout.astro`)**: Encapsula `<head>`, script anti-FOUC para `data-seed`, `data-mode` e `data-motion`, `.skip-link`, Top App Bar em cápsula flutuante, navegação mobile horizontal, transições de visualização (`@view-transition { navigation: auto; }`) e variantes de rodapé (`full` e `compact`).
+- **Tailwind CSS v4 + Tokens M3 Expressive**: `@tailwindcss/vite` coexiste com variáveis semânticas `--md-primary`, `--md-secondary`, `--md-tertiary`, `--md-surface-*`, `--md-on-*`, `--md-outline-*` e escalas de arredondamento (`--shape-sm` a `--shape-2xl`, `--shape-pill`).
+
+## Motion, Scrollytelling & Smooth Scroll
+
+- **Lenis + GSAP (`ScrollTrigger`)**: Rolagem suave gerenciada pelo Lenis e conectada ao `ScrollTrigger` para acionar progressão contínua da cena Yukon (`--yukon-progress` de `0` a `1`), anel circular `#yukonRingFill`, indicador `#yukonStepBadge` (`01 / 04`–`04 / 04`) e alternância automática de atmosferas (`alvorada`, `travessia`, `boreal`) com respeito a travamento manual (`[data-yukon-mood]`).
+- **Motion (`motion/react`)**: Aplicado nas ilhas React (`GlossaryExplorer` e controles interativos) com curvas spring expressivas (`--ease-spring`) e fallback imediato quando `[data-motion="calm"]` ou `@media (prefers-reduced-motion: reduce)` estiver ativo.
+- **MPA View Transitions**: Transições fluidas entre rotas mantendo a barra superior (`view-transition-name: yuko-topbar`) e o logotipo (`yuko-logo`) estáveis enquanto `main` (`yuko-stage`) transiciona.
+
+## Temas Dinâmicos, Acessibilidade & Qualidade
+
+- **4 Sementes × 2 Polaridades**: `terracota` (Terracota Solar), `botanico` (Botânico Vivo), `oceanico` (Índigo Oceânico) e `ameixa` (Ameixa Editorial) em modos `light` e `dark`, persistidos em `localStorage` (`yuko_seed`, `yuko_mode`, `yuko_motion`) com atualização imediata de `aria-pressed` e notificações via toast (`role="status"`, `aria-live="polite"`).
+- **Acessibilidade**: `.skip-link`, `.sr-only`, `:focus-visible` global, `scroll-margin-top: 96px`, `<th scope="row">` e `<caption>` semânticos, listas `.clean-list` com `<span>` interno preservando o grid `auto 1fr`, e regiões `aria-live="polite"` para busca do glossário.
+- **Qualidade & Deploy**: Validação contínua com `eslint .` (`eslint.config.mjs`), `tsc --noEmit` e `astro build` gerando artefatos estáticos compatíveis com GitHub + Vercel (`cleanUrls: true`, `trailingSlash: true`).

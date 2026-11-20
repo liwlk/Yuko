@@ -1,0 +1,168 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SplitButton from '../components/SplitButton';
+import HeroSculpture from '../components/HeroSculpture';
+import YukonExperience from '../components/YukonExperience';
+import {
+  AUDIENCE_CARDS,
+  HERO_METRICS,
+  HOME_PILLARS,
+  SPLIT_SHORTCUTS,
+  YUKON_CHAPTERS,
+  YUKON_MOOD_LABELS,
+} from '../data/yuko';
+---
+
+<BaseLayout
+  title="Yuko — Comunidade Técnica Brasileira & Entrega Assistida"
+  description="A Yuko conecta desenvolvedores independentes e microempresas para criar software sob medida, validado por múltiplos pares e com suporte garantido após a entrega."
+  currentPath="/"
+  footerVariant="monument"
+>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <h1 class="hero-title">
+          Software com <span class="accent-word">respaldo</span> coletivo para microempresas.
+        </h1>
+
+        <p class="hero-lead">
+          A Yuko conecta desenvolvedores independentes e microempresas para criar software sob medida, validado por múltiplos pares e com suporte garantido após a entrega.
+        </p>
+
+        <div class="hero-actions">
+          <SplitButton
+            client:load
+            mainLabel="Conhecer o Ciclo Assistido"
+            mainHref="/ciclo/"
+            items={SPLIT_SHORTCUTS}
+          />
+
+          <a href="/manual/" class="btn btn-tonal">Consultar Manual v1.0</a>
+        </div>
+
+        <div class="hero-metrics" aria-label="Indicadores estruturais da Yuko">
+          {HERO_METRICS.map((metric) => (
+            <div class="metric-pill">
+              <span class="metric-val">{metric.value}</span>
+              <span class="metric-label">{metric.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <HeroSculpture client:load />
+    </div>
+  </section>
+
+  <!-- Experiência em Yukon (Canadá) — Firewatch + INVERSA Scrollytelling -->
+  <section id="yukon" class="yukon-section" aria-labelledby="yukonHeading">
+    <div class="container">
+      <YukonExperience
+        client:load
+        chapters={YUKON_CHAPTERS}
+        moodLabels={YUKON_MOOD_LABELS}
+      />
+    </div>
+  </section>
+
+  <!-- 3 Expressive Asymmetric Feature Modules -->
+  <section id="pilares" class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Como funciona</div>
+        <h2 class="section-title">Entrega profissional sem burocracia</h2>
+        <p class="section-desc">
+          Escopo claro, revisão por pares e suporte definido em um ciclo único.
+        </p>
+      </div>
+
+      <div class="features-grid">
+        {HOME_PILLARS.map((pillar) => (
+          <a href={pillar.href} class={`feature-card feature-${pillar.variant}`}>
+            <div>
+              <div class="feature-shape-icon" aria-hidden="true">
+                {pillar.variant === 'arch' && (
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <circle cx="12" cy="12" r="9" />
+                    <path d="M12 3v18M3 12h18" />
+                  </svg>
+                )}
+                {pillar.variant === 'xl' && (
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <path d="M4 12h4l3-7 4 14 3-7h2" />
+                  </svg>
+                )}
+                {pillar.variant === 'soft' && (
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <rect x="4" y="10" width="16" height="10" rx="4" />
+                    <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+                  </svg>
+                )}
+              </div>
+              <h3>{pillar.title}</h3>
+              <p>{pillar.description}</p>
+            </div>
+            <span class="feature-tag">{pillar.tag}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Two Audiences Section (Microempresas vs Desenvolvedores) -->
+  <section id="atuacao" class="section">
+    <div class="container">
+      <div class="plans-header">
+        <div>
+          <div class="section-kicker">Para quem é</div>
+          <h2 class="section-title" style="margin-bottom:0">
+            Segurança para microempresas, autonomia para desenvolvedores
+          </h2>
+        </div>
+      </div>
+
+      <div class="plans-grid">
+        {AUDIENCE_CARDS.map((card) => (
+          <article
+            id={card.id}
+            class={card.featured ? 'plan-card featured' : 'plan-card'}
+          >
+            <div>
+              <span class="studio-badge">{card.badge}</span>
+              <h3 class="audience-title">{card.title}</h3>
+              <p>{card.description}</p>
+              <ul class="clean-list">
+                {card.bullets.map((bullet) => (
+                  <li><span>{bullet}</span></li>
+                ))}
+              </ul>
+            </div>
+            <a
+              href={card.ctaHref}
+              class={card.ctaVariant === 'primary' ? 'btn btn-primary' : 'btn btn-outline'}
+            >
+              {card.ctaLabel}
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Closing CTA Banner -->
+  <section class="section" style="padding-top:24px">
+    <div class="container">
+      <div class="cta-banner">
+        <div>
+          <h2>Consulte o Manual Institucional da Yuko — v1.0</h2>
+          <p>
+            Acesse o controle documental, as diretrizes operacionais, o glossário pesquisável e os compromissos públicos da comunidade.
+          </p>
+        </div>
+        <a href="/manual/" class="btn btn-primary">Abrir Manual v1.0</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,155 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import '../styles/global.css';
+import TopBar from '../components/TopBar.astro';
+import Footer from '../components/Footer.astro';
+
+export interface Props {
+  title: string;
+  description: string;
+  currentPath: string;
+  footerVariant?: 'monument' | 'compact';
+  nextHref?: string;
+  nextLabel?: string;
+  footerSummary?: string;
+}
+
+const {
+  title,
+  description,
+  currentPath,
+  footerVariant = 'compact',
+  nextHref,
+  nextLabel,
+  footerSummary,
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="pt-BR" data-seed="terracota" data-mode="light" data-motion="expressive">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&family=JetBrains+Mono:wght@500;700&display=swap"
+    />
+    <ClientRouter />
+    <script is:inline>
+      (function () {
+        var ALLOWED_SEEDS = ['terracota', 'botanico', 'oceanico', 'ameixa'];
+        var ALLOWED_MODES = ['light', 'dark'];
+        var ALLOWED_MOTIONS = ['expressive', 'calm'];
+
+        function readPrefs() {
+          var seed = 'terracota';
+          var mode = 'light';
+          var motion = 'expressive';
+          try {
+            var s = localStorage.getItem('yuko_seed');
+            var m = localStorage.getItem('yuko_mode');
+            var t = localStorage.getItem('yuko_motion');
+            if (s && ALLOWED_SEEDS.indexOf(s) > -1) seed = s;
+            if (m && ALLOWED_MODES.indexOf(m) > -1) mode = m;
+            if (t && ALLOWED_MOTIONS.indexOf(t) > -1) motion = t;
+          } catch (_e) {
+            // Ignore storage access errors
+          }
+          return { seed: seed, mode: mode, motion: motion };
+        }
+
+        function applyPrefsToDocument(targetDoc) {
+          var root = (targetDoc || document).documentElement;
+          if (!root) return;
+          var prefs = readPrefs();
+          root.setAttribute('data-seed', prefs.seed);
+          root.setAttribute('data-mode', prefs.mode);
+          root.setAttribute('data-motion', prefs.motion);
+        }
+
+        applyPrefsToDocument(document);
+
+        if (!window.__yukoThemeSwapReady) {
+          window.__yukoThemeSwapReady = true;
+          document.addEventListener('astro:before-swap', function (ev) {
+            if (ev && ev.newDocument) {
+              applyPrefsToDocument(ev.newDocument);
+            }
+          });
+          document.addEventListener('astro:after-swap', function () {
+            applyPrefsToDocument(document);
+          });
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#topo">Pular para o conteúdo</a>
+
+    <TopBar currentPath={currentPath} />
+
+    <main id="topo" transition:name="yuko-stage">
+      <slot />
+    </main>
+
+    <Footer
+      variant={footerVariant}
+      currentPath={currentPath}
+      nextHref={nextHref}
+      nextLabel={nextLabel}
+      summary={footerSummary}
+    />
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script>
+      import { initLenis } from '../scripts/lenis-manager';
+
+      declare global {
+        interface Window {
+          __yukoToastReady?: boolean;
+        }
+      }
+
+      let toastTimer: number | undefined;
+
+      function showToast(message: string) {
+        const toastEl = document.getElementById('toast');
+        if (!toastEl || !message) return;
+        toastEl.textContent = message;
+        toastEl.classList.add('show');
+        if (toastTimer !== undefined) {
+          window.clearTimeout(toastTimer);
+        }
+        toastTimer = window.setTimeout(() => {
+          toastEl.classList.remove('show');
+        }, 2500);
+      }
+
+      function handleToastEvent(event: Event) {
+        const customEvent = event as CustomEvent<{ message?: string } | string>;
+        const detail = customEvent.detail;
+        const message = typeof detail === 'string' ? detail : detail?.message;
+        if (message) {
+          showToast(message);
+        }
+      }
+
+      if (!window.__yukoToastReady) {
+        window.__yukoToastReady = true;
+        window.addEventListener('yuko:toast', handleToastEvent);
+        document.addEventListener('yuko:toast', handleToastEvent);
+        document.addEventListener('astro:page-load', () => {
+          initLenis();
+        });
+      }
+
+      initLenis();
+    </script>
+  </body>
+</html>

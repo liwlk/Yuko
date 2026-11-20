@@ -1,0 +1,45 @@
+---
+import { COLOR_SEEDS, NAV_ITEMS } from '../data/yuko';
+import ThemeControls from './ThemeControls';
+
+export interface Props {
+  currentPath: string;
+}
+
+const { currentPath } = Astro.props;
+---
+
+<div class="top-bar-wrap">
+  <header class="top-bar" aria-label="Navegação principal" transition:name="yuko-topbar">
+    <a href="/" class="brand">
+      <span class="brand-mark" transition:name="yuko-logo">
+        <img src="/assets/yuko-logo.jpg" alt="Logotipo da Yuko" />
+      </span>
+      <span>Yuko</span>
+    </a>
+
+    <nav class="nav-links" aria-label="Seções e subpáginas">
+      {NAV_ITEMS.map((item) => (
+        <a
+          href={item.href}
+          aria-current={currentPath === item.href ? 'page' : undefined}
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <ThemeControls client:load seeds={COLOR_SEEDS} />
+  </header>
+
+  <nav class="mobile-nav" aria-label="Navegação móvel">
+    {NAV_ITEMS.map((item) => (
+      <a
+        href={item.href}
+        aria-current={currentPath === item.href ? 'page' : undefined}
+      >
+        {item.label}
+      </a>
+    ))}
+  </nav>
+</div>

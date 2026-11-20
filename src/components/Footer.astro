@@ -1,0 +1,145 @@
+---
+import { NAV_ITEMS } from '../data/yuko';
+
+export interface Props {
+  variant?: 'monument' | 'compact';
+  currentPath: string;
+  nextHref?: string;
+  nextLabel?: string;
+  summary?: string;
+}
+
+const {
+  variant = 'compact',
+  currentPath,
+  nextHref,
+  nextLabel,
+  summary,
+} = Astro.props;
+
+const PAGE_ANCHORS: Record<string, Array<{ href: string; label: string }>> = {
+  '/': [
+    { href: '#yukon', label: 'Experiência Yukon' },
+    { href: '#pilares', label: 'Como funciona' },
+    { href: '#atuacao', label: 'Para quem é' },
+    { href: '/manual/#glossario', label: 'Glossário' },
+  ],
+  '/extensoes/': [
+    { href: '#fundamentos', label: 'Fundamentos' },
+    { href: '#extensoes', label: '6 Extensões' },
+    { href: '#frentes', label: '6 Frentes' },
+    { href: '#discord', label: 'Discord' },
+  ],
+  '/ciclo/': [
+    { href: '#etapas', label: '6 Etapas' },
+    { href: '#papeis', label: 'Papéis & Continuidade' },
+    { href: '#registro', label: 'Registro Formal' },
+  ],
+  '/governanca/': [
+    { href: '#engenharia', label: 'Engenharia & Segurança' },
+    { href: '#privacidade', label: 'LGPD & Mediação' },
+  ],
+  '/manual/': [
+    { href: '#controle', label: 'Quadro de Controle' },
+    { href: '#origem', label: 'Ressalvas & Linhagem' },
+    { href: '#glossario', label: 'Glossário' },
+  ],
+};
+
+const resolvedAnchors = PAGE_ANCHORS[currentPath] ?? PAGE_ANCHORS['/'];
+
+const defaultSummary =
+  variant === 'monument'
+    ? 'Compromisso coletivo de valorização do talento técnico independente e de fortalecimento das microempresas brasileiras por meio de entrega assistida e sustentação compartilhada.'
+    : 'Comunidade técnica brasileira de desenvolvimento colaborativo e sustentação para microempresas.';
+
+const resolvedSummary = summary ?? defaultSummary;
+const isMonument = variant === 'monument';
+---
+
+<footer class={isMonument ? 'site-footer' : 'site-footer site-footer-compact'}>
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <a href="/" class="brand">
+          <span class="brand-mark">
+            <img src="/assets/yuko-logo.jpg" alt="Logotipo da Yuko" />
+          </span>
+          <span>Yuko</span>
+        </a>
+        <p class="footer-summary">{resolvedSummary}</p>
+        {nextHref && nextLabel ? (
+          <a href={nextHref} class="btn btn-primary btn-sm">{nextLabel}</a>
+        ) : (
+          <a href="#topo" class="btn btn-tonal btn-sm">Voltar ao topo</a>
+        )}
+      </div>
+
+      <div class="footer-cols">
+        <div>
+          <div class="footer-col-title">{isMonument ? 'Navegação' : 'Subpáginas'}</div>
+          <div class="footer-col-links">
+            {NAV_ITEMS.map((item) => (
+              <a
+                href={item.href}
+                aria-current={currentPath === item.href ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Nesta Página</div>
+          <div class="footer-col-links">
+            {resolvedAnchors.map((anchor) => (
+              <a href={anchor.href}>{anchor.label}</a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {isMonument && (
+      <div class="footer-monument">
+        <div class="footer-monument-head">
+          <span class="footer-ref-kicker">
+            Comunidade Técnica Brasileira · Yukon · Oslo · Verona
+          </span>
+          <div class="footer-monument-logo">
+            <img src="/assets/yuko-logo.jpg" alt="Marca Yuko" />
+          </div>
+        </div>
+
+        <span class="footer-wordmark">YUKO</span>
+
+        <div class="footer-monument-sub">
+          <span class="footer-monument-tagline">
+            Ciclo Colaborativo e Entrega Assistida por Pares
+          </span>
+        </div>
+      </div>
+    )}
+
+    <div class="footer-inner">
+      <span><strong>Yuko</strong> · Manual Institucional v1.0</span>
+      <div class="footer-links">
+        {isMonument ? (
+          <a href="#topo">Topo</a>
+        ) : (
+          <>
+            {NAV_ITEMS.map((item) => (
+              <a
+                href={item.href}
+                aria-current={currentPath === item.href ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            ))}
+          </>
+        )}
+      </div>
+    </div>
+  </div>
+</footer>
