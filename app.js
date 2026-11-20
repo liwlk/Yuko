@@ -8,11 +8,11 @@
     toastEl.textContent = message;
     toastEl.classList.add("show");
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => toastEl.classList.remove("show"), 2600);
+    toastTimer = setTimeout(() => toastEl.classList.remove("show"), 2500);
   }
 
   // ------------------------------------------------------------------------
-  // 1. Dynamic Color Seed, Light/Dark Mode & Motion Physics
+  // 1. Dynamic Color Seed, Mode & Motion Persistence across Subpages
   // ------------------------------------------------------------------------
   const seedNames = {
     terracota: "Terracota Solar",
@@ -21,27 +21,44 @@
     ameixa: "Ameixa Editorial",
   };
 
-  function setSeed(seed) {
+  function applyPreferences() {
+    try {
+      const savedSeed = localStorage.getItem("yuko_seed");
+      const savedMode = localStorage.getItem("yuko_mode");
+      const savedMotion = localStorage.getItem("yuko_motion");
+      if (savedSeed) setSeed(savedSeed, true);
+      if (savedMode) setMode(savedMode, true);
+      if (savedMotion) setMotion(savedMotion, true);
+    } catch {
+      // Ignore storage errors
+    }
+  }
+
+  function setSeed(seed, silent = false) {
     root.setAttribute("data-seed", seed);
     document.querySelectorAll("[data-seed]").forEach((btn) => {
       btn.setAttribute("aria-pressed", btn.dataset.seed === seed ? "true" : "false");
     });
-    showToast(`Tema alterado para ${seedNames[seed] || seed}`);
+    try { localStorage.setItem("yuko_seed", seed); } catch {}
+    if (!silent) showToast(`Tema: ${seedNames[seed] || seed}`);
   }
 
-  function setMode(mode) {
+  function setMode(mode, silent = false) {
     root.setAttribute("data-mode", mode);
     document.querySelectorAll("[data-set-mode]").forEach((btn) => {
       btn.setAttribute("aria-pressed", btn.dataset.setMode === mode ? "true" : "false");
     });
+    try { localStorage.setItem("yuko_mode", mode); } catch {}
+    if (!silent) showToast(mode === "dark" ? "Modo Escuro ativado" : "Modo Claro ativado");
   }
 
-  function setMotion(motion) {
+  function setMotion(motion, silent = false) {
     root.setAttribute("data-motion", motion);
     document.querySelectorAll("[data-set-motion]").forEach((btn) => {
       btn.setAttribute("aria-pressed", btn.dataset.setMotion === motion ? "true" : "false");
     });
-    showToast(motion === "expressive" ? "Física: Mola Expressiva ativa" : "Física: Transição Linear Calma");
+    try { localStorage.setItem("yuko_motion", motion); } catch {}
+    if (!silent) showToast(motion === "expressive" ? "Física: Mola Expressiva" : "Física: Linear Calmo");
   }
 
   document.querySelectorAll("[data-seed]").forEach((btn) => {
@@ -56,14 +73,12 @@
     btn.addEventListener("click", () => setMotion(btn.dataset.setMotion));
   });
 
-  const modeToggleBtn = document.getElementById("modeToggleBtn");
-  if (modeToggleBtn) {
-    modeToggleBtn.addEventListener("click", () => {
-      const next = root.getAttribute("data-mode") === "dark" ? "light" : "dark";
-      setMode(next);
-      showToast(next === "dark" ? "Modo Escuro ativado" : "Modo Claro ativado");
-    });
-  }
+  document.getElementById("modeToggleBtn")?.addEventListener("click", () => {
+    const next = root.getAttribute("data-mode") === "dark" ? "light" : "dark";
+    setMode(next);
+  });
+
+  applyPreferences();
 
   // ------------------------------------------------------------------------
   // 2. Split Button Dropdown
@@ -82,243 +97,166 @@
       splitMenu.classList.remove("open");
       splitMenuBtn.setAttribute("aria-expanded", "false");
     });
-
-    splitMenu.querySelectorAll("[data-quick-mood]").forEach((item) => {
-      item.addEventListener("click", () => {
-        selectMood(item.dataset.quickMood);
-        if (!isPlaying) togglePlayback();
-      });
-    });
-  }
-
-  const heroStartBtn = document.getElementById("heroStartBtn");
-  if (heroStartBtn) {
-    heroStartBtn.addEventListener("click", () => {
-      if (!isPlaying) togglePlayback();
-      document.getElementById("studioCard")?.scrollIntoView({ behavior: "smooth", block: "center" });
-    });
   }
 
   // ------------------------------------------------------------------------
-  // 3. Interactive Soundscape Studio + Gentle Web Audio Synthesizer
+  // 3. Home Hero Interactive Explorer (Ciclo 6 Etapas + Pilares do Manual)
   // ------------------------------------------------------------------------
-  const moods = {
-    foco: {
-      title: "Chuva de Argila",
-      subtitle: "Harmônicos quentes em 174 Hz · Foco Profundo",
-      minutes: 25,
-      freq: 174,
+  const cycleStages = [
+    {
+      badge: "Etapa 1 · Demanda",
+      title: "1. Demanda & Triagem",
+      subtitle: "Prospecção ativa via Yuko Field ou acolhimento passivo com análise de viabilidade e criticidade.",
     },
-    leitura: {
-      title: "Pátio de Linho",
-      subtitle: "Brisa acústica suave em 220 Hz · Leitura Calma",
-      minutes: 40,
-      freq: 220,
+    {
+      badge: "Etapa 2 · Escopo",
+      title: "2. Escopo & Critérios",
+      subtitle: "Documento sintético com critérios objetivos de aceitação e abertura de registro formal rastreável.",
     },
-    criativa: {
-      title: "Atelier Solar",
-      subtitle: "Textura analógica em 261 Hz · Pausa Criativa",
-      minutes: 15,
-      freq: 261.6,
+    {
+      badge: "Etapa 3 · Construção",
+      title: "3. Construção Modular",
+      subtitle: "Codificação em stacks consolidadas com linting automatizado, commits semânticos e dados sintéticos.",
     },
-    sono: {
-      title: "Horizonte Profundo",
-      subtitle: "Onda lenta em 136 Hz · Sono Sereno",
-      minutes: 60,
-      freq: 136.1,
+    {
+      badge: "Etapa 4 · Peer Review",
+      title: "4. Revisão por Pares",
+      subtitle: "Validação cruzada obrigatória por 2+ desenvolvedores independentes antes da homologação.",
+    },
+    {
+      badge: "Etapa 5 · Homologação",
+      title: "5. Testes & Homologação",
+      subtitle: "Verificação funcional, responsividade, segurança contra SQLi/XSS e auditoria de dependências em staging.",
+    },
+    {
+      badge: "Etapa 6 · Sustentação",
+      title: "6. Entrega & Suporte",
+      subtitle: "Homologação com a microempresa e designação obrigatória do Responsável de Suporte pós-entrega.",
+    },
+  ];
+
+  const pillarPresets = {
+    ciclo: {
+      stage: 1,
+      badge: "Ciclo de Entrega Assistida",
+      title: "1. Demanda & Triagem",
+      subtitle: "Prospecção ativa via Yuko Field ou acolhimento passivo com análise de viabilidade e criticidade.",
+    },
+    linhagem: {
+      stage: 2,
+      badge: "Linhagem · NYX → Expliance → Yuko",
+      title: "Herança & Desburocratização",
+      subtitle: "Absorve a experimentação da fase NYX e a governança da Expliance em um ciclo produtivo enxuto.",
+    },
+    pilares: {
+      stage: 3,
+      badge: "Identidade · Yukon · Oslo · Verona",
+      title: "Minimalismo Instrumental",
+      subtitle: "Resiliência (Yukon), limpeza comunicacional (Oslo) e solidez institucional formal (Verona).",
+    },
+    discord: {
+      stage: 4,
+      badge: "Comunidade · Ambiente Discord",
+      title: "Operação Síncrona & Assíncrona",
+      subtitle: "Canais institucionais, técnicos e operacionais pautados por comunicação construtiva e respeito.",
     },
   };
 
-  let currentMood = "foco";
-  let isPlaying = false;
-  let remainingSeconds = moods.foco.minutes * 60;
-  let eqTimer = null;
-  let clockTimer = null;
-  let audioCtx = null;
-  let masterGain = null;
-  let osc1 = null;
-  let osc2 = null;
-
   const studioCard = document.getElementById("studioCard");
-  const studioStateBadge = document.getElementById("studioStateBadge");
-  const studioTimer = document.getElementById("studioTimer");
-  const trackTitle = document.getElementById("trackTitle");
-  const trackSubtitle = document.getElementById("trackSubtitle");
-  const playIcon = document.getElementById("playIcon");
-  const eqBars = Array.from(document.querySelectorAll("#eqBars .eq-bar"));
-  const densitySlider = document.getElementById("densitySlider");
-  const densityVal = document.getElementById("densityVal");
+  const badgeEl = document.getElementById("studioStateBadge");
+  const counterEl = document.getElementById("studioTimer");
+  const titleEl = document.getElementById("trackTitle");
+  const subtitleEl = document.getElementById("trackSubtitle");
+  const stageSlider = document.getElementById("densitySlider");
+  const stageVal = document.getElementById("densityVal");
+  const stageDots = Array.from(document.querySelectorAll("#stageDots .stage-dot"));
 
-  function formatTime(totalSec) {
-    const m = Math.floor(totalSec / 60).toString().padStart(2, "0");
-    const s = (totalSec % 60).toString().padStart(2, "0");
-    return `${m}:${s}`;
+  function renderCycleStage(stepNumber) {
+    const idx = Math.max(1, Math.min(6, Number(stepNumber))) - 1;
+    const data = cycleStages[idx];
+    if (!data) return;
+    if (badgeEl) badgeEl.textContent = data.badge;
+    if (counterEl) counterEl.textContent = `Etapa 0${idx + 1} / 06`;
+    if (titleEl) titleEl.textContent = data.title;
+    if (subtitleEl) subtitleEl.textContent = data.subtitle;
+    if (stageVal) stageVal.textContent = `Etapa ${idx + 1}/6`;
+    if (stageSlider) stageSlider.value = String(idx + 1);
+    stageDots.forEach((dot, i) => dot.classList.toggle("active", i <= idx));
   }
 
-  function startAudio() {
-    try {
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      if (!AudioContext) return;
-      if (!audioCtx) audioCtx = new AudioContext();
-      if (audioCtx.state === "suspended") audioCtx.resume();
-
-      const density = Number(densitySlider?.value || 64) / 100;
-      const baseFreq = moods[currentMood].freq;
-
-      masterGain = audioCtx.createGain();
-      masterGain.gain.setValueAtTime(0.001, audioCtx.currentTime);
-      masterGain.gain.exponentialRampToValueAtTime(0.045 * density + 0.01, audioCtx.currentTime + 0.6);
-
-      osc1 = audioCtx.createOscillator();
-      osc2 = audioCtx.createOscillator();
-      osc1.type = "sine";
-      osc2.type = "triangle";
-      osc1.frequency.setValueAtTime(baseFreq, audioCtx.currentTime);
-      osc2.frequency.setValueAtTime(baseFreq * 1.5, audioCtx.currentTime);
-
-      const filter = audioCtx.createBiquadFilter();
-      filter.type = "lowpass";
-      filter.frequency.setValueAtTime(420, audioCtx.currentTime);
-
-      osc1.connect(filter);
-      osc2.connect(filter);
-      filter.connect(masterGain);
-      masterGain.connect(audioCtx.destination);
-
-      osc1.start();
-      osc2.start();
-    } catch {
-      // Visual-only fallback if Web Audio is unavailable
-    }
+  if (stageSlider) {
+    stageSlider.addEventListener("input", () => {
+      renderCycleStage(stageSlider.value);
+      document.querySelectorAll("[data-pillar]").forEach((c) => {
+        c.setAttribute("aria-pressed", c.dataset.pillar === "ciclo" ? "true" : "false");
+      });
+    });
   }
 
-  function stopAudio() {
-    if (osc1) {
-      try { osc1.stop(); osc1.disconnect(); } catch {}
-      osc1 = null;
-    }
-    if (osc2) {
-      try { osc2.stop(); osc2.disconnect(); } catch {}
-      osc2 = null;
-    }
-    if (masterGain) {
-      try { masterGain.disconnect(); } catch {}
-      masterGain = null;
-    }
-  }
-
-  function updateEq() {
-    const density = Number(densitySlider?.value || 64) / 100;
-    eqBars.forEach((bar, idx) => {
-      if (!isPlaying) {
-        bar.style.height = "8px";
-        return;
+  document.querySelectorAll("[data-pillar]").forEach((chip) => {
+    chip.addEventListener("click", () => {
+      const key = chip.dataset.pillar;
+      document.querySelectorAll("[data-pillar]").forEach((c) => {
+        c.setAttribute("aria-pressed", c.dataset.pillar === key ? "true" : "false");
+      });
+      const preset = pillarPresets[key];
+      if (!preset) return;
+      if (key === "ciclo") {
+        renderCycleStage(1);
+      } else {
+        if (badgeEl) badgeEl.textContent = preset.badge;
+        if (counterEl) counterEl.textContent = "Manual v1.0";
+        if (titleEl) titleEl.textContent = preset.title;
+        if (subtitleEl) subtitleEl.textContent = preset.subtitle;
+        if (stageVal) stageVal.textContent = `Seção ativa`;
+        stageDots.forEach((dot, i) => dot.classList.toggle("active", i < preset.stage));
       }
-      const wave = Math.sin(Date.now() / 220 + idx * 0.7) * 0.5 + 0.5;
-      const height = Math.round(8 + wave * 20 * density);
-      bar.style.height = `${height}px`;
+      studioCard?.classList.add("playing");
+      setTimeout(() => studioCard?.classList.remove("playing"), 1200);
     });
-  }
-
-  function togglePlayback() {
-    isPlaying = !isPlaying;
-    studioCard?.classList.toggle("playing", isPlaying);
-
-    if (studioStateBadge) {
-      studioStateBadge.textContent = isPlaying ? "Reproduzindo Agora" : "Pausado";
-    }
-    if (playIcon) {
-      playIcon.innerHTML = isPlaying
-        ? '<rect x="6" y="5" width="4" height="14" rx="1.5"/><rect x="14" y="5" width="4" height="14" rx="1.5"/>'
-        : '<polygon points="7 4 20 12 7 20 7 4"/>';
-    }
-
-    if (isPlaying) {
-      startAudio();
-      eqTimer = setInterval(updateEq, 140);
-      clockTimer = setInterval(() => {
-        if (remainingSeconds > 0) {
-          remainingSeconds -= 1;
-          if (studioTimer) studioTimer.textContent = formatTime(remainingSeconds);
-        }
-      }, 1000);
-      showToast(`Reproduzindo: ${moods[currentMood].title}`);
-    } else {
-      stopAudio();
-      clearInterval(eqTimer);
-      clearInterval(clockTimer);
-      updateEq();
-    }
-  }
-
-  function selectMood(moodKey) {
-    if (!moods[moodKey]) return;
-    currentMood = moodKey;
-    const data = moods[moodKey];
-    if (trackTitle) trackTitle.textContent = data.title;
-    if (trackSubtitle) trackSubtitle.textContent = data.subtitle;
-    remainingSeconds = data.minutes * 60;
-    if (studioTimer) studioTimer.textContent = formatTime(remainingSeconds);
-
-    document.querySelectorAll("[data-mood]").forEach((chip) => {
-      chip.setAttribute("aria-pressed", chip.dataset.mood === moodKey ? "true" : "false");
-    });
-
-    if (isPlaying) {
-      stopAudio();
-      startAudio();
-    }
-  }
-
-  document.getElementById("scallopToggle")?.addEventListener("click", togglePlayback);
-  document.getElementById("scallopToggle")?.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      togglePlayback();
-    }
   });
 
-  document.querySelectorAll("[data-mood]").forEach((chip) => {
-    chip.addEventListener("click", () => selectMood(chip.dataset.mood));
+  document.getElementById("scallopToggle")?.addEventListener("click", () => {
+    const next = stageSlider ? (Number(stageSlider.value) % 6) + 1 : 1;
+    renderCycleStage(next);
+    studioCard?.classList.toggle("playing");
+    showToast(`Ciclo Assistido: Etapa ${next} de 6`);
   });
-
-  if (densitySlider && densityVal) {
-    densitySlider.addEventListener("input", () => {
-      densityVal.textContent = `${densitySlider.value}%`;
-      if (masterGain && audioCtx) {
-        const density = Number(densitySlider.value) / 100;
-        masterGain.gain.setTargetAtTime(0.045 * density + 0.01, audioCtx.currentTime, 0.08);
-      }
-    });
-  }
 
   // ------------------------------------------------------------------------
-  // 4. Morphing Shape Pills & Plans Toggle
+  // 4. Connected Button Group Audience Focus & Morph Pills & Glossary Filter
   // ------------------------------------------------------------------------
   document.querySelectorAll(".morph-pill").forEach((pill) => {
     pill.addEventListener("click", () => {
-      pill.classList.toggle("morphed");
+      if (pill.tagName === "BUTTON") pill.classList.toggle("morphed");
     });
   });
 
-  const studioPriceVal = document.getElementById("studioPriceVal");
-  const studioPricePeriod = document.getElementById("studioPricePeriod");
-  document.querySelectorAll("[data-billing]").forEach((btn) => {
+  const cardMicro = document.getElementById("cardMicroempresa");
+  const cardDev = document.getElementById("cardDesenvolvedor");
+  document.querySelectorAll("[data-audience]").forEach((btn) => {
     btn.addEventListener("click", () => {
-      const billing = btn.dataset.billing;
-      document.querySelectorAll("[data-billing]").forEach((b) => {
-        b.setAttribute("aria-pressed", b.dataset.billing === billing ? "true" : "false");
+      const target = btn.dataset.audience;
+      document.querySelectorAll("[data-audience]").forEach((b) => {
+        b.setAttribute("aria-pressed", b.dataset.audience === target ? "true" : "false");
       });
-      if (studioPriceVal && studioPricePeriod) {
-        studioPriceVal.textContent = billing === "anual" ? "R$ 18" : "R$ 24";
-        studioPricePeriod.textContent = billing === "anual" ? "/ mês (cobrado anualmente)" : "/ mês";
+      if (cardMicro && cardDev) {
+        cardMicro.classList.toggle("featured", target === "microempresa");
+        cardDev.classList.toggle("featured", target === "desenvolvedor");
       }
     });
   });
 
-  document.querySelectorAll(".plan-cta").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      showToast(`Plano ${btn.dataset.plan} selecionado para teste local`);
+  // Glossary filter on manual.html
+  const glossarySearch = document.getElementById("glossarySearch");
+  if (glossarySearch) {
+    const items = Array.from(document.querySelectorAll("[data-glossary-item]"));
+    glossarySearch.addEventListener("input", () => {
+      const q = glossarySearch.value.trim().toLowerCase();
+      items.forEach((item) => {
+        const text = item.textContent.toLowerCase();
+        item.style.display = text.includes(q) ? "" : "none";
+      });
     });
-  });
+  }
 })();
