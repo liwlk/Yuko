@@ -693,24 +693,54 @@ button, input { font-family: inherit; }
 }
 
 /* ==========================================================================
-   Hero Interactive Card — Painel Institucional Vivo Yuko
+   Hero Illustration Frame (Clean Yuko Visual)
    ========================================================================== */
-.studio-card {
-  position: relative;
+.hero-art-card {
   background-color: var(--md-surface-container-low);
   border: 1px solid var(--md-outline-variant);
   border-radius: var(--shape-2xl);
-  padding: 26px;
+  padding: 18px;
   box-shadow: 0 24px 60px -28px var(--md-shadow-tint);
-  transition: background-color var(--dur-med) var(--ease-standard);
+  transition: transform var(--dur-med) var(--ease-spring),
+              border-radius var(--dur-med) var(--ease-spring),
+              background-color var(--dur-med) var(--ease-standard);
 }
 
-.studio-top {
+.hero-art-card:hover {
+  transform: translateY(-4px);
+}
+
+.hero-art-frame {
+  margin: 0;
+  border-radius: 28px;
+  overflow: hidden;
+  background-color: #fef8ec;
+  border: 1px solid var(--md-outline-variant);
+  aspect-ratio: 4 / 3;
+}
+
+.hero-art-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--dur-slow) var(--ease-spring);
+}
+
+.hero-art-card:hover .hero-art-frame img {
+  transform: scale(1.025);
+}
+
+.hero-art-caption {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 20px;
+  gap: 10px;
+  padding: 14px 8px 4px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--md-on-surface-variant);
 }
 
 .studio-badge {
@@ -723,186 +753,198 @@ button, input { font-family: inherit; }
   color: var(--md-on-tertiary-container);
   font-size: 0.82rem;
   font-weight: 700;
+  text-decoration: none;
 }
 
-.studio-timer {
+/* ==========================================================================
+   Yukon (Canadá) — Experiência Imersiva Material You 3 Expressive
+   ========================================================================== */
+.yukon-panel {
+  background-color: var(--md-surface-container);
+  border: 1px solid var(--md-outline-variant);
+  border-radius: var(--shape-2xl);
+  padding: clamp(20px, 3vw, 32px);
+  display: grid;
+  gap: 22px;
+}
+
+.yukon-topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.yukon-coords {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: var(--shape-pill);
+  background-color: var(--md-surface-container-lowest);
+  border: 1px solid var(--md-outline-variant);
   font-family: var(--font-mono);
-  font-variant-numeric: tabular-nums;
-  font-size: 0.88rem;
+  font-size: 0.8rem;
   font-weight: 700;
   color: var(--md-on-surface-variant);
 }
 
-.studio-visual {
+.yukon-stage-grid {
   display: grid;
-  grid-template-columns: auto 1fr;
-  align-items: center;
   gap: 20px;
-  padding: 20px;
-  background-color: var(--md-surface-container);
-  border-radius: var(--shape-xl);
-  margin-bottom: 18px;
+  align-items: stretch;
 }
 
-.scallop-wrap {
+@media (min-width: 920px) {
+  .yukon-stage-grid {
+    grid-template-columns: 1.2fr 0.8fr;
+  }
+}
+
+.yukon-art-frame {
   position: relative;
-  width: 108px;
-  height: 108px;
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-}
-
-.scallop-svg {
-  width: 108px;
-  height: 108px;
-  color: var(--md-primary-container);
-  transition: transform 0.6s var(--ease-spring), color var(--dur-med) var(--ease-standard);
-}
-
-.studio-card.playing .scallop-svg {
-  animation: slowSpin 18s linear infinite;
-  color: var(--md-primary);
-}
-
-.scallop-logo-pill {
-  position: absolute;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background-color: #fef8ec;
-  border: 2px solid var(--md-surface-container-lowest);
+  border-radius: 30px;
   overflow: hidden;
-  display: grid;
-  place-items: center;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.14);
-  transition: transform var(--dur-fast) var(--ease-spring), border-radius var(--dur-fast) var(--ease-spring);
+  border: 1px solid var(--md-outline-variant);
+  min-height: 290px;
+  background-color: #231916;
 }
 
-.scallop-logo-pill img {
+.yukon-art-frame img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transform: scale(1.25);
+  display: block;
+  transition: filter var(--dur-slow) var(--ease-standard), transform var(--dur-slow) var(--ease-spring);
 }
 
-.scallop-wrap:hover .scallop-logo-pill {
-  transform: scale(1.07);
-  border-radius: 18px;
+.yukon-art-frame[data-yukon-mood="alvorada"] img {
+  filter: saturate(1.06) brightness(1.03);
 }
 
-@keyframes slowSpin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+.yukon-art-frame[data-yukon-mood="travessia"] img {
+  filter: contrast(1.08) saturate(0.95) brightness(0.98);
 }
 
-.track-meta h3 {
-  font-size: 1.18rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  margin-bottom: 4px;
+.yukon-art-frame[data-yukon-mood="boreal"] img {
+  filter: brightness(0.76) contrast(1.14) hue-rotate(-14deg) saturate(1.15);
 }
 
-.track-meta p {
-  margin: 0 0 12px;
-  font-size: 0.9rem;
-  color: var(--md-on-surface-variant);
+.yukon-art-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(20, 14, 12, 0.04) 40%, rgba(20, 14, 12, 0.62) 100%);
+  transition: opacity var(--dur-med) ease;
 }
 
-.stage-dots {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.stage-dot {
-  height: 8px;
-  flex: 1;
-  border-radius: 999px;
-  background-color: var(--md-surface-container-highest);
-  transition: background-color var(--dur-fast) ease, transform var(--dur-fast) var(--ease-spring);
-}
-
-.stage-dot.active {
-  background-color: var(--md-primary);
-  transform: scaleY(1.25);
-}
-
-.chip-row {
+.yukon-art-hud {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 18px;
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 18px;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
 }
 
-.m3-chip {
-  border: 1px solid var(--md-outline-variant);
+.yukon-hud-pill {
+  background-color: rgba(255, 248, 246, 0.92);
+  color: #231916;
+  padding: 10px 16px;
+  border-radius: 18px;
+  font-size: 0.86rem;
+  font-weight: 700;
+  backdrop-filter: blur(8px);
+}
+
+[data-mode="dark"] .yukon-hud-pill {
+  background-color: rgba(26, 17, 15, 0.88);
+  color: #f1dfd9;
+}
+
+.yukon-spotlight {
   background-color: var(--md-surface-container-lowest);
+  border: 1px solid var(--md-outline-variant);
+  border-radius: 30px;
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.yukon-spotlight h3 {
+  font-size: 1.55rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  margin: 10px 0 8px;
+}
+
+.yukon-spotlight p {
+  margin: 0;
   color: var(--md-on-surface-variant);
-  padding: 9px 14px;
-  border-radius: 14px;
-  font-size: 0.84rem;
-  font-weight: 650;
-  cursor: pointer;
-  transition: all var(--dur-fast) var(--ease-spring);
+  font-size: 0.97rem;
 }
 
-.m3-chip:hover {
-  background-color: var(--md-surface-container-high);
+.yukon-pillars {
+  display: grid;
+  gap: 12px;
+}
+
+@media (min-width: 720px) {
+  .yukon-pillars {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.yukon-pillar-btn {
+  text-align: left;
+  padding: 18px;
+  border-radius: 22px;
+  border: 1px solid var(--md-outline-variant);
+  background-color: var(--md-surface-container-low);
   color: var(--md-on-surface);
+  cursor: pointer;
+  display: grid;
+  gap: 6px;
+  transition: transform var(--dur-fast) var(--ease-spring),
+              border-radius var(--dur-med) var(--ease-spring),
+              background-color var(--dur-fast) var(--ease-standard);
 }
 
-.m3-chip[aria-pressed="true"] {
+.yukon-pillar-btn:hover {
+  transform: translateY(-2px);
+  background-color: var(--md-surface-container-high);
+}
+
+.yukon-pillar-btn[aria-pressed="true"] {
   background-color: var(--md-primary-container);
   color: var(--md-on-primary-container);
   border-color: transparent;
-  border-radius: var(--shape-pill);
+  border-radius: 28px 14px 28px 14px;
 }
 
-.slider-box {
-  background-color: var(--md-surface-container-lowest);
-  border-radius: var(--shape-lg);
-  padding: 14px 18px;
-}
-
-.slider-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.85rem;
-  font-weight: 650;
-  color: var(--md-on-surface-variant);
-  margin-bottom: 10px;
-}
-
-.slider-head strong {
+.yukon-pillar-num {
   font-family: var(--font-mono);
-  color: var(--md-primary);
+  font-size: 0.76rem;
+  font-weight: 700;
+  opacity: 0.78;
 }
 
-.m3-range {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 100%;
-  height: 14px;
-  border-radius: var(--shape-pill);
-  background: var(--md-surface-container-highest);
-  outline: none;
-  cursor: pointer;
+.yukon-pillar-name {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 800;
 }
 
-.m3-range::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 10px;
-  height: 28px;
-  border-radius: 999px;
-  background: var(--md-primary);
-  border: 2px solid var(--md-surface-container-lowest);
-  transition: transform var(--dur-fast) var(--ease-spring);
+.yukon-pillar-sub {
+  font-size: 0.82rem;
+  opacity: 0.86;
 }
-
-.m3-range:hover::-webkit-slider-thumb { transform: scaleY(1.1); }
 
 /* ==========================================================================
    Sections & Expressive Feature Modules
