@@ -4,16 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Qualidade, Segurança, LGPD &amp; Ética — Yuko Institucional</title>
-  <meta name="description" content="Gestão da qualidade, Definition of Done, segurança de aplicação, sustentação assistida, LGPD (Lei nº 13.709/2018) e resolução de conflitos na Yuko." />
+  <meta name="description" content="Padrões de engenharia, Definition of Done, segurança de aplicação, LGPD (Lei nº 13.709/2018) e mediação de conflitos na Yuko." />
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..800;1,9..40,400..700&family=JetBrains+Mono:wght@500;700&display=swap" />
-  <link rel="stylesheet" href="./styles.css?v=5" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&family=JetBrains+Mono:wght@500;700&display=swap" />
+  <link rel="stylesheet" href="./styles.css?v=6" />
   <script>
-    (function(){try{var r=document.documentElement,s=localStorage.getItem("yuko_seed"),m=localStorage.getItem("yuko_mode"),t=localStorage.getItem("yuko_motion");if(s)r.setAttribute("data-seed",s);if(m)r.setAttribute("data-mode",m);if(t)r.setAttribute("data-motion",t);}catch(e){}})();
+    (function(){try{var r=document.documentElement,s=localStorage.getItem("yuko_seed"),m=localStorage.getItem("yuko_mode"),t=localStorage.getItem("yuko_motion");if(["terracota","botanico","oceanico","ameixa"].indexOf(s)!==-1)r.setAttribute("data-seed",s);if(["light","dark"].indexOf(m)!==-1)r.setAttribute("data-mode",m);if(["expressive","calm"].indexOf(t)!==-1)r.setAttribute("data-motion",t);}catch(e){}})();
   </script>
 </head>
 <body>
+  <a class="skip-link" href="#topo">Pular para o conteúdo</a>
   <div class="top-bar-wrap">
     <header class="top-bar" aria-label="Navegação principal">
       <a href="./index.html" class="brand">
@@ -22,30 +24,29 @@
       </a>
       <nav class="nav-links" aria-label="Seções e subpáginas">
         <a href="./index.html">Início</a>
-        <a href="./extensoes.html">Extensões &amp; Frentes</a>
-        <a href="./ciclo.html">Ciclo &amp; Papéis</a>
+        <a href="./extensoes.html">Extensões</a>
+        <a href="./ciclo.html">Ciclo</a>
         <a href="./governanca.html" aria-current="page">Qualidade &amp; LGPD</a>
         <a href="./manual.html">Manual v1.0</a>
       </nav>
       <div class="bar-controls">
         <div class="seed-dots" role="group" aria-label="Semente de cor dinâmica">
-          <button class="seed-dot" data-seed="terracota" aria-pressed="true" title="Terracota Solar"></button>
-          <button class="seed-dot" data-seed="botanico" aria-pressed="false" title="Botânico Vivo"></button>
-          <button class="seed-dot" data-seed="oceanico" aria-pressed="false" title="Índigo Oceânico"></button>
-          <button class="seed-dot" data-seed="ameixa" aria-pressed="false" title="Ameixa Editorial"></button>
+          <button class="seed-dot" type="button" data-seed="terracota" aria-pressed="true" title="Terracota Solar" aria-label="Tema Terracota Solar"></button>
+          <button class="seed-dot" type="button" data-seed="botanico" aria-pressed="false" title="Botânico Vivo" aria-label="Tema Botânico Vivo"></button>
+          <button class="seed-dot" type="button" data-seed="oceanico" aria-pressed="false" title="Índigo Oceânico" aria-label="Tema Índigo Oceânico"></button>
+          <button class="seed-dot" type="button" data-seed="ameixa" aria-pressed="false" title="Ameixa Editorial" aria-label="Tema Ameixa Editorial"></button>
         </div>
-        <button id="modeToggleBtn" class="icon-btn" type="button" aria-label="Alternar modo claro e escuro">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <button id="modeToggleBtn" class="icon-btn" type="button" title="Alternar Claro/Escuro" aria-label="Alternar modo claro e escuro" aria-pressed="false">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
             <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
           </svg>
         </button>
-        <a href="./manual.html" class="btn btn-primary btn-sm bar-cta">Manual v1.0</a>
       </div>
     </header>
     <nav class="mobile-nav" aria-label="Navegação móvel">
       <a href="./index.html">Início</a>
       <a href="./extensoes.html">Extensões</a>
-      <a href="./ciclo.html">Ciclo 6 Etapas</a>
+      <a href="./ciclo.html">Ciclo</a>
       <a href="./governanca.html" aria-current="page">Qualidade &amp; LGPD</a>
       <a href="./manual.html">Manual v1.0</a>
     </nav>
@@ -54,124 +55,111 @@
   <main id="topo">
     <section class="sub-hero">
       <div class="container">
-        <div class="hero-eyebrow"><span>Seções 10, 11, 12 e 13 do Manual</span><span aria-hidden="true">·</span><span>Engenharia &amp; Ética</span></div>
+        <div class="hero-eyebrow"><span>Engenharia &amp; Ética</span><span aria-hidden="true">·</span><span>Diretrizes Técnicas</span></div>
         <h1 class="sub-hero-title">Qualidade, <span class="accent-word">Segurança</span> &amp; Conformidade LGPD</h1>
         <p class="hero-lead">
-          Critérios técnicos de aceitação, diretrizes de stack sustentável, proteção de aplicações, sustentação pós-entrega, Lei Geral de Proteção de Dados e mediação comunitária.
+          Critérios técnicos de aceitação, stack sustentável, proteção de aplicações, conformidade com a Lei Geral de Proteção de Dados e mediação comunitária.
         </p>
         <div class="hero-actions" style="margin-bottom:0">
-          <a href="#qualidade" class="btn btn-primary">Qualidade &amp; Stack</a>
-          <a href="#seguranca" class="btn btn-tonal">Segurança &amp; LGPD</a>
-          <a href="#conflitos" class="btn btn-outline">Ética &amp; Conflitos</a>
+          <a href="#engenharia" class="btn btn-primary">Engenharia &amp; Segurança</a>
+          <a href="#privacidade" class="btn btn-tonal">LGPD &amp; Mediação</a>
         </div>
       </div>
     </section>
 
-    <!-- Seção 10: Qualidade e Stack -->
-    <section id="qualidade" class="section" style="padding-top:24px">
+    <!-- Bloco 1: Padrões de Engenharia & Segurança -->
+    <section id="engenharia" class="section" style="padding-top:24px">
       <div class="container">
         <div class="section-head">
-          <div class="section-kicker">Seção 10 · Critérios Técnicos</div>
-          <h2 class="section-title">Simplicidade Arquitetural &amp; Definition of Done</h2>
-          <p class="section-desc">Soluções proporcionais à realidade operacional da microempresa, evitando pilhas complexas ou lock-in excessivo.</p>
-        </div>
-
-        <div class="grid-2">
-          <article class="m3-card tonal-primary">
-            <div>
-              <h3>Critérios de Conclusão Técnica (DoD)</h3>
-              <ul class="clean-list" style="margin-top:14px">
-                <li>Funcionalidades operando conforme a especificação do escopo inicial;</li>
-                <li>Código em versionamento central com histórico de commits compreensível;</li>
-                <li>Revisão aprovada por múltiplos pares anexada ao registro do projeto;</li>
-                <li>Guia simplificado de operação ou manual básico para a microempresa;</li>
-                <li>Ausência de falhas impeditivas ou vulnerabilidades conhecidas não mitigadas.</li>
-              </ul>
-            </div>
-            <span class="card-code">seção 10.2 · definition of done</span>
-          </article>
-
-          <article class="m3-card">
-            <div>
-              <h3>Convenções de Código &amp; Stack</h3>
-              <ul class="clean-list" style="margin-top:14px">
-                <li><strong>Linting &amp; Formatação:</strong> linters e formatadores versionados na raiz do repositório.</li>
-                <li><strong>Commits Semânticos:</strong> prefixação imperativa (<code>feat</code>, <code>fix</code>, <code>refactor</code>, <code>chore</code>, <code>docs</code>) vinculada à issue.</li>
-                <li><strong>Ecossistemas Maduros:</strong> Node.js/TypeScript, Python, Go, PHP moderno e padrões nativos da web.</li>
-                <li><strong>Persistência Confiável:</strong> PostgreSQL, MySQL/MariaDB ou SQLite para demandas contidas.</li>
-              </ul>
-            </div>
-            <span class="card-code">seção 10.3 &amp; 10.4 · engenharia</span>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- Seção 10.5 + 11 + 12: Segurança, Suporte e Documentação -->
-    <section id="seguranca" class="section">
-      <div class="container">
-        <div class="section-head">
-          <div class="section-kicker">Seções 10.5, 11 e 12</div>
-          <h2 class="section-title">Segurança da Aplicação, Sustentação &amp; Conhecimento</h2>
+          <div class="section-kicker">Bloco 01 · Engenharia &amp; Segurança</div>
+          <h2 class="section-title">Padrões de Engenharia &amp; Segurança</h2>
+          <p class="section-desc">Soluções proporcionais à microempresa, com código limpo, pilhas maduras e proteção desde a base.</p>
         </div>
 
         <div class="grid-3">
-          <article class="m3-card">
-            <h3>Blindagem &amp; Segredos</h3>
-            <p>Obrigatório uso de prepared statements/ORM contra SQL Injection e sanitização contra XSS. Proibido versionar senhas ou chaves no código (apenas <code>.env.example</code>).</p>
+          <article class="m3-card tonal-primary">
+            <div>
+              <h3>Checklist de Entrega (DoD)</h3>
+              <ul class="clean-list" style="margin-top:14px">
+                <li><span>Escopo inicial validado em operação;</span></li>
+                <li><span>Commits organizados no repositório central;</span></li>
+                <li><span>Revisão por múltiplos pares registrada;</span></li>
+                <li><span>Guia básico de uso para a microempresa;</span></li>
+                <li><span>Sem falhas críticas ou riscos abertos.</span></li>
+              </ul>
+            </div>
+            <span class="card-code">definition of done</span>
           </article>
+
           <article class="m3-card">
-            <h3>Criptografia &amp; Auditoria</h3>
-            <p>Tráfego obrigatório em HTTPS/TLS, senhas com derivação lenta e salt dinâmico (Argon2 ou bcrypt) e auditoria automatizada de vulnerabilidades em dependências.</p>
+            <div>
+              <h3>Stack &amp; Commits</h3>
+              <ul class="clean-list" style="margin-top:14px">
+                <li><span><strong>Linting:</strong> regras versionadas na raiz do projeto.</span></li>
+                <li><span><strong>Commits Semânticos:</strong> <code>feat</code>, <code>fix</code>, <code>refactor</code>, <code>chore</code> e <code>docs</code> com issue.</span></li>
+                <li><span><strong>Ecossistemas:</strong> Node.js/TS, Python, Go, PHP e web nativa.</span></li>
+                <li><span><strong>Dados:</strong> PostgreSQL, MySQL/MariaDB ou SQLite.</span></li>
+              </ul>
+            </div>
+            <span class="card-code">engenharia sustentável</span>
           </article>
+
           <article class="m3-card tonal-secondary">
-            <h3>Sustentação &amp; Documentação Enxuta</h3>
-            <p>Responsável de Suporte acompanha a estabilização inicial e corrige bugs imediatos. Documentação com clareza instrumental e reaproveitamento aberto de componentes não privativos.</p>
+            <div>
+              <h3>Blindagem, Segredos &amp; Auditoria</h3>
+              <ul class="clean-list" style="margin-top:14px">
+                <li><span><strong>Prevenção:</strong> prepared statements/ORM e sanitização XSS.</span></li>
+                <li><span><strong>Segredos:</strong> nunca no Git; apenas <code>.env.example</code>.</span></li>
+                <li><span><strong>Criptografia:</strong> HTTPS/TLS e senhas em Argon2 ou bcrypt.</span></li>
+                <li><span><strong>Auditoria:</strong> checagem contínua de dependências.</span></li>
+              </ul>
+            </div>
+            <span class="card-code">segurança &amp; sigilo</span>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- Seção 13: LGPD e Ética -->
-    <section id="conflitos" class="section">
+    <!-- Bloco 2: Privacidade (LGPD) & Mediação -->
+    <section id="privacidade" class="section">
       <div class="container">
         <div class="section-head">
-          <div class="section-kicker">Seção 13 · Lei nº 13.709/2018 e Conduta</div>
-          <h2 class="section-title">Sigilo Técnico, LGPD e Mediação de Conflitos</h2>
+          <div class="section-kicker">Bloco 02 · Lei nº 13.709/2018 e Conduta</div>
+          <h2 class="section-title">Privacidade (LGPD) &amp; Mediação</h2>
         </div>
 
         <div class="grid-2">
           <article class="m3-card tonal-tertiary">
             <div>
-              <h3>Diretrizes de Conformidade com a LGPD</h3>
+              <h3>Conformidade com a LGPD</h3>
               <ul class="clean-list" style="margin-top:14px">
-                <li><strong>Papéis:</strong> microempresa como Controladora; desenvolvedores como operadores técnicos.</li>
-                <li><strong>Privacy by Design:</strong> coleta estrita de dados necessários à finalidade funcional.</li>
-                <li><strong>Proibição de Dados Reais em Dev/Staging:</strong> uso exclusivo de dados sintéticos ou anonimizados de forma irreversível.</li>
-                <li><strong>Direitos dos Titulares &amp; Incidentes:</strong> rotinas de exportação, atualização e exclusão, além de reporte imediato de falhas na issue.</li>
+                <li><span><strong>Papéis:</strong> microempresa Controladora; devs como operadores técnicos.</span></li>
+                <li><span><strong>Privacy by Design:</strong> coleta mínima estrita à finalidade.</span></li>
+                <li><span><strong>Dev/Staging:</strong> uso exclusivo de dados sintéticos ou anonimizados.</span></li>
+                <li><span><strong>Titulares &amp; Incidentes:</strong> exportação, exclusão e reporte imediato na issue.</span></li>
               </ul>
             </div>
-            <span class="card-code">seção 13.3 · lgpd</span>
+            <span class="card-code">lgpd · proteção de dados</span>
           </article>
 
           <article class="m3-card">
             <div>
-              <h3>Resolução de Conflitos em 3 Etapas</h3>
+              <h3>Mediação de Conflitos em 3 Etapas</h3>
               <ul class="clean-list" style="margin-top:14px">
-                <li><strong>Etapa 1 — Diálogo Direto:</strong> entendimento mútuo civilizado e baseado em evidências técnicas nos canais da iniciativa.</li>
-                <li><strong>Etapa 2 — Mediação por Pares:</strong> membro experiente neutro facilita o alinhamento focado no interesse técnico do projeto.</li>
-                <li><strong>Etapa 3 — Deliberação Coletiva:</strong> revisores decidem consensualmente pela alternativa de menor complexidade e maior fidelidade ao escopo.</li>
-                <li><strong>Autonomia:</strong> cada participante responde individualmente por seus atos profissionais.</li>
+                <li><span><strong>1. Diálogo Direto:</strong> alinhamento objetivo com base em evidências técnicas.</span></li>
+                <li><span><strong>2. Mediação por Pares:</strong> membro neutro facilita consenso focado no projeto.</span></li>
+                <li><span><strong>3. Deliberação Coletiva:</strong> revisores priorizam menor complexidade e escopo.</span></li>
+                <li><span><strong>Autonomia:</strong> cada participante responde por seus atos profissionais.</span></li>
               </ul>
             </div>
-            <span class="card-code">seção 13.4 &amp; 13.5 · conduta</span>
+            <span class="card-code">ética · resolução</span>
           </article>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
+  <footer class="site-footer site-footer-compact">
     <div class="container">
       <div class="footer-top">
         <div>
@@ -180,15 +168,15 @@
             <span>Yuko</span>
           </a>
           <p class="footer-summary">Segurança operacional, privacidade por padrão e respeito à diversidade de percursos técnicos.</p>
-          <a href="./manual.html" class="btn btn-primary btn-sm">Ler Manual Completo v1.0 →</a>
+          <a href="./manual.html" class="btn btn-primary btn-sm">Avançar para Manual v1.0 →</a>
         </div>
         <div class="footer-cols">
           <div>
             <div class="footer-col-title">Subpáginas</div>
             <div class="footer-col-links">
               <a href="./index.html">Início</a>
-              <a href="./extensoes.html">Extensões &amp; Frentes</a>
-              <a href="./ciclo.html">Ciclo &amp; Papéis</a>
+              <a href="./extensoes.html">Extensões</a>
+              <a href="./ciclo.html">Ciclo</a>
               <a href="./governanca.html">Qualidade &amp; LGPD</a>
               <a href="./manual.html">Manual v1.0</a>
             </div>
@@ -196,35 +184,25 @@
           <div>
             <div class="footer-col-title">Nesta Página</div>
             <div class="footer-col-links">
-              <a href="#qualidade">Qualidade &amp; Stack</a>
-              <a href="#seguranca">Segurança &amp; Suporte</a>
-              <a href="#conflitos">LGPD &amp; Conflitos</a>
+              <a href="#engenharia">Engenharia &amp; Segurança</a>
+              <a href="#privacidade">LGPD &amp; Mediação</a>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="footer-monument">
-        <div class="footer-monument-head">
-          <span class="footer-ref-kicker">Manual Institucional v1.0 · Qualidade, Segurança &amp; LGPD</span>
-          <div class="footer-monument-logo"><img src="./assets/yuko-logo.jpg" alt="Marca Yuko" /></div>
-        </div>
-        <span class="footer-wordmark">YUKO</span>
-        <div class="footer-monument-sub">
-          <span class="footer-monument-tagline">Privacy by Design · Dados Sintéticos · Commits Semânticos · Revisão Cruzada</span>
-          <div class="footer-token-row">
-            <span class="footer-token-chip">seção 10</span>
-            <span class="footer-token-chip">seção 11-12</span>
-            <span class="footer-token-chip">seção 13</span>
           </div>
         </div>
       </div>
       <div class="footer-inner">
         <span><strong>Yuko</strong> · Manual Institucional v1.0</span>
-        <div class="footer-links"><a href="./index.html">Início</a><a href="./ciclo.html">Ciclo</a><a href="./manual.html">Manual</a></div>
+        <div class="footer-links">
+          <a href="./index.html">Início</a>
+          <a href="./extensoes.html">Extensões</a>
+          <a href="./ciclo.html">Ciclo</a>
+          <a href="./governanca.html">Qualidade &amp; LGPD</a>
+          <a href="./manual.html">Manual v1.0</a>
+        </div>
       </div>
     </div>
   </footer>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <script src="./app.js?v=5"></script>
+  <script src="./app.js?v=6"></script>
 </body>
 </html>
