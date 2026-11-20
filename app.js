@@ -100,78 +100,101 @@
   }
 
   // ------------------------------------------------------------------------
-  // 3. Experiência em Yukon (Canadá) — Atmosfera & Pilares Interativos
+  // 3. Experiência em Yukon (Canadá) — Narrativa Linear & Atmosfera
   // ------------------------------------------------------------------------
-  const yukonMoods = {
-    alvorada: "Alvorada em Whitehorse · Prospecção Contextual via Yuko Field",
-    travessia: "Travessia do Rio Yukon · Construção Modular & Peer Review",
-    boreal: "Noite Boreal · Sustentação Assistida & Estabilidade Pós-Entrega",
-  };
-
-  const yukonPillars = {
-    resiliencia: {
-      tag: "Pilar 01 · Resiliência",
+  const yukonChapters = [
+    {
+      step: 1,
+      mood: "alvorada",
+      tag: "Marco 01 · Resiliência (Seção 4.1 & 10.1)",
       title: "Construção sólida em ambientes exigentes",
-      body: "Assim como a travessia do território de Yukon exige preparo e ausência de excessos, a Yuko rejeita pilhas complexas e lock-in. Cada solução nasce enxuta, testada em staging e sustentada por pares.",
+      body: "Assim como o território de Yukon impõe preparo e ausência de excessos, a Yuko rejeita pilhas complexas e lock-in. Cada solução nasce enxuta, em ecossistemas maduros e testada antes da entrega.",
       tokenA: "seção 4.1 · yukon",
       tokenB: "seção 10.1 · simplicidade",
     },
-    vastidao: {
-      tag: "Pilar 02 · Vastidão Exploratória",
-      title: "Imersão real nas dores da microempresa",
-      body: "Pela frente Yuko Field, os integrantes vão a campo com entrevistas e validação contextual antes de escrever código — transformando problemas operacionais reais em critérios objetivos de aceitação.",
+    {
+      step: 2,
+      mood: "alvorada",
+      tag: "Marco 02 · Vastidão Exploratória (Yuko Field)",
+      title: "Imersão contextual nas dores reais da microempresa",
+      body: "Pela frente Yuko Field, a comunidade realiza visitas, entrevistas e leitura operacional no campo antes de codificar — convertendo gargalos reais em critérios objetivos de aceitação.",
       tokenA: "seção 4.3 · yuko field",
       tokenB: "seção 8.1 · demanda",
     },
-    sobriedade: {
-      tag: "Pilar 03 · Sobriedade Estrutural",
-      title: "Minimalismo instrumental sem ruído",
-      body: "A sobriedade de Yukon dialoga com a clareza de Oslo: documentação enxuta e útil, commits semânticos rastreáveis e zero burocracia impeditiva para equipes independentes.",
+    {
+      step: 3,
+      mood: "travessia",
+      tag: "Marco 03 · Sobriedade (Oslo & Gestão Enxuta)",
+      title: "Minimalismo instrumental e zero ruído",
+      body: "A sobriedade de Yukon dialoga com Oslo: documentação objetiva, commits semânticos rastreáveis e rejeição à hipertrofia burocrática para manter o ciclo produtivo ágil.",
       tokenA: "seção 4.2 · minimalismo",
       tokenB: "seção 14.1 · gestão enxuta",
     },
-    rede: {
-      tag: "Pilar 04 · Construção em Rede",
-      title: "Nenhuma entrega caminha isolada",
-      body: "Todo projeto passa por revisão cruzada de no mínimo dois desenvolvedores independentes e conta com transição compulsória para proteger a microempresa parceira contra qualquer ruptura.",
+    {
+      step: 4,
+      mood: "boreal",
+      tag: "Marco 04 · Construção em Rede (Chancela Coletiva)",
+      title: "Nenhuma entrega atravessa o território sozinha",
+      body: "Todo projeto passa por Peer Review obrigatório de 2+ desenvolvedores, designação nominal de suporte e transição compulsória para proteger a microempresa parceira contra qualquer ruptura.",
       tokenA: "seção 7.4 · continuidade",
       tokenB: "seção 8.4 · peer review",
     },
-  };
+  ];
 
-  const yukonArtFrame = document.getElementById("yukonArtFrame");
-  const yukonHudText = document.getElementById("yukonHudText");
-  const yukonSpotTag = document.getElementById("yukonSpotTag");
-  const yukonSpotTitle = document.getElementById("yukonSpotTitle");
-  const yukonSpotBody = document.getElementById("yukonSpotBody");
+  let currentYukonIdx = 0;
+  const yukonPanorama = document.getElementById("yukonPanorama");
+  const yukonRailFill = document.getElementById("yukonRailFill");
+  const yukonChapterTag = document.getElementById("yukonChapterTag");
+  const yukonChapterTitle = document.getElementById("yukonChapterTitle");
+  const yukonChapterBody = document.getElementById("yukonChapterBody");
   const yukonTokenA = document.getElementById("yukonTokenA");
   const yukonTokenB = document.getElementById("yukonTokenB");
+  const yukonPrevBtn = document.getElementById("yukonPrevBtn");
+  const yukonNextBtn = document.getElementById("yukonNextBtn");
+  const yukonStepBtns = Array.from(document.querySelectorAll("[data-yukon-step]"));
+
+  function setYukonMood(mood) {
+    if (yukonPanorama) yukonPanorama.setAttribute("data-yukon-mood", mood);
+    document.querySelectorAll("[data-yukon-mood]").forEach((b) => {
+      b.setAttribute("aria-pressed", b.dataset.yukonMood === mood ? "true" : "false");
+    });
+  }
+
+  function renderYukonStep(index, syncMood = true) {
+    currentYukonIdx = Math.max(0, Math.min(yukonChapters.length - 1, index));
+    const data = yukonChapters[currentYukonIdx];
+    if (!data) return;
+
+    yukonStepBtns.forEach((b, i) => {
+      b.setAttribute("aria-pressed", i === currentYukonIdx ? "true" : "false");
+    });
+    if (yukonRailFill) {
+      yukonRailFill.style.width = `${((currentYukonIdx + 1) / yukonChapters.length) * 100}%`;
+    }
+    if (yukonChapterTag) yukonChapterTag.textContent = data.tag;
+    if (yukonChapterTitle) yukonChapterTitle.textContent = data.title;
+    if (yukonChapterBody) yukonChapterBody.textContent = data.body;
+    if (yukonTokenA) yukonTokenA.textContent = data.tokenA;
+    if (yukonTokenB) yukonTokenB.textContent = data.tokenB;
+    if (yukonPrevBtn) yukonPrevBtn.disabled = currentYukonIdx === 0;
+    if (yukonNextBtn) {
+      yukonNextBtn.textContent = currentYukonIdx === yukonChapters.length - 1 ? "Reiniciar jornada ↺" : "Próximo marco →";
+    }
+    if (syncMood) setYukonMood(data.mood);
+  }
 
   document.querySelectorAll("[data-yukon-mood]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const mood = btn.dataset.yukonMood;
-      document.querySelectorAll("[data-yukon-mood]").forEach((b) => {
-        b.setAttribute("aria-pressed", b.dataset.yukonMood === mood ? "true" : "false");
-      });
-      if (yukonArtFrame) yukonArtFrame.setAttribute("data-yukon-mood", mood);
-      if (yukonHudText && yukonMoods[mood]) yukonHudText.textContent = yukonMoods[mood];
-    });
+    btn.addEventListener("click", () => setYukonMood(btn.dataset.yukonMood));
   });
 
-  document.querySelectorAll("[data-yukon-pillar]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const key = btn.dataset.yukonPillar;
-      const data = yukonPillars[key];
-      if (!data) return;
-      document.querySelectorAll("[data-yukon-pillar]").forEach((b) => {
-        b.setAttribute("aria-pressed", b.dataset.yukonPillar === key ? "true" : "false");
-      });
-      if (yukonSpotTag) yukonSpotTag.textContent = data.tag;
-      if (yukonSpotTitle) yukonSpotTitle.textContent = data.title;
-      if (yukonSpotBody) yukonSpotBody.textContent = data.body;
-      if (yukonTokenA) yukonTokenA.textContent = data.tokenA;
-      if (yukonTokenB) yukonTokenB.textContent = data.tokenB;
-    });
+  yukonStepBtns.forEach((btn) => {
+    btn.addEventListener("click", () => renderYukonStep(Number(btn.dataset.yukonStep)));
+  });
+
+  yukonPrevBtn?.addEventListener("click", () => renderYukonStep(currentYukonIdx - 1));
+  yukonNextBtn?.addEventListener("click", () => {
+    const next = currentYukonIdx === yukonChapters.length - 1 ? 0 : currentYukonIdx + 1;
+    renderYukonStep(next);
   });
 
   // ------------------------------------------------------------------------
