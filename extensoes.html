@@ -3,17 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Extensões, Frentes &amp; Comunidade — Yuko Institucional</title>
-  <meta name="description" content="Identidade da marca (Yukon, Oslo, Verona), as 6 extensões funcionais (Field, Dev, Make, Place, Work, Inline), as 6 frentes de atuação e o ambiente Discord da Yuko." />
+  <title>Extensões, Frentes &amp; Comunidade — Yuko</title>
+  <meta name="description" content="Fundamentos da marca (Yukon, Oslo, Verona), as 6 extensões funcionais (Field, Dev, Make, Place, Work, Inline), as 6 frentes de atuação e a organização do servidor Discord." />
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..800;1,9..40,400..700&family=JetBrains+Mono:wght@500;700&display=swap" />
-  <link rel="stylesheet" href="./styles.css?v=5" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&family=JetBrains+Mono:wght@500;700&display=swap" />
+  <link rel="stylesheet" href="./styles.css?v=6" />
   <script>
-    (function(){try{var r=document.documentElement,s=localStorage.getItem("yuko_seed"),m=localStorage.getItem("yuko_mode"),t=localStorage.getItem("yuko_motion");if(s)r.setAttribute("data-seed",s);if(m)r.setAttribute("data-mode",m);if(t)r.setAttribute("data-motion",t);}catch(e){}})();
+    (function(){try{var r=document.documentElement,s=localStorage.getItem("yuko_seed"),m=localStorage.getItem("yuko_mode"),t=localStorage.getItem("yuko_motion");if(["terracota","botanico","oceanico","ameixa"].indexOf(s)>-1)r.setAttribute("data-seed",s);if(["light","dark"].indexOf(m)>-1)r.setAttribute("data-mode",m);if(["expressive","calm"].indexOf(t)>-1)r.setAttribute("data-motion",t);}catch(e){}})();
   </script>
 </head>
 <body>
+  <a class="skip-link" href="#topo">Pular para o conteúdo</a>
+
   <div class="top-bar-wrap">
     <header class="top-bar" aria-label="Navegação principal">
       <a href="./index.html" class="brand">
@@ -22,30 +25,29 @@
       </a>
       <nav class="nav-links" aria-label="Seções e subpáginas">
         <a href="./index.html">Início</a>
-        <a href="./extensoes.html" aria-current="page">Extensões &amp; Frentes</a>
-        <a href="./ciclo.html">Ciclo &amp; Papéis</a>
+        <a href="./extensoes.html" aria-current="page">Extensões</a>
+        <a href="./ciclo.html">Ciclo</a>
         <a href="./governanca.html">Qualidade &amp; LGPD</a>
         <a href="./manual.html">Manual v1.0</a>
       </nav>
       <div class="bar-controls">
         <div class="seed-dots" role="group" aria-label="Semente de cor dinâmica">
-          <button class="seed-dot" data-seed="terracota" aria-pressed="true" title="Terracota Solar"></button>
-          <button class="seed-dot" data-seed="botanico" aria-pressed="false" title="Botânico Vivo"></button>
-          <button class="seed-dot" data-seed="oceanico" aria-pressed="false" title="Índigo Oceânico"></button>
-          <button class="seed-dot" data-seed="ameixa" aria-pressed="false" title="Ameixa Editorial"></button>
+          <button class="seed-dot" type="button" data-seed="terracota" aria-pressed="true" title="Terracota Solar" aria-label="Tema Terracota Solar"></button>
+          <button class="seed-dot" type="button" data-seed="botanico" aria-pressed="false" title="Botânico Vivo" aria-label="Tema Botânico Vivo"></button>
+          <button class="seed-dot" type="button" data-seed="oceanico" aria-pressed="false" title="Índigo Oceânico" aria-label="Tema Índigo Oceânico"></button>
+          <button class="seed-dot" type="button" data-seed="ameixa" aria-pressed="false" title="Ameixa Editorial" aria-label="Tema Ameixa Editorial"></button>
         </div>
-        <button id="modeToggleBtn" class="icon-btn" type="button" aria-label="Alternar modo claro e escuro">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <button id="modeToggleBtn" class="icon-btn" type="button" aria-label="Alternar modo claro e escuro" title="Alternar Claro/Escuro" aria-pressed="false">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
             <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
           </svg>
         </button>
-        <a href="./manual.html" class="btn btn-primary btn-sm bar-cta">Manual v1.0</a>
       </div>
     </header>
     <nav class="mobile-nav" aria-label="Navegação móvel">
       <a href="./index.html">Início</a>
       <a href="./extensoes.html" aria-current="page">Extensões</a>
-      <a href="./ciclo.html">Ciclo 6 Etapas</a>
+      <a href="./ciclo.html">Ciclo</a>
       <a href="./governanca.html">Qualidade &amp; LGPD</a>
       <a href="./manual.html">Manual v1.0</a>
     </nav>
@@ -54,225 +56,198 @@
   <main id="topo">
     <section class="sub-hero">
       <div class="container">
-        <div class="hero-eyebrow"><span>Seções 4, 5 e 6 do Manual</span><span aria-hidden="true">·</span><span>Arquitetura da Marca</span></div>
-        <h1 class="sub-hero-title">Identidade, <span class="accent-word">Extensões</span> &amp; Frentes de Atuação</h1>
+        <div class="hero-eyebrow"><span>Arquitetura da Marca</span><span aria-hidden="true">·</span><span>Extensões &amp; Frentes</span></div>
+        <h1 class="sub-hero-title">Identidade, <span class="accent-word">Extensões</span> &amp; Frentes</h1>
         <p class="hero-lead">
-          Segmentação funcional sem fragmentar a marca principal, alicerçada nos pilares Yukon, Oslo e Verona, nas seis frentes herdadas de NYX e Expliance e na operação comunitária via Discord.
+          Estrutura funcional sob uma marca única: fundamentos de design, seis extensões práticas, seis frentes de trabalho e convivência organizada no Discord.
         </p>
         <div class="hero-actions" style="margin-bottom:0">
           <a href="#extensoes" class="btn btn-primary">6 Extensões</a>
           <a href="#frentes" class="btn btn-tonal">6 Frentes</a>
-          <a href="#discord" class="btn btn-outline">Ambiente Discord</a>
+          <a href="#discord" class="btn btn-outline">Discord</a>
         </div>
       </div>
     </section>
 
-    <!-- Seção 4.1 e 4.2: Fundamentos e Diretrizes Visuais -->
-    <section class="section" style="padding-top:24px">
+    <!-- Fundamentos e Diretrizes Visuais -->
+    <section id="fundamentos" class="section" style="padding-top:24px">
       <div class="container">
         <div class="section-head">
-          <div class="section-kicker">Seção 4.1 &amp; 4.2</div>
-          <h2 class="section-title">Fundamentos Conceituais e Minimalismo Instrumental</h2>
+          <div class="section-kicker">Fundamentos &amp; Identidade</div>
+          <h2 class="section-title">Princípios da marca e diretrizes visuais</h2>
         </div>
 
-        <div class="grid-3">
-          <article class="m3-card tonal-primary">
-            <div>
-              <h3>Yukon (Canadá)</h3>
-              <p>Inspiração seminal para o nome "Yuko", evocando resiliência, vastidão exploratória, sobriedade e capacidade de construção em ambientes de alta exigência.</p>
-            </div>
-            <span class="card-code">pilar.geopolítico · 01</span>
-          </article>
-
-          <article class="m3-card">
-            <div>
-              <h3>Oslo (Noruega)</h3>
-              <p>Matriz da limpeza nominal, minimalismo radical, ausência de ruídos comunicacionais e precisão objetiva em cada entrega e interface.</p>
-            </div>
-            <span class="card-code">pilar.estético · 02</span>
-          </article>
-
-          <article class="m3-card tonal-secondary">
-            <div>
-              <h3>Verona (Itália)</h3>
-              <p>Referência de solidez histórica, caráter institucional perene, dignidade estrutural e respeito ao registro formal das iniciativas.</p>
-            </div>
-            <span class="card-code">pilar.institucional · 03</span>
-          </article>
-        </div>
-
-        <div class="lab-panel" style="margin-top:24px">
+        <div class="lab-panel">
           <div class="grid-3">
+            <div class="control-group">
+              <h3 style="margin-bottom:8px">Yukon (Canadá)</h3>
+              <p style="margin:0">Inspiração do nome Yuko: resiliência, exploração prática e construção sólida para cenários reais.</p>
+            </div>
+
+            <div class="control-group">
+              <h3 style="margin-bottom:8px">Oslo (Noruega)</h3>
+              <p style="margin:0">Referência de minimalismo, clareza nominal, ausência de ruído e precisão objetiva em cada entrega.</p>
+            </div>
+
+            <div class="control-group">
+              <h3 style="margin-bottom:8px">Verona (Itália)</h3>
+              <p style="margin:0">Compromisso com solidez técnica, continuidade institucional e registro formal dos projetos.</p>
+            </div>
+          </div>
+
+          <div class="grid-3" style="margin-top:24px">
             <div>
               <h3 style="margin-bottom:8px">Logotipo &amp; Tipografia</h3>
-              <p style="margin:0; color:var(--md-on-surface-variant)">Composto exclusivamente pela palavra "Yuko" em tipografia abstrata, contemporânea e equilibrada, acompanhado do símbolo institucional.</p>
+              <p style="margin:0">Composto pela palavra "Yuko" em tipografia contemporânea e equilibrada, acompanhada do símbolo da comunidade.</p>
             </div>
             <div>
-              <h3 style="margin-bottom:8px">Ausência de Ornamentos Restritivos</h3>
-              <p style="margin:0; color:var(--md-on-surface-variant)">A marca dispensa ornamentos excessivos ou ilustrações que limitem, encapsulem ou distorçam a interpretação semiótica de sua atuação.</p>
+              <h3 style="margin-bottom:8px">Simplicidade Visual</h3>
+              <p style="margin:0">A marca dispensa ornamentos excessivos ou ilustrações que limitem sua leitura ou aplicação em diferentes contextos.</p>
             </div>
             <div>
               <h3 style="margin-bottom:8px">Alto Contraste &amp; Clareza</h3>
-              <p style="margin:0; color:var(--md-on-surface-variant)">A identidade base prevê inversões cromáticas de alto contraste (preto puro, branco puro e neutros), assegurando legibilidade absoluta.</p>
+              <p style="margin:0">Aplicação em preto, branco e tons neutros de alto contraste para garantir legibilidade consistente.</p>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Seção 4.3: Sistema de Extensões -->
+    <!-- Sistema de Extensões -->
     <section id="extensoes" class="section">
       <div class="container">
         <div class="section-head">
-          <div class="section-kicker">Seção 4.3 · Sistema de Extensões Institucionais</div>
+          <div class="section-kicker">Extensões da Marca</div>
           <h2 class="section-title">Seis extensões sob o prefixo Yuko</h2>
-          <p class="section-desc">Para segmentar campos de atuação e produtos sem fragmentar a identidade principal, a Yuko adota extensões funcionais padronizadas.</p>
+          <p class="section-desc">Cada extensão identifica um campo de atuação sem fragmentar a marca principal.</p>
         </div>
 
         <div class="grid-3">
           <article class="m3-card">
             <div>
               <h3>Yuko Field</h3>
-              <p>Destinada à prospecção, relacionamento institucional, imersão em cenários reais de aplicação e validação contextual junto às microempresas.</p>
+              <p>Prospecção, relacionamento institucional e validação de problemas reais junto às microempresas.</p>
             </div>
-            <span class="card-code">extensão · prospecção</span>
+            <span class="card-code">prospecção</span>
           </article>
 
           <article class="m3-card tonal-primary">
             <div>
               <h3>Yuko Dev</h3>
-              <p>Ambiente de engenharia de software pura, padrões de arquitetura de código, desenvolvimento colaborativo e integração tecnológica.</p>
+              <p>Engenharia de software, arquitetura de código, desenvolvimento colaborativo e integração técnica.</p>
             </div>
-            <span class="card-code">extensão · engenharia</span>
+            <span class="card-code">engenharia</span>
           </article>
 
           <article class="m3-card">
             <div>
               <h3>Yuko Make</h3>
-              <p>Frente focada na criação, prototipagem ágil, design de interfaces e manufatura visual/digital de soluções.</p>
+              <p>Prototipagem ágil, design de interfaces e construção visual de soluções digitais.</p>
             </div>
-            <span class="card-code">extensão · design &amp; protótipos</span>
+            <span class="card-code">design &amp; protótipos</span>
           </article>
 
           <article class="m3-card tonal-secondary">
             <div>
               <h3>Yuko Place</h3>
-              <p>Plataforma e espaço comunitário de encontro, articulação de membros, eventos, integração social e repositórios coletivos.</p>
+              <p>Espaço comunitário de encontro, eventos, integração de membros e repositórios compartilhados.</p>
             </div>
-            <span class="card-code">extensão · comunidade</span>
+            <span class="card-code">comunidade</span>
           </article>
 
           <article class="m3-card">
             <div>
               <h3>Yuko Work</h3>
-              <p>Módulo dedicado à governança operacional, gestão de projetos, alocação funcional e acompanhamento de entregas produtivas.</p>
+              <p>Gestão de projetos, organização operacional, alocação de papéis e acompanhamento de entregas.</p>
             </div>
-            <span class="card-code">extensão · operações</span>
+            <span class="card-code">operações</span>
           </article>
 
           <article class="m3-card tonal-tertiary">
             <div>
               <h3>Yuko Inline</h3>
-              <p>Vertente voltada a ferramentas de fluxo contínuo, automações internas, pipelines operacionais, rotinas em linha e utilitários técnicos.</p>
+              <p>Ferramentas de fluxo contínuo, automações internas, pipelines e utilitários técnicos.</p>
             </div>
-            <span class="card-code">extensão · automações</span>
+            <span class="card-code">automações</span>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- Seção 5: As Seis Frentes de Atuação -->
+    <!-- As Seis Frentes de Atuação -->
     <section id="frentes" class="section">
       <div class="container">
         <div class="section-head">
-          <div class="section-kicker">Seção 5 · Herdadas de NYX e Expliance</div>
-          <h2 class="section-title">As seis frentes interdependentes de atuação</h2>
+          <div class="section-kicker">Frentes de Atuação</div>
+          <h2 class="section-title">Seis frentes integradas de trabalho</h2>
+          <p class="section-desc">
+            Enquanto as extensões nomeiam áreas e produtos da marca, as frentes organizam as disciplinas internas aplicadas em cada projeto.
+          </p>
         </div>
 
-        <div class="grid-2">
-          <article class="m3-card">
-            <div>
-              <h3>5.1 Organização e Execução</h3>
-              <p>Enquadramento de demandas, estruturação de cronogramas básicos, mobilização de talentos necessários e cumprimento dos prazos pactuados com microempresas.</p>
-            </div>
-            <span class="card-code">frente 01 · projetos e iniciativas</span>
-          </article>
+        <div class="lab-panel">
+          <div class="grid-2">
+            <ul class="clean-list">
+              <li>
+                <span><strong>Organização e Execução</strong> — Enquadramento de demandas, definição de cronogramas básicos e cumprimento dos prazos pactuados.</span>
+              </li>
+              <li>
+                <span><strong>Tecnologia e Desenvolvimento</strong> — Escrita de código, escolha criteriosa de stacks, automação e deploy contínuo.</span>
+              </li>
+              <li>
+                <span><strong>Inteligência e Avaliação</strong> — Análise de viabilidade, comparação de ferramentas, avaliação de impacto e apoio à decisão.</span>
+              </li>
+            </ul>
 
-          <article class="m3-card">
-            <div>
-              <h3>5.2 Tecnologia e Desenvolvimento</h3>
-              <p>Núcleo prático de engenharia: escrita de código-fonte, automação de processos, deploy contínuo, escolha criteriosa de stacks e infraestrutura técnica.</p>
-            </div>
-            <span class="card-code">frente 02 · construção e automação</span>
-          </article>
-
-          <article class="m3-card">
-            <div>
-              <h3>5.3 Inteligência e Avaliação</h3>
-              <p>Análise crítica de viabilidade de propostas, avaliação de impacto das soluções adotadas, estudo comparativo de ferramentas e apoio à decisão.</p>
-            </div>
-            <span class="card-code">frente 03 · apoio à decisão</span>
-          </article>
-
-          <article class="m3-card">
-            <div>
-              <h3>5.4 Gestão e Colaboração Multidisciplinar</h3>
-              <p>Articulação harmônica entre desenvolvimento, usabilidade, infraestrutura e sustentação, garantindo sincronia e comunicação sem atritos.</p>
-            </div>
-            <span class="card-code">frente 04 · multidisciplinar</span>
-          </article>
-
-          <article class="m3-card">
-            <div>
-              <h3>5.5 Integridade Informacional</h3>
-              <p>Preservação do histórico de cada solução, manutenção de documentações objetivas, versionamento de requisitos e transparência de artefatos.</p>
-            </div>
-            <span class="card-code">frente 05 · rastreabilidade</span>
-          </article>
-
-          <article class="m3-card">
-            <div>
-              <h3>5.6 Governança e Segurança</h3>
-              <p>Definição de balizas éticas de conduta, padrões mínimos de integridade da informação, segurança operacional digital e indicadores de qualidade.</p>
-            </div>
-            <span class="card-code">frente 06 · comunicação e segurança</span>
-          </article>
+            <ul class="clean-list">
+              <li>
+                <span><strong>Gestão e Colaboração Multidisciplinar</strong> — Sincronia entre desenvolvimento, usabilidade, infraestrutura e suporte contínuo.</span>
+              </li>
+              <li>
+                <span><strong>Integridade Informacional</strong> — Preservação do histórico das soluções, documentação objetiva e versionamento transparente.</span>
+              </li>
+              <li>
+                <span><strong>Governança e Segurança</strong> — Diretrizes éticas de conduta, segurança digital, integridade de dados e indicadores de qualidade.</span>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Seção 6: Comunidade & Discord -->
+    <!-- Comunidade & Discord -->
     <section id="discord" class="section">
       <div class="container">
         <div class="section-head">
-          <div class="section-kicker">Seção 6 · Ambiente Comunitário</div>
-          <h2 class="section-title">A Comunidade de Desenvolvedores e o Servidor Discord</h2>
-          <p class="section-desc">A operação diária, convivência e alinhamento técnico ocorrem prioritariamente em um servidor no Discord mantido sob organização funcional estrita.</p>
+          <div class="section-kicker">Ambiente Comunitário</div>
+          <h2 class="section-title">Comunidade e Servidor Discord</h2>
+          <p class="section-desc">A convivência diária e o alinhamento técnico acontecem no Discord em canais organizados por função.</p>
         </div>
 
-        <div class="grid-2">
-          <article class="m3-card tonal-secondary">
-            <h3>Canais Institucionais e Gerais</h3>
-            <p>Reservados a avisos da comunidade, alinhamentos globais e recepção de novos membros.</p>
-          </article>
-          <article class="m3-card">
-            <h3>Canais de Conhecimento e Discussão Técnica</h3>
-            <p>Espaços temáticos voltados ao debate sobre linguagens, frameworks, boas práticas, segurança e resolução conjunta de impasses.</p>
-          </article>
-          <article class="m3-card">
-            <h3>Canais Operacionais e de Projetos</h3>
-            <p>Espaços temporários ou dedicados a iniciativas específicas, onde discussões de escopo e alinhamento de tarefas acontecem.</p>
-          </article>
-          <article class="m3-card tonal-tertiary">
-            <h3>Comunicação Construtiva</h3>
-            <p>Interações pautadas por respeito profissional, objetividade técnica e colaboração mútua — vedados comportamentos tóxicos ou autopromoção abusiva.</p>
-          </article>
+        <div class="m3-card tonal-secondary">
+          <div class="grid-2">
+            <div>
+              <h3 style="margin-bottom:14px">Estrutura dos canais</h3>
+              <ul class="clean-list">
+                <li><span><strong>Institucionais e Gerais:</strong> avisos da comunidade, alinhamentos globais e recepção de novos membros.</span></li>
+                <li><span><strong>Conhecimento Técnico:</strong> debates sobre linguagens, frameworks, segurança e resolução conjunta de dúvidas.</span></li>
+                <li><span><strong>Operacionais e de Projetos:</strong> espaços dedicados a iniciativas ativas para alinhamento de escopo e tarefas.</span></li>
+              </ul>
+            </div>
+
+            <div class="control-group">
+              <h3 style="margin-bottom:8px">Comunicação Construtiva</h3>
+              <p>
+                Toda interação é pautada por respeito profissional, objetividade técnica e colaboração mútua — sendo vedados comportamentos tóxicos ou autopromoção abusiva.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
+  <footer class="site-footer site-footer-compact">
     <div class="container">
       <div class="footer-top">
         <div>
@@ -280,16 +255,16 @@
             <span class="brand-mark"><img src="./assets/yuko-logo.jpg" alt="Logotipo da Yuko" /></span>
             <span>Yuko</span>
           </a>
-          <p class="footer-summary">Compromisso coletivo de valorização do talento técnico independente e de fortalecimento das microempresas brasileiras.</p>
-          <a href="./ciclo.html" class="btn btn-primary btn-sm">Avançar para Ciclo &amp; Papéis →</a>
+          <p class="footer-summary">Comunidade técnica brasileira de desenvolvimento colaborativo e sustentação para microempresas.</p>
+          <a href="./ciclo.html" class="btn btn-primary btn-sm">Avançar para Ciclo →</a>
         </div>
         <div class="footer-cols">
           <div>
-            <div class="footer-col-title">Subpáginas</div>
+            <div class="footer-col-title">Navegação</div>
             <div class="footer-col-links">
               <a href="./index.html">Início</a>
-              <a href="./extensoes.html">Extensões &amp; Frentes</a>
-              <a href="./ciclo.html">Ciclo &amp; Papéis</a>
+              <a href="./extensoes.html">Extensões</a>
+              <a href="./ciclo.html">Ciclo</a>
               <a href="./governanca.html">Qualidade &amp; LGPD</a>
               <a href="./manual.html">Manual v1.0</a>
             </div>
@@ -297,7 +272,7 @@
           <div>
             <div class="footer-col-title">Nesta Página</div>
             <div class="footer-col-links">
-              <a href="#topo">Pilares da Marca</a>
+              <a href="#fundamentos">Fundamentos</a>
               <a href="#extensoes">6 Extensões</a>
               <a href="#frentes">6 Frentes</a>
               <a href="#discord">Discord</a>
@@ -305,28 +280,17 @@
           </div>
         </div>
       </div>
-      <div class="footer-monument">
-        <div class="footer-monument-head">
-          <span class="footer-ref-kicker">Manual Institucional v1.0 · Yukon · Oslo · Verona</span>
-          <div class="footer-monument-logo"><img src="./assets/yuko-logo.jpg" alt="Marca Yuko" /></div>
-        </div>
-        <span class="footer-wordmark">YUKO</span>
-        <div class="footer-monument-sub">
-          <span class="footer-monument-tagline">Yuko Field · Yuko Dev · Yuko Make · Yuko Place · Yuko Work · Yuko Inline</span>
-          <div class="footer-token-row">
-            <span class="footer-token-chip">seção 4</span>
-            <span class="footer-token-chip">seção 5</span>
-            <span class="footer-token-chip">seção 6</span>
-          </div>
-        </div>
-      </div>
+
       <div class="footer-inner">
         <span><strong>Yuko</strong> · Manual Institucional v1.0</span>
-        <div class="footer-links"><a href="./index.html">Início</a><a href="./ciclo.html">Ciclo</a><a href="./manual.html">Manual</a></div>
+        <div class="footer-links">
+          <a href="#topo">Voltar ao topo</a>
+        </div>
       </div>
     </div>
   </footer>
+
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <script src="./app.js?v=5"></script>
+  <script src="./app.js?v=6"></script>
 </body>
 </html>
