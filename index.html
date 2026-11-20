@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&family=JetBrains+Mono:wght@500;700&display=swap" />
-  <link rel="stylesheet" href="./styles.css?v=6" />
+  <link rel="stylesheet" href="./styles.css?v=7" />
   <script>
     (function(){try{var r=document.documentElement,s=localStorage.getItem("yuko_seed"),m=localStorage.getItem("yuko_mode"),t=localStorage.getItem("yuko_motion");if(["terracota","botanico","oceanico","ameixa"].indexOf(s)>-1)r.setAttribute("data-seed",s);if(["light","dark"].indexOf(m)>-1)r.setAttribute("data-mode",m);if(["expressive","calm"].indexOf(t)>-1)r.setAttribute("data-motion",t);}catch(e){}})();
   </script>
@@ -128,8 +128,8 @@
               <rect width="640" height="480" fill="url(#heroBgGrad)"/>
 
               <!-- Subtle Architectural Arches -->
-              <path d="M52 480V228C52 162 106 108 172 108C238 108 292 162 292 228V480H52Z" fill="var(--md-surface-container-highest)" opacity="0.58"/>
-              <path d="M348 480V172C348 112 397 64 457 64C517 64 566 112 566 172V480H348Z" fill="var(--md-secondary-container)" opacity="0.56"/>
+              <path class="hero-arch-left" d="M52 480V228C52 162 106 108 172 108C238 108 292 162 292 228V480H52Z" fill="var(--md-surface-container-highest)" opacity="0.58"/>
+              <path class="hero-arch-right" d="M348 480V172C348 112 397 64 457 64C517 64 566 112 566 172V480H348Z" fill="var(--md-secondary-container)" opacity="0.56"/>
 
               <!-- Soft Organic Base Horizon -->
               <path d="M0 374C135 344 240 398 370 372C485 348 560 326 640 342V480H0V374Z" fill="var(--md-surface-container-lowest)" opacity="0.88"/>
@@ -137,7 +137,7 @@
 
               <!-- Central 12-Petal Scalloped Medallion -->
               <g transform="translate(320 228)">
-                <path d="M0 -132C18 -132 29 -111 46 -106C63 -101 82 -115 95 -102C108 -89 94 -70 99 -53C104 -36 125 -25 125 -7C125 11 104 22 99 39C94 56 108 75 95 88C82 101 63 87 46 92C29 97 18 118 0 118C-18 118 -29 97 -46 92C-63 87 -82 101 -95 88C-108 75 -94 56 -99 39C-104 22 -125 11 -125 -7C-125 -25 -104 -36 -99 -53C-94 -70 -108 -89 -95 -102C-82 -115 -63 -101 -46 -106C-29 -111 -18 -132 0 -132Z" fill="url(#heroOrbGrad)" opacity="0.92"/>
+                <path class="hero-medallion-petals" d="M0 -132C18 -132 29 -111 46 -106C63 -101 82 -115 95 -102C108 -89 94 -70 99 -53C104 -36 125 -25 125 -7C125 11 104 22 99 39C94 56 108 75 95 88C82 101 63 87 46 92C29 97 18 118 0 118C-18 118 -29 97 -46 92C-63 87 -82 101 -95 88C-108 75 -94 56 -99 39C-104 22 -125 11 -125 -7C-125 -25 -104 -36 -99 -53C-94 -70 -108 -89 -95 -102C-82 -115 -63 -101 -46 -106C-29 -111 -18 -132 0 -132Z" fill="url(#heroOrbGrad)" opacity="0.92"/>
                 <circle cx="0" cy="-7" r="76" fill="var(--md-surface-container-lowest)" stroke="var(--md-outline-variant)" stroke-width="1.5"/>
                 <circle cx="0" cy="-7" r="52" fill="var(--md-primary)"/>
                 <!-- Stylized Yuko Core Node Geometry -->
@@ -146,32 +146,38 @@
               </g>
 
               <!-- Interlocking 3-Stage Peer Review & Support Circuit -->
-              <path d="M168 182C210 182 222 221 258 221M472 152C428 152 414 221 382 221M320 342V376" stroke="var(--md-primary)" stroke-width="3" stroke-dasharray="6 6" stroke-linecap="round" opacity="0.65"/>
+              <path class="hero-circuit-lines" d="M168 182C210 182 222 221 258 221M472 152C428 152 414 221 382 221M320 342V376" stroke="var(--md-primary)" stroke-width="3" stroke-dasharray="6 6" stroke-linecap="round" opacity="0.65"/>
 
               <!-- Left Card: Executor / Escopo -->
               <g transform="translate(86 134)">
-                <rect width="108" height="92" rx="24" fill="var(--md-surface-container-lowest)" stroke="var(--md-outline-variant)" stroke-width="1.5"/>
-                <rect x="18" y="20" width="38" height="12" rx="6" fill="var(--md-primary-container)"/>
-                <rect x="18" y="42" width="72" height="10" rx="5" fill="var(--md-surface-container-highest)"/>
-                <rect x="18" y="60" width="52" height="10" rx="5" fill="var(--md-surface-container-highest)"/>
-                <circle cx="84" cy="26" r="8" fill="var(--md-primary)"/>
+                <g class="hero-card-executor">
+                  <rect width="108" height="92" rx="24" fill="var(--md-surface-container-lowest)" stroke="var(--md-outline-variant)" stroke-width="1.5"/>
+                  <rect x="18" y="20" width="38" height="12" rx="6" fill="var(--md-primary-container)"/>
+                  <rect x="18" y="42" width="72" height="10" rx="5" fill="var(--md-surface-container-highest)"/>
+                  <rect x="18" y="60" width="52" height="10" rx="5" fill="var(--md-surface-container-highest)"/>
+                  <circle cx="84" cy="26" r="8" fill="var(--md-primary)"/>
+                </g>
               </g>
 
               <!-- Right Card: 2+ Pares Revisores -->
               <g transform="translate(446 106)">
-                <rect width="112" height="94" rx="24" fill="var(--md-tertiary-container)" stroke="var(--md-outline-variant)" stroke-width="1.5"/>
-                <circle cx="34" cy="38" r="13" fill="var(--md-tertiary)"/>
-                <circle cx="56" cy="38" r="13" fill="var(--md-primary)"/>
-                <rect x="20" y="62" width="72" height="12" rx="6" fill="var(--md-surface-container-lowest)" opacity="0.88"/>
+                <g class="hero-card-reviewers">
+                  <rect width="112" height="94" rx="24" fill="var(--md-tertiary-container)" stroke="var(--md-outline-variant)" stroke-width="1.5"/>
+                  <circle cx="34" cy="38" r="13" fill="var(--md-tertiary)"/>
+                  <circle cx="56" cy="38" r="13" fill="var(--md-primary)"/>
+                  <rect x="20" y="62" width="72" height="12" rx="6" fill="var(--md-surface-container-lowest)" opacity="0.88"/>
+                </g>
               </g>
 
               <!-- Bottom Pill: Sustentação & Entrega Registrada -->
               <g transform="translate(216 364)">
-                <rect width="208" height="58" rx="29" fill="var(--md-secondary-container)" stroke="var(--md-outline-variant)" stroke-width="1.5"/>
-                <circle cx="30" cy="29" r="14" fill="var(--md-primary)"/>
-                <path d="M24 29L28 33L36 25" stroke="var(--md-on-primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <rect x="58" y="20" width="120" height="8" rx="4" fill="var(--md-on-secondary-container)" opacity="0.72"/>
-                <rect x="58" y="34" width="84" height="7" rx="3.5" fill="var(--md-on-secondary-container)" opacity="0.4"/>
+                <g class="hero-pill-support">
+                  <rect width="208" height="58" rx="29" fill="var(--md-secondary-container)" stroke="var(--md-outline-variant)" stroke-width="1.5"/>
+                  <circle cx="30" cy="29" r="14" fill="var(--md-primary)"/>
+                  <path d="M24 29L28 33L36 25" stroke="var(--md-on-primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <rect x="58" y="20" width="120" height="8" rx="4" fill="var(--md-on-secondary-container)" opacity="0.72"/>
+                  <rect x="58" y="34" width="84" height="7" rx="3.5" fill="var(--md-on-secondary-container)" opacity="0.4"/>
+                </g>
               </g>
             </svg>
           </figure>
@@ -183,123 +189,196 @@
       </div>
     </section>
 
-    <!-- Experiência em Yukon (Canadá) — Panorâmica Linear -->
-    <section id="yukon" class="yukon-section">
+    <!-- Experiência em Yukon (Canadá) — Firewatch + INVERSA Scrollytelling -->
+    <section id="yukon" class="yukon-section" aria-labelledby="yukonHeading">
       <div class="container">
-        <div class="yukon-experience">
-          <div id="yukonPanorama" class="yukon-panorama" data-yukon-mood="alvorada">
-            <!-- Theme-Responsive Panoramic Yukon Landscape SVG -->
-            <svg class="yukon-svg-bg" viewBox="0 0 1200 560" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-              <defs>
-                <linearGradient id="yukonSkyGrad" x1="0" y1="0" x2="0" y2="560" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stop-color="var(--md-surface-container-low)"/>
-                  <stop offset="52%" stop-color="var(--md-primary-container)" stop-opacity="0.55"/>
-                  <stop offset="100%" stop-color="var(--md-surface-container)"/>
-                </linearGradient>
-                <linearGradient id="yukonAuroraGrad" x1="0" y1="40" x2="1200" y2="260" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stop-color="var(--md-primary)" stop-opacity="0.05"/>
-                  <stop offset="45%" stop-color="var(--md-primary)" stop-opacity="0.48"/>
-                  <stop offset="80%" stop-color="var(--md-tertiary)" stop-opacity="0.38"/>
-                  <stop offset="100%" stop-color="var(--md-primary)" stop-opacity="0.05"/>
-                </linearGradient>
-                <linearGradient id="yukonRiverGrad" x1="600" y1="310" x2="600" y2="560" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stop-color="var(--md-primary-container)"/>
-                  <stop offset="100%" stop-color="var(--md-surface-container)"/>
-                </linearGradient>
-              </defs>
+        <div class="yukon-scrolly">
+          <!-- Coluna Esquerda: Palco Sticky Panorâmico -->
+          <aside class="yukon-sticky-stage" aria-label="Cenário atmosférico de Yukon">
+            <div id="yukonPanorama" class="yukon-panorama" data-yukon-mood="alvorada">
+              <!-- Theme-Responsive Firewatch-Style Parallax Yukon SVG -->
+              <svg class="yukon-svg-bg" viewBox="0 0 1200 640" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                <defs>
+                  <linearGradient id="yukonSkyGrad" x1="0" y1="0" x2="0" y2="640" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stop-color="var(--md-surface-container-low)"/>
+                    <stop offset="50%" stop-color="var(--md-primary-container)" stop-opacity="0.58"/>
+                    <stop offset="100%" stop-color="var(--md-surface-container)"/>
+                  </linearGradient>
+                  <linearGradient id="yukonAuroraGrad" x1="0" y1="40" x2="1200" y2="290" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stop-color="var(--md-primary)" stop-opacity="0.06"/>
+                    <stop offset="42%" stop-color="var(--md-primary)" stop-opacity="0.52"/>
+                    <stop offset="76%" stop-color="var(--md-tertiary)" stop-opacity="0.42"/>
+                    <stop offset="100%" stop-color="var(--md-primary)" stop-opacity="0.06"/>
+                  </linearGradient>
+                  <linearGradient id="yukonRiverGrad" x1="600" y1="360" x2="600" y2="640" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stop-color="var(--md-primary-container)"/>
+                    <stop offset="100%" stop-color="var(--md-surface-container)"/>
+                  </linearGradient>
+                </defs>
 
-              <!-- Sky -->
-              <rect width="1200" height="560" fill="url(#yukonSkyGrad)"/>
+                <!-- 1. Céu -->
+                <rect width="1200" height="640" fill="url(#yukonSkyGrad)"/>
 
-              <!-- Aurora Borealis Ribbons (Visible on Travessia & Noite Boreal) -->
-              <g class="yukon-aurora">
-                <path d="M-40 165C180 95 360 215 610 135C860 55 1010 185 1240 110V235C990 275 830 165 590 230C350 295 170 205 -40 250Z" fill="url(#yukonAuroraGrad)"/>
-              </g>
+                <!-- 2. Estrelas (Noite Boreal) -->
+                <g class="yukon-stars">
+                  <circle cx="110" cy="76" r="2.2" fill="var(--md-primary-container)" opacity="0.85"/>
+                  <circle cx="218" cy="122" r="1.6" fill="var(--md-tertiary-container)" opacity="0.78"/>
+                  <circle cx="334" cy="64" r="2.4" fill="var(--md-primary-container)" opacity="0.9"/>
+                  <circle cx="468" cy="96" r="1.8" fill="var(--md-secondary-container)" opacity="0.72"/>
+                  <circle cx="592" cy="54" r="2.6" fill="var(--md-tertiary-container)" opacity="0.88"/>
+                  <circle cx="716" cy="108" r="1.7" fill="var(--md-primary-container)" opacity="0.76"/>
+                  <circle cx="842" cy="68" r="2.3" fill="var(--md-primary-container)" opacity="0.85"/>
+                  <circle cx="956" cy="134" r="1.8" fill="var(--md-tertiary-container)" opacity="0.8"/>
+                  <circle cx="1078" cy="82" r="2.5" fill="var(--md-primary-container)" opacity="0.92"/>
+                  <circle cx="164" cy="186" r="1.5" fill="var(--md-secondary-container)" opacity="0.68"/>
+                  <circle cx="640" cy="148" r="1.6" fill="var(--md-primary-container)" opacity="0.74"/>
+                  <circle cx="1020" cy="176" r="1.5" fill="var(--md-tertiary-container)" opacity="0.7"/>
+                </g>
 
-              <!-- Northern Sun -->
-              <g class="yukon-sun">
-                <circle cx="710" cy="245" r="108" fill="var(--md-primary-container)" opacity="0.55"/>
-                <circle cx="710" cy="245" r="56" fill="var(--md-surface-container-lowest)" opacity="0.92"/>
-              </g>
+                <!-- 3. Aurora Boreal -->
+                <g class="yukon-aurora">
+                  <path d="M-40 185C180 105 360 235 610 148C860 62 1010 205 1240 120V265C990 310 830 185 590 258C350 330 170 225 -40 280Z" fill="url(#yukonAuroraGrad)"/>
+                  <path d="M80 125C290 70 470 165 730 98C940 44 1080 135 1220 88V175C1050 205 900 132 700 178C460 232 270 145 80 185Z" fill="url(#yukonAuroraGrad)" opacity="0.62"/>
+                </g>
 
-              <!-- Distant Mountain Range -->
-              <path class="yukon-ridge-far" d="M0 330L130 235L255 292L410 198L565 288L735 212L895 282L1060 196L1200 268V560H0V330Z" fill="var(--md-secondary-container)" opacity="0.88"/>
+                <!-- 4. Sol Nórdico -->
+                <g class="yukon-sun">
+                  <circle cx="740" cy="250" r="118" fill="var(--md-primary-container)" opacity="0.54"/>
+                  <circle cx="740" cy="250" r="60" fill="var(--md-surface-container-lowest)" opacity="0.92"/>
+                </g>
 
-              <!-- Mid Mountain Range -->
-              <path class="yukon-ridge-mid" d="M0 365L165 268L310 338L475 245L645 335L810 252L995 322L1200 242V560H0V365Z" fill="var(--md-secondary)" opacity="0.52"/>
+                <!-- 5. Nuvens & Névoa -->
+                <g class="yukon-clouds">
+                  <path d="M60 232C115 212 185 214 238 232C280 218 345 224 388 242H30C40 238 50 235 60 232Z" fill="var(--md-surface-container-lowest)" opacity="0.48"/>
+                  <path d="M810 198C872 174 958 176 1016 198C1068 182 1138 188 1185 210H772C786 205 798 201 810 198Z" fill="var(--md-surface-container-lowest)" opacity="0.42"/>
+                  <path d="M0 356C220 336 410 368 640 350C860 334 1030 358 1200 344V392H0V356Z" fill="var(--md-surface-container-low)" opacity="0.34"/>
+                </g>
 
-              <!-- Valley Floor & Winding Yukon River -->
-              <path d="M0 375C280 355 540 365 1200 355V560H0V375Z" fill="var(--md-surface-container-high)"/>
-              <path d="M685 360C620 376 740 398 630 422C505 448 730 478 585 516C525 532 490 548 475 560H775C810 525 710 492 745 456C782 418 675 394 725 360H685Z" fill="url(#yukonRiverGrad)" opacity="0.95"/>
+                <!-- 6. Cordilheira Distante -->
+                <path class="yukon-ridge-far" d="M0 370L130 264L255 328L410 222L565 322L735 236L895 316L1060 218L1200 298V640H0V370Z" fill="var(--md-secondary-container)" opacity="0.88"/>
 
-              <!-- Foreground Boreal Ridges & Pine Silhouettes -->
-              <path class="yukon-ridge-near" d="M0 310L110 342L215 390L365 445L445 560H0V310Z" fill="var(--md-primary)" opacity="0.34"/>
-              <path class="yukon-ridge-near" d="M1200 295L1070 342L930 402L820 468L785 560H1200V295Z" fill="var(--md-primary)" opacity="0.42"/>
-              <path d="M0 448C175 418 320 475 480 515C680 562 930 465 1200 495V560H0V448Z" fill="var(--md-surface-container)"/>
-            </svg>
+                <!-- 7. Cordilheira Média -->
+                <path class="yukon-ridge-mid" d="M0 412L165 304L310 382L475 278L645 378L810 286L995 364L1200 276V640H0V412Z" fill="var(--md-secondary)" opacity="0.54"/>
 
-            <div class="yukon-header-row">
-              <div class="yukon-intro">
-                <span class="yukon-kicker">60.72° N · 135.05° W · Território de Yukon, Canadá</span>
-                <h2 class="yukon-title">Experiência em Yukon: resiliência em território aberto</h2>
-                <p class="yukon-lead">
-                  A origem do nome Yuko reflete o horizonte canadense de Yukon — vastidão exploratória, sobriedade e software sólido para ambientes reais.
-                </p>
-              </div>
+                <!-- 8. Vale e Rio Yukon -->
+                <path d="M0 426C280 404 540 416 1200 404V640H0V426Z" fill="var(--md-surface-container-high)"/>
+                <path d="M685 410C620 428 740 454 630 482C505 512 730 546 585 590C525 608 490 626 475 640H775C810 600 710 562 745 522C782 478 675 450 725 410H685Z" fill="url(#yukonRiverGrad)" opacity="0.95"/>
 
-              <div class="yukon-mood-switch">
-                <div class="connected-group" role="group" aria-label="Momento da expedição em Yukon">
-                  <button class="connected-btn" type="button" data-yukon-mood="alvorada" aria-pressed="true">Alvorada</button>
-                  <button class="connected-btn" type="button" data-yukon-mood="travessia" aria-pressed="false">Travessia</button>
-                  <button class="connected-btn" type="button" data-yukon-mood="boreal" aria-pressed="false">Noite Boreal</button>
+                <!-- 9. Cordilheira Próxima -->
+                <g class="yukon-ridge-near">
+                  <path d="M0 354L115 390L225 446L375 508L455 640H0V354Z" fill="var(--md-primary)" opacity="0.34"/>
+                  <path d="M1200 338L1070 390L930 458L820 532L785 640H1200V338Z" fill="var(--md-primary)" opacity="0.42"/>
+                  <path d="M0 512C175 478 320 542 480 588C680 642 930 530 1200 564V640H0V512Z" fill="var(--md-surface-container)"/>
+                </g>
+
+                <!-- 10. Silhueta de Pinheiros Boreais -->
+                <g class="yukon-pines">
+                  <path d="M24 640V514L4 514L28 476L12 476L34 440L56 476L40 476L64 514L44 514V640Z" fill="var(--md-secondary)" opacity="0.72"/>
+                  <path d="M74 640V544L56 544L78 510L64 510L84 478L104 510L90 510L112 544L94 544V640Z" fill="var(--md-primary)" opacity="0.58"/>
+                  <path d="M134 640V562L118 562L138 532L126 532L144 504L162 532L150 532L170 562L154 562V640Z" fill="var(--md-secondary)" opacity="0.64"/>
+                  <path d="M196 640V580L184 580L200 556L190 556L205 532L220 556L210 556L226 580L214 580V640Z" fill="var(--md-primary)" opacity="0.48"/>
+                  <path d="M982 640V574L968 574L986 548L975 548L991 522L1007 548L996 548L1014 574L1000 574V640Z" fill="var(--md-primary)" opacity="0.52"/>
+                  <path d="M1044 640V552L1026 552L1048 518L1034 518L1054 486L1074 518L1060 518L1082 552L1064 552V640Z" fill="var(--md-secondary)" opacity="0.68"/>
+                  <path d="M1112 640V522L1090 522L1116 482L1098 482L1122 444L1146 482L1128 482L1154 522L1132 522V640Z" fill="var(--md-primary)" opacity="0.62"/>
+                  <path d="M1168 640V548L1152 548L1172 516L1160 516L1178 488L1196 516L1184 516L1200 542V640Z" fill="var(--md-secondary)" opacity="0.76"/>
+                </g>
+              </svg>
+
+              <div class="yukon-sky-scrim" aria-hidden="true"></div>
+
+              <div class="yukon-header-row">
+                <div class="yukon-intro">
+                  <span class="yukon-kicker">Yukon, Canadá</span>
+                  <h2 id="yukonHeading" class="yukon-title">Experiência em Yukon: resiliência em território aberto</h2>
+                  <p class="yukon-lead">
+                    A origem do nome Yuko reflete o horizonte canadense de Yukon — vastidão exploratória, sobriedade e software sólido para ambientes reais.
+                  </p>
+                </div>
+
+                <div class="yukon-mood-switch">
+                  <div class="connected-group" role="group" aria-label="Momento da expedição em Yukon">
+                    <button class="connected-btn" type="button" data-yukon-mood="alvorada" aria-pressed="true">Alvorada</button>
+                    <button class="connected-btn" type="button" data-yukon-mood="travessia" aria-pressed="false">Travessia</button>
+                    <button class="connected-btn" type="button" data-yukon-mood="boreal" aria-pressed="false">Noite Boreal</button>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="yukon-horizon-spacer" aria-hidden="true"></div>
-          </div>
-
-          <!-- Linear 4-Step Narrative Progression -->
-          <div class="yukon-narrative">
-            <div class="yukon-rail" role="group" aria-label="Marcos lineares da experiência em Yukon">
-              <button class="yukon-step-btn" type="button" data-yukon-step="0" aria-pressed="true">
-                <span class="yukon-step-num">01 · TERRITÓRIO</span>
-                <span class="yukon-step-label">Resiliência</span>
-              </button>
-              <button class="yukon-step-btn" type="button" data-yukon-step="1" aria-pressed="false">
-                <span class="yukon-step-num">02 · CAMPO</span>
-                <span class="yukon-step-label">Vastidão Exploratória</span>
-              </button>
-              <button class="yukon-step-btn" type="button" data-yukon-step="2" aria-pressed="false">
-                <span class="yukon-step-num">03 · FORMA</span>
-                <span class="yukon-step-label">Sobriedade</span>
-              </button>
-              <button class="yukon-step-btn" type="button" data-yukon-step="3" aria-pressed="false">
-                <span class="yukon-step-num">04 · CHANCELA</span>
-                <span class="yukon-step-label">Construção em Rede</span>
-              </button>
-              <div class="yukon-rail-track" aria-hidden="true">
-                <div id="yukonRailFill" class="yukon-rail-fill"></div>
-              </div>
-            </div>
-
-            <div class="yukon-chapter-band">
-              <div class="yukon-chapter-copy" aria-live="polite">
-                <div class="yukon-chapter-meta">
-                  <span id="yukonChapterTag" class="studio-badge">Marco 01 · Resiliência</span>
+              <div class="yukon-progress-hud">
+                <div class="yukon-ring-wrap">
+                  <svg class="yukon-ring-svg" width="48" height="48" viewBox="0 0 48 48" aria-hidden="true">
+                    <circle class="yukon-ring-track" cx="24" cy="24" r="20" fill="none"/>
+                    <circle id="yukonRingFill" class="yukon-ring-fill" cx="24" cy="24" r="20" fill="none"/>
+                  </svg>
+                  <span id="yukonStepBadge" class="yukon-step-badge">01 / 04</span>
                 </div>
-                <h3 id="yukonChapterTitle" class="yukon-chapter-title">Construção sólida em ambientes exigentes</h3>
-                <p id="yukonChapterBody" class="yukon-chapter-body">
-                  Assim como o território de Yukon impõe preparo e ausência de excessos, a Yuko rejeita pilhas complexas e lock-in. Cada solução nasce enxuta, em ecossistemas maduros e testada antes da entrega.
-                </p>
-              </div>
-
-              <div class="yukon-chapter-controls">
-                <button id="yukonPrevBtn" class="btn btn-outline btn-sm" type="button" disabled>← Anterior</button>
-                <button id="yukonNextBtn" class="btn btn-primary btn-sm" type="button">Próximo marco →</button>
-                <a href="./extensoes.html" class="btn btn-tonal btn-sm">Ver Pilares &amp; Extensões</a>
+                <button id="yukonMoodLabel" class="yukon-mood-label" type="button" aria-live="polite">
+                  Alvorada
+                </button>
               </div>
             </div>
+          </aside>
+
+          <!-- Coluna Direita: Capítulos em Scrollytelling -->
+          <div class="yukon-chapters" aria-label="Marcos da jornada em Yukon">
+            <article class="yukon-chapter is-active" data-yukon-chapter="0">
+              <div class="yukon-chapter-meta">
+                <span class="yukon-chapter-kicker">01 · Território</span>
+              </div>
+              <h3 class="yukon-chapter-title">
+                <button type="button" class="yukon-chapter-trigger" aria-pressed="true">
+                  Resiliência em ambientes exigentes
+                </button>
+              </h3>
+              <p class="yukon-chapter-body">
+                Assim como o território de Yukon impõe preparo e ausência de excessos, a Yuko rejeita pilhas complexas e lock-in. Cada solução nasce enxuta, em ecossistemas maduros e testada antes da entrega.
+              </p>
+            </article>
+
+            <article class="yukon-chapter" data-yukon-chapter="1">
+              <div class="yukon-chapter-meta">
+                <span class="yukon-chapter-kicker">02 · Campo</span>
+              </div>
+              <h3 class="yukon-chapter-title">
+                <button type="button" class="yukon-chapter-trigger" aria-pressed="false">
+                  Vastidão exploratória com Yuko Field
+                </button>
+              </h3>
+              <p class="yukon-chapter-body">
+                Pela frente Yuko Field, a comunidade realiza visitas, entrevistas e validação contextual das dores reais da microempresa antes de escrever qualquer linha de código.
+              </p>
+            </article>
+
+            <article class="yukon-chapter" data-yukon-chapter="2">
+              <div class="yukon-chapter-meta">
+                <span class="yukon-chapter-kicker">03 · Forma</span>
+              </div>
+              <h3 class="yukon-chapter-title">
+                <button type="button" class="yukon-chapter-trigger" aria-pressed="false">
+                  Sobriedade e gestão enxuta
+                </button>
+              </h3>
+              <p class="yukon-chapter-body">
+                Minimalismo instrumental e zero ruído: documentação útil, commits semânticos rastreáveis e zero burocracia para manter o ciclo produtivo ágil.
+              </p>
+            </article>
+
+            <article class="yukon-chapter" data-yukon-chapter="3">
+              <div class="yukon-chapter-meta">
+                <span class="yukon-chapter-kicker">04 · Chancela</span>
+              </div>
+              <h3 class="yukon-chapter-title">
+                <button type="button" class="yukon-chapter-trigger" aria-pressed="false">
+                  Construção em rede
+                </button>
+              </h3>
+              <p class="yukon-chapter-body">
+                Nenhuma entrega atravessa o território sozinha. Todo projeto passa por revisão cruzada por 2+ pares, suporte definido e transição segura para proteger a microempresa.
+              </p>
+              <div class="yukon-chapter-actions">
+                <a href="./extensoes.html" class="btn btn-tonal btn-sm">Explorar Extensões →</a>
+              </div>
+            </article>
           </div>
         </div>
       </div>
@@ -489,6 +568,6 @@
   </footer>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <script src="./app.js?v=6"></script>
+  <script src="./app.js?v=7"></script>
 </body>
 </html>
