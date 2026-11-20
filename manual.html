@@ -5,15 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Manual Institucional da Yuko — v1.0 &amp; Glossário</title>
   <meta name="description" content="Quadro de controle do Manual Institucional da Yuko v1.0, ressalvas jurídicas, linhagem NYX e Expliance, gestão enxuta e glossário institucional pesquisável." />
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..800;1,9..40,400..700&family=JetBrains+Mono:wght@500;700&display=swap" />
-  <link rel="stylesheet" href="./styles.css?v=5" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&family=JetBrains+Mono:wght@500;700&display=swap" />
+  <link rel="stylesheet" href="./styles.css?v=6" />
   <script>
-    (function(){try{var r=document.documentElement,s=localStorage.getItem("yuko_seed"),m=localStorage.getItem("yuko_mode"),t=localStorage.getItem("yuko_motion");if(s)r.setAttribute("data-seed",s);if(m)r.setAttribute("data-mode",m);if(t)r.setAttribute("data-motion",t);}catch(e){}})();
+    (function(){try{var r=document.documentElement,s=localStorage.getItem("yuko_seed"),m=localStorage.getItem("yuko_mode"),t=localStorage.getItem("yuko_motion");if(["terracota","botanico","oceanico","ameixa"].indexOf(s)!==-1)r.setAttribute("data-seed",s);if(["light","dark"].indexOf(m)!==-1)r.setAttribute("data-mode",m);if(["expressive","calm"].indexOf(t)!==-1)r.setAttribute("data-motion",t);}catch(e){}})();
   </script>
 </head>
 <body>
+  <a class="skip-link" href="#topo">Pular para o conteúdo</a>
   <div class="top-bar-wrap">
     <header class="top-bar" aria-label="Navegação principal">
       <a href="./index.html" class="brand">
@@ -22,30 +24,29 @@
       </a>
       <nav class="nav-links" aria-label="Seções e subpáginas">
         <a href="./index.html">Início</a>
-        <a href="./extensoes.html">Extensões &amp; Frentes</a>
-        <a href="./ciclo.html">Ciclo &amp; Papéis</a>
+        <a href="./extensoes.html">Extensões</a>
+        <a href="./ciclo.html">Ciclo</a>
         <a href="./governanca.html">Qualidade &amp; LGPD</a>
         <a href="./manual.html" aria-current="page">Manual v1.0</a>
       </nav>
       <div class="bar-controls">
         <div class="seed-dots" role="group" aria-label="Semente de cor dinâmica">
-          <button class="seed-dot" data-seed="terracota" aria-pressed="true" title="Terracota Solar"></button>
-          <button class="seed-dot" data-seed="botanico" aria-pressed="false" title="Botânico Vivo"></button>
-          <button class="seed-dot" data-seed="oceanico" aria-pressed="false" title="Índigo Oceânico"></button>
-          <button class="seed-dot" data-seed="ameixa" aria-pressed="false" title="Ameixa Editorial"></button>
+          <button class="seed-dot" type="button" data-seed="terracota" aria-pressed="true" title="Terracota Solar" aria-label="Tema Terracota Solar"></button>
+          <button class="seed-dot" type="button" data-seed="botanico" aria-pressed="false" title="Botânico Vivo" aria-label="Tema Botânico Vivo"></button>
+          <button class="seed-dot" type="button" data-seed="oceanico" aria-pressed="false" title="Índigo Oceânico" aria-label="Tema Índigo Oceânico"></button>
+          <button class="seed-dot" type="button" data-seed="ameixa" aria-pressed="false" title="Ameixa Editorial" aria-label="Tema Ameixa Editorial"></button>
         </div>
-        <button id="modeToggleBtn" class="icon-btn" type="button" aria-label="Alternar modo claro e escuro">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <button id="modeToggleBtn" class="icon-btn" type="button" title="Alternar Claro/Escuro" aria-label="Alternar modo claro e escuro" aria-pressed="false">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
             <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
           </svg>
         </button>
-        <a href="./index.html" class="btn btn-tonal btn-sm bar-cta">Voltar ao Início</a>
       </div>
     </header>
     <nav class="mobile-nav" aria-label="Navegação móvel">
       <a href="./index.html">Início</a>
       <a href="./extensoes.html">Extensões</a>
-      <a href="./ciclo.html">Ciclo 6 Etapas</a>
+      <a href="./ciclo.html">Ciclo</a>
       <a href="./governanca.html">Qualidade &amp; LGPD</a>
       <a href="./manual.html" aria-current="page">Manual v1.0</a>
     </nav>
@@ -57,7 +58,7 @@
         <div class="hero-eyebrow"><span>Documento Institucional Aberto</span><span aria-hidden="true">·</span><span>Versão 1.0</span></div>
         <h1 class="sub-hero-title">Manual Institucional da <span class="accent-word">Yuko</span> — v1.0</h1>
         <p class="hero-lead">
-          Identidade Institucional, Governança, Metodologia e Diretrizes Operacionais — edição inicial de formalização para a comunidade Yuko e projetos em implantação.
+          Referência normativa, metodológica e operacional de uso comunitário para os projetos e iniciativas em implantação na Yuko.
         </p>
         <div class="hero-actions" style="margin-bottom:0">
           <a href="#controle" class="btn btn-primary">Quadro de Controle</a>
@@ -67,7 +68,7 @@
       </div>
     </section>
 
-    <!-- Quadro de Controle + Como Consultar -->
+    <!-- Quadro de Controle -->
     <section id="controle" class="section" style="padding-top:24px">
       <div class="container">
         <div class="section-head">
@@ -77,65 +78,58 @@
 
         <div class="control-table-wrap">
           <table class="control-table">
+            <caption class="sr-only">Metadados normativos e de versão do Manual Institucional da Yuko v1.0</caption>
             <tbody>
-              <tr><th>Documento</th><td>Manual Institucional da Yuko</td></tr>
-              <tr><th>Versão</th><td>1.0 (Edição Inicial de Formalização)</td></tr>
-              <tr><th>Natureza</th><td>Referencial Normativo, Metodológico e Operacional</td></tr>
-              <tr><th>Abrangência</th><td>Comunidade Yuko, frentes de atuação e projetos em fase de implantação</td></tr>
-              <tr><th>Vigência</th><td>A partir de sua emissão e publicação interna</td></tr>
-              <tr><th>Classificação</th><td>Documento Institucional Aberto de Uso Comunitário</td></tr>
-              <tr><th>Revisão</th><td>Periódica, sob demanda do ciclo de maturação da governança (v1.1, v2.0, etc.)</td></tr>
+              <tr><th scope="row">Documento</th><td>Manual Institucional da Yuko</td></tr>
+              <tr><th scope="row">Versão</th><td>1.0 (Formalização Inicial)</td></tr>
+              <tr><th scope="row">Natureza</th><td>Referencial normativo, metodológico e operacional</td></tr>
+              <tr><th scope="row">Abrangência</th><td>Comunidade Yuko, frentes e projetos em implantação</td></tr>
+              <tr><th scope="row">Classificação</th><td>Documento aberto de uso comunitário</td></tr>
+              <tr><th scope="row">Revisão</th><td>Periódica, conforme maturação da governança (v1.1, v2.0)</td></tr>
             </tbody>
           </table>
-        </div>
-
-        <div class="grid-3" style="margin-top:24px">
-          <article class="m3-card">
-            <h3>Leitura Geral Inicial</h3>
-            <p>Essencial para integrantes que ingressam na comunidade técnica ou atuam em projetos, apresentando linhagem, ética e metodologia.</p>
-          </article>
-          <article class="m3-card tonal-secondary">
-            <h3>Consulta Operacional Contínua</h3>
-            <p>As seções do Ciclo de Entrega Assistida (Seção 8), Registro Formal (Seção 9) e Identidade da Marca (Seção 4) devem ser consultadas na abertura e homologação.</p>
-          </article>
-          <article class="m3-card">
-            <h3>Interpretação Proporcional</h3>
-            <p>As regras descrevem estruturas em implantação progressiva, preservando equilíbrio entre rigor metodológico e agilidade operacional.</p>
-          </article>
         </div>
       </div>
     </section>
 
-    <!-- Seções 1, 2 e 14 -->
+    <!-- Ressalvas, Linhagem & Guia -->
     <section id="origem" class="section">
       <div class="container">
         <div class="section-head">
-          <div class="section-kicker">Seções 1, 2 e 14</div>
+          <div class="section-kicker">Fundamentos &amp; Mapa</div>
           <h2 class="section-title">Ressalvas Jurídicas, Linhagem &amp; Gestão Enxuta</h2>
         </div>
 
         <div class="grid-2">
           <article class="m3-card">
-            <h3>1. Natureza Orientativa e Ausência de Vínculos</h3>
-            <p>O manual possui caráter estritamente institucional, metodológico e procedimental no âmbito comunitário. Não substitui contratos formais, estatutos sociais ou pareceres jurídicos.</p>
-            <p>A participação voluntária ou o alinhamento às práticas não configura vínculo empregatício, societário ou representação legal. Relações comerciais com microempresas dependem de documentação bilateral própria e juridicamente autônoma.</p>
+            <h3>1. Ressalvas Jurídicas &amp; Ausência de Vínculo</h3>
+            <p>Este manual tem caráter orientativo e comunitário, sem substituir contratos formais, estatutos sociais ou pareceres jurídicos.</p>
+            <p>A participação voluntária não gera vínculo empregatício, societário ou representação legal. Relações comerciais exigem contrato bilateral autônomo.</p>
           </article>
 
           <article class="m3-card tonal-primary">
-            <h3>2. Linhagem: De NYX a Expliance</h3>
-            <p><strong>Fase NYX:</strong> marco inicial de experimentação em métodos colaborativos de desenvolvimento e articulação de competências individuais.</p>
-            <p><strong>Fase Expliance:</strong> sistematização procedimental com modelos de governança, divisão de frentes técnicas e padrões operacionais.</p>
-            <p><strong>Transição para Yuko:</strong> absorve o patrimônio conceitual herdado, filtrando sobrecargas regulatórias para tornar o ciclo produtivo enxuto e rastreável.</p>
+            <h3>2. Linhagem: NYX → Expliance → Yuko</h3>
+            <p><strong>NYX:</strong> experimentação inicial em desenvolvimento colaborativo e articulação de talentos.</p>
+            <p><strong>Expliance:</strong> sistematização de governança, frentes técnicas e padrões operacionais.</p>
+            <p><strong>Yuko:</strong> síntese enxuta e rastreável, eliminando excessos regulatórios sem perder rigor.</p>
           </article>
 
           <article class="m3-card tonal-tertiary">
-            <h3>1.3 Fase de Implantação Progressiva</h3>
-            <p>A Yuko encontra-se em consolidação gradual de suas rotinas institucionais. Os modelos de comitês, papéis e extensões refletem a arquitetura planejada e não pressupõem carteira fixa prévia de clientes ou equipe corporativa permanente.</p>
+            <h3>3. Implantação Gradual &amp; Gestão Enxuta</h3>
+            <p>Estruturas, papéis e extensões estão em consolidação progressiva, sem pressupor carteira fixa de clientes ou equipe corporativa permanente.</p>
+            <p>Todo fluxo que se mostrar lento frente ao benefício real deve ser simplificado; qualquer membro ativo pode propor revisões.</p>
           </article>
 
-          <article class="m3-card">
-            <h3>14. Rejeição à Hipertrofia Burocrática</h3>
-            <p>A formalização não visa engessar a comunidade. Qualquer fluxo de validação que se mostre lento ou oneroso frente ao benefício real deve ser simplificado imediatamente. Propostas de atualização do manual podem partir de qualquer integrante ativo.</p>
+          <article class="m3-card tonal-secondary">
+            <div>
+              <h3>Guia Rápido de Navegação</h3>
+              <ul class="clean-list" style="margin-top:12px">
+                <li><span><a href="./index.html"><strong>Início</strong></a> — propósito, experiência Yukon e temas dinâmicos.</span></li>
+                <li><span><a href="./extensoes.html"><strong>Extensões</strong></a> — marca, 6 extensões, 6 frentes e Discord.</span></li>
+                <li><span><a href="./ciclo.html"><strong>Ciclo</strong></a> — 6 etapas assistidas, papéis e registro em issue.</span></li>
+                <li><span><a href="./governanca.html"><strong>Qualidade &amp; LGPD</strong></a> — DoD, stack, segurança e mediação.</span></li>
+              </ul>
+            </div>
           </article>
         </div>
       </div>
@@ -149,56 +143,55 @@
             <div class="section-kicker">Glossário Institucional</div>
             <h2 class="section-title" style="margin-bottom:0">Termos oficiais do Manual v1.0</h2>
           </div>
-          <input id="glossarySearch" class="search-pill" type="search" placeholder="Filtrar termos do glossário (ex: Peer, Issue, Yuko)..." aria-label="Filtrar termos do glossário" />
+          <input id="glossarySearch" class="search-pill" type="search" placeholder="Filtrar termos do glossário (ex: Peer, DoD, Issue)..." aria-label="Filtrar termos do glossário" />
         </div>
+
+        <p id="glossaryStatus" class="hero-lead" aria-live="polite" style="font-size:0.9rem; margin:0 0 16px;"></p>
 
         <div class="grid-2">
           <article class="m3-card" data-glossary-item>
             <h3>Ciclo de Entrega Assistida</h3>
-            <p>Metodologia de desenvolvimento e liberação de software desenvolvida pela Yuko, na qual uma entrega individual é obrigatoriamente submetida a acompanhamento, revisão crítica por múltiplos pares e teste antes da validação com o cliente.</p>
+            <p>Fluxo em seis etapas no qual toda solução passa por escopo, revisão cruzada por pares e testes antes da entrega.</p>
           </article>
           <article class="m3-card" data-glossary-item>
             <h3>Critérios de Aceitação</h3>
-            <p>Lista objetiva e prévia de requisitos técnicos e funcionais acordados que definem o ponto no qual uma tarefa ou projeto pode ser aceito como satisfatoriamente concluído.</p>
+            <p>Parâmetros técnicos e funcionais definidos previamente para validar quando a solução atende ao acordado.</p>
+          </article>
+          <article class="m3-card" data-glossary-item>
+            <h3>Definition of Done (DoD)</h3>
+            <p>Checklist técnico obrigatório que atesta funcionalidade, versionamento, revisão aprovada, guia básico e segurança.</p>
           </article>
           <article class="m3-card" data-glossary-item>
             <h3>Desenvolvedor Executor</h3>
-            <p>Integrante técnico responsável pela liderança prática da concepção e programação da solução para um determinado projeto.</p>
+            <p>Integrante responsável pela liderança prática do escopo, implementação técnica e alinhamento da entrega.</p>
           </article>
           <article class="m3-card" data-glossary-item>
             <h3>Extensões da Marca</h3>
-            <p>Ramificações funcionais especializadas sob o prefixo Yuko (Field, Dev, Make, Place, Work e Inline) voltadas a propósitos institucionais e de produto específicos.</p>
+            <p>Ramificações funcionais sob o prefixo Yuko (Field, Dev, Make, Place, Work e Inline) para frentes específicas.</p>
           </article>
           <article class="m3-card" data-glossary-item>
             <h3>Issue de Registro</h3>
-            <p>Cartão, tarefa ou registro rastreável formalizado dentro da ferramenta oficial de gestão de projetos que consolida formalmente histórico, papéis, links e decisões de uma iniciativa.</p>
+            <p>Registro oficial rastreável que centraliza escopo, responsáveis, pareceres de revisão, links e decisões do projeto.</p>
           </article>
           <article class="m3-card" data-glossary-item>
             <h3>Peer Review Obrigatório</h3>
-            <p>Etapa procedural no ciclo de entrega na qual pelo menos dois desenvolvedores habilitados avaliam a integridade do código antes de qualquer autorização de publicação ou release.</p>
+            <p>Etapa em que pelo menos dois desenvolvedores independentes revisam código e segurança antes da homologação.</p>
           </article>
           <article class="m3-card tonal-secondary" data-glossary-item>
             <h3>Responsável de Suporte</h3>
-            <p>Desenvolvedor formalmente designado ao final da entrega técnica para atuar como guardião da sustentação e ponto focal para a estabilização da solução em prol da microempresa parceira.</p>
+            <p>Desenvolvedor designado para acompanhar a estabilização pós-entrega e correções iniciais junto à microempresa.</p>
           </article>
         </div>
-      </div>
-    </section>
 
-    <section class="section" style="padding-top:16px">
-      <div class="container">
-        <div class="cta-banner">
-          <div>
-            <h2>Declaração de Fechamento Institucional</h2>
-            <p>A Yuko firma-se como um compromisso coletivo de valorização do talento técnico independente e de fortalecimento das microempresas brasileiras, transformando esforço individual em sustentação compartilhada, integridade operacional e maturidade contínua.</p>
-          </div>
-          <a href="./index.html" class="btn btn-primary">Voltar ao início</a>
+        <div id="glossaryEmpty" class="m3-card" hidden>
+          <h3>Nenhum termo encontrado</h3>
+          <p>Tente buscar por outra palavra-chave do manual.</p>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
+  <footer class="site-footer site-footer-compact">
     <div class="container">
       <div class="footer-top">
         <div>
@@ -206,16 +199,16 @@
             <span class="brand-mark"><img src="./assets/yuko-logo.jpg" alt="Logotipo da Yuko" /></span>
             <span>Yuko</span>
           </a>
-          <p class="footer-summary">Documento Institucional Aberto de Uso Comunitário · Versão 1.0 (Edição Inicial de Formalização).</p>
-          <a href="#topo" class="btn btn-tonal btn-sm">Voltar ao topo</a>
+          <p class="footer-summary">Documento Institucional Aberto de Uso Comunitário · Versão 1.0.</p>
+          <a href="./index.html" class="btn btn-primary btn-sm">Voltar ao Início →</a>
         </div>
         <div class="footer-cols">
           <div>
             <div class="footer-col-title">Subpáginas</div>
             <div class="footer-col-links">
               <a href="./index.html">Início</a>
-              <a href="./extensoes.html">Extensões &amp; Frentes</a>
-              <a href="./ciclo.html">Ciclo &amp; Papéis</a>
+              <a href="./extensoes.html">Extensões</a>
+              <a href="./ciclo.html">Ciclo</a>
               <a href="./governanca.html">Qualidade &amp; LGPD</a>
               <a href="./manual.html">Manual v1.0</a>
             </div>
@@ -230,28 +223,19 @@
           </div>
         </div>
       </div>
-      <div class="footer-monument">
-        <div class="footer-monument-head">
-          <span class="footer-ref-kicker">Manual Institucional v1.0 · Edição Inicial de Formalização</span>
-          <div class="footer-monument-logo"><img src="./assets/yuko-logo.jpg" alt="Marca Yuko" /></div>
-        </div>
-        <span class="footer-wordmark">YUKO</span>
-        <div class="footer-monument-sub">
-          <span class="footer-monument-tagline">De NYX e Expliance à Yuko · Sustentação Compartilhada e Maturidade Contínua</span>
-          <div class="footer-token-row">
-            <span class="footer-token-chip">seção 1-2</span>
-            <span class="footer-token-chip">seção 14</span>
-            <span class="footer-token-chip">glossário</span>
-          </div>
-        </div>
-      </div>
       <div class="footer-inner">
         <span><strong>Yuko</strong> · Manual Institucional v1.0</span>
-        <div class="footer-links"><a href="./index.html">Início</a><a href="./extensoes.html">Extensões</a><a href="./ciclo.html">Ciclo</a></div>
+        <div class="footer-links">
+          <a href="./index.html">Início</a>
+          <a href="./extensoes.html">Extensões</a>
+          <a href="./ciclo.html">Ciclo</a>
+          <a href="./governanca.html">Qualidade &amp; LGPD</a>
+          <a href="./manual.html">Manual v1.0</a>
+        </div>
       </div>
     </div>
   </footer>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <script src="./app.js?v=5"></script>
+  <script src="./app.js?v=6"></script>
 </body>
 </html>
