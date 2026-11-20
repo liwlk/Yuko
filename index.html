@@ -109,52 +109,92 @@
           </div>
         </div>
 
-        <!-- Interactive Yuko Institutional Explorer Card -->
-        <aside id="studioCard" class="studio-card" aria-label="Explorador interativo do Ciclo da Yuko">
-          <div class="studio-top">
-            <span class="studio-badge" id="studioStateBadge">Etapa 1 · Demanda</span>
-            <span class="studio-timer" id="studioTimer">Etapa 01 / 06</span>
-          </div>
-
-          <div class="studio-visual">
-            <div class="scallop-wrap" id="scallopToggle" role="button" tabindex="0" aria-label="Avançar etapa do Ciclo de Entrega Assistida">
-              <svg class="scallop-svg" viewBox="0 0 120 120" fill="currentColor" aria-hidden="true">
-                <path d="M60 4C67.5 4 72.1 12.6 79.2 14.5C86.3 16.4 94.3 10.6 99.6 15.9C104.9 21.2 99.1 29.2 101 36.3C102.9 43.4 111.5 48 111.5 55.5C111.5 63 102.9 67.6 101 74.7C99.1 81.8 104.9 89.8 99.6 95.1C94.3 100.4 86.3 94.6 79.2 96.5C72.1 98.4 67.5 107 60 107C52.5 107 47.9 98.4 40.8 96.5C33.7 94.6 25.7 100.4 20.4 95.1C15.1 89.8 20.9 81.8 19 74.7C17.1 67.6 8.5 63 8.5 55.5C8.5 48 17.1 43.4 19 36.3C20.9 29.2 15.1 21.2 20.4 15.9C25.7 10.6 33.7 16.4 40.8 14.5C47.9 12.6 52.5 4 60 4Z"/>
-              </svg>
-              <div class="scallop-logo-pill">
-                <img src="./assets/yuko-logo.jpg" alt="Símbolo da Yuko" />
-              </div>
-            </div>
-
-            <div class="track-meta">
-              <h3 id="trackTitle">1. Demanda &amp; Triagem</h3>
-              <p id="trackSubtitle">Prospecção ativa via Yuko Field ou acolhimento passivo com análise de viabilidade e criticidade.</p>
-              <div class="stage-dots" id="stageDots" aria-hidden="true">
-                <span class="stage-dot active"></span>
-                <span class="stage-dot"></span>
-                <span class="stage-dot"></span>
-                <span class="stage-dot"></span>
-                <span class="stage-dot"></span>
-                <span class="stage-dot"></span>
-              </div>
-            </div>
-          </div>
-
-          <div class="chip-row" role="group" aria-label="Pilares do Manual Institucional">
-            <button class="m3-chip" type="button" data-pillar="ciclo" aria-pressed="true">Ciclo 6 Etapas</button>
-            <button class="m3-chip" type="button" data-pillar="linhagem" aria-pressed="false">NYX → Expliance</button>
-            <button class="m3-chip" type="button" data-pillar="pilares" aria-pressed="false">Yukon · Oslo · Verona</button>
-            <button class="m3-chip" type="button" data-pillar="discord" aria-pressed="false">Comunidade Discord</button>
-          </div>
-
-          <div class="slider-box">
-            <div class="slider-head">
-              <label for="densitySlider">Navegar pelo Ciclo de Entrega Assistida</label>
-              <strong id="densityVal">Etapa 1/6</strong>
-            </div>
-            <input id="densitySlider" class="m3-range" type="range" min="1" max="6" step="1" value="1" />
+        <!-- Editorial Illustration for Yuko -->
+        <aside class="hero-art-card" aria-label="Ilustração institucional da Yuko">
+          <figure class="hero-art-frame">
+            <img src="./assets/yuko-hero.jpg" alt="Ilustração editorial simbolizando engenharia colaborativa e arquitetura modular da Yuko" />
+          </figure>
+          <div class="hero-art-caption">
+            <span>Engenharia colaborativa · Revisão cruzada por pares</span>
+            <a href="./extensoes.html" class="studio-badge">Yuko Dev &amp; Make</a>
           </div>
         </aside>
+      </div>
+    </section>
+
+    <!-- Experiência em Yukon (Canadá) -->
+    <section id="yukon" class="section" style="padding-top:16px">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-kicker">Seção 4.1 · Origem Seminal do Nome Yuko</div>
+          <h2 class="section-title">Experiência em Yukon (Canadá): resiliência sob alta exigência</h2>
+          <p class="section-desc">
+            A concepção nominal da Yuko nasce do território canadense de Yukon — evocando vastidão exploratória, sobriedade operacional e capacidade de construir software confiável em cenários reais.
+          </p>
+        </div>
+
+        <div class="yukon-panel">
+          <div class="yukon-topbar">
+            <span class="yukon-coords">60.72° N · 135.05° W · Território de Yukon, Canadá</span>
+
+            <div class="connected-group" role="group" aria-label="Momento da expedição em Yukon">
+              <button class="connected-btn" type="button" data-yukon-mood="alvorada" aria-pressed="true">Alvorada</button>
+              <button class="connected-btn" type="button" data-yukon-mood="travessia" aria-pressed="false">Travessia</button>
+              <button class="connected-btn" type="button" data-yukon-mood="boreal" aria-pressed="false">Noite Boreal</button>
+            </div>
+          </div>
+
+          <div class="yukon-stage-grid">
+            <div id="yukonArtFrame" class="yukon-art-frame" data-yukon-mood="alvorada">
+              <img src="./assets/yukon-landscape.jpg" alt="Paisagem editorial do Território de Yukon, Canadá, com montanhas boreais e vale fluvial" />
+              <div class="yukon-art-overlay" aria-hidden="true"></div>
+              <div class="yukon-art-hud">
+                <span id="yukonHudText" class="yukon-hud-pill">Alvorada em Whitehorse · Prospecção Contextual via Yuko Field</span>
+                <span class="yukon-hud-pill">Pilar 01 · Geopolítica &amp; Ética Técnica</span>
+              </div>
+            </div>
+
+            <article class="yukon-spotlight" aria-live="polite">
+              <div>
+                <span id="yukonSpotTag" class="studio-badge">Pilar 01 · Resiliência</span>
+                <h3 id="yukonSpotTitle">Construção sólida em ambientes exigentes</h3>
+                <p id="yukonSpotBody">
+                  Assim como a travessia do território de Yukon exige preparo e ausência de excessos, a Yuko rejeita pilhas complexas e lock-in. Cada solução nasce enxuta, testada em staging e sustentada por pares.
+                </p>
+              </div>
+              <div style="display:grid; gap:14px">
+                <div class="footer-token-row">
+                  <span id="yukonTokenA" class="footer-token-chip">seção 4.1 · yukon</span>
+                  <span id="yukonTokenB" class="footer-token-chip">seção 10.1 · simplicidade</span>
+                </div>
+                <a href="./extensoes.html" class="btn btn-tonal">Explorar Pilares &amp; Extensões →</a>
+              </div>
+            </article>
+          </div>
+
+          <div class="yukon-pillars" role="group" aria-label="Pilares da experiência em Yukon">
+            <button class="yukon-pillar-btn" type="button" data-yukon-pillar="resiliencia" aria-pressed="true">
+              <span class="yukon-pillar-num">01 · TERRITÓRIO</span>
+              <span class="yukon-pillar-name">Resiliência</span>
+              <span class="yukon-pillar-sub">Operação estável sem dependências frágeis</span>
+            </button>
+            <button class="yukon-pillar-btn" type="button" data-yukon-pillar="vastidao" aria-pressed="false">
+              <span class="yukon-pillar-num">02 · CAMPO</span>
+              <span class="yukon-pillar-name">Vastidão Exploratória</span>
+              <span class="yukon-pillar-sub">Imersão contextual com Yuko Field</span>
+            </button>
+            <button class="yukon-pillar-btn" type="button" data-yukon-pillar="sobriedade" aria-pressed="false">
+              <span class="yukon-pillar-num">03 · FORMA</span>
+              <span class="yukon-pillar-name">Sobriedade</span>
+              <span class="yukon-pillar-sub">Clareza instrumental e zero ruído</span>
+            </button>
+            <button class="yukon-pillar-btn" type="button" data-yukon-pillar="rede" aria-pressed="false">
+              <span class="yukon-pillar-num">04 · CHANCELA</span>
+              <span class="yukon-pillar-name">Construção em Rede</span>
+              <span class="yukon-pillar-sub">Revisão cruzada por 2+ pares</span>
+            </button>
+          </div>
+        </div>
       </div>
     </section>
 
