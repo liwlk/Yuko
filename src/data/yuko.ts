@@ -860,6 +860,7 @@ export interface SimulatorJourneyStep {
   step: number;
   label: string;
   humanLine: string;
+  clientLine: string;
   devLine: string;
   area: string;
   href: string;
@@ -926,7 +927,7 @@ export const SIMULATOR_SOLUTIONS: SimulatorSolutionCard[] = [
   {
     id: 'cadastro-rotina',
     shortTitle: 'Rotina & Controle',
-    moodTag: 'Casa organizada',
+    moodTag: 'Casa em ordem',
     profileTitle: 'Rotina Leve & Segura',
     profileBadge: 'Gestão Central',
     humanSummary:
@@ -943,7 +944,7 @@ export const SIMULATOR_SOLUTIONS: SimulatorSolutionCard[] = [
   {
     id: 'automacao-ferramentas',
     shortTitle: 'Conexões & Fluxos',
-    moodTag: 'Menos retrabalho',
+    moodTag: 'Menos esforço',
     profileTitle: 'Operação Conectada',
     profileBadge: 'Ponte Enxuta',
     humanSummary:
@@ -960,7 +961,7 @@ export const SIMULATOR_SOLUTIONS: SimulatorSolutionCard[] = [
   {
     id: 'casa-em-ordem',
     shortTitle: 'Proteção & LGPD',
-    moodTag: 'Tranquilidade real',
+    moodTag: 'Sigilo ativo',
     profileTitle: 'Base Protegida (LGPD)',
     profileBadge: 'Cuidado & Sigilo',
     humanSummary:
@@ -999,6 +1000,8 @@ export const SIMULATOR_JOURNEY_STEPS: SimulatorJourneyStep[] = [
     label: '1. Escuta',
     humanLine:
       'Você conta a rotina sem jargões e a rede avalia o impacto real antes de começar.',
+    clientLine:
+      'Sua necessidade vira ponto de partida para um atendimento mais simples e rápido.',
     devLine:
       'Triagem no #projetos-ativos avalia ganho real, urgência, baixa dependência externa e 2+ revisores.',
     area: 'Yuko Field',
@@ -1009,6 +1012,8 @@ export const SIMULATOR_JOURNEY_STEPS: SimulatorJourneyStep[] = [
     label: '2. Acordo',
     humanLine:
       'Combinado enxuto por escrito, com prazos claros, critérios de aprovação e contrato direto.',
+    clientLine:
+      'O serviço nasce focado no que resolve seu dia a dia, sem excesso de telas ou cadastros.',
     devLine:
       'Ficha oficial registra escopo, contrato bilateral autônomo e nomes de executor, revisores e suporte.',
     area: 'Yuko Make · Yuko Work',
@@ -1018,7 +1023,9 @@ export const SIMULATOR_JOURNEY_STEPS: SimulatorJourneyStep[] = [
     step: 3,
     label: '3. Criação',
     humanLine:
-      'Sistema construído em espaço central seguro, usando apenas exemplos inventados no lugar de dados reais.',
+      'Sistema feito em espaço central compartilhado, sem depender de um único computador.',
+    clientLine:
+      'Cada tela é preparada para abrir leve no celular e proteger seus dados desde o início.',
     devLine:
       'Construção no espaço central com apoio em #conhecimento-tecnico; proibido reter código no computador pessoal.',
     area: 'Yuko Dev · Yuko Inline',
@@ -1029,6 +1036,8 @@ export const SIMULATOR_JOURNEY_STEPS: SimulatorJourneyStep[] = [
     label: '4. Revisão',
     humanLine:
       'Pelo menos dois profissionais independentes conferem tudo antes de você precisar aprovar qualquer tela.',
+    clientLine:
+      'Mais de um par confere segurança e clareza antes de o serviço chegar até você.',
     devLine:
       'Revisão obrigatória por 2+ colegas no #projetos-ativos valida segurança, LGPD e fidelidade ao acordo.',
     area: 'Yuko Dev · Yuko Work',
@@ -1038,7 +1047,9 @@ export const SIMULATOR_JOURNEY_STEPS: SimulatorJourneyStep[] = [
     step: 5,
     label: '5. Testes',
     humanLine:
-      'Você experimenta no celular em ambiente separado de testes, só com dados fictícios de exemplo.',
+      'Você testa no celular em ambiente separado, usando só dados fictícios.',
+    clientLine:
+      'Os testes acontecem só com exemplos fictícios, preservando a privacidade de clientes reais.',
     devLine:
       'Ambiente separado com dados fictícios fecha a lista final de entrega e cadeado HTTPS ativo.',
     area: 'Yuko Inline · Yuko Make',
@@ -1049,6 +1060,8 @@ export const SIMULATOR_JOURNEY_STEPS: SimulatorJourneyStep[] = [
     label: '6. Apoio',
     humanLine:
       'Tudo vai ao ar no seu nome, com guia simples e suporte protegido contra abandono.',
+    clientLine:
+      'Tudo funciona de forma estável e com suporte pronto se precisar de ajuste.',
     devLine:
       'Entrega registrada em #recepcao-e-avisos; empresa é Controladora e suporte segue regra de 5 dias.',
     area: 'Yuko Place · Yuko Work',
@@ -1062,21 +1075,21 @@ export const SIMULATOR_DEV_PROFILES: Record<SimulatorDevRole, SimulatorDevProfil
     profileTitle: 'Par Executor em Rede',
     profileBadge: 'Autonomia & Ficha',
     humanSummary:
-      'Transforma a escuta em combinado enxuto, constrói em espaço central e mantém histórico claro, sem vínculo empregatício.',
+      'Transforma a conversa em combinado simples e constrói em espaço central compartilhado.',
   },
   revisor: {
     label: 'Revisar (2+)',
     profileTitle: 'Guardião de Revisão (2+)',
     profileBadge: 'Olhar Independente',
     humanSummary:
-      'Confere clareza, proteção de senhas e LGPD junto com outro par: nada vai ao ar por uma pessoa só.',
+      'Confere segurança, clareza e LGPD junto com outro revisor antes de liberar.',
   },
   suporte: {
     label: 'Apoiar',
     profileTitle: 'Referência de Continuidade',
     profileBadge: 'Pós-Entrega Ativo',
     humanSummary:
-      'Acompanha os primeiros dias como Operador técnico sob guia da empresa, com troca segura pela regra de 5 dias.',
+      'Acompanha os primeiros dias no ar e garante troca segura em até 5 dias úteis.',
   },
 };
 

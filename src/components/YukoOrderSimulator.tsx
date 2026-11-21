@@ -198,10 +198,6 @@ function resolveHumanProfile(
       ? 'Começando pelo essencial e validado por 2+ revisores antes de ir ao ar.'
       : 'Cobrindo a rotina completa com conferência coletiva e guia de uso.';
 
-  const lgpdPhrase = involvesClientData
-    ? 'Com sigilo LGPD ativo e testes feitos só com exemplos fictícios.'
-    : 'Sem exposição de dados sensíveis e com acessos sempre no nome da empresa.';
-
   if (perspective === 'desenvolvedor') {
     const devMeta = SIMULATOR_DEV_PROFILES[devRole];
     const situationSuffix =
@@ -213,7 +209,7 @@ function resolveHumanProfile(
     return {
       badge: `${devMeta.profileBadge} · ${solution.shortTitle}`,
       title: `${devMeta.profileTitle}${situationSuffix}`,
-      summary: `${devMeta.humanSummary} Foco em ${solution.shortTitle.toLowerCase()} no ritmo ${
+      summary: `${devMeta.humanSummary} Frente "${solution.shortTitle}" em ritmo ${
         scopeSize === 'essencial' ? 'enxuto' : 'completo'
       }.`,
     };
@@ -225,10 +221,22 @@ function resolveHumanProfile(
       situation === 'resgate' && solution.id !== 'resgate-sistema'
         ? `${baseClientTitle} · Retomada`
         : baseClientTitle;
+    const clientScopePhrase =
+      scopeSize === 'essencial'
+        ? 'Caminho direto no celular, sem etapas sobrando.'
+        : 'Experiência completa do atendimento ao retorno.';
+    const clientRescuePhrase =
+      situation === 'resgate' && solution.id !== 'resgate-sistema'
+        ? ' Em modo de retomada para estabilizar o atendimento sem sustos.'
+        : '';
+    const clientLgpdPhrase = involvesClientData
+      ? 'Seus dados ficam protegidos com coleta mínima e sigilo.'
+      : 'Sem exigir cadastro extra nem expor seu contato.';
+
     return {
-      badge: `${solution.profileBadge} · Visão Cliente`,
+      badge: `${solution.profileBadge} · Experiência do cliente`,
       title: clientTitle,
-      summary: `${solution.clientProfileHook} ${lgpdPhrase}`,
+      summary: `${solution.clientProfileHook} ${clientScopePhrase}${clientRescuePhrase} ${clientLgpdPhrase}`,
     };
   }
 
@@ -269,13 +277,6 @@ function buildHiddenOrderRecord(params: {
     estimate,
   } = params;
 
-  const perspectiveLabel =
-    perspective === 'empresa'
-      ? 'Empresa'
-      : perspective === 'cliente'
-        ? 'Cliente'
-        : `Dev (${SIMULATOR_DEV_PROFILES[devRole].label})`;
-
   const scopeLabel = scopeSize === 'essencial' ? 'Essencial' : 'Completo';
   const situationLabel =
     situation === 'zero' ? 'Do zero' : situation === 'existente' ? 'Evoluir' : 'Resgatar';
@@ -284,9 +285,45 @@ function buildHiddenOrderRecord(params: {
     ? 'Ativa (empresa como Controladora, coleta mínima e testes exclusivos com dados fictícios)'
     : 'Informações públicas (sem coleta sensível e testes exclusivos com dados fictícios)';
 
+  if (perspective === 'cliente') {
+    const clientLgpdSummary = involvesClientData
+      ? 'Seus dados ficam protegidos com coleta mínima, sigilo LGPD e testes apenas com exemplos fictícios.'
+      : 'Sem exigir cadastro extra nem expor seu contato.';
+    const rescueTag =
+      situation === 'resgate' && solution.id !== 'resgate-sistema' ? ' · Retomada' : '';
+
+    return [
+      `INDICAÇÃO DE EXPERIÊNCIA · ${orderCode}`,
+      `Experiência sugerida: ${profile.title} (${profile.badge})`,
+      `Benefício para quem usa: ${solution.clientProfileHook}`,
+      `Solução indicada: ${solution.shortTitle} · Alcance ${scopeLabel}${rescueTag}`,
+      `Ritmo estimado: ${estimate.deadlineFull}`,
+      `Cuidado com os dados: ${clientLgpdSummary}`,
+      'Conferência de qualidade: validada por 2+ profissionais independentes antes de ir ao ar, com suporte após a entrega.',
+      `Onde conversar: Discord Yuko (${solution.discordChannel}) · Manual v1.0`,
+    ].join('\n');
+  }
+
+  if (perspective === 'desenvolvedor') {
+    const devMeta = SIMULATOR_DEV_PROFILES[devRole];
+    return [
+      `FICHA DE ATUAÇÃO NA REDE · ${orderCode}`,
+      `Papel escolhido: ${devMeta.label} — ${profile.title} (${profile.badge})`,
+      `Frente: ${solution.shortTitle} · ${scopeLabel} · ${situationLabel}`,
+      `Nível da entrega: ${estimate.costLevelTitle} (Piso: ${estimate.costFloorLabel} → Teto: ${estimate.costCeilingLabel})`,
+      `Ritmo estimado: ${estimate.deadlineFull}`,
+      `Áreas Yuko: ${solution.extensions.join(' · ')}`,
+      `Canal Discord: ${solution.discordChannel}`,
+      'Revisão por pares: obrigatória por 2+ desenvolvedores independentes antes da publicação.',
+      `Proteção LGPD: ${lgpdSummary}`,
+      'Regra de 5 dias úteis: código e histórico ficam no espaço central; após 5 dias úteis sem resposta nem aviso, a vaga abre na ficha para continuidade sem perda.',
+      'Manual v1.0: participação comunitária sem vínculo empregatício; condições comerciais e valores finais são combinados em contrato direto entre as partes.',
+    ].join('\n');
+  }
+
   return [
-    `SOLICITAÇÃO YUKO · PROTOCOLO ${orderCode}`,
-    `Origem: ${perspectiveLabel}`,
+    `SOLICITAÇÃO YUKO · ${orderCode}`,
+    'Origem: Empresa',
     `Perfil associado: ${profile.title} (${profile.badge})`,
     `Frente solicitada: ${solution.shortTitle} · ${scopeLabel} · ${situationLabel}`,
     `Nível de custo: ${estimate.costLevelTitle} (Piso: ${estimate.costFloorLabel} → Teto: ${estimate.costCeilingLabel}, sem valor fechado prévio)`,
@@ -586,12 +623,19 @@ export default function YukoOrderSimulator({
     }
 
     if (typeof window !== 'undefined') {
+      const recordNoun =
+        perspective === 'cliente'
+          ? 'Indicação'
+          : perspective === 'desenvolvedor'
+            ? 'Ficha'
+            : 'Solicitação';
+
       window.dispatchEvent(
         new CustomEvent('yuko:toast', {
           detail: {
             message: copied
-              ? `Solicitação ${orderCode} pronta e copiada para o Discord.`
-              : `Solicitação ${orderCode} gerada. Abra o Discord para iniciar.`,
+              ? `${recordNoun} ${orderCode} pronta e copiada para o Discord.`
+              : `${recordNoun} ${orderCode} gerada. Abra o Discord para iniciar.`,
           },
         })
       );
@@ -630,6 +674,13 @@ export default function YukoOrderSimulator({
 
   const networkKpiSub =
     perspective === 'desenvolvedor' ? 'atuação na rede' : '1 cria · 2+ revisam · suporte';
+
+  const primaryCtaLabel =
+    perspective === 'empresa'
+      ? 'Montar solicitação'
+      : perspective === 'cliente'
+        ? 'Recomendar solução'
+        : 'Gerar ficha de atuação';
 
   const panelId = `sim-workspace-${uid}`;
   const journeyPanelId = `sim-journey-note-${uid}`;
@@ -705,6 +756,29 @@ export default function YukoOrderSimulator({
           </div>
 
           <div className="sim-tuning-stack">
+            {perspective === 'desenvolvedor' && (
+              <div className="sim-tuning-group">
+                <span className="sim-tuning-label">Papel na rede</span>
+                <div className="sim-chip-row" role="group" aria-label="Papel na rede Yuko">
+                  {DEV_ROLE_ORDER.map((roleId) => {
+                    const isActive = devRole === roleId;
+                    const roleMeta = SIMULATOR_DEV_PROFILES[roleId];
+                    return (
+                      <button
+                        key={roleId}
+                        type="button"
+                        aria-pressed={isActive}
+                        className={`sim-chip${isActive ? ' is-active' : ''}`}
+                        onClick={() => setDevRole(roleId)}
+                      >
+                        {roleMeta.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
             <div className="sim-tuning-group">
               <span className="sim-tuning-label">Alcance</span>
               <div className="sim-chip-row" role="group" aria-label="Alcance da entrega">
@@ -730,12 +804,17 @@ export default function YukoOrderSimulator({
               <div className="sim-chip-row" role="group" aria-label="Momento atual">
                 {SITUATION_OPTIONS.map((opt) => {
                   const isActive = situation === opt.id;
+                  const isDisabled = solutionId === 'resgate-sistema' && opt.id !== 'resgate';
                   return (
                     <button
                       key={opt.id}
                       type="button"
+                      disabled={isDisabled}
                       aria-pressed={isActive}
                       className={`sim-chip${isActive ? ' is-active' : ''}`}
+                      title={
+                        isDisabled ? 'Resgate & Apoio atua sempre no modo Resgatar' : undefined
+                      }
                       onClick={() => setSituation(opt.id)}
                     >
                       {opt.label}
@@ -775,48 +854,30 @@ export default function YukoOrderSimulator({
                 </span>
               </button>
             </div>
-
-            {perspective === 'desenvolvedor' && (
-              <div className="sim-tuning-group">
-                <span className="sim-tuning-label">Papel na rede</span>
-                <div className="sim-chip-row" role="group" aria-label="Papel na rede Yuko">
-                  {DEV_ROLE_ORDER.map((roleId) => {
-                    const isActive = devRole === roleId;
-                    const roleMeta = SIMULATOR_DEV_PROFILES[roleId];
-                    return (
-                      <button
-                        key={roleId}
-                        type="button"
-                        aria-pressed={isActive}
-                        className={`sim-chip${isActive ? ' is-active' : ''}`}
-                        onClick={() => setDevRole(roleId)}
-                      >
-                        {roleMeta.label}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
           </div>
         </div>
 
         {/* Direita: Perfil humanizado completo */}
-        <div className="sim-results" aria-live="polite">
+        <div className="sim-results">
           <section className="sim-profile-card" aria-label="Perfil recomendado">
-            <div className="sim-profile-head">
-              <div className="sim-profile-head-top">
-                <span className="sim-profile-emblem" aria-hidden="true">
-                  <SolutionIcon id={selectedSolution.id} />
-                </span>
-                <span className="sim-profile-badge">{profile.badge}</span>
+            <div
+              aria-live="polite"
+              style={{ display: 'flex', flexDirection: 'column', gap: '14px', minWidth: 0 }}
+            >
+              <div className="sim-profile-head">
+                <div className="sim-profile-head-top">
+                  <span className="sim-profile-emblem" aria-hidden="true">
+                    <SolutionIcon id={selectedSolution.id} />
+                  </span>
+                  <span className="sim-profile-badge">{profile.badge}</span>
+                </div>
+                <h3 className="sim-profile-title">{profile.title}</h3>
               </div>
-              <h3 className="sim-profile-title">{profile.title}</h3>
+
+              <p className="sim-profile-summary">{profile.summary}</p>
             </div>
 
-            <p className="sim-profile-summary">{profile.summary}</p>
-
-            {/* 3 Indicadores visuais compactos */}
+            {/* 3 Indicadores visuais compactos consistentes nos 3 perfis */}
             <div className="sim-kpi-grid">
               <div className="sim-kpi-box">
                 <span className="sim-kpi-label">
@@ -840,57 +901,31 @@ export default function YukoOrderSimulator({
                 <span className="sim-kpi-sub">ritmo estimado</span>
               </div>
 
-              {perspective === 'cliente' ? (
-                <div className="sim-kpi-box">
-                  <span className="sim-kpi-label">
-                    <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.1"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      aria-hidden="true"
-                    >
-                      <path d="M12 3l7 3v5.5c0 4.6-3 8.2-7 9.5-4-1.3-7-4.9-7-9.5V6l7-3z" />
-                      <path d="M9.5 12l1.8 1.8 3.4-3.6" />
-                    </svg>
-                    <span>Cuidado</span>
-                  </span>
-                  <strong className="sim-kpi-value">
-                    {involvesClientData ? 'Sigilo LGPD' : 'Acesso seguro'}
-                  </strong>
-                  <span className="sim-kpi-sub">
-                    {involvesClientData ? 'exemplos fictícios em testes' : 'experiência protegida'}
-                  </span>
-                </div>
-              ) : (
-                <div className="sim-kpi-box">
-                  <span className="sim-kpi-label">
-                    <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.1"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      aria-hidden="true"
-                    >
-                      <path d="M4 17l5-5 4 4 7-8" />
-                      <path d="M16 8h4v4" />
-                    </svg>
-                    <span>Nível de custo</span>
-                  </span>
-                  <strong className="sim-kpi-value">{estimate.costLevelTitle}</strong>
-                  <span className="sim-kpi-sub">
-                    {estimate.costFloorLabel} → {estimate.costCeilingLabel}
-                  </span>
-                </div>
-              )}
+              <div className="sim-kpi-box">
+                <span className="sim-kpi-label">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.1"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M12 3l7 3v5.5c0 4.6-3 8.2-7 9.5-4-1.3-7-4.9-7-9.5V6l7-3z" />
+                    <path d="M9.5 12l1.8 1.8 3.4-3.6" />
+                  </svg>
+                  <span>Cuidado</span>
+                </span>
+                <strong className="sim-kpi-value">
+                  {involvesClientData ? 'Sigilo LGPD' : 'Acesso seguro'}
+                </strong>
+                <span className="sim-kpi-sub">
+                  {involvesClientData ? 'exemplos fictícios em testes' : 'uso protegido'}
+                </span>
+              </div>
 
               <div className="sim-kpi-box">
                 <span className="sim-kpi-label">
@@ -982,7 +1017,11 @@ export default function YukoOrderSimulator({
                 aria-labelledby={`sim-journey-tab-${activeStep.step}-${uid}`}
               >
                 <p>
-                  {perspective === 'desenvolvedor' ? activeStep.devLine : activeStep.humanLine}
+                  {perspective === 'desenvolvedor'
+                    ? activeStep.devLine
+                    : perspective === 'cliente'
+                      ? (activeStep.clientLine ?? activeStep.humanLine)
+                      : activeStep.humanLine}
                 </p>
                 {perspective === 'desenvolvedor' ? (
                   <p>
@@ -1056,61 +1095,76 @@ export default function YukoOrderSimulator({
               </div>
             )}
 
-            {/* Ações estratégicas */}
-            <div className="sim-actions-row">
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={handleGenerateOrder}
-                aria-expanded={orderGenerated}
-              >
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.1"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden="true"
+            {/* Ações estratégicas / Ticket gerado (sem duplicação) */}
+            {!orderGenerated ? (
+              <div className="sim-actions-row">
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={handleGenerateOrder}
+                  aria-expanded={orderGenerated}
                 >
-                  <path d="M7 3h10a2 2 0 0 1 2 2v14l-3.5-2-3.5 2-3.5-2L5 19V5a2 2 0 0 1 2-2z" />
-                  <path d="M9 8h6M9 12h4" />
-                </svg>
-                <span>{orderGenerated ? 'Atualizar solicitação' : 'Gerar solicitação'}</span>
-              </button>
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.1"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M7 3h10a2 2 0 0 1 2 2v14l-3.5-2-3.5 2-3.5-2L5 19V5a2 2 0 0 1 2-2z" />
+                    <path d="M9 8h6M9 12h4" />
+                  </svg>
+                  <span>{primaryCtaLabel}</span>
+                </button>
 
-              <a
-                href={DISCORD_INVITE_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-tonal"
+                <a
+                  href={DISCORD_INVITE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-tonal"
+                >
+                  Conversar no Discord ↗
+                </a>
+              </div>
+            ) : (
+              <div
+                className="sim-order-ticket"
+                role="region"
+                aria-label={
+                  perspective === 'cliente'
+                    ? 'Indicação gerada'
+                    : perspective === 'desenvolvedor'
+                      ? 'Ficha de atuação gerada'
+                      : 'Solicitação gerada'
+                }
               >
-                Conversar no Discord ↗
-              </a>
-            </div>
-
-            {orderGenerated && (
-              <div className="sim-order-ticket" role="region" aria-label="Solicitação gerada">
                 <div className="sim-order-head">
                   <div className="sim-order-code-wrap">
                     <span className="sim-order-code">{orderCode}</span>
-                    <span className="sim-order-level">{estimate.costLevelTitle}</span>
+                    {perspective !== 'cliente' && (
+                      <span className="sim-order-level">{estimate.costLevelTitle}</span>
+                    )}
                   </div>
                   <button
                     type="button"
                     className="sim-order-close"
                     onClick={() => setOrderGenerated(false)}
-                    aria-label="Fechar solicitação gerada"
+                    aria-label="Fechar resumo gerado"
                   >
                     Fechar
                   </button>
                 </div>
                 <p className="sim-order-summary">
-                  <strong>{profile.title}</strong> · {estimate.deadlineShort} · Piso{' '}
-                  {estimate.costFloorLabel.toLowerCase()} até teto{' '}
-                  {estimate.costCeilingLabel.toLowerCase()}.
+                  <strong>{profile.title}</strong> · {estimate.deadlineShort} ·{' '}
+                  {perspective === 'cliente'
+                    ? involvesClientData
+                      ? 'sigilo LGPD com coleta mínima.'
+                      : 'uso direto sem cadastro extra.'
+                    : `Piso ${estimate.costFloorLabel.toLowerCase()} até teto ${estimate.costCeilingLabel.toLowerCase()}.`}
                 </p>
                 <div className="sim-order-actions">
                   <button
@@ -1118,7 +1172,7 @@ export default function YukoOrderSimulator({
                     className="btn btn-tonal"
                     onClick={() => void copyOrderToClipboard()}
                   >
-                    {copiedRecently ? 'Protocolo copiado ✓' : `Copiar protocolo (${orderCode})`}
+                    {copiedRecently ? 'Copiado ✓' : `Copiar resumo (${orderCode})`}
                   </button>
                   <a
                     href={DISCORD_INVITE_URL}
@@ -1126,14 +1180,15 @@ export default function YukoOrderSimulator({
                     rel="noopener noreferrer"
                     className="btn btn-primary"
                   >
-                    Enviar no Discord ↗
+                    Abrir no Discord ↗
                   </a>
                 </div>
               </div>
             )}
 
             <p className="sim-footer-note">
-              <a href="/manual/">Manual v1.0</a> · sem vínculo nem taxas ocultas
+              Sem vínculo empregatício nem taxas ocultas · alinhamento direto pelo{' '}
+              <a href="/manual/">Manual v1.0</a>
             </p>
           </section>
         </div>
