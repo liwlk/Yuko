@@ -2855,24 +2855,50 @@ main {
   .yuko-intro-skip {
     appearance: none;
     -webkit-appearance: none;
-    padding: 7px 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 56px;
+    height: 40px;
+    padding: 0 16px;
     border-radius: var(--shape-pill);
     border: 1px solid var(--md-outline-variant);
     background-color: var(--md-surface-container-low);
     color: var(--md-on-surface-variant);
-    font-family: var(--font-display);
-    font-size: 0.78rem;
-    font-weight: 700;
     cursor: pointer;
     transition: background-color var(--dur-fast) var(--ease-standard),
                 color var(--dur-fast) var(--ease-standard),
-                border-color var(--dur-fast) var(--ease-standard);
+                border-color var(--dur-fast) var(--ease-standard),
+                transform var(--dur-fast) var(--ease-spring);
+  }
+
+  .yuko-intro-skip-icon {
+    display: block;
+    transition: transform var(--dur-fast) var(--ease-spring);
   }
 
   .yuko-intro-skip:hover {
     background-color: var(--md-primary-container);
     color: var(--md-on-primary-container);
     border-color: transparent;
+  }
+
+  .yuko-intro-skip:hover .yuko-intro-skip-icon {
+    transform: translateX(2px);
+  }
+
+  .yuko-intro-skip:active {
+    transform: scale(0.95);
+  }
+
+  .yuko-intro-skip:focus-visible {
+    outline: 2px solid var(--md-primary);
+    outline-offset: 3px;
+  }
+
+  [data-motion="calm"] .yuko-intro-skip:hover .yuko-intro-skip-icon,
+  [data-motion="calm"] .yuko-intro-skip:active {
+    transform: none;
   }
 
   [data-intro-active="true"] body {
