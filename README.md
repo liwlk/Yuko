@@ -9,7 +9,7 @@ Site institucional da **Yuko**, estruturado integralmente a partir do **Manual I
 - **Estilização**: **Tailwind CSS v4** (`@tailwindcss/vite`) integrado ao sistema de design tokens Material You 3 Expressive
 - **Motion & Scroll**:
   - **Motion** (`motion/react`) para microinterações táteis e transições baseadas em física de mola
-  - **GSAP (`ScrollTrigger`)** para coreografia do Hero SVG e scrollytelling sticky da **Experiência em Yukon (Canadá)**
+  - **GSAP (`ScrollTrigger`)** para coreografia do Hero SVG e progressão interativa (`--stage-progress`) do palco **Respaldo na Prática** (`#continuidade`)
   - **Lenis** para rolagem suave sincronizada com `ScrollTrigger` e respeitando `prefers-reduced-motion` e `[data-motion="calm"]`
 - **Qualidade de Código**: **ESLint** (`eslint.config.mjs` com `typescript-eslint`) e verificação de tipos via `tsc --noEmit`
 - **Deploy**: Configurado para **GitHub** e **Vercel** (`vercel.json` com `cleanUrls: true` e `trailingSlash: true`)
@@ -30,13 +30,13 @@ yuko-app/
 │   │   ├── SplitButton.tsx          # Split button acessível para atalhos rápidos
 │   │   ├── ThemeControls.tsx        # Seletor de 4 sementes, Claro/Escuro e Mola/Calmo
 │   │   ├── TopBar.astro             # Barra superior flutuante e navegação mobile
-│   │   └── YukonExperience.tsx      # Scrollytelling sticky com GSAP ScrollTrigger
+│   │   └── YukoContinuityStage.tsx  # Palco interativo de continuidade (#continuidade) com lentes e ScrollTrigger
 │   ├── data/
 │   │   └── yuko.ts                  # Fonte única tipada com o conteúdo do Manual v1.0
 │   ├── layouts/
 │   │   └── BaseLayout.astro         # Shell compartilhado, ClientRouter, Lenis e Footer
 │   ├── pages/
-│   │   ├── index.astro              # / — Visão Geral, Hero SVG e Experiência Yukon
+│   │   ├── index.astro              # / — Visão Geral, Hero SVG e Respaldo na Prática (#continuidade)
 │   │   ├── extensoes.astro          # /extensoes/ — Identidade, 6 Extensões, 6 Frentes e Discord
 │   │   ├── ciclo.astro              # /ciclo/ — Ciclo de Entrega Assistida, Papéis e Registro Formal
 │   │   ├── governanca.astro         # /governanca/ — DoD, Stack, Segurança, LGPD e Mediação

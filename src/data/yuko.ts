@@ -3,7 +3,7 @@ export const DISCORD_INVITE_URL = 'https://discord.gg/a3kSmBDxp3';
 export type SeedId = 'terracota' | 'botanico' | 'oceanico' | 'ameixa';
 export type ModeId = 'light' | 'dark';
 export type MotionId = 'expressive' | 'calm';
-export type YukonMood = 'alvorada' | 'travessia' | 'boreal';
+export type StageLensId = 'fluxo' | 'rede' | 'blindagem';
 
 export type CardTone = 'default' | 'tonal-primary' | 'tonal-secondary' | 'tonal-tertiary';
 
@@ -24,12 +24,14 @@ export interface HeroMetric {
   label: string;
 }
 
-export interface YukonChapter {
+export interface ContinuityStageItem {
   index: number;
   kicker: string;
+  stageLabel: string;
   title: string;
   body: string;
-  mood: YukonMood;
+  defaultLens: StageLensId;
+  lensNotes: Record<StageLensId, string>;
   ctaLabel?: string;
   ctaHref?: string;
 }
@@ -166,42 +168,66 @@ export const HERO_METRICS: HeroMetric[] = [
   { value: 'Zero abandono', label: 'Suporte garantido após a entrega' },
 ];
 
-export const YUKON_MOOD_LABELS: Record<YukonMood, string> = {
-  alvorada: 'Alvorada',
-  travessia: 'Travessia',
-  boreal: 'Noite Boreal',
+export const CONTINUITY_LENS_LABELS: Record<StageLensId, string> = {
+  fluxo: 'Fluxo',
+  rede: 'Rede',
+  blindagem: 'Blindagem',
 };
 
-export const YUKON_CHAPTERS: YukonChapter[] = [
+export const CONTINUITY_STAGES: ContinuityStageItem[] = [
   {
     index: 0,
-    kicker: '01 · Origem',
-    title: 'Soluções simples para o dia a dia',
-    body: 'Inspirada na resistência de Yukon, a Yuko evita ferramentas complicadas e não prende sua empresa a um único fornecedor. Cada sistema nasce enxuto, com tecnologias conhecidas e testado antes de ir ao ar.',
-    mood: 'alvorada',
+    kicker: '01 · Combinado',
+    stageLabel: 'Combinado sem caixa-preta',
+    title: 'Escuta real e combinado direto',
+    body: 'Ouvimos a rotina da empresa antes de criar qualquer tela e registramos de forma clara o que será entregue.',
+    defaultLens: 'fluxo',
+    lensNotes: {
+      fluxo: 'Escuta inicial em campo ou contato direto',
+      rede: 'Demanda acolhida e registrada para a comunidade',
+      blindagem: 'Escopo enxuto com critérios claros de aceite',
+    },
   },
   {
     index: 1,
-    kicker: '02 · Escuta',
-    title: 'Conversa direta antes de começar',
-    body: 'Com a área Yuko Field, a comunidade visita, conversa e acompanha a rotina real da microempresa antes de desenhar qualquer tela ou começar o sistema.',
-    mood: 'alvorada',
+    kicker: '02 · Centralização',
+    stageLabel: 'Código sempre acessível',
+    title: 'Nada preso no PC de uma pessoa',
+    body: 'Código, acessos e mudanças ficam no espaço central do projeto, usando tecnologias conhecidas — sem prender a empresa.',
+    defaultLens: 'rede',
+    lensNotes: {
+      fluxo: 'Infraestrutura padronizada e fácil de manter',
+      rede: 'Discord (#projetos-ativos) e repositório compartilhado',
+      blindagem: 'Zero dados reais em testes · privacidade desde a base',
+    },
   },
   {
     index: 2,
-    kicker: '03 · Clareza',
-    title: 'Combinados claros, sem papelada',
-    body: 'Tudo fica combinado de forma simples: guia direto de uso, histórico organizado de alterações e ritmo ágil sem burocracia.',
-    mood: 'travessia',
+    kicker: '03 · Conferência',
+    stageLabel: 'Olhar de 2+ pares',
+    title: 'Conferido por 2+ profissionais',
+    body: 'Nenhuma entrega vai ao ar sozinha: pelo menos dois desenvolvedores revisam segurança, clareza e funcionamento.',
+    defaultLens: 'blindagem',
+    lensNotes: {
+      fluxo: 'Aprovação coletiva antes de publicar',
+      rede: '2+ revisores independentes na mesma entrega',
+      blindagem: 'Conferência contra falhas comuns e proteção LGPD',
+    },
   },
   {
     index: 3,
     kicker: '04 · Continuidade',
-    title: 'Ninguém fica na mão',
-    body: 'Nenhum projeto depende de uma pessoa só. Todo trabalho é conferido por pelo menos 2 profissionais independentes e conta com suporte garantido para a microempresa.',
-    mood: 'boreal',
-    ctaLabel: 'Explorar Extensões →',
-    ctaHref: '/extensoes/',
+    stageLabel: 'Suporte e troca segura',
+    title: 'Suporte garantido contra abandono',
+    body: 'Cada entrega tem suporte nominal. Se houver ausência por 5 dias úteis, outro profissional assume sem perda.',
+    defaultLens: 'blindagem',
+    lensNotes: {
+      fluxo: 'Guia direto de uso e suporte pós-entrega definido',
+      rede: 'Passagem assistida de contexto entre membros no Discord',
+      blindagem: 'Regra anti-abandono em 5 dias úteis e suporte registrado',
+    },
+    ctaLabel: 'Ver papéis e continuidade →',
+    ctaHref: '/ciclo/#papeis',
   },
 ];
 
@@ -695,7 +721,7 @@ export const MANUAL_ORIGINS: ManualOriginCard[] = [
       {
         label: 'Início',
         href: '/',
-        description: 'propósito, valores Yukon, resumo das etapas e quem atendemos.',
+        description: 'propósito, garantia de continuidade, resumo das etapas e quem atendemos.',
       },
       {
         label: 'Extensões',

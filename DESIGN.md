@@ -4,7 +4,7 @@ Sistema de design e arquitetura frontend da **Yuko** baseado integralmente no **
 
 ## Arquitetura Multi-Rota (`trailingSlash: true`)
 
-- **`/` (`src/pages/index.astro`)**: Visão geral institucional, Hero com ilustração vetorial responsiva ao tema e coreografia 60fps, **Experiência em Yukon (Canadá)** (`#yukon`) em scrollytelling sticky com 4 capítulos e 3 atmosferas, módulos assimétricos de entrada e seção comparativa Microempresas vs. Desenvolvedores.
+- **`/` (`src/pages/index.astro`)**: Visão geral institucional, Hero com ilustração vetorial responsiva ao tema e coreografia 60fps, seção **Respaldo na Prática — Por que nenhum projeto fica na mão** (`#continuidade`, `YukoContinuityStage.tsx`) com 4 marcos e 3 lentes de leitura (`fluxo`, `rede`, `blindagem`), módulos assimétricos de entrada e seção comparativa Microempresas vs. Desenvolvedores.
 - **`/extensoes/` (`src/pages/extensoes.astro`)**: Painel unificado de identidade conceitual (Yukon, Oslo, Verona) e diretrizes visuais, grade das 6 extensões (`Yuko Field`, `Yuko Dev`, `Yuko Make`, `Yuko Place`, `Yuko Work`, `Yuko Inline`), painel estruturado das 6 frentes de atuação, painel tonal do servidor Discord e rodapé compacto (`footerVariant="compact"`).
 - **`/ciclo/` (`src/pages/ciclo.astro`)**: As 6 etapas do Ciclo de Entrega Assistida, critérios de triagem/priorização, papéis operacionais (Executor, 2+ Revisores, Responsável de Suporte), regras de continuidade (transição compulsória e abandono em 5 dias úteis), os 6 elementos mínimos do registro formal em issue e rodapé compacto.
 - **`/governanca/` (`src/pages/governanca.astro`)**: Bloco 01 com Checklist de Entrega (DoD), Stack & Commits Semânticos e Blindagem/Segredos/Auditoria (SQLi, XSS, `.env.example`, HTTPS/TLS, Argon2/bcrypt); Bloco 02 com Privacidade LGPD (Lei nº 13.709/2018) e Mediação de Conflitos em 3 etapas; rodapé compacto.
@@ -12,13 +12,13 @@ Sistema de design e arquitetura frontend da **Yuko** baseado integralmente no **
 
 ## Stack Tecnológica & Camada de Dados
 
-- **Fonte Única de Conteúdo (`src/data/yuko.ts`)**: Todos os textos normativos, listas, tabelas e termos do glossário são exportados com tipagem TypeScript estrita (`IDENTITY_PILLARS`, `VISUAL_RULES`, `EXTENSIONS`, `FRONTS`, `DISCORD_CHANNELS`, `CYCLE_STAGES`, `TRIAGE_CRITERIA`, `ROLES`, `CONTINUITY_RULES`, `REGISTRY_COL_A`, `REGISTRY_COL_B`, `DOD_ITEMS`, `STACK_ITEMS`, `SECURITY_CARDS`, `LGPD_ITEMS`, `CONFLICT_STEPS`, `CONTROL_TABLE`, `MANUAL_ORIGINS`, `GLOSSARY_TERMS`).
+- **Fonte Única de Conteúdo (`src/data/yuko.ts`)**: Todos os textos normativos, listas, tabelas e termos do glossário são exportados com tipagem TypeScript estrita (`CONTINUITY_STAGES`, `CONTINUITY_LENS_LABELS`, `IDENTITY_PILLARS`, `VISUAL_RULES`, `EXTENSIONS`, `FRONTS`, `DISCORD_CHANNELS`, `CYCLE_STAGES`, `TRIAGE_CRITERIA`, `ROLES`, `CONTINUITY_RULES`, `REGISTRY_COL_A`, `REGISTRY_COL_B`, `DOD_ITEMS`, `STACK_ITEMS`, `SECURITY_CARDS`, `LGPD_ITEMS`, `CONFLICT_STEPS`, `CONTROL_TABLE`, `MANUAL_ORIGINS`, `GLOSSARY_TERMS`).
 - **Layout Compartilhado (`src/layouts/BaseLayout.astro`)**: Encapsula `<head>`, script anti-FOUC para `data-seed`, `data-mode` e `data-motion`, `.skip-link`, Top App Bar em cápsula flutuante, navegação mobile horizontal, transições de visualização (`@view-transition { navigation: auto; }`) e variantes de rodapé (`full` e `compact`).
 - **Tailwind CSS v4 + Tokens M3 Expressive**: `@tailwindcss/vite` coexiste com variáveis semânticas `--md-primary`, `--md-secondary`, `--md-tertiary`, `--md-surface-*`, `--md-on-*`, `--md-outline-*` e escalas de arredondamento (`--shape-sm` a `--shape-2xl`, `--shape-pill`).
 
 ## Motion, Scrollytelling & Smooth Scroll
 
-- **Lenis + GSAP (`ScrollTrigger`)**: Rolagem suave gerenciada pelo Lenis e conectada ao `ScrollTrigger` para acionar progressão contínua da cena Yukon (`--yukon-progress` de `0` a `1`), anel circular `#yukonRingFill`, indicador `#yukonStepBadge` (`01 / 04`–`04 / 04`) e alternância automática de atmosferas (`alvorada`, `travessia`, `boreal`) com respeito a travamento manual (`[data-yukon-mood]`).
+- **Lenis + GSAP (`ScrollTrigger`)**: Rolagem suave gerenciada pelo Lenis e conectada ao `ScrollTrigger` para acionar progressão contínua do palco de continuidade (`YukoContinuityStage.tsx` em `#continuidade`, `--stage-progress` de `0` a `1`), avanço pelos 4 marcos (`01`–`04`) e alternância entre as 3 lentes de inspeção (`fluxo`, `rede`, `blindagem`) com suporte a seleção manual via `[data-stage-lens]`.
 - **Motion (`motion/react`)**: Aplicado nas ilhas React (`GlossaryExplorer` e controles interativos) com curvas spring expressivas (`--ease-spring`) e fallback imediato quando `[data-motion="calm"]` ou `@media (prefers-reduced-motion: reduce)` estiver ativo.
 - **MPA View Transitions**: Transições fluidas entre rotas mantendo a barra superior (`view-transition-name: yuko-topbar`) e o logotipo (`yuko-logo`) estáveis enquanto `main` (`yuko-stage`) transiciona.
 

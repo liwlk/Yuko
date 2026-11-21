@@ -2,15 +2,15 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SplitButton from '../components/SplitButton';
 import HeroSculpture from '../components/HeroSculpture';
-import YukonExperience from '../components/YukonExperience';
+import YukoContinuityStage from '../components/YukoContinuityStage';
 import {
   AUDIENCE_CARDS,
+  CONTINUITY_LENS_LABELS,
+  CONTINUITY_STAGES,
   DISCORD_INVITE_URL,
   HERO_METRICS,
   HOME_PILLARS,
   SPLIT_SHORTCUTS,
-  YUKON_CHAPTERS,
-  YUKON_MOOD_LABELS,
 } from '../data/yuko';
 ---
 
@@ -57,13 +57,14 @@ import {
     </div>
   </section>
 
-  <!-- Experiência em Yukon (Canadá) — Scrollytelling Panorâmico -->
-  <section id="yukon" class="yukon-section" aria-labelledby="yukonHeading">
+  <!-- Respaldo na Prática — Por que nenhum projeto fica na mão -->
+  <section id="continuidade" class="stage-section" aria-labelledby="continuidadeHeading">
     <div class="container">
-      <YukonExperience
+      <YukoContinuityStage
         client:load
-        chapters={YUKON_CHAPTERS}
-        moodLabels={YUKON_MOOD_LABELS}
+        stages={CONTINUITY_STAGES}
+        lensLabels={CONTINUITY_LENS_LABELS}
+        headingId="continuidadeHeading"
       />
     </div>
   </section>
