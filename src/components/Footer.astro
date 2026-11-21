@@ -24,11 +24,12 @@ const PAGE_ANCHORS: Record<string, Array<{ href: string; label: string }>> = {
   '/': [
     { href: '#continuidade', label: 'Continuidade na Prática' },
     { href: '#pilares', label: 'Como funciona' },
-    { href: '#atuacao', label: 'Para quem é' },
-    { href: '#manual', label: 'Manual v1.0' },
+    { href: '#atuacao', label: 'Parceria Assistida' },
+    { href: '#simulador', label: 'Simulador' },
+    { href: '#manual', label: 'Manual & Discord' },
   ],
   '/extensoes/': [
-    { href: '#fundamentos', label: 'Fundamentos' },
+    { href: '#fundamentos', label: 'Origem & Pilares' },
     { href: '#extensoes', label: '6 Extensões' },
     { href: '#frentes', label: '6 Frentes' },
     { href: '#discord', label: 'Discord' },
@@ -54,8 +55,8 @@ const resolvedAnchors = PAGE_ANCHORS[normalizedPath] ?? PAGE_ANCHORS['/'];
 
 const defaultSummary =
   variant === 'monument'
-    ? 'Comunidade técnica brasileira em implantação gradual que cria sistemas sob medida para microempresas, com revisão por 2+ pares e suporte pelo período combinado.'
-    : 'Comunidade técnica em implantação gradual que conecta desenvolvedores e microempresas, com revisão por 2+ pares e suporte pelo período combinado.';
+    ? 'Comunidade técnica brasileira que une desenvolvedores independentes e microempresas em parceria assistida: trabalho autônomo validado por 2+ pares, repositório central sem lock-in e continuidade organizada.'
+    : 'Comunidade técnica que une desenvolvedores independentes e microempresas em parceria assistida, com revisão por 2+ pares, repositório central e continuidade.';
 
 const resolvedSummary = summary ?? defaultSummary;
 const isMonument = variant === 'monument';
@@ -127,7 +128,7 @@ const isMonument = variant === 'monument';
 
         <div class="footer-monument-sub">
           <span class="footer-monument-tagline">
-            Ciclo de Entrega Assistida e Revisão por 2+ Pares
+            Trabalho individual validado coletivamente · Sem caixa-preta, sem isolamento
           </span>
         </div>
       </div>

@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import {
   DISCORD_INVITE_URL,
+  LINEAGE_STAGES,
   IDENTITY_PILLARS,
   VISUAL_RULES,
   EXTENSIONS,
@@ -16,8 +17,9 @@ const guidelineItems = DISCORD_CHANNELS.filter((item) => item.kind === 'guidelin
 ---
 
 <BaseLayout
-  title="Extensões, Frentes & Discord — Yuko"
-  description="Identidade da Yuko (Yukon, Oslo, Verona), 6 extensões da marca (Field, Dev, Make, Place, Work, Inline), 6 frentes internas de atuação e o servidor Discord."
+  title="Origem, Pilares, 6 Extensões & Discord — Yuko"
+  description="Da trajetória NYX e Expliance aos pilares Yukon, Oslo e Verona: conheça as 6 extensões da Yuko, as 6 frentes internas e nosso ponto de encontro voluntário no Discord."
+  ogImageAlt="Origem, pilares Yukon, Oslo e Verona, 6 extensões e comunidade Discord da Yuko"
   currentPath="/extensoes/"
   footerVariant="compact"
   nextHref="/ciclo/"
@@ -25,16 +27,16 @@ const guidelineItems = DISCORD_CHANNELS.filter((item) => item.kind === 'guidelin
 >
   <section class="sub-hero">
     <div class="container">
-      <div class="section-kicker">Como a Yuko se organiza</div>
+      <div class="section-kicker">De onde viemos e como nos organizamos</div>
       <h1 class="sub-hero-title">
-        Identidade, <span class="accent-word">Extensões</span> &amp; Frentes
+        Origem, Pilares &amp; <span class="accent-word">Extensões</span>
       </h1>
       <p class="hero-lead">
-        Identidade da marca, 6 extensões da Yuko, 6 frentes internas e nosso ponto de encontro no Discord, em implantação gradual.
+        Conheça a caminhada da Yuko, os valores por trás do nome, as 6 extensões de atuação, as 6 frentes internas e nosso Discord de participação voluntária.
       </p>
       <div class="hero-actions" style="margin-bottom:0">
         <a href="#extensoes" class="btn btn-primary">6 Extensões</a>
-        <a href="#fundamentos" class="btn btn-tonal">Valores</a>
+        <a href="#fundamentos" class="btn btn-tonal">Origem &amp; Pilares</a>
         <a href="#frentes" class="btn btn-tonal">6 Frentes</a>
         <a href="#discord" class="btn btn-outline">Discord</a>
       </div>
@@ -47,9 +49,21 @@ const guidelineItems = DISCORD_CHANNELS.filter((item) => item.kind === 'guidelin
       <div class="section-head">
         <div class="section-kicker">Fundamentos &amp; Identidade</div>
         <h2 class="section-title">De onde vem a Yuko e como nos apresentamos</h2>
+        <p class="section-desc">
+          A Yuko nasceu como síntese de uma ponte técnica em duas fases precursoras — simplificando o caminho sem abrir mão do rigor e do registro.
+        </p>
       </div>
 
       <div class="lab-panel">
+        <div class="grid-3" style="margin-bottom:24px">
+          {LINEAGE_STAGES.map((stage) => (
+            <div>
+              <h3 style="margin-bottom:8px">{stage.title}</h3>
+              <p style="margin:0">{stage.description}</p>
+            </div>
+          ))}
+        </div>
+
         <div class="grid-3">
           {IDENTITY_PILLARS.map((pillar) => (
             <div>
@@ -75,10 +89,10 @@ const guidelineItems = DISCORD_CHANNELS.filter((item) => item.kind === 'guidelin
   <section id="extensoes" class="section">
     <div class="container">
       <div class="section-head">
-        <div class="section-kicker">Extensões Yuko</div>
-        <h2 class="section-title">6 extensões sob a marca Yuko</h2>
+        <div class="section-kicker">Portas Públicas da Marca</div>
+        <h2 class="section-title">6 extensões como portas públicas da Yuko</h2>
         <p class="section-desc">
-          As 6 extensões identificam áreas sob a marca Yuko — em implantação gradual, sem exigir equipe permanente.
+          As 6 extensões são as portas públicas sob a marca Yuko — evoluem de forma gradual, sem exigir equipe fixa.
         </p>
       </div>
 
@@ -100,10 +114,10 @@ const guidelineItems = DISCORD_CHANNELS.filter((item) => item.kind === 'guidelin
   <section id="frentes" class="section">
     <div class="container">
       <div class="section-head">
-        <div class="section-kicker">6 Frentes Internas</div>
+        <div class="section-kicker">Engrenagens nos Bastidores</div>
         <h2 class="section-title">Seis frentes internas de atuação</h2>
         <p class="section-desc">
-          Diferentemente das 6 extensões sob a marca Yuko, as 6 frentes internas organizam as disciplinas aplicadas conforme cada projeto.
+          Se as extensões funcionam como portas de entrada da Yuko, as 6 frentes internas são as engrenagens disciplinares combinadas nos bastidores de cada projeto.
         </p>
       </div>
 
@@ -137,10 +151,10 @@ const guidelineItems = DISCORD_CHANNELS.filter((item) => item.kind === 'guidelin
   <section id="discord" class="section">
     <div class="container">
       <div class="section-head">
-        <div class="section-kicker">Ponto de Encontro</div>
+        <div class="section-kicker">Convivência Diária &amp; Autônoma</div>
         <h2 class="section-title">Servidor Discord</h2>
         <p class="section-desc">
-          É no Discord que desenvolvedores independentes se reúnem para tirar dúvidas, combinar tarefas e acompanhar projetos ativos.
+          Nosso ponto de encontro no Discord reúne desenvolvedores voluntários e autônomos — sem vínculo empregatício ou societário — para trocar ideias, tirar dúvidas e tocar projetos ativos.
         </p>
       </div>
 

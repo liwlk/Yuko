@@ -277,14 +277,23 @@ function buildHiddenOrderRecord(params: {
   const situationLabel =
     situation === 'zero' ? 'Do zero' : situation === 'existente' ? 'Evoluir' : 'Resgatar';
 
-  const lgpdSummary = involvesClientData
-    ? 'estrutura pensada para a LGPD (empresa como controladora, dev como operador), coleta mínima, direitos dos titulares e testes com dados sintéticos (não substitui assessoria jurídica)'
-    : 'informações públicas, sem coleta sensível prevista e testes com dados sintéticos (não substitui assessoria jurídica)';
+  const sixStagesLine =
+    'Ciclo (6 etapas engrenadas): 1) Demanda e Triagem (viabilidade, proporcionalidade e impacto) -> 2) Escopo sintético -> 3) Construção no repositório central -> 4) Peer Review (2+ pares) -> 5) Staging (se falhar, volta ao executor) -> 6) Homologação e Responsável de Suporte.';
+
+  const architectureAndDodLine =
+    'Arquitetura & DoD: tecnologias maduras, sem nuvem cara nem lock-in; linter na raiz, commits semânticos ligados à issue, prevenção a SQLi/XSS, HTTPS/TLS, Argon2/bcrypt e zero segredos no código.';
+
+  const lgpdLine = involvesClientData
+    ? 'LGPD (com dados de pessoas): microempresa = Controladora, dev = Operador técnico; Privacy by Design, coleta mínima e Regra de Ouro — proibido usar dados reais em dev/staging (apenas dados sintéticos/anonimizados). Nota: caráter orientativo, não substitui assessoria jurídica.'
+    : 'LGPD (escopo sem coleta sensível prevista): microempresa = Controladora, dev = Operador técnico; Privacy by Design, coleta mínima e Regra de Ouro — proibido usar dados reais em dev/staging (apenas dados sintéticos/anonimizados). Nota: caráter orientativo, não substitui assessoria jurídica.';
+
+  const continuityLine =
+    'Continuidade dupla: (1) Afastamento programado com aviso prévio na issue e push compulsório de branches, tarefas e decisões (proibido manter código, credenciais ou dados locais); (2) Inércia > 5 dias úteis sem justificativa gera vacância, revogação de acessos e reatribuição transitória.';
+
+  const governanceLine =
+    'Enquadramento (Manual v1.0): registro orientativo para triagem no Discord; participação voluntária e autônoma, sem vínculo empregatício ou societário nem responsabilidade solidária (condições e valores são definidos em combinado bilateral direto).';
 
   if (perspective === 'cliente') {
-    const clientLgpdSummary = involvesClientData
-      ? 'estrutura pensada para a LGPD, com coleta mínima, direitos dos titulares e testes apenas com dados sintéticos (não substitui assessoria jurídica).'
-      : 'sem exigir cadastro extra nem expor seu contato.';
     const rescueTag =
       situation === 'resgate' && solution.id !== 'resgate-sistema' ? ' · Retomada' : '';
 
@@ -292,11 +301,14 @@ function buildHiddenOrderRecord(params: {
       `INDICAÇÃO DE EXPERIÊNCIA · ${orderCode}`,
       `Experiência sugerida: ${profile.title} (${profile.badge})`,
       `Benefício para quem usa: ${solution.clientProfileHook}`,
-      `Categoria do pedido: ${solution.shortTitle} · Alcance ${scopeLabel}${rescueTag}`,
+      `Categoria: ${solution.shortTitle} · Alcance ${scopeLabel}${rescueTag}`,
       `Ritmo estimado: ${estimate.deadlineFull}`,
-      `Cuidado com os dados: ${clientLgpdSummary}`,
-      'Conferência de qualidade: entrega revisada por 2+ pares independentes, com responsável de suporte pelo período combinado.',
-      `Onde conversar: Discord Yuko (${solution.discordChannel}) · Manual v1.0`,
+      sixStagesLine,
+      architectureAndDodLine,
+      lgpdLine,
+      continuityLine,
+      `Onde conversar: Discord Yuko (${solution.discordChannel})`,
+      governanceLine,
     ].join('\n');
   }
 
@@ -306,32 +318,34 @@ function buildHiddenOrderRecord(params: {
       `FICHA DE ATUAÇÃO NA REDE · ${orderCode}`,
       `Papel escolhido: ${devMeta.label} — ${profile.title} (${profile.badge})`,
       `Atuação: ${devMeta.humanSummary}`,
-      `Categoria do pedido: ${solution.shortTitle} · ${scopeLabel} · ${situationLabel}`,
-      `Estimativa indicativa: ${estimate.costLevelTitle} (Piso: ${estimate.costFloorLabel} → Teto: ${estimate.costCeilingLabel}; valores definidos no combinado)`,
+      `Categoria: ${solution.shortTitle} · Alcance ${scopeLabel} · Momento ${situationLabel}`,
+      `Complexidade indicativa: ${estimate.costLevelTitle} (Piso: ${estimate.costFloorLabel} -> Teto: ${estimate.costCeilingLabel}; sem valores em R$, combinado bilateral)`,
       `Ritmo estimado: ${estimate.deadlineFull}`,
       `Extensões Yuko: ${solution.extensions.join(' · ')}`,
       `Canal Discord: ${solution.discordChannel}`,
-      'Padrões e revisão: ficha (issue) obrigatória, linter, commits semânticos e revisão por 2+ pares independentes antes da liberação.',
-      `LGPD: ${lgpdSummary}`,
-      'Regra dos 5 dias úteis: envio (push) e transferência de contexto no repositório central; após 5 dias úteis sem resposta nem justificativa, registra-se vacância, os acessos são revogados e outro participante assume.',
-      'Manual v1.0: participação sem vínculo empregatício nem responsabilidade solidária (cada participante responde por seus atos); condições e valores são definidos em acordo bilateral autônomo.',
+      sixStagesLine,
+      architectureAndDodLine,
+      lgpdLine,
+      continuityLine,
+      governanceLine,
     ].join('\n');
   }
 
   return [
     `SOLICITAÇÃO YUKO · ${orderCode}`,
-    'Origem: Empresa',
+    'Origem: Microempresa (Controladora)',
     `Perfil associado: ${profile.title} (${profile.badge})`,
     `Resumo: ${solution.humanSummary}`,
-    `Categoria do pedido: ${solution.shortTitle} · ${scopeLabel} · ${situationLabel}`,
-    `Estimativa indicativa: ${estimate.costLevelTitle} (Piso: ${estimate.costFloorLabel} → Teto: ${estimate.costCeilingLabel}; valores definidos no combinado)`,
+    `Categoria: ${solution.shortTitle} · Alcance ${scopeLabel} · Momento ${situationLabel}`,
+    `Complexidade indicativa: ${estimate.costLevelTitle} (Piso: ${estimate.costFloorLabel} -> Teto: ${estimate.costCeilingLabel}; sem valores em R$, combinado bilateral)`,
     `Ritmo estimado: ${estimate.deadlineFull}`,
     `Extensões Yuko: ${solution.extensions.join(' · ')}`,
     `Canal Discord: ${solution.discordChannel}`,
-    'Rede do ciclo: executor, 2+ revisores independentes e responsável de suporte',
-    `LGPD: ${lgpdSummary}`,
-    'Continuidade (regra dos 5 dias úteis): envio (push) e transferência de contexto ficam no repositório central; após 5 dias úteis sem resposta nem justificativa, registra-se vacância, os acessos são revogados e outro participante assume.',
-    'Triagem e Manual v1.0: após o envio, o pedido passa por triagem e pode ser recusado ou repriorizado com orientação (demandas desproporcionais não são atendidas). Chancela coletiva sem vínculo nem responsabilidade solidária (cada participante responde por seus atos); condições e valores são definidos em combinado direto e acordo bilateral autônomo.',
+    sixStagesLine,
+    architectureAndDodLine,
+    lgpdLine,
+    continuityLine,
+    `Triagem & ${governanceLine}`,
   ].join('\n');
 }
 
@@ -747,8 +761,8 @@ export default function YukoOrderSimulator({
         new CustomEvent('yuko:toast', {
           detail: {
             message: copied
-              ? `${recordNoun} ${orderCode} copiada para triagem no Discord.`
-              : `${recordNoun} ${orderCode} gerada. Envie no Discord para triagem.`,
+              ? `${recordNoun} ${orderCode} copiada! Cole no Discord para começarmos a triagem.`
+              : `${recordNoun} ${orderCode} pronta! Abra o Discord e envie para iniciarmos a triagem.`,
           },
         })
       );
@@ -779,11 +793,11 @@ export default function YukoOrderSimulator({
   const networkSignalValue =
     perspective === 'desenvolvedor'
       ? devRole === 'executor'
-        ? '1 cria + 2 pares'
+        ? '1 dev + 2+ pares'
         : devRole === 'revisor'
           ? '2+ revisores'
-          : 'Apoio · 5d'
-      : '1 + 2 pares';
+          : 'Suporte · regra 5d'
+      : '1 + 2+ pares';
 
   const primaryCtaLabel =
     perspective === 'empresa'
@@ -843,7 +857,7 @@ export default function YukoOrderSimulator({
             ref={solutionsGridRef}
             className="sim-solutions-grid"
             role="group"
-            aria-label="Escolha a categoria de serviço"
+            aria-label="Escolha a categoria de pedido"
           >
             {SIMULATOR_SOLUTIONS.map((item, idx) => {
               const isSelected = item.id === solutionId;
@@ -931,7 +945,11 @@ export default function YukoOrderSimulator({
                       disabled={isDisabled}
                       aria-pressed={isActive}
                       className={`sim-chip${isActive ? ' is-active' : ''}`}
-                      title={isDisabled ? 'A categoria Resgate usa o modo Resgatar' : undefined}
+                      title={
+                        isDisabled
+                          ? 'Na categoria Resgate, o projeto já segue o modo Resgatar para retomada segura no repositório central.'
+                          : undefined
+                      }
                       onClick={() => setSituation(opt.id)}
                     >
                       {opt.label}
@@ -945,8 +963,8 @@ export default function YukoOrderSimulator({
               <button
                 type="button"
                 aria-pressed={involvesClientData}
-                aria-label="Envolve dados de pessoas (LGPD)"
-                title="Ativar proteção LGPD para dados de pessoas"
+                aria-label="Envolve dados de pessoas: ativar Privacy by Design e cuidados LGPD"
+                title="Ativar Privacy by Design e cuidados LGPD"
                 className={`sim-chip sim-chip-data${involvesClientData ? ' is-active' : ''}`}
                 onClick={() => setInvolvesClientData((prev) => !prev)}
               >
@@ -980,7 +998,7 @@ export default function YukoOrderSimulator({
               <div className="sim-signal-item">
                 <span className="sim-signal-label">Cuidado</span>
                 <strong className="sim-signal-value">
-                  {involvesClientData ? 'Sigilo LGPD' : 'Acesso seguro'}
+                  {involvesClientData ? 'LGPD · Dados sintéticos' : 'Coleta mínima · HTTPS'}
                 </strong>
               </div>
 
@@ -993,18 +1011,18 @@ export default function YukoOrderSimulator({
             {perspective !== 'cliente' && (
               <div
                 className="sim-cost-meter"
-                aria-label={`Nível de custo: ${estimate.costLevelTitle}, Piso ${estimate.costFloorLabel} até Teto ${estimate.costCeilingLabel}`}
+                aria-label={`Faixa indicativa de complexidade: ${estimate.costLevelTitle}, Piso ${estimate.costFloorLabel} até Teto ${estimate.costCeilingLabel} (sem valores em R$)`}
               >
                 <div className="sim-cost-meter-head">
-                  <span className="sim-cost-end">Piso</span>
+                  <span className="sim-cost-end">Piso · {estimate.costFloorLabel}</span>
                   <span className="sim-cost-mid">{estimate.costLevelTitle}</span>
-                  <span className="sim-cost-end">Teto</span>
+                  <span className="sim-cost-end">Teto · {estimate.costCeilingLabel}</span>
                 </div>
                 <div
                   ref={wavyTrackRef}
                   className="sim-cost-wavy"
                   role="img"
-                  aria-label={`Faixa do nível de custo de ${estimate.costFloorLabel} até ${estimate.costCeilingLabel}`}
+                  aria-label={`Faixa indicativa de complexidade: de ${estimate.costFloorLabel} até ${estimate.costCeilingLabel}`}
                 >
                   <svg
                     className="sim-wavy-svg"
@@ -1121,7 +1139,8 @@ export default function YukoOrderSimulator({
             )}
 
             <p className="sim-footer-note">
-              Faixa indicativa · <a href="/manual/">Manual v1.0 ↗</a>
+              Faixa indicativa de complexidade (sem valores em R$; combinado bilateral e autônomo) ·{' '}
+              <a href="/manual/">Manual v1.0 ↗</a>
             </p>
           </section>
         </div>

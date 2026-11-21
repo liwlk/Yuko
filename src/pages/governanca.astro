@@ -11,8 +11,9 @@ import {
 ---
 
 <BaseLayout
-  title="Qualidade, Segurança, LGPD & Ética — Yuko Institucional"
-  description="Critério de pronto, revisão de segurança por 2+ pares, cuidados pensando na LGPD (não substitui assessoria jurídica) e mediação de conflitos na Yuko."
+  title="Qualidade, Segurança, Arquitetura & LGPD — Yuko"
+  description="Critério de pronto (DoD), tecnologias maduras sem dependência de nuvem (lock-in), proteção contra SQL Injection e XSS, Privacy by Design na LGPD e mediação."
+  ogImageAlt="Padrões de qualidade, segurança, arquitetura simples e LGPD da Yuko"
   currentPath="/governanca/"
   footerVariant="compact"
   nextHref="/manual/"
@@ -25,10 +26,10 @@ import {
         Qualidade, <span class="accent-word">Segurança</span> &amp; Proteção de Dados
       </h1>
       <p class="hero-lead">
-        Conferência antes da entrega, tecnologias conhecidas, revisão de segurança por 2+ pares e verificação de dependências, respeito à LGPD e mediação de impasses.
+        Sistemas enxutos sem dependência de nuvem (lock-in), conferência rigorosa de pronto (DoD), proteção de código contra SQL Injection e XSS, e LGPD com Privacy by Design.
       </p>
       <div class="hero-actions" style="margin-bottom:0">
-        <a href="#engenharia" class="btn btn-primary">Qualidade &amp; Conferência</a>
+        <a href="#engenharia" class="btn btn-primary">Qualidade &amp; Arquitetura</a>
         <a href="#seguranca" class="btn btn-tonal">Segurança</a>
         <a href="#privacidade" class="btn btn-outline">LGPD &amp; Mediação</a>
       </div>
@@ -39,17 +40,17 @@ import {
   <section id="engenharia" class="section" style="padding-top:24px">
     <div class="container">
       <div class="section-head">
-        <div class="section-kicker">Base Técnica</div>
-        <h2 class="section-title">Padrões de Qualidade &amp; Segurança</h2>
+        <div class="section-kicker">Base Técnica &amp; Escolhas</div>
+        <h2 class="section-title">Padrões de Qualidade, Arquitetura &amp; Segurança</h2>
         <p class="section-desc">
-          Sistemas do tamanho certo para a microempresa, com código limpo, tecnologias conhecidas e boas práticas de segurança desde o início.
+          Sistemas do tamanho certo para a microempresa: arquitetura simples com tecnologias maduras para evitar custos excessivos e dependência de nuvem (lock-in), com proteção desde o início.
         </p>
       </div>
 
       <div class="grid-2">
         <article class="m3-card tonal-primary">
           <div>
-            <h3>Lista de Conferência Final (Critério de Pronto)</h3>
+            <h3>Lista de Conferência Final (Definition of Done)</h3>
             <ul class="clean-list" style="margin-top:14px">
               {DOD_ITEMS.map((item) => (
                 <li>
@@ -58,12 +59,12 @@ import {
               ))}
             </ul>
           </div>
-          <span class="card-code">critério de pronto</span>
+          <span class="card-code">definition of done</span>
         </article>
 
         <article class="m3-card">
           <div>
-            <h3>Tecnologias &amp; Histórico Organizado</h3>
+            <h3>Arquitetura Simples &amp; Sem Lock-in</h3>
             <ul class="clean-list" style="margin-top:14px">
               {STACK_ITEMS.map((item) => (
                 <li>
@@ -74,7 +75,7 @@ import {
               ))}
             </ul>
           </div>
-          <span class="card-code">tecnologias confiáveis</span>
+          <span class="card-code">tecnologias maduras</span>
         </article>
       </div>
 
@@ -97,13 +98,13 @@ import {
     <div class="container">
       <div class="section-head">
         <div class="section-kicker">Lei nº 13.709/2018 &amp; Boa Convivência</div>
-        <h2 class="section-title">Privacidade (LGPD) &amp; Mediação</h2>
+        <h2 class="section-title">LGPD, Privacy by Design &amp; Regra de Ouro</h2>
       </div>
 
       <div class="grid-2">
         <article class="m3-card tonal-tertiary">
           <div>
-            <h3>Estrutura pensada para a LGPD</h3>
+            <h3>Privacidade desde o Desenho (Privacy by Design)</h3>
             <ul class="clean-list" style="margin-top:14px">
               {LGPD_ITEMS.map((item) => (
                 <li>
@@ -114,7 +115,7 @@ import {
               ))}
             </ul>
           </div>
-          <span class="card-code">lgpd · proteção de dados</span>
+          <span class="card-code">lgpd · privacy by design</span>
         </article>
 
         <article class="m3-card">

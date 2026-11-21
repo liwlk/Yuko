@@ -198,7 +198,7 @@ export default function HeroSculpture() {
     <motion.div
       ref={cardRef}
       className="hero-art-card"
-      aria-label="Ilustração institucional da Yuko"
+      aria-label="Ilustração da parceria assistida na Yuko sem caixa-preta"
       whileHover={disableCardHover ? undefined : { y: -4 }}
       transition={{ type: 'spring', stiffness: 360, damping: 28 }}
       onPointerMove={handlePointerMove}
@@ -211,7 +211,7 @@ export default function HeroSculpture() {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           role="img"
-          aria-label="Composição visual simbolizando arquitetura modular, revisão por pares e sustentação coletiva da Yuko"
+          aria-label="Composição visual simbolizando parceria assistida sem caixa-preta: executor, 2+ revisores e suporte coletivo na Yuko"
         >
           <defs>
             <linearGradient
@@ -485,7 +485,7 @@ export default function HeroSculpture() {
         </svg>
       </figure>
       <div className="hero-art-caption">
-        <span>Desenvolvimento colaborativo · Revisão por 2+ pares</span>
+        <span>Parceria assistida · Executor, 2+ revisores e suporte</span>
         <a href="/extensoes/" className="studio-badge">
           Yuko Dev &amp; Make
         </a>
