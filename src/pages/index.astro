@@ -6,7 +6,6 @@ import YukoContinuityStage from '../components/YukoContinuityStage';
 import YukoOrderSimulator from '../components/YukoOrderSimulator';
 import {
   AUDIENCE_CARDS,
-  CONTINUITY_LENS_LABELS,
   CONTINUITY_STAGES,
   DISCORD_INVITE_URL,
   HERO_METRICS,
@@ -58,13 +57,12 @@ import {
     </div>
   </section>
 
-  <!-- Respaldo na Prática — Por que nenhum projeto fica na mão -->
+  <!-- Por que nenhum projeto fica na mão -->
   <section id="continuidade" class="stage-section" aria-labelledby="continuidadeHeading">
     <div class="container">
       <YukoContinuityStage
         client:load
         stages={CONTINUITY_STAGES}
-        lensLabels={CONTINUITY_LENS_LABELS}
         headingId="continuidadeHeading"
       />
     </div>

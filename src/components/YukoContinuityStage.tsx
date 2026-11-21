@@ -3,15 +3,13 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { AnimatePresence, motion, useMotionValue, useSpring } from 'motion/react';
 import { scrollToTarget } from '../scripts/lenis-manager';
-import type { ContinuityStageItem, StageLensId } from '../data/yuko';
+import type { ContinuityStageItem } from '../data/yuko';
 
 export interface YukoContinuityStageProps {
   stages: ContinuityStageItem[];
-  lensLabels: Record<StageLensId, string>;
   headingId?: string;
 }
 
-const LENS_ORDER: readonly StageLensId[] = ['fluxo', 'rede', 'blindagem'];
 const RING_RADIUS = 17;
 const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS;
 
@@ -49,13 +47,10 @@ function isMotionPaused(): boolean {
 
 export default function YukoContinuityStage({
   stages,
-  lensLabels,
   headingId = 'continuidadeHeading',
 }: YukoContinuityStageProps) {
   const uid = useId().replace(/:/g, '');
   const [activeIdx, setActiveIdx] = useState(0);
-  const [lens, setLens] = useState<StageLensId>('fluxo');
-  const [lensAnnouncement, setLensAnnouncement] = useState('');
   const [motionPaused, setMotionPaused] = useState(false);
 
   const scrollyRef = useRef<HTMLDivElement>(null);
@@ -251,11 +246,6 @@ export default function YukoContinuityStage({
     };
   }, [applyProgress, getScrollRange, updateActiveFromProgress]);
 
-  const handleSelectLens = (nextLens: StageLensId) => {
-    setLens(nextLens);
-    setLensAnnouncement(`Perspectiva de análise: ${lensLabels[nextLens]}`);
-  };
-
   const handleSelectChapter = (idx: number, shouldScroll = true) => {
     if (!stages.length) return;
     const clampedIdx = clamp(Math.trunc(idx), 0, stages.length - 1);
@@ -329,7 +319,7 @@ export default function YukoContinuityStage({
   const totalCount = Math.max(stages.length, 1);
   const stepBadgeText = `${String(activeIdx + 1).padStart(2, '0')} / ${String(totalCount).padStart(2, '0')}`;
   const activeStage = stages[activeIdx] ?? stages[0];
-  const activeStepLabel = String(activeIdx + 1).padStart(2, '0');
+  const lens = activeStage?.defaultLens ?? 'fluxo';
 
   const isNetworkLens = lens === 'rede';
   const isShieldLens = lens === 'blindagem';
@@ -858,95 +848,67 @@ export default function YukoContinuityStage({
             {/* HUD Superior do Palco */}
             <div className="stage-header-row">
               <div className="stage-intro">
-                <span className="stage-kicker">Respaldo na Prática</span>
-                <h2 id={headingId} className="stage-title">
-                  Como preservamos a continuidade
-                </h2>
-                <p className="stage-lead">
-                  Código centralizado, revisão por 2+ pares e transferência assistida após 5 dias úteis sem retorno.
-                </p>
-              </div>
+                <div className="stage-intro-head">
+                  <h2 id={headingId} className="stage-kicker">
+                    Por que nenhum projeto fica na mão
+                  </h2>
 
-              <div className="stage-hud-cluster">
-                <div
-                  className="connected-group stage-glass-group"
-                  role="group"
-                  aria-label="Perspectiva de análise"
-                >
-                  {LENS_ORDER.map((lensKey) => (
-                    <button
-                      key={lensKey}
-                      className="connected-btn"
-                      type="button"
-                      data-stage-lens={lensKey}
-                      aria-pressed={lens === lensKey}
-                      onClick={() => handleSelectLens(lensKey)}
-                    >
-                      {lensLabels[lensKey]}
-                    </button>
-                  ))}
-                </div>
-
-                <span className="sr-only" aria-live="polite">
-                  {lensAnnouncement}
-                </span>
-
-                <div className="stage-progress-hud">
-                  <div className="stage-ring-wrap">
-                    <svg
-                      className="stage-ring-svg"
-                      width="40"
-                      height="40"
-                      viewBox="0 0 40 40"
-                      aria-hidden="true"
-                    >
-                      <circle
-                        className="stage-ring-track"
-                        cx="20"
-                        cy="20"
-                        r={RING_RADIUS}
-                        fill="none"
-                      />
-                      <circle
-                        ref={ringFillRef}
-                        className="stage-ring-fill"
-                        cx="20"
-                        cy="20"
-                        r={RING_RADIUS}
-                        fill="none"
-                        strokeDasharray={RING_CIRCUMFERENCE.toFixed(2)}
-                        strokeDashoffset={RING_CIRCUMFERENCE.toFixed(2)}
-                      />
-                    </svg>
-                    <span className="stage-step-badge">{stepBadgeText}</span>
+                  <div className="stage-progress-hud">
+                    <div className="stage-ring-wrap">
+                      <svg
+                        className="stage-ring-svg"
+                        width="40"
+                        height="40"
+                        viewBox="0 0 40 40"
+                        aria-hidden="true"
+                      >
+                        <circle
+                          className="stage-ring-track"
+                          cx="20"
+                          cy="20"
+                          r={RING_RADIUS}
+                          fill="none"
+                        />
+                        <circle
+                          ref={ringFillRef}
+                          className="stage-ring-fill"
+                          cx="20"
+                          cy="20"
+                          r={RING_RADIUS}
+                          fill="none"
+                          strokeDasharray={RING_CIRCUMFERENCE.toFixed(2)}
+                          strokeDashoffset={RING_CIRCUMFERENCE.toFixed(2)}
+                        />
+                      </svg>
+                      <span className="stage-step-badge">{stepBadgeText}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
 
-            {/* Camada 4: Título emergente e micro-chip da lente na base esquerda */}
-            <div className="stage-rising-stage">
-              <AnimatePresence mode="wait" initial={false}>
-                {activeStage && (
-                  <motion.div
-                    key={activeIdx}
-                    className="stage-rising-title"
-                    initial={motionPaused ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={motionPaused ? { opacity: 0, y: 0 } : { opacity: 0, y: -14 }}
-                    transition={{
-                      duration: motionPaused ? 0 : 0.34,
-                      ease: [0.2, 0, 0, 1],
-                    }}
-                  >
-                    <span className="stage-rising-ref">{activeStepLabel}</span>
-                    <span className="stage-rising-name">{activeStage.stageLabel}</span>
-                    <span className="stage-rising-lens-chip">
-                      {activeStage.lensNotes[lens]}
-                    </span>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                {/* Textos que sobem conforme a rolagem utilizando a mesma animação */}
+                <div className="stage-rising-stage" aria-live="polite">
+                  <AnimatePresence mode="wait" initial={false}>
+                    {activeStage && (
+                      <motion.div
+                        key={activeIdx}
+                        className="stage-rising-title"
+                        initial={motionPaused ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={motionPaused ? { opacity: 0, y: 0 } : { opacity: 0, y: -14 }}
+                        transition={{
+                          duration: motionPaused ? 0 : 0.34,
+                          ease: [0.2, 0, 0, 1],
+                        }}
+                      >
+                        <span className="stage-rising-name">{activeStage.stageLabel}</span>
+                        <span className="stage-rising-lens-chip">
+                          {activeStage.lensNotes[lens]}
+                        </span>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </div>
             </div>
           </div>
 
