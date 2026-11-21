@@ -75,20 +75,21 @@ function clamp(value: number, min: number, max: number): number {
 }
 
 function formatDeadlineRange(minDays: number, maxDays: number): { short: string; full: string } {
-  const daysRange = `${minDays}–${maxDays} dias úteis`;
+  const daysFull = `${minDays}–${maxDays} dias úteis`;
   if (maxDays <= 15) {
     return {
-      short: daysRange,
-      full: daysRange,
+      short: `${minDays}–${maxDays} dias`,
+      full: daysFull,
     };
   }
   const minWeeks = Math.max(1, Math.ceil(minDays / 5));
   const maxWeeks = Math.max(minWeeks, Math.ceil(maxDays / 5));
-  const weeksLabel =
+  const shortWeeks = minWeeks === maxWeeks ? `~${minWeeks} sem` : `${minWeeks}–${maxWeeks} sem`;
+  const fullWeeks =
     minWeeks === maxWeeks ? `~${minWeeks} semanas` : `${minWeeks}–${maxWeeks} semanas`;
   return {
-    short: weeksLabel,
-    full: `${weeksLabel} (${daysRange})`,
+    short: shortWeeks,
+    full: `${fullWeeks} (${daysFull})`,
   };
 }
 
@@ -187,7 +188,6 @@ function resolveHumanProfile(
   perspective: SimulatorPerspective,
   solution: SimulatorSolutionCard,
   situation: SimulatorSituation,
-  involvesClientData: boolean,
   devRole: SimulatorDevRole
 ): HumanProfile {
   if (perspective === 'desenvolvedor') {
@@ -199,9 +199,9 @@ function resolveHumanProfile(
           ? ' · Evolução'
           : '';
     return {
-      badge: `${devMeta.profileBadge} · ${solution.shortTitle}`,
+      badge: devMeta.profileBadge,
       title: `${devMeta.profileTitle}${situationSuffix}`,
-      summary: devMeta.humanSummary,
+      summary: devMeta.shortSummary,
     };
   }
 
@@ -213,9 +213,9 @@ function resolveHumanProfile(
         : baseClientTitle;
 
     return {
-      badge: `${solution.profileBadge} · Experiência do cliente`,
+      badge: solution.profileBadge,
       title: clientTitle,
-      summary: solution.clientProfileHook,
+      summary: solution.clientShortSummary,
     };
   }
 
@@ -227,9 +227,9 @@ function resolveHumanProfile(
         : solution.profileTitle;
 
   return {
-    badge: involvesClientData ? `${solution.profileBadge} · LGPD` : solution.profileBadge,
+    badge: solution.profileBadge,
     title: companyTitle,
-    summary: solution.humanSummary,
+    summary: solution.shortSummary,
   };
 }
 
@@ -288,6 +288,7 @@ function buildHiddenOrderRecord(params: {
     return [
       `FICHA DE ATUAÇÃO NA REDE · ${orderCode}`,
       `Papel escolhido: ${devMeta.label} — ${profile.title} (${profile.badge})`,
+      `Atuação: ${devMeta.humanSummary}`,
       `Frente: ${solution.shortTitle} · ${scopeLabel} · ${situationLabel}`,
       `Nível da entrega: ${estimate.costLevelTitle} (Piso: ${estimate.costFloorLabel} → Teto: ${estimate.costCeilingLabel})`,
       `Ritmo estimado: ${estimate.deadlineFull}`,
@@ -304,6 +305,7 @@ function buildHiddenOrderRecord(params: {
     `SOLICITAÇÃO YUKO · ${orderCode}`,
     'Origem: Empresa',
     `Perfil associado: ${profile.title} (${profile.badge})`,
+    `Resumo: ${solution.humanSummary}`,
     `Frente solicitada: ${solution.shortTitle} · ${scopeLabel} · ${situationLabel}`,
     `Nível de custo: ${estimate.costLevelTitle} (Piso: ${estimate.costFloorLabel} → Teto: ${estimate.costCeilingLabel}, sem valor fechado prévio)`,
     `Ritmo estimado: ${estimate.deadlineFull}`,
@@ -356,10 +358,10 @@ function PerspectiveIcon({ id }: { id: SimulatorPerspective }) {
   }
 }
 
-function SolutionIcon({ id }: { id: SimulatorSolutionId }) {
+function SolutionIcon({ id, size = 18 }: { id: SimulatorSolutionId; size?: number }) {
   const shared = {
-    width: 22,
-    height: 22,
+    width: size,
+    height: size,
     viewBox: '0 0 24 24',
     fill: 'none',
     stroke: 'currentColor',
@@ -423,6 +425,25 @@ function SolutionIcon({ id }: { id: SimulatorSolutionId }) {
   }
 }
 
+function ShieldIcon({ size = 14 }: { size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.1"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M12 3l7 3v5.5c0 4.6-3 8.2-7 9.5-4-1.3-7-4.9-7-9.5V6l7-3z" />
+      <path d="M9.5 12l1.8 1.8 3.4-3.6" />
+    </svg>
+  );
+}
+
 export default function YukoOrderSimulator({
   defaultPerspective = 'empresa',
   headingId,
@@ -468,14 +489,8 @@ export default function YukoOrderSimulator({
   }, [selectedSolution.id, scopeSize, estimate.costLevel]);
 
   const profile = useMemo(() => {
-    return resolveHumanProfile(
-      perspective,
-      selectedSolution,
-      situation,
-      involvesClientData,
-      devRole
-    );
-  }, [perspective, selectedSolution, situation, involvesClientData, devRole]);
+    return resolveHumanProfile(perspective, selectedSolution, situation, devRole);
+  }, [perspective, selectedSolution, situation, devRole]);
 
   const hiddenOrderRecord = useMemo(() => {
     return buildHiddenOrderRecord({
@@ -604,33 +619,28 @@ export default function YukoOrderSimulator({
     setCopyNonce((prev) => prev + 1);
   };
 
-  const networkKpiValue =
+  const networkSignalValue =
     perspective === 'desenvolvedor'
       ? devRole === 'executor'
-        ? 'Executar + 2+ pares'
+        ? '1 cria + 2 pares'
         : devRole === 'revisor'
-          ? 'Revisar (2+ pares)'
-          : 'Apoio · 5 dias'
+          ? '2+ revisores'
+          : 'Apoio · 5d'
       : '4+ pessoas';
-
-  const networkKpiSub =
-    perspective === 'desenvolvedor' ? 'atuação na rede' : '1 cria · 2+ revisam · suporte';
 
   const primaryCtaLabel =
     perspective === 'empresa'
-      ? 'Montar solicitação'
+      ? 'Gerar solicitação'
       : perspective === 'cliente'
-        ? 'Recomendar solução'
-        : 'Gerar ficha de atuação';
+        ? 'Gerar indicação'
+        : 'Gerar ficha';
 
   const panelId = `sim-workspace-${uid}`;
 
   return (
     <div className="sim-shell" aria-labelledby={headingId}>
-      {/* Barra superior: Seletor de perfil em pílula */}
+      {/* Barra superior: seletor de perfil */}
       <div className="sim-top-bar">
-        <span className="sim-top-label">Seu olhar</span>
-
         <div
           className="sim-perspective-switch"
           role="tablist"
@@ -670,9 +680,13 @@ export default function YukoOrderSimulator({
         role="tabpanel"
         aria-labelledby={`sim-tab-${perspective}-${uid}`}
       >
-        {/* Esquerda: Seleções minimalistas por símbolos */}
+        {/* Esquerda: Cards horizontais compactos + faixa única de ajuste */}
         <div className="sim-controls">
-          <div className="sim-solutions-grid" role="group" aria-label="Escolha o que deseja simular">
+          <div
+            className="sim-solutions-grid"
+            role="group"
+            aria-label="Escolha o que deseja simular"
+          >
             {SIMULATOR_SOLUTIONS.map((item) => {
               const isSelected = item.id === solutionId;
               return (
@@ -684,222 +698,134 @@ export default function YukoOrderSimulator({
                   onClick={() => handleSelectSolution(item.id)}
                 >
                   <span className="sim-solution-icon" aria-hidden="true">
-                    <SolutionIcon id={item.id} />
+                    <SolutionIcon id={item.id} size={18} />
                   </span>
-                  <span className="sim-solution-meta">
-                    <strong className="sim-solution-title">{item.shortTitle}</strong>
-                    <span className="sim-solution-mood">{item.moodTag}</span>
-                  </span>
+                  <strong className="sim-solution-title">{item.shortTitle}</strong>
                 </button>
               );
             })}
           </div>
 
-          <div className="sim-tuning-stack">
+          <div className="sim-tuning-strip">
             {perspective === 'desenvolvedor' && (
-              <div className="sim-tuning-group">
-                <span className="sim-tuning-label">Papel na rede</span>
-                <div className="sim-chip-row" role="group" aria-label="Papel na rede Yuko">
-                  {DEV_ROLE_ORDER.map((roleId) => {
-                    const isActive = devRole === roleId;
-                    const roleMeta = SIMULATOR_DEV_PROFILES[roleId];
-                    return (
-                      <button
-                        key={roleId}
-                        type="button"
-                        aria-pressed={isActive}
-                        className={`sim-chip${isActive ? ' is-active' : ''}`}
-                        onClick={() => setDevRole(roleId)}
-                      >
-                        {roleMeta.label}
-                      </button>
-                    );
-                  })}
-                </div>
+              <div className="sim-chip-row" role="group" aria-label="Papel na rede">
+                {DEV_ROLE_ORDER.map((roleId) => {
+                  const isActive = devRole === roleId;
+                  const roleMeta = SIMULATOR_DEV_PROFILES[roleId];
+                  return (
+                    <button
+                      key={roleId}
+                      type="button"
+                      aria-pressed={isActive}
+                      className={`sim-chip${isActive ? ' is-active' : ''}`}
+                      onClick={() => setDevRole(roleId)}
+                    >
+                      {roleMeta.label}
+                    </button>
+                  );
+                })}
               </div>
             )}
 
-            <div className="sim-tuning-pair">
-              <div className="sim-tuning-group">
-                <span className="sim-tuning-label">Alcance</span>
-                <div className="sim-chip-row" role="group" aria-label="Alcance da entrega">
-                  {SCOPE_OPTIONS.map((opt) => {
-                    const isActive = scopeSize === opt.id;
-                    return (
-                      <button
-                        key={opt.id}
-                        type="button"
-                        aria-pressed={isActive}
-                        className={`sim-chip${isActive ? ' is-active' : ''}`}
-                        onClick={() => setScopeSize(opt.id)}
-                      >
-                        {opt.label}
-                      </button>
-                    );
-                  })}
-                </div>
+            <div className="sim-chip-row">
+              <div className="sim-chip-row" role="group" aria-label="Alcance">
+                {SCOPE_OPTIONS.map((opt) => {
+                  const isActive = scopeSize === opt.id;
+                  return (
+                    <button
+                      key={opt.id}
+                      type="button"
+                      aria-pressed={isActive}
+                      className={`sim-chip${isActive ? ' is-active' : ''}`}
+                      onClick={() => setScopeSize(opt.id)}
+                    >
+                      {opt.label}
+                    </button>
+                  );
+                })}
               </div>
 
-              <div className="sim-tuning-group">
-                <span className="sim-tuning-label">Momento</span>
-                <div className="sim-chip-row" role="group" aria-label="Momento atual">
-                  {SITUATION_OPTIONS.map((opt) => {
-                    const isActive = situation === opt.id;
-                    const isDisabled = solutionId === 'resgate-sistema' && opt.id !== 'resgate';
-                    return (
-                      <button
-                        key={opt.id}
-                        type="button"
-                        disabled={isDisabled}
-                        aria-pressed={isActive}
-                        className={`sim-chip${isActive ? ' is-active' : ''}`}
-                        title={
-                          isDisabled ? 'Resgate & Apoio atua sempre no modo Resgatar' : undefined
-                        }
-                        onClick={() => setSituation(opt.id)}
-                      >
-                        {opt.label}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
+              <span className="sim-tuning-sep" aria-hidden="true" />
 
-            <div className="sim-tuning-group">
-              <span className="sim-tuning-label">Dados</span>
+              <div className="sim-chip-row" role="group" aria-label="Momento">
+                {SITUATION_OPTIONS.map((opt) => {
+                  const isActive = situation === opt.id;
+                  const isDisabled = solutionId === 'resgate-sistema' && opt.id !== 'resgate';
+                  return (
+                    <button
+                      key={opt.id}
+                      type="button"
+                      disabled={isDisabled}
+                      aria-pressed={isActive}
+                      className={`sim-chip${isActive ? ' is-active' : ''}`}
+                      title={isDisabled ? 'Resgate atua sempre no modo Resgatar' : undefined}
+                      onClick={() => setSituation(opt.id)}
+                    >
+                      {opt.label}
+                    </button>
+                  );
+                })}
+              </div>
+
+              <span className="sim-tuning-sep" aria-hidden="true" />
+
               <button
                 type="button"
                 aria-pressed={involvesClientData}
-                className={`sim-toggle-btn${involvesClientData ? ' is-active' : ''}`}
+                aria-label="Envolve dados de pessoas (LGPD)"
+                title="Ativar proteção LGPD para dados de pessoas"
+                className={`sim-chip sim-chip-data${involvesClientData ? ' is-active' : ''}`}
                 onClick={() => setInvolvesClientData((prev) => !prev)}
               >
-                <span className="sim-toggle-label">
-                  <svg
-                    width="15"
-                    height="15"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.1"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    <path d="M12 3l7 3v5.5c0 4.6-3 8.2-7 9.5-4-1.3-7-4.9-7-9.5V6l7-3z" />
-                    <path d="M9.5 12l1.8 1.8 3.4-3.6" />
-                  </svg>
-                  <span>Com dados de pessoas</span>
-                </span>
-                <span className="sim-solution-tag" aria-hidden="true">
-                  {involvesClientData ? 'LGPD ativa' : 'Opcional'}
-                </span>
+                <ShieldIcon size={14} />
+                <span>{involvesClientData ? '✓ LGPD' : '+ LGPD'}</span>
               </button>
             </div>
           </div>
         </div>
 
-        {/* Direita: Perfil humanizado completo */}
+        {/* Direita: Síntese imediata do perfil */}
         <div className="sim-results">
           <section className="sim-profile-card" aria-label="Perfil recomendado">
-            <div
-              aria-live="polite"
-              style={{ display: 'flex', flexDirection: 'column', gap: '14px', minWidth: 0 }}
-            >
-              <div className="sim-profile-head">
-                <div className="sim-profile-head-top">
-                  <span className="sim-profile-emblem" aria-hidden="true">
-                    <SolutionIcon id={selectedSolution.id} />
-                  </span>
-                  <span className="sim-profile-badge">{profile.badge}</span>
-                </div>
+            <div className="sim-profile-head" aria-live="polite">
+              <span className="sim-profile-emblem" aria-hidden="true">
+                <SolutionIcon id={selectedSolution.id} size={18} />
+              </span>
+              <div className="sim-profile-head-meta">
+                <span className="sim-profile-badge">{profile.badge}</span>
                 <h3 className="sim-profile-title">{profile.title}</h3>
+                <p className="sim-profile-summary">{profile.summary}</p>
               </div>
-
-              <p className="sim-profile-summary">{profile.summary}</p>
             </div>
 
-            {/* 3 Indicadores visuais compactos consistentes nos 3 perfis */}
-            <div className="sim-kpi-grid">
-              <div className="sim-kpi-box">
-                <span className="sim-kpi-label">
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.1"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    <circle cx="12" cy="12" r="9" />
-                    <path d="M12 7v5l3 2" />
-                  </svg>
-                  <span>Prazo</span>
-                </span>
-                <strong className="sim-kpi-value">{estimate.deadlineShort}</strong>
-                <span className="sim-kpi-sub">ritmo estimado</span>
+            <div className="sim-signals-strip">
+              <div className="sim-signal-item">
+                <span className="sim-signal-label">Prazo</span>
+                <strong className="sim-signal-value">{estimate.deadlineShort}</strong>
               </div>
 
-              <div className="sim-kpi-box">
-                <span className="sim-kpi-label">
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.1"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    <path d="M12 3l7 3v5.5c0 4.6-3 8.2-7 9.5-4-1.3-7-4.9-7-9.5V6l7-3z" />
-                    <path d="M9.5 12l1.8 1.8 3.4-3.6" />
-                  </svg>
-                  <span>Cuidado</span>
-                </span>
-                <strong className="sim-kpi-value">
+              <div className="sim-signal-item">
+                <span className="sim-signal-label">Cuidado</span>
+                <strong className="sim-signal-value">
                   {involvesClientData ? 'Sigilo LGPD' : 'Acesso seguro'}
                 </strong>
-                <span className="sim-kpi-sub">
-                  {involvesClientData ? 'exemplos fictícios em testes' : 'uso protegido'}
-                </span>
               </div>
 
-              <div className="sim-kpi-box">
-                <span className="sim-kpi-label">
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.1"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    <circle cx="9" cy="8" r="3" />
-                    <path d="M3.5 19a5.5 5.5 0 0 1 11 0" />
-                    <circle cx="17" cy="9" r="2.2" />
-                    <path d="M16 14.5a4.5 4.5 0 0 1 4.5 4.5" />
-                  </svg>
-                  <span>Rede</span>
-                </span>
-                <strong className="sim-kpi-value">{networkKpiValue}</strong>
-                <span className="sim-kpi-sub">{networkKpiSub}</span>
+              <div className="sim-signal-item">
+                <span className="sim-signal-label">Rede</span>
+                <strong className="sim-signal-value">{networkSignalValue}</strong>
               </div>
             </div>
 
             {perspective !== 'cliente' && (
-              <div className="sim-cost-meter" aria-label="Linha de nível de custo entre piso e teto">
+              <div
+                className="sim-cost-meter"
+                aria-label={`Nível de custo: ${estimate.costLevelTitle}, Piso ${estimate.costFloorLabel} até Teto ${estimate.costCeilingLabel}`}
+              >
                 <div className="sim-cost-meter-head">
-                  <span className="sim-cost-end">Piso · {estimate.costFloorLabel}</span>
+                  <span className="sim-cost-end">Piso</span>
                   <span className="sim-cost-mid">{estimate.costLevelTitle}</span>
-                  <span className="sim-cost-end">Teto · {estimate.costCeilingLabel}</span>
+                  <span className="sim-cost-end">Teto</span>
                 </div>
                 <div
                   className="sim-cost-track"
@@ -920,7 +846,6 @@ export default function YukoOrderSimulator({
               </div>
             )}
 
-            {/* Ações estratégicas / Ticket gerado (sem duplicação) */}
             {!orderGenerated ? (
               <div className="sim-actions-row">
                 <button
@@ -952,12 +877,12 @@ export default function YukoOrderSimulator({
                   rel="noopener noreferrer"
                   className="btn btn-tonal"
                 >
-                  Conversar no Discord ↗
+                  Abrir Discord ↗
                 </a>
               </div>
             ) : (
               <div
-                className="sim-order-ticket"
+                className="sim-order-bar"
                 role="region"
                 aria-label={
                   perspective === 'cliente'
@@ -967,37 +892,20 @@ export default function YukoOrderSimulator({
                       : 'Solicitação gerada'
                 }
               >
-                <div className="sim-order-head">
-                  <div className="sim-order-code-wrap">
-                    <span className="sim-order-code">{orderCode}</span>
-                    {perspective !== 'cliente' && (
-                      <span className="sim-order-level">{estimate.costLevelTitle}</span>
-                    )}
-                  </div>
-                  <button
-                    type="button"
-                    className="sim-order-close"
-                    onClick={() => setOrderGenerated(false)}
-                    aria-label="Fechar resumo gerado"
-                  >
-                    Fechar
-                  </button>
+                <div className="sim-order-bar-left">
+                  <span className="sim-order-code">{orderCode}</span>
+                  {perspective !== 'cliente' && (
+                    <span className="sim-order-level">{estimate.costLevelTitle}</span>
+                  )}
                 </div>
-                <p className="sim-order-summary">
-                  <strong>{profile.title}</strong> · {estimate.deadlineShort} ·{' '}
-                  {perspective === 'cliente'
-                    ? involvesClientData
-                      ? 'sigilo LGPD com coleta mínima.'
-                      : 'uso direto sem cadastro extra.'
-                    : `Piso ${estimate.costFloorLabel.toLowerCase()} até teto ${estimate.costCeilingLabel.toLowerCase()}.`}
-                </p>
-                <div className="sim-order-actions">
+
+                <div className="sim-order-bar-actions">
                   <button
                     type="button"
                     className="btn btn-tonal"
                     onClick={() => void copyOrderToClipboard()}
                   >
-                    {copiedRecently ? 'Copiado ✓' : `Copiar resumo (${orderCode})`}
+                    {copiedRecently ? 'Copiado ✓' : 'Copiar'}
                   </button>
                   <a
                     href={DISCORD_INVITE_URL}
@@ -1005,14 +913,22 @@ export default function YukoOrderSimulator({
                     rel="noopener noreferrer"
                     className="btn btn-primary"
                   >
-                    Abrir no Discord ↗
+                    Discord ↗
                   </a>
+                  <button
+                    type="button"
+                    className="sim-order-close"
+                    onClick={() => setOrderGenerated(false)}
+                    aria-label="Fechar solicitação"
+                  >
+                    ×
+                  </button>
                 </div>
               </div>
             )}
 
             <p className="sim-footer-note">
-              Sem vínculo nem taxas ocultas · regras no <a href="/manual/">Manual v1.0</a>
+              Sem taxas ocultas · <a href="/manual/">Manual v1.0 ↗</a>
             </p>
           </section>
         </div>

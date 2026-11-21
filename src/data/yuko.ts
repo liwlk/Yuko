@@ -843,9 +843,10 @@ export type SimulatorSolutionId =
 export interface SimulatorSolutionCard {
   id: SimulatorSolutionId;
   shortTitle: string;
-  moodTag: string;
   profileTitle: string;
   profileBadge: string;
+  shortSummary: string;
+  clientShortSummary: string;
   humanSummary: string;
   clientProfileHook: string;
   extensions: string[];
@@ -860,6 +861,7 @@ export interface SimulatorDevProfileMeta {
   label: string;
   profileTitle: string;
   profileBadge: string;
+  shortSummary: string;
   humanSummary: string;
 }
 
@@ -875,10 +877,11 @@ export const SIMULATOR_PERSPECTIVE_OPTIONS: {
 export const SIMULATOR_SOLUTIONS: SimulatorSolutionCard[] = [
   {
     id: 'site-presenca',
-    shortTitle: 'Presença & Site',
-    moodTag: 'Vitrine clara',
+    shortTitle: 'Site & Presença',
     profileTitle: 'Presença com Respaldo',
     profileBadge: 'Acolhimento Digital',
+    shortSummary: 'Negócio no ar, rápido e no seu domínio.',
+    clientShortSummary: 'Horários, serviços e WhatsApp oficial em segundos.',
     humanSummary:
       'Seu negócio no ar com contato direto, rápido no celular e domínio no seu nome.',
     clientProfileHook:
@@ -893,9 +896,10 @@ export const SIMULATOR_SOLUTIONS: SimulatorSolutionCard[] = [
   {
     id: 'agenda-pedidos',
     shortTitle: 'Agenda & Pedidos',
-    moodTag: 'Fluxo direto',
     profileTitle: 'Atendimento sem Atrito',
     profileBadge: 'Ritmo de Balcão',
+    shortSummary: 'Horários e pedidos organizados sem perder mensagens.',
+    clientShortSummary: 'Agendamento ou pedido em poucos toques, sem cadastro.',
     humanSummary:
       'Horários e pedidos organizados sem perder mensagens ou pedir cadastros extras.',
     clientProfileHook:
@@ -909,10 +913,11 @@ export const SIMULATOR_SOLUTIONS: SimulatorSolutionCard[] = [
   },
   {
     id: 'cadastro-rotina',
-    shortTitle: 'Rotina & Controle',
-    moodTag: 'Casa em ordem',
+    shortTitle: 'Rotina Interna',
     profileTitle: 'Rotina Leve & Segura',
     profileBadge: 'Gestão Central',
+    shortSummary: 'Clientes, ordens e estoque em um só lugar.',
+    clientShortSummary: 'Atendimento ágil com histórico sempre à mão.',
     humanSummary:
       'Clientes, ordens ou estoque em um só lugar, substituindo planilhas soltas.',
     clientProfileHook:
@@ -926,10 +931,11 @@ export const SIMULATOR_SOLUTIONS: SimulatorSolutionCard[] = [
   },
   {
     id: 'automacao-ferramentas',
-    shortTitle: 'Conexões & Fluxos',
-    moodTag: 'Menos esforço',
+    shortTitle: 'Automações',
     profileTitle: 'Operação Conectada',
     profileBadge: 'Ponte Enxuta',
+    shortSummary: 'Conecta formulários, planilhas e avisos sem retrabalho.',
+    clientShortSummary: 'Confirmação imediata e respostas consistentes a cada pedido.',
     humanSummary:
       'Liga formulário, planilha e avisos da equipe para acabar com o retrabalho manual.',
     clientProfileHook:
@@ -943,10 +949,11 @@ export const SIMULATOR_SOLUTIONS: SimulatorSolutionCard[] = [
   },
   {
     id: 'casa-em-ordem',
-    shortTitle: 'Proteção & LGPD',
-    moodTag: 'Sigilo ativo',
+    shortTitle: 'Segurança & LGPD',
     profileTitle: 'Base Protegida (LGPD)',
     profileBadge: 'Cuidado & Sigilo',
+    shortSummary: 'Senhas, cópias de segurança e coleta sob LGPD.',
+    clientShortSummary: 'Dados protegidos, acesso restrito e coleta mínima.',
     humanSummary:
       'Organiza senhas, cópias de segurança e coleta de dados conforme a LGPD.',
     clientProfileHook:
@@ -960,10 +967,11 @@ export const SIMULATOR_SOLUTIONS: SimulatorSolutionCard[] = [
   },
   {
     id: 'resgate-sistema',
-    shortTitle: 'Resgate & Apoio',
-    moodTag: 'Virada segura',
+    shortTitle: 'Resgate',
     profileTitle: 'Retomada Assistida',
     profileBadge: 'Continuidade Ativa',
+    shortSummary: 'Retoma o sistema parado com suporte contínuo.',
+    clientShortSummary: 'Serviço estável de volta, sem novas interrupções.',
     humanSummary:
       'Retoma seu sistema parado, coloca tudo em espaço central e garante suporte contínuo.',
     clientProfileHook:
@@ -982,13 +990,15 @@ export const SIMULATOR_DEV_PROFILES: Record<SimulatorDevRole, SimulatorDevProfil
     label: 'Executar',
     profileTitle: 'Par Executor em Rede',
     profileBadge: 'Autonomia & Ficha',
+    shortSummary: 'Acorda por escrito e constrói no espaço central.',
     humanSummary:
       'Fecha o acordo por escrito e constrói tudo no espaço central compartilhado.',
   },
   revisor: {
-    label: 'Revisar (2+)',
+    label: 'Revisar 2+',
     profileTitle: 'Guardião de Revisão (2+)',
     profileBadge: 'Olhar Independente',
+    shortSummary: 'Valida segurança, LGPD e clareza antes de publicar.',
     humanSummary:
       'Valida segurança, LGPD e clareza com outro colega antes de liberar.',
   },
@@ -996,6 +1006,7 @@ export const SIMULATOR_DEV_PROFILES: Record<SimulatorDevRole, SimulatorDevProfil
     label: 'Apoiar',
     profileTitle: 'Referência de Continuidade',
     profileBadge: 'Pós-Entrega Ativo',
+    shortSummary: 'Acompanha em produção e garante continuidade em ausências.',
     humanSummary:
       'Acompanha o sistema no ar e garante transição segura se houver ausência.',
   },

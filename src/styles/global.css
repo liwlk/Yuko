@@ -2739,16 +2739,16 @@ main {
 
   #simulador .section-head {
     max-width: 640px;
-    margin-bottom: 24px;
+    margin-bottom: 18px;
   }
 
   .sim-shell {
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: clamp(14px, 2vw, 20px);
-    padding: clamp(14px, 2.4vw, 26px);
-    border-radius: 32px;
+    gap: 14px;
+    padding: clamp(14px, 2vw, 20px);
+    border-radius: 28px;
     background-color: var(--md-surface-container-low);
     border: 1px solid var(--md-outline-variant);
     box-shadow: 0 20px 48px -32px var(--md-shadow-tint),
@@ -2759,24 +2759,9 @@ main {
 
   .sim-top-bar {
     display: flex;
-    flex-wrap: wrap;
+    justify-content: flex-end;
     align-items: center;
-    justify-content: space-between;
-    gap: 10px 16px;
-    padding-bottom: 14px;
-    border-bottom: 1px solid color-mix(in srgb, var(--md-outline-variant) 68%, transparent);
     min-width: 0;
-  }
-
-  .sim-top-label {
-    font-family: var(--font-display);
-    font-size: 0.85rem;
-    font-weight: 700;
-    letter-spacing: 0.01em;
-    color: var(--md-on-surface-variant);
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
   }
 
   .sim-perspective-switch {
@@ -2797,11 +2782,11 @@ main {
     border: none;
     background: transparent;
     color: var(--md-on-surface-variant);
-    min-height: 36px;
-    padding: 7px 14px;
+    min-height: 34px;
+    padding: 5px 12px;
     border-radius: var(--shape-pill);
     font-family: var(--font-display);
-    font-size: 0.83rem;
+    font-size: 0.8rem;
     font-weight: 700;
     line-height: 1.2;
     display: inline-flex;
@@ -2841,7 +2826,7 @@ main {
 
   @media (max-width: 560px) {
     .sim-shell {
-      border-radius: 26px;
+      border-radius: 24px;
     }
 
     .sim-perspective-switch {
@@ -2852,8 +2837,8 @@ main {
     }
 
     .sim-perspective-btn {
-      padding: 7px 8px;
-      font-size: 0.78rem;
+      padding: 5px 8px;
+      font-size: 0.76rem;
       gap: 4px;
       text-align: center;
     }
@@ -2863,7 +2848,7 @@ main {
   .sim-workspace {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    gap: clamp(16px, 2.4vw, 24px);
+    gap: clamp(14px, 2vw, 20px);
     align-items: start;
     min-width: 0;
   }
@@ -2879,17 +2864,17 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: 14px;
+    gap: 12px;
     height: 100%;
     min-width: 0;
   }
 
-  /* Cards compactos de solução em grade 2 colunas */
+  /* Cards compactos horizontais de solução em grade 2 colunas */
   .sim-solutions-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-auto-rows: 1fr;
-    gap: 10px;
+    gap: 8px;
     min-width: 0;
   }
 
@@ -2898,13 +2883,14 @@ main {
     -webkit-appearance: none;
     width: 100%;
     height: 100%;
+    min-height: 48px;
     text-align: left;
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 6px;
-    padding: 13px 14px;
-    border-radius: 20px;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border-radius: 16px;
     background-color: var(--md-surface-container-lowest);
     border: 1.5px solid var(--md-outline-variant);
     color: var(--md-on-surface);
@@ -2944,9 +2930,9 @@ main {
   }
 
   .sim-solution-icon {
-    width: 36px;
-    height: 36px;
-    border-radius: 12px;
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
     display: grid;
     place-items: center;
     flex-shrink: 0;
@@ -2964,21 +2950,13 @@ main {
     transform: scale(1.06);
   }
 
-  .sim-solution-meta {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 4px;
-    flex: 1 1 auto;
-    width: 100%;
-    min-width: 0;
-  }
-
   .sim-solution-title {
     display: block;
-    margin: 2px 0 0;
+    flex: 1 1 auto;
+    min-width: 0;
+    margin: 0;
     font-family: var(--font-display);
-    font-size: 0.94rem;
+    font-size: 0.86rem;
     font-weight: 700;
     letter-spacing: -0.015em;
     line-height: 1.22;
@@ -2986,124 +2964,58 @@ main {
     overflow-wrap: break-word;
   }
 
-  .sim-solution-tag,
-  .sim-solution-mood {
-    display: inline-flex;
-    align-items: center;
-    padding: 3px 9px;
-    border-radius: var(--shape-pill);
-    background-color: var(--md-surface-container);
-    color: var(--md-on-surface-variant);
-    font-family: var(--font-mono);
-    font-size: 0.69rem;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    line-height: 1.25;
-    max-width: 100%;
-    overflow-wrap: break-word;
-  }
-
-  .sim-solution-mood {
-    margin-top: auto;
-  }
-
-  .sim-solution-card.is-selected .sim-solution-tag,
-  .sim-solution-card[aria-pressed="true"] .sim-solution-tag,
-  .sim-solution-card.is-selected .sim-solution-mood,
-  .sim-solution-card[aria-pressed="true"] .sim-solution-mood {
-    background-color: color-mix(in srgb, var(--md-surface-container-lowest) 82%, transparent);
-    color: var(--md-on-surface);
-  }
-
   @media (max-width: 480px) {
     .sim-solutions-grid {
-      gap: 8px;
+      gap: 7px;
     }
 
     .sim-solution-card {
-      gap: 5px;
-      padding: 11px 12px;
-      border-radius: 18px;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 14px;
     }
 
     .sim-solution-icon {
-      width: 32px;
-      height: 32px;
-      border-radius: 10px;
+      width: 28px;
+      height: 28px;
+      border-radius: 9px;
     }
 
     .sim-solution-title {
-      font-size: 0.86rem;
-    }
-
-    .sim-solution-tag,
-    .sim-solution-mood {
-      font-size: 0.66rem;
-      padding: 2px 8px;
-    }
-
-    .sim-solution-mood {
-      font-size: 0.64rem;
-      padding: 2px 7px;
-      letter-spacing: 0.01em;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-size: 0.81rem;
     }
   }
 
-  /* Ajustes & Chips de Filtro M3 */
-  .sim-tuning-stack {
-    background-color: var(--md-surface-container-lowest);
-    border: 1px solid var(--md-outline-variant);
-    border-radius: 22px;
-    padding: clamp(14px, 2vw, 18px);
+  /* Faixa plana de chips de ajuste */
+  .sim-tuning-strip {
+    border-top: 1px solid color-mix(in srgb, var(--md-outline-variant) 55%, transparent);
+    padding-top: 10px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
     min-width: 0;
-  }
-
-  .sim-tuning-pair {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 12px 16px;
-    min-width: 0;
-  }
-
-  @media (min-width: 580px) {
-    .sim-tuning-pair {
-      grid-template-columns: auto minmax(0, 1fr);
-    }
-  }
-
-  .sim-tuning-group {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    min-width: 0;
-  }
-
-  .sim-tuning-label {
-    font-family: var(--font-display);
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    line-height: 1.3;
-    color: var(--md-on-surface-variant);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 4px 10px;
   }
 
   .sim-chip-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 7px;
+    align-items: center;
+    gap: 6px;
     min-width: 0;
+  }
+
+  .sim-tuning-sep {
+    width: 1px;
+    height: 18px;
+    background: var(--md-outline-variant);
+    margin-inline: 2px;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 420px) {
+    .sim-tuning-sep {
+      display: none;
+    }
   }
 
   .sim-chip {
@@ -3112,15 +3024,15 @@ main {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    min-height: 36px;
-    padding: 7px 13px;
+    gap: 5px;
+    min-height: 32px;
+    padding: 5px 11px;
     border-radius: var(--shape-pill);
     border: 1.5px solid var(--md-outline-variant);
     background-color: var(--md-surface-container-low);
     color: var(--md-on-surface-variant);
     font-family: var(--font-body);
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     font-weight: 600;
     line-height: 1.2;
     max-width: 100%;
@@ -3152,84 +3064,19 @@ main {
     box-shadow: 0 4px 12px -8px var(--md-shadow-tint);
   }
 
+  .sim-chip-data.is-active,
+  .sim-chip-data[aria-pressed="true"] {
+    background-color: var(--md-tertiary-container);
+    color: var(--md-on-tertiary-container);
+    border-color: color-mix(in srgb, var(--md-tertiary) 60%, var(--md-outline-variant));
+  }
+
   .sim-chip:disabled {
     opacity: 0.42;
     cursor: not-allowed;
   }
 
   .sim-chip:focus-visible {
-    outline: 2px solid var(--md-primary);
-    outline-offset: 2px;
-  }
-
-  .sim-toggle-btn {
-    appearance: none;
-    -webkit-appearance: none;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    min-height: 42px;
-    padding: 9px 14px;
-    border-radius: 16px;
-    border: 1.5px solid var(--md-outline-variant);
-    background-color: var(--md-surface-container-low);
-    color: var(--md-on-surface);
-    font-family: var(--font-body);
-    font-size: 0.84rem;
-    font-weight: 600;
-    line-height: 1.3;
-    text-align: left;
-    cursor: pointer;
-    min-width: 0;
-    transition: background-color var(--dur-fast) var(--ease-standard),
-                color var(--dur-fast) var(--ease-standard),
-                border-color var(--dur-fast) var(--ease-standard),
-                transform var(--dur-med) var(--ease-spring);
-  }
-
-  .sim-toggle-label {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    min-width: 0;
-  }
-
-  .sim-toggle-label svg {
-    flex-shrink: 0;
-    color: var(--md-primary);
-  }
-
-  .sim-toggle-btn:hover:not(.is-active):not([aria-pressed="true"]) {
-    background-color: var(--md-surface-container);
-    border-color: color-mix(in srgb, var(--md-primary) 45%, var(--md-outline-variant));
-  }
-
-  .sim-toggle-btn:active {
-    transform: scale(0.985);
-  }
-
-  .sim-toggle-btn.is-active,
-  .sim-toggle-btn[aria-pressed="true"] {
-    background-color: var(--md-tertiary-container);
-    color: var(--md-on-tertiary-container);
-    border-color: color-mix(in srgb, var(--md-tertiary) 60%, var(--md-outline-variant));
-    font-weight: 700;
-  }
-
-  .sim-toggle-btn.is-active .sim-toggle-label svg,
-  .sim-toggle-btn[aria-pressed="true"] .sim-toggle-label svg {
-    color: currentColor;
-  }
-
-  .sim-toggle-btn.is-active .sim-solution-tag,
-  .sim-toggle-btn[aria-pressed="true"] .sim-solution-tag {
-    background-color: color-mix(in srgb, var(--md-surface-container-lowest) 84%, transparent);
-    color: var(--md-on-surface);
-  }
-
-  .sim-toggle-btn:focus-visible {
     outline: 2px solid var(--md-primary);
     outline-offset: 2px;
   }
@@ -3247,12 +3094,12 @@ main {
   .sim-profile-card {
     background-color: var(--md-surface-container-lowest);
     border: 1.5px solid color-mix(in srgb, var(--md-primary) 34%, var(--md-outline-variant));
-    border-radius: 26px;
+    border-radius: 22px;
     padding: clamp(16px, 2.2vw, 22px);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: 14px;
+    gap: 12px;
     height: 100%;
     min-width: 0;
     box-shadow: 0 16px 36px -26px var(--md-shadow-tint);
@@ -3260,23 +3107,16 @@ main {
 
   .sim-profile-head {
     display: flex;
-    flex-direction: column;
-    gap: 8px;
-    min-width: 0;
-  }
-
-  .sim-profile-head-top {
-    display: flex;
+    flex-direction: row;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 10px;
+    gap: 12px;
     min-width: 0;
   }
 
   .sim-profile-emblem {
-    width: 40px;
-    height: 40px;
-    border-radius: 13px;
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
     display: grid;
     place-items: center;
     flex-shrink: 0;
@@ -3286,16 +3126,23 @@ main {
                 background-color var(--dur-fast) var(--ease-standard);
   }
 
+  .sim-profile-head-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
   .sim-profile-badge {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 4px 11px;
+    padding: 3px 10px;
     border-radius: var(--shape-pill);
     background-color: var(--md-secondary-container);
     color: var(--md-on-secondary-container);
     font-family: var(--font-display);
-    font-size: 0.74rem;
+    font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.01em;
     line-height: 1.25;
@@ -3306,7 +3153,7 @@ main {
   .sim-profile-title {
     margin: 0;
     font-family: var(--font-display);
-    font-size: clamp(1.12rem, 1.7vw, 1.3rem);
+    font-size: clamp(1.08rem, 1.6vw, 1.24rem);
     font-weight: 700;
     letter-spacing: -0.02em;
     line-height: 1.22;
@@ -3315,8 +3162,8 @@ main {
 
   .sim-profile-summary {
     margin: 0;
-    font-size: 0.88rem;
-    line-height: 1.48;
+    font-size: 0.86rem;
+    line-height: 1.45;
     color: var(--md-on-surface-variant);
   }
 
@@ -3325,78 +3172,64 @@ main {
     color: var(--md-on-surface);
   }
 
-  /* KPI Grid */
-  .sim-kpi-grid {
+  /* Faixa única de 3 sinais compactos */
+  .sim-signals-strip {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    background-color: var(--md-surface-container-low);
+    border-radius: 14px;
+    padding: 9px 10px;
     gap: 8px;
     min-width: 0;
   }
 
-  @media (min-width: 560px) {
-    .sim-kpi-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-  }
-
-  .sim-kpi-box {
-    background-color: var(--md-surface-container-low);
-    border: 1px solid var(--md-outline-variant);
-    border-radius: 18px;
-    padding: 12px 13px;
+  .sim-signal-item {
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    gap: 2px;
     min-width: 0;
   }
 
-  .sim-kpi-box:first-child {
-    background-color: color-mix(in srgb, var(--md-primary-container) 38%, var(--md-surface-container-low));
-    border-color: color-mix(in srgb, var(--md-primary) 36%, var(--md-outline-variant));
+  .sim-signal-item + .sim-signal-item {
+    border-left: 1px solid color-mix(in srgb, var(--md-outline-variant) 55%, transparent);
+    padding-left: 10px;
   }
 
-  .sim-kpi-label {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 0.72rem;
+  .sim-signal-label {
+    font-family: var(--font-display);
+    font-size: 0.68rem;
     font-weight: 700;
     letter-spacing: 0.04em;
     text-transform: uppercase;
+    line-height: 1.2;
     color: var(--md-on-surface-variant);
-    line-height: 1.25;
   }
 
-  .sim-kpi-label svg {
-    flex-shrink: 0;
-    color: var(--md-primary);
-  }
-
-  .sim-kpi-value {
+  .sim-signal-value {
     font-family: var(--font-display);
-    font-size: clamp(0.98rem, 1.35vw, 1.1rem);
+    font-size: 0.88rem;
     font-weight: 700;
     font-variant-numeric: tabular-nums;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.015em;
     line-height: 1.22;
     color: var(--md-on-surface);
-    overflow-wrap: anywhere;
+    overflow-wrap: break-word;
   }
 
-  .sim-kpi-sub {
-    display: block;
-    margin-top: 1px;
-    font-size: 0.74rem;
-    line-height: 1.32;
-    color: var(--md-on-surface-variant);
-    font-weight: 500;
-  }
+  @media (max-width: 460px) {
+    .sim-signals-strip {
+      padding: 8px 6px;
+      gap: 6px;
+    }
 
-  .sim-kpi-box:first-child .sim-kpi-label,
-  .sim-kpi-box:first-child .sim-kpi-label svg,
-  .sim-kpi-box:first-child .sim-kpi-value,
-  .sim-kpi-box:first-child .sim-kpi-sub {
-    color: var(--md-on-primary-container);
+    .sim-signal-item + .sim-signal-item {
+      padding-left: 6px;
+    }
+
+    .sim-signal-value {
+      font-size: 0.8rem;
+      overflow-wrap: anywhere;
+    }
   }
 
   /* Links nítidos com contraste AAA (sobrescreve Tailwind Preflight) */
@@ -3425,37 +3258,33 @@ main {
     outline-offset: 2px;
   }
 
-  /* Ações Finais & Rodapé do Simulador */
+  /* Ações Finais */
   .sim-actions-row {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 8px 12px;
+    gap: 8px 10px;
     min-width: 0;
   }
 
   .sim-actions-row .btn {
-    min-height: 42px;
-    padding: 10px 18px;
-    font-size: 0.88rem;
+    min-height: 40px;
+    padding: 9px 16px;
+    font-size: 0.86rem;
   }
 
   @media (max-width: 520px) {
-    .sim-actions-row .btn,
-    .sim-order-actions .btn {
+    .sim-actions-row .btn {
       width: 100%;
     }
   }
 
-  /* Linha de Nível de Custo (Piso ↔ Teto) */
+  /* Linha de Nível de Custo (Piso ↔ Teto) sem fundo nem borda */
   .sim-cost-meter {
-    padding: 11px 14px 12px;
-    border-radius: 16px;
-    background-color: var(--md-surface-container-low);
-    border: 1px solid var(--md-outline-variant);
+    padding: 2px 0;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
     min-width: 0;
   }
 
@@ -3465,7 +3294,7 @@ main {
     align-items: center;
     justify-content: space-between;
     gap: 6px 10px;
-    font-size: 0.76rem;
+    font-size: 0.74rem;
     line-height: 1.25;
   }
 
@@ -3480,14 +3309,14 @@ main {
     background-color: var(--md-primary-container);
     color: var(--md-on-primary-container);
     font-family: var(--font-display);
-    font-size: 0.74rem;
+    font-size: 0.72rem;
     font-weight: 700;
   }
 
   .sim-cost-track {
     position: relative;
     width: 100%;
-    height: 10px;
+    height: 8px;
     border-radius: var(--shape-pill);
     background-color: var(--md-surface-container-highest);
     border: 1px solid color-mix(in srgb, var(--md-outline-variant) 70%, transparent);
@@ -3506,11 +3335,11 @@ main {
   .sim-cost-dot {
     position: absolute;
     top: 50%;
-    width: 12px;
-    height: 12px;
+    width: 10px;
+    height: 10px;
     border-radius: 999px;
     background-color: var(--md-surface-container-lowest);
-    border: 2.5px solid var(--md-primary);
+    border: 2px solid var(--md-primary);
     transform: translateY(-50%);
     box-shadow: 0 2px 6px var(--md-shadow-tint);
   }
@@ -3524,67 +3353,77 @@ main {
     border-color: var(--md-tertiary);
   }
 
-  /* Solicitação Gerada (Protocolo Padrão) */
-  .sim-order-ticket {
-    padding: 14px 16px;
-    border-radius: 20px;
-    background-color: color-mix(in srgb, var(--md-primary-container) 28%, var(--md-surface-container-low));
-    border: 1.5px solid color-mix(in srgb, var(--md-primary) 42%, var(--md-outline-variant));
+  /* Barra compacta de protocolo gerado */
+  .sim-order-bar {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 7px 10px 7px 12px;
+    border-radius: 20px;
+    background: color-mix(in srgb, var(--md-primary-container) 34%, var(--md-surface-container-low));
+    border: 1px solid color-mix(in srgb, var(--md-primary) 36%, transparent);
     min-width: 0;
   }
 
-  .sim-order-head {
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 10px;
-  }
-
-  .sim-order-code-wrap {
+  .sim-order-bar-left {
     display: inline-flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     min-width: 0;
   }
 
   .sim-order-code {
-    padding: 3px 10px;
+    padding: 3px 9px;
     border-radius: var(--shape-pill);
     background-color: var(--md-primary);
     color: var(--md-on-primary);
     font-family: var(--font-mono);
-    font-size: 0.78rem;
+    font-size: 0.76rem;
     font-weight: 700;
     letter-spacing: 0.04em;
   }
 
   .sim-order-level {
-    padding: 3px 10px;
+    padding: 3px 9px;
     border-radius: var(--shape-pill);
     background-color: var(--md-secondary-container);
     color: var(--md-on-secondary-container);
     font-family: var(--font-display);
-    font-size: 0.74rem;
+    font-size: 0.72rem;
     font-weight: 700;
+  }
+
+  .sim-order-bar-actions {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .sim-order-bar-actions .btn {
+    min-height: 32px;
+    padding: 6px 12px;
+    font-size: 0.78rem;
   }
 
   .sim-order-close {
     appearance: none;
     -webkit-appearance: none;
-    margin-left: auto;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    display: grid;
+    place-items: center;
     flex-shrink: 0;
+    border-radius: 999px;
     border: 1px solid var(--md-outline-variant);
     background-color: var(--md-surface-container-lowest);
     color: var(--md-on-surface-variant);
-    border-radius: var(--shape-pill);
-    padding: 4px 10px;
     font-family: var(--font-display);
-    font-size: 0.74rem;
+    font-size: 0.76rem;
     font-weight: 700;
     cursor: pointer;
     transition: background-color var(--dur-fast) var(--ease-standard),
@@ -3607,36 +3446,11 @@ main {
     outline-offset: 2px;
   }
 
-  .sim-order-summary {
-    margin: 0;
-    font-size: 0.85rem;
-    line-height: 1.45;
-    color: var(--md-on-surface);
-  }
-
-  .sim-order-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .sim-order-actions .btn {
-    min-height: 38px;
-    padding: 8px 14px;
-    font-size: 0.82rem;
-  }
-
   .sim-footer-note {
     margin: 0;
-    padding: 9px 13px;
-    border-radius: 14px;
-    background-color: color-mix(in srgb, var(--md-secondary-container) 42%, var(--md-surface-container));
-    border: 1px solid color-mix(in srgb, var(--md-outline-variant) 72%, transparent);
-    font-family: var(--font-mono);
-    font-size: 0.76rem;
-    font-weight: 600;
-    line-height: 1.45;
-    color: var(--md-on-surface);
+    font-size: 0.74rem;
+    line-height: 1.4;
+    color: var(--md-on-surface-variant);
     min-width: 0;
   }
 
@@ -3923,10 +3737,12 @@ main {
 [data-motion="calm"] .sim-solution-card,
 [data-motion="calm"] .sim-solution-icon,
 [data-motion="calm"] .sim-chip,
-[data-motion="calm"] .sim-toggle-btn,
+[data-motion="calm"] .sim-chip-data,
 [data-motion="calm"] .sim-profile-emblem,
 [data-motion="calm"] .sim-footer-note a,
 [data-motion="calm"] .sim-cost-range,
+[data-motion="calm"] .sim-order-bar,
+[data-motion="calm"] .sim-order-bar-actions .btn,
 [data-motion="calm"] .sim-order-close,
 [data-motion="calm"] .sim-shell .btn {
   transition-duration: 160ms !important;
@@ -3938,7 +3754,9 @@ main {
 [data-motion="calm"] .sim-solution-card[aria-pressed="true"] .sim-solution-icon,
 [data-motion="calm"] .sim-perspective-btn:active,
 [data-motion="calm"] .sim-chip:active,
-[data-motion="calm"] .sim-toggle-btn:active,
+[data-motion="calm"] .sim-chip-data:active,
+[data-motion="calm"] .sim-order-bar-actions .btn:hover,
+[data-motion="calm"] .sim-order-bar-actions .btn:active,
 [data-motion="calm"] .sim-order-close:hover,
 [data-motion="calm"] .sim-order-close:active,
 [data-motion="calm"] .sim-shell .btn:hover,
@@ -4014,7 +3832,9 @@ main {
   .sim-solution-card[aria-pressed="true"] .sim-solution-icon,
   .sim-perspective-btn:active,
   .sim-chip:active,
-  .sim-toggle-btn:active,
+  .sim-chip-data:active,
+  .sim-order-bar-actions .btn:hover,
+  .sim-order-bar-actions .btn:active,
   .sim-order-close:hover,
   .sim-order-close:active,
   .sim-shell .btn:hover,
