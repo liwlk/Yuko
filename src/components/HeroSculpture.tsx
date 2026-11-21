@@ -485,7 +485,7 @@ export default function HeroSculpture() {
         </svg>
       </figure>
       <div className="hero-art-caption">
-        <span>Desenvolvimento colaborativo · Revisão por 2+ profissionais</span>
+        <span>Desenvolvimento colaborativo · Revisão por 2+ pares</span>
         <a href="/extensoes/" className="studio-badge">
           Yuko Dev &amp; Make
         </a>

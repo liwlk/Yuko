@@ -22,7 +22,7 @@ const normalizedPath =
 
 const PAGE_ANCHORS: Record<string, Array<{ href: string; label: string }>> = {
   '/': [
-    { href: '#continuidade', label: 'Proteção & Continuidade' },
+    { href: '#continuidade', label: 'Continuidade na Prática' },
     { href: '#pilares', label: 'Como funciona' },
     { href: '#atuacao', label: 'Para quem é' },
     { href: '#manual', label: 'Manual v1.0' },
@@ -54,8 +54,8 @@ const resolvedAnchors = PAGE_ANCHORS[normalizedPath] ?? PAGE_ANCHORS['/'];
 
 const defaultSummary =
   variant === 'monument'
-    ? 'Comunidade brasileira de desenvolvedores que cria software sob medida para microempresas, com revisão em equipe e acompanhamento após o lançamento.'
-    : 'Comunidade brasileira que conecta desenvolvedores e microempresas para criar sistemas confiáveis e com suporte contínuo.';
+    ? 'Comunidade técnica brasileira em implantação gradual que cria sistemas sob medida para microempresas, com revisão por 2+ pares e suporte pelo período combinado.'
+    : 'Comunidade técnica em implantação gradual que conecta desenvolvedores e microempresas, com revisão por 2+ pares e suporte pelo período combinado.';
 
 const resolvedSummary = summary ?? defaultSummary;
 const isMonument = variant === 'monument';
@@ -116,7 +116,7 @@ const isMonument = variant === 'monument';
       <div class="footer-monument">
         <div class="footer-monument-head">
           <span class="footer-ref-kicker">
-            Comunidade Técnica Brasileira · Respaldo Coletivo
+            Comunidade Técnica Brasileira · Chancela Coletiva
           </span>
           <div class="footer-monument-logo">
             <img src="/assets/yuko-logo.jpg" alt="Marca Yuko" />
@@ -127,7 +127,7 @@ const isMonument = variant === 'monument';
 
         <div class="footer-monument-sub">
           <span class="footer-monument-tagline">
-            Ciclo Colaborativo e Entrega Assistida por Pares
+            Ciclo de Entrega Assistida e Revisão por 2+ Pares
           </span>
         </div>
       </div>

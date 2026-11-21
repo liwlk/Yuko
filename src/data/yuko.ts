@@ -165,13 +165,13 @@ export const SPLIT_SHORTCUTS: NavItem[] = [
 export const HERO_METRICS: HeroMetric[] = [
   { value: '6 Etapas', label: 'Do pedido ao suporte' },
   { value: '2+ Revisores', label: 'Conferência independente' },
-  { value: 'Zero abandono', label: 'Suporte garantido após a entrega' },
+  { value: '5 dias úteis', label: 'Troca assistida se houver ausência' },
 ];
 
 export const CONTINUITY_LENS_LABELS: Record<StageLensId, string> = {
   fluxo: 'Fluxo',
   rede: 'Rede',
-  blindagem: 'Blindagem',
+  blindagem: 'Respaldo',
 };
 
 export const CONTINUITY_STAGES: ContinuityStageItem[] = [
@@ -185,46 +185,46 @@ export const CONTINUITY_STAGES: ContinuityStageItem[] = [
     lensNotes: {
       fluxo: 'Escuta inicial em campo ou contato direto',
       rede: 'Demanda acolhida e registrada para a comunidade',
-      blindagem: 'Escopo enxuto com critérios claros de aceite',
+      blindagem: 'Escopo enxuto com critérios claros de aceitação',
     },
   },
   {
     index: 1,
     kicker: '02 · Centralização',
-    stageLabel: 'Código sempre acessível',
+    stageLabel: 'Código em espaço central',
     title: 'Nada preso no PC de uma pessoa',
     body: 'Código, acessos e mudanças ficam no espaço central do projeto, usando tecnologias conhecidas — sem prender a empresa.',
     defaultLens: 'rede',
     lensNotes: {
       fluxo: 'Infraestrutura padronizada e fácil de manter',
       rede: 'Discord (#projetos-ativos) e repositório compartilhado',
-      blindagem: 'Zero dados reais em testes · privacidade desde a base',
+      blindagem: 'Dados sintéticos (fictícios) em testes · foco em LGPD',
     },
   },
   {
     index: 2,
     kicker: '03 · Conferência',
     stageLabel: 'Olhar de 2+ pares',
-    title: 'Conferido por 2+ profissionais',
+    title: 'Conferido por 2+ revisores',
     body: 'Nenhuma entrega vai ao ar sozinha: pelo menos dois desenvolvedores revisam segurança, clareza e funcionamento.',
     defaultLens: 'blindagem',
     lensNotes: {
       fluxo: 'Aprovação coletiva antes de publicar',
       rede: '2+ revisores independentes na mesma entrega',
-      blindagem: 'Conferência contra falhas comuns e proteção LGPD',
+      blindagem: 'Revisão de segurança por pares e práticas de LGPD',
     },
   },
   {
     index: 3,
     kicker: '04 · Continuidade',
     stageLabel: 'Suporte e troca segura',
-    title: 'Suporte garantido contra abandono',
-    body: 'Cada entrega tem suporte nominal. Se houver ausência por 5 dias úteis, outro profissional assume sem perda.',
+    title: 'Suporte e troca em 5 dias úteis',
+    body: 'Há suporte nomeado no período combinado. Após 5 dias úteis sem retorno, registra-se vacância e outro par assume.',
     defaultLens: 'blindagem',
     lensNotes: {
-      fluxo: 'Guia direto de uso e suporte pós-entrega definido',
+      fluxo: 'Guia de uso e suporte no período combinado',
       rede: 'Passagem assistida de contexto entre membros no Discord',
-      blindagem: 'Regra anti-abandono em 5 dias úteis e suporte registrado',
+      blindagem: 'Regra dos 5 dias úteis, revogação de acessos e suporte nomeado',
     },
     ctaLabel: 'Ver papéis e continuidade →',
     ctaHref: '/ciclo/#papeis',
@@ -237,23 +237,23 @@ export const HOME_PILLARS: HomePillar[] = [
     href: '/extensoes/',
     title: 'Extensões & Frentes',
     description:
-      'Field, Dev, Make, Place, Work e Inline organizam cada entrega do começo ao fim — da conversa inicial à segurança dos seus dados.',
-    tag: 'Ver áreas e Discord →',
+      'As 6 extensões (Field, Dev, Make, Place, Work, Inline) e 6 frentes internas organizam o trabalho, da escuta inicial à governança.',
+    tag: 'Extensões e Discord →',
   },
   {
     variant: 'xl',
     href: '/ciclo/',
     title: 'Ciclo de Entrega Assistida',
     description:
-      'Todo pedido passa por 6 etapas claras: entendimento, combinado escrito, construção, conferência por 2+ desenvolvedores, testes e suporte garantido.',
-    tag: 'Ver as 6 etapas →',
+      'Após triagem, o Ciclo segue 6 etapas: entendimento, combinado escrito, construção, revisão por 2+ pares, testes e suporte nomeado no período combinado.',
+    tag: '6 etapas do Ciclo →',
   },
   {
     variant: 'soft',
     href: '/governanca/',
     title: 'Qualidade, Segurança & LGPD',
     description:
-      'Lista de conferência antes da entrega, proteção contra invasões, sigilo sobre o negócio, testes sem dados reais e respeito à LGPD (Lei Geral de Proteção de Dados).',
+      'Revisão de segurança por 2+ pares, verificação de dependências, sigilo, dados sintéticos (fictícios) e LGPD (Lei Geral de Proteção de Dados; não substitui assessoria jurídica).',
     tag: 'Ver qualidade e LGPD →',
   },
 ];
@@ -264,12 +264,12 @@ export const AUDIENCE_CARDS: AudienceCard[] = [
     badge: 'Microempresas Parceiras',
     title: 'Continuidade & Respaldo',
     description:
-      'Acaba com entregas sem explicação e o medo de ficar sem apoio: tudo tem combinado claro, conferência coletiva e suporte depois do lançamento.',
+      'Evita entregas sem explicação: há combinado claro, chancela coletiva sem vínculo nem responsabilidade solidária e responsabilidade individual de cada par.',
     bullets: [
-      'Conversa inicial sobre a rotina real via Yuko Field ou contato direto',
-      'Combinado enxuto deixando claro o que será entregue e como testar',
-      'Conferência por pelo menos 2 revisores independentes antes da entrega',
-      'Responsável de suporte com nome definido e sigilo de dados conforme a LGPD',
+      'Escuta e triagem: pedido pode ser recusado com orientação se desproporcional',
+      'Combinado (escopo escrito e testes) até a homologação (aprovação final)',
+      'Conferência por 2+ revisores independentes (chancela coletiva da comunidade)',
+      'Responsável de suporte nomeado no período combinado e cuidado com dados (LGPD)',
     ],
     ctaLabel: 'Ver as 6 etapas da entrega',
     ctaHref: '/ciclo/',
@@ -281,12 +281,12 @@ export const AUDIENCE_CARDS: AudienceCard[] = [
     badge: 'Desenvolvedores Independentes',
     title: 'Autonomia com Pares',
     description:
-      'Troque o trabalho isolado por uma rede colaborativa de revisão e apoio técnico no Discord — sem vínculo empregatício nem burocracia de empresa.',
+      'Troque o trabalho isolado pela rede técnica no Discord — sem vínculo empregatício, com responsabilidade profissional individual e troca aberta de guias.',
     bullets: [
-      'Liberdade para escolher tecnologias conhecidas e confiáveis',
-      'Revisão por 2+ pares antes de qualquer liberação ao cliente',
-      'Operação coordenada no Discord com fichas claras de acompanhamento',
-      'Reaproveitamento aberto de ferramentas, guias e boas práticas',
+      'Linter (padrão automático) e commits semânticos (histórico)',
+      'Revisão por 2+ pares e testes apenas com dados sintéticos (LGPD)',
+      'Registro em ficha (issue), envio (push) e transferência de contexto',
+      'Após 5 dias úteis sem resposta, há vacância e revogação dos acessos',
     ],
     ctaLabel: 'Ver padrões & ética',
     ctaHref: '/governanca/',
@@ -349,7 +349,7 @@ export const EXTENSIONS: ExtensionItem[] = [
   {
     name: 'Yuko Dev',
     description:
-      'Construção do sistema, organização técnica, trabalho em dupla e integração entre ferramentas.',
+      'Construção do sistema, organização técnica, revisão entre pares e integração entre ferramentas.',
     code: 'construção',
     tone: 'tonal-primary',
   },
@@ -363,7 +363,7 @@ export const EXTENSIONS: ExtensionItem[] = [
   {
     name: 'Yuko Place',
     description:
-      'Ponto de encontro da comunidade para eventos, acolhimento de novos membros e materiais compartilhados.',
+      'Espaço da comunidade para acolhimento, troca técnica e materiais compartilhados, em evolução gradual.',
     code: 'comunidade',
     tone: 'tonal-secondary',
   },
@@ -377,7 +377,7 @@ export const EXTENSIONS: ExtensionItem[] = [
   {
     name: 'Yuko Inline',
     description:
-      'Automações internas e ferramentas de apoio que facilitam o trabalho diário da comunidade.',
+      'Automações internas e scripts de apoio, em evolução gradual, para os projetos da comunidade.',
     code: 'automações',
     tone: 'tonal-tertiary',
   },
@@ -392,7 +392,7 @@ export const FRONTS: FrontItem[] = [
   {
     title: 'Tecnologia e Desenvolvimento',
     description:
-      'Escrita do sistema, escolha cuidadosa de tecnologias conhecidas e confiáveis, automações e publicação segura.',
+      'Escrita do sistema, escolha cuidadosa de tecnologias conhecidas e confiáveis, automações e publicação revisada.',
   },
   {
     title: 'Inteligência e Avaliação',
@@ -402,7 +402,7 @@ export const FRONTS: FrontItem[] = [
   {
     title: 'Gestão e Colaboração Multidisciplinar',
     description:
-      'Sintonia entre quem programa, quem cuida da facilidade de uso, servidores e suporte contínuo.',
+      'Sintonia entre quem programa, quem cuida das telas, infraestrutura e suporte combinado.',
   },
   {
     title: 'Integridade Informacional',
@@ -451,21 +451,21 @@ export const CYCLE_STAGES: CycleStage[] = [
   {
     title: '1. Pedido & Prioridade',
     description:
-      'O pedido chega pela conversa com a área Yuko Field ou contato direto. Avaliamos se atende bem ao negócio e se há equipe disponível.',
+      'O pedido entra via Yuko Field ou contato direto. Pedidos desproporcionais não são atendidos; podem ser recusados ou repriorizados, com orientação.',
     code: 'etapa 01 · viabilidade',
     tone: 'tonal-primary',
   },
   {
     title: '2. Combinado & Escopo',
     description:
-      'Quem vai executar transforma o pedido em um combinado enxuto, com regras claras para a empresa aprovar a entrega.',
+      'O executor registra um combinado (escopo escrito) com critérios de aceitação (condições para considerar a entrega pronta).',
     code: 'etapa 02 · combinado',
     tone: 'default',
   },
   {
     title: '3. Construção Organizada',
     description:
-      'O sistema é construído em espaço central, com histórico organizado de alterações e anotações simples para outros membros acompanharem.',
+      'Código em repositório central com ficha de acompanhamento (issue de registro), linter (padrão automático) e commits semânticos (mensagens padronizadas).',
     code: 'etapa 03 · construção',
     tone: 'default',
   },
@@ -479,14 +479,14 @@ export const CYCLE_STAGES: CycleStage[] = [
   {
     title: '5. Testes antes do Ar',
     description:
-      'Testamos funcionamento, uso no celular, velocidade e integridade em um ambiente de testes separado antes de liberar para a empresa.',
+      'Testamos funcionamento, celular e velocidade em ambiente de testes (staging), com dados sintéticos (fictícios), antes da liberação.',
     code: 'etapa 05 · testes',
     tone: 'default',
   },
   {
     title: '6. Entrega & Suporte',
     description:
-      'Aprovação final junto à microempresa e início do período de suporte com um responsável técnico registrado.',
+      'Homologação (aprovação final pela microempresa) e início do suporte por responsável nomeado, pelo período combinado.',
     code: 'etapa 06 · liberação',
     tone: 'tonal-tertiary',
   },
@@ -531,7 +531,7 @@ export const ROLES: RoleItem[] = [
   {
     title: 'Responsável de Suporte',
     description:
-      'Acompanha a estabilização após o lançamento, corrige ajustes imediatos e cuida do sistema no período combinado.',
+      'Profissional nomeado na entrega para acompanhar a estabilização, fazer ajustes iniciais e apoiar no período combinado.',
     tone: 'tonal-secondary',
   },
 ];
@@ -540,27 +540,27 @@ export const CONTINUITY_RULES: ContinuityRule[] = [
   {
     title: 'Transição Obrigatória de Contexto',
     description:
-      'Antes de se afastar, o participante envia todo o código para o espaço central e registra tarefas, decisões e pendências. É proibido reter código ou senhas apenas no computador pessoal.',
+      'Na transferência de contexto antes de se afastar, o participante faz o envio (push) do código ao repositório central e registra pendências. É proibido reter código ou senhas apenas no computador pessoal.',
     tone: 'default',
   },
   {
-    title: 'Abandono (5 dias úteis) & Proteção',
+    title: 'Regra de Vacância (5 dias úteis)',
     description:
-      'Após 5 dias úteis sem resposta nem justificativa, registra-se a vaga aberta na ficha de acompanhamento, os acessos são bloqueados e outro par assume imediatamente para proteger a microempresa.',
+      'Após 5 dias úteis sem resposta nem justificativa, registra-se a vacância na ficha de acompanhamento, os acessos são revogados e outro par assume a continuidade.',
     tone: 'tonal-tertiary',
   },
 ];
 
 export const REGISTRY_COL_A: string[] = [
-  'Código único do pedido na ficha oficial de acompanhamento;',
-  'O que foi combinado entregar e critérios de aprovação validados;',
+  'Código do pedido na ficha de acompanhamento (issue de registro);',
+  'O que foi combinado e critérios de aceitação validados;',
   'Nomes de quem vai executar e dos 2+ revisores;',
 ];
 
 export const REGISTRY_COL_B: string[] = [
-  'Nome completo do responsável pelo suporte após a entrega;',
-  'Aprovações registradas na conferência por 2+ pares;',
-  'Datas, endereço do código e guia de transição.',
+  'Responsável de suporte nomeado e período combinado;',
+  'Aprovações registradas na revisão por 2+ pares;',
+  'Datas, repositório central e guia de transição.',
 ];
 
 /* ==========================================================================
@@ -568,21 +568,21 @@ export const REGISTRY_COL_B: string[] = [
    ========================================================================== */
 
 export const DOD_ITEMS: string[] = [
-  'Combinado inicial testado e funcionando na prática;',
-  'Histórico organizado de alterações salvo no espaço central;',
-  'Conferência por 2+ pares devidamente registrada;',
+  'Combinado testado com dados sintéticos (fictícios);',
+  'Commits semânticos (histórico claro) no repositório;',
+  'Revisão por 2+ pares na ficha (issue de registro);',
   'Guia básico de uso entregue para a microempresa;',
-  'Sem falhas graves ou riscos de segurança abertos.',
+  'Sem falhas graves conhecidas de segurança em aberto.',
 ];
 
 export const STACK_ITEMS: IdentityItem[] = [
   {
     title: 'Padronização de Código',
-    description: 'regras automáticas de limpeza e organização salvas junto ao projeto.',
+    description: 'uso de linter (padronização automática de código) salvo junto ao projeto.',
   },
   {
     title: 'Histórico Organizado',
-    description: 'cada alteração (novidade, correção, ajuste ou guia) fica marcada e ligada à ficha do projeto.',
+    description: 'commits semânticos (mensagens padronizadas por tipo de mudança) ligados à ficha do projeto.',
   },
   {
     title: 'Tecnologias Conhecidas',
@@ -590,28 +590,28 @@ export const STACK_ITEMS: IdentityItem[] = [
   },
   {
     title: 'Bancos de Dados Estáveis',
-    description: 'PostgreSQL, MySQL/MariaDB ou SQLite para guardar dados com segurança.',
+    description: 'PostgreSQL, MySQL/MariaDB ou SQLite para guardar dados com integridade.',
   },
 ];
 
 export const SECURITY_CARDS: SecurityCard[] = [
   {
-    title: 'Prevenção de Invasões',
+    title: 'Validação de Entradas',
     description:
-      'Protegemos formulários contra invasões, comandos e códigos maliciosos.',
-    code: 'proteção ativa',
+      'Revisão de segurança contra falhas comuns de entrada em formulários e rotas.',
+    code: 'revisão 2+ pares',
   },
   {
     title: 'Senhas & Chaves Seguras',
     description:
-      'Senhas e chaves nunca ficam no código público; conexões sempre criptografadas (HTTPS) e senhas protegidas (Argon2 ou bcrypt).',
-    code: 'https & senhas seguras',
+      'Segredos fora do código-fonte, tráfego sob HTTPS (conexão cifrada) e hash de senhas (Argon2 ou bcrypt) no banco de dados.',
+    code: 'https & hash de senhas',
   },
   {
     title: 'Checagem & Sigilo',
     description:
-      'Verificação contínua das ferramentas usadas, controle responsável de acessos e sigilo sobre os dados da microempresa.',
-    code: 'auditoria contínua',
+      'Verificação de dependências (bibliotecas de terceiros), controle de acessos por papel e sigilo sobre dados da empresa.',
+    code: 'checagem de pacotes',
   },
 ];
 
@@ -619,20 +619,20 @@ export const LGPD_ITEMS: IdentityItem[] = [
   {
     title: 'Quem responde pelo quê',
     description:
-      'Sua microempresa atua como Controladora (dona das decisões sobre os dados) e os desenvolvedores atuam como Operadores técnicos (seguem suas instruções).',
+      'a microempresa é a Controladora (decide sobre os dados); o desenvolvedor atua como Operador (segue instruções dela). Não substitui assessoria jurídica.',
   },
   {
     title: 'Só o essencial',
-    description: 'coleta mínima de informações, apenas o estritamente necessário para o sistema funcionar.',
+    description: 'sistema estruturado pensando na LGPD, com coleta mínima — apenas dados necessários ao funcionamento.',
   },
   {
     title: 'Testes sem dados reais',
-    description: 'durante a criação e os testes, usamos apenas dados fictícios ou mascarados — nunca dados reais de clientes.',
+    description: 'na criação e nos testes usamos dados sintéticos (fictícios ou mascarados), sem expor dados reais de clientes.',
   },
   {
-    title: 'Direitos & Avisos Rápidos',
+    title: 'Titular & Incidentes',
     description:
-      'facilidade para a pessoa dona dos dados (titular) pedir cópia ou exclusão, e aviso rápido à empresa em caso de problema, registrado de forma restrita.',
+      'recursos para o titular (dono dos dados) pedir acesso ou exclusão, e comunicação à empresa em caso de incidente, com registro restrito.',
   },
 ];
 
@@ -653,7 +653,7 @@ export const CONFLICT_STEPS: IdentityItem[] = [
 
 export const CONFLICT_PRINCIPLE: IdentityItem = {
   title: 'Autonomia',
-  description: 'cada participante responde pelos seus próprios atos profissionais.',
+  description: 'cada participante responde pelos próprios atos profissionais, sem vínculo.',
 };
 
 /* ==========================================================================
@@ -882,10 +882,10 @@ export const SIMULATOR_SOLUTIONS: SimulatorSolutionCard[] = [
     categoryDescription: 'Crie ou melhore seu site e fortaleça sua presença digital.',
     profileTitle: 'Presença com Respaldo',
     profileBadge: 'Acolhimento Digital',
-    shortSummary: 'Negócio no ar, rápido e no seu domínio.',
-    clientShortSummary: 'Horários, serviços e WhatsApp oficial em segundos.',
+    shortSummary: 'Negócio no ar, leve, rápido e acessível.',
+    clientShortSummary: 'Horários, serviços e contato oficial em poucos toques.',
     humanSummary:
-      'Seu negócio no ar com contato direto, rápido no celular e domínio no seu nome.',
+      'Seu negócio no ar com contato direto, leitura clara e acesso rápido no celular.',
     clientProfileHook:
       'Horários, serviços e WhatsApp oficial com acesso rápido e seguro no celular.',
     extensions: ['Yuko Field', 'Yuko Make', 'Yuko Dev', 'Yuko Work'],
@@ -921,7 +921,7 @@ export const SIMULATOR_SOLUTIONS: SimulatorSolutionCard[] = [
     profileTitle: 'Rotina Leve & Segura',
     profileBadge: 'Gestão Central',
     shortSummary: 'Clientes, ordens e estoque em um só lugar.',
-    clientShortSummary: 'Atendimento ágil com histórico sempre à mão.',
+    clientShortSummary: 'Atendimento ágil com histórico organizado à mão.',
     humanSummary:
       'Clientes, ordens ou estoque em um só lugar, substituindo planilhas soltas.',
     clientProfileHook:
@@ -940,11 +940,11 @@ export const SIMULATOR_SOLUTIONS: SimulatorSolutionCard[] = [
     profileTitle: 'Operação Conectada',
     profileBadge: 'Ponte Enxuta',
     shortSummary: 'Conecta formulários, planilhas e avisos sem retrabalho.',
-    clientShortSummary: 'Confirmação imediata e respostas consistentes a cada pedido.',
+    clientShortSummary: 'Confirmação rápida e respostas consistentes a cada pedido.',
     humanSummary:
       'Liga formulário, planilha e avisos da equipe para acabar com o retrabalho manual.',
     clientProfileHook:
-      'Confirmação imediata e respostas consistentes assim que você envia um pedido.',
+      'Confirmação rápida e respostas consistentes após o envio do seu pedido.',
     extensions: ['Yuko Field', 'Yuko Inline', 'Yuko Dev', 'Yuko Work'],
     discordChannel: '#conhecimento-tecnico',
     baseDaysMin: 5,
@@ -955,15 +955,15 @@ export const SIMULATOR_SOLUTIONS: SimulatorSolutionCard[] = [
   {
     id: 'casa-em-ordem',
     shortTitle: 'Segurança & LGPD',
-    categoryDescription: 'Proteja informações, acessos e práticas de tratamento de dados.',
-    profileTitle: 'Base Protegida (LGPD)',
+    categoryDescription: 'Organize acessos pensando na LGPD; não substitui assessoria jurídica.',
+    profileTitle: 'Base Organizada (LGPD)',
     profileBadge: 'Cuidado & Sigilo',
-    shortSummary: 'Senhas, cópias de segurança e coleta sob LGPD.',
-    clientShortSummary: 'Dados protegidos, acesso restrito e coleta mínima.',
+    shortSummary: 'Coleta mínima e dados sintéticos pensando na LGPD.',
+    clientShortSummary: 'Coleta mínima, acesso restrito e direitos dos titulares.',
     humanSummary:
-      'Organiza senhas, cópias de segurança e coleta de dados conforme a LGPD.',
+      'Projetado para LGPD (controladora e operador); não substitui assessoria jurídica.',
     clientProfileHook:
-      'Seus dados ficam protegidos, com acesso restrito e sem coleta desnecessária.',
+      'Acesso restrito, coleta mínima, dados sintéticos em testes e respeito aos titulares.',
     extensions: ['Yuko Field', 'Yuko Dev', 'Yuko Work', 'Yuko Place'],
     discordChannel: '#conhecimento-tecnico',
     baseDaysMin: 5,
@@ -978,12 +978,12 @@ export const SIMULATOR_SOLUTIONS: SimulatorSolutionCard[] = [
       'Recupere ou estabilize soluções digitais que apresentam problemas ou precisam de continuidade.',
     profileTitle: 'Retomada Assistida',
     profileBadge: 'Continuidade Ativa',
-    shortSummary: 'Retoma o sistema parado com suporte contínuo.',
-    clientShortSummary: 'Serviço estável de volta, sem novas interrupções.',
+    shortSummary: 'Retoma o sistema com suporte no período combinado.',
+    clientShortSummary: 'Serviço estável de volta com acompanhamento técnico.',
     humanSummary:
-      'Retoma seu sistema parado, coloca tudo em espaço central e garante suporte contínuo.',
+      'Retoma o sistema no repositório central, com responsável de suporte pelo período combinado.',
     clientProfileHook:
-      'O serviço volta a funcionar de forma estável, sem interrupções para você.',
+      'O serviço volta a funcionar de forma estável, com suporte no período combinado.',
     extensions: ['Yuko Field', 'Yuko Dev', 'Yuko Work', 'Yuko Inline'],
     discordChannel: '#projetos-ativos',
     baseDaysMin: 7,
@@ -998,9 +998,9 @@ export const SIMULATOR_DEV_PROFILES: Record<SimulatorDevRole, SimulatorDevProfil
     label: 'Executar',
     profileTitle: 'Par Executor em Rede',
     profileBadge: 'Autonomia & Ficha',
-    shortSummary: 'Acorda por escrito e constrói no espaço central.',
+    shortSummary: 'Faz combinado escrito e constrói no espaço central.',
     humanSummary:
-      'Fecha o acordo por escrito e constrói tudo no espaço central compartilhado.',
+      'Registra o combinado por escrito e constrói no repositório central.',
   },
   revisor: {
     label: 'Revisar 2+',
@@ -1008,14 +1008,14 @@ export const SIMULATOR_DEV_PROFILES: Record<SimulatorDevRole, SimulatorDevProfil
     profileBadge: 'Olhar Independente',
     shortSummary: 'Valida segurança, LGPD e clareza antes de publicar.',
     humanSummary:
-      'Valida segurança, LGPD e clareza com outro colega antes de liberar.',
+      'Valida segurança, LGPD e clareza junto a outro revisor (2+ pares).',
   },
   suporte: {
     label: 'Apoiar',
     profileTitle: 'Referência de Continuidade',
     profileBadge: 'Pós-Entrega Ativo',
-    shortSummary: 'Acompanha em produção e garante continuidade em ausências.',
+    shortSummary: 'Acompanha em produção no período combinado e apoia transições.',
     humanSummary:
-      'Acompanha o sistema no ar e garante transição segura se houver ausência.',
+      'Acompanha o sistema no período combinado e apoia a transição em ausências.',
   },
 };

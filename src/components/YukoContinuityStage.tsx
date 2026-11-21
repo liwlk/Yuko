@@ -860,10 +860,10 @@ export default function YukoContinuityStage({
               <div className="stage-intro">
                 <span className="stage-kicker">Respaldo na Prática</span>
                 <h2 id={headingId} className="stage-title">
-                  Por que nenhum projeto fica na mão
+                  Como preservamos a continuidade
                 </h2>
                 <p className="stage-lead">
-                  Código centralizado, revisão por 2+ profissionais e troca segura sem deixar a empresa parada.
+                  Código centralizado, revisão por 2+ pares e transferência assistida após 5 dias úteis sem retorno.
                 </p>
               </div>
 

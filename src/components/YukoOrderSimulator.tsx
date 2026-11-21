@@ -278,13 +278,13 @@ function buildHiddenOrderRecord(params: {
     situation === 'zero' ? 'Do zero' : situation === 'existente' ? 'Evoluir' : 'Resgatar';
 
   const lgpdSummary = involvesClientData
-    ? 'Ativa (empresa como Controladora, coleta mínima e testes exclusivos com dados fictícios)'
-    : 'Informações públicas (sem coleta sensível e testes exclusivos com dados fictícios)';
+    ? 'estrutura pensada para a LGPD (empresa como controladora, dev como operador), coleta mínima, direitos dos titulares e testes com dados sintéticos (não substitui assessoria jurídica)'
+    : 'informações públicas, sem coleta sensível prevista e testes com dados sintéticos (não substitui assessoria jurídica)';
 
   if (perspective === 'cliente') {
     const clientLgpdSummary = involvesClientData
-      ? 'Seus dados ficam protegidos com coleta mínima, sigilo LGPD e testes apenas com exemplos fictícios.'
-      : 'Sem exigir cadastro extra nem expor seu contato.';
+      ? 'estrutura pensada para a LGPD, com coleta mínima, direitos dos titulares e testes apenas com dados sintéticos (não substitui assessoria jurídica).'
+      : 'sem exigir cadastro extra nem expor seu contato.';
     const rescueTag =
       situation === 'resgate' && solution.id !== 'resgate-sistema' ? ' · Retomada' : '';
 
@@ -292,10 +292,10 @@ function buildHiddenOrderRecord(params: {
       `INDICAÇÃO DE EXPERIÊNCIA · ${orderCode}`,
       `Experiência sugerida: ${profile.title} (${profile.badge})`,
       `Benefício para quem usa: ${solution.clientProfileHook}`,
-      `Solução indicada: ${solution.shortTitle} · Alcance ${scopeLabel}${rescueTag}`,
+      `Categoria do pedido: ${solution.shortTitle} · Alcance ${scopeLabel}${rescueTag}`,
       `Ritmo estimado: ${estimate.deadlineFull}`,
       `Cuidado com os dados: ${clientLgpdSummary}`,
-      'Conferência de qualidade: validada por 2+ profissionais independentes antes de ir ao ar, com suporte após a entrega.',
+      'Conferência de qualidade: entrega revisada por 2+ pares independentes, com responsável de suporte pelo período combinado.',
       `Onde conversar: Discord Yuko (${solution.discordChannel}) · Manual v1.0`,
     ].join('\n');
   }
@@ -306,15 +306,15 @@ function buildHiddenOrderRecord(params: {
       `FICHA DE ATUAÇÃO NA REDE · ${orderCode}`,
       `Papel escolhido: ${devMeta.label} — ${profile.title} (${profile.badge})`,
       `Atuação: ${devMeta.humanSummary}`,
-      `Frente: ${solution.shortTitle} · ${scopeLabel} · ${situationLabel}`,
-      `Nível da entrega: ${estimate.costLevelTitle} (Piso: ${estimate.costFloorLabel} → Teto: ${estimate.costCeilingLabel})`,
+      `Categoria do pedido: ${solution.shortTitle} · ${scopeLabel} · ${situationLabel}`,
+      `Estimativa indicativa: ${estimate.costLevelTitle} (Piso: ${estimate.costFloorLabel} → Teto: ${estimate.costCeilingLabel}; valores definidos no combinado)`,
       `Ritmo estimado: ${estimate.deadlineFull}`,
-      `Áreas Yuko: ${solution.extensions.join(' · ')}`,
+      `Extensões Yuko: ${solution.extensions.join(' · ')}`,
       `Canal Discord: ${solution.discordChannel}`,
-      'Revisão por pares: obrigatória por 2+ desenvolvedores independentes antes da publicação.',
-      `Proteção LGPD: ${lgpdSummary}`,
-      'Regra de 5 dias úteis: código e histórico ficam no espaço central; após 5 dias úteis sem resposta nem aviso, a vaga abre na ficha para continuidade sem perda.',
-      'Manual v1.0: participação comunitária sem vínculo empregatício; condições comerciais e valores finais são combinados em contrato direto entre as partes.',
+      'Padrões e revisão: ficha (issue) obrigatória, linter, commits semânticos e revisão por 2+ pares independentes antes da liberação.',
+      `LGPD: ${lgpdSummary}`,
+      'Regra dos 5 dias úteis: envio (push) e transferência de contexto no repositório central; após 5 dias úteis sem resposta nem justificativa, registra-se vacância, os acessos são revogados e outro participante assume.',
+      'Manual v1.0: participação sem vínculo empregatício nem responsabilidade solidária (cada participante responde por seus atos); condições e valores são definidos em acordo bilateral autônomo.',
     ].join('\n');
   }
 
@@ -323,15 +323,15 @@ function buildHiddenOrderRecord(params: {
     'Origem: Empresa',
     `Perfil associado: ${profile.title} (${profile.badge})`,
     `Resumo: ${solution.humanSummary}`,
-    `Frente solicitada: ${solution.shortTitle} · ${scopeLabel} · ${situationLabel}`,
-    `Nível de custo: ${estimate.costLevelTitle} (Piso: ${estimate.costFloorLabel} → Teto: ${estimate.costCeilingLabel}, sem valor fechado prévio)`,
+    `Categoria do pedido: ${solution.shortTitle} · ${scopeLabel} · ${situationLabel}`,
+    `Estimativa indicativa: ${estimate.costLevelTitle} (Piso: ${estimate.costFloorLabel} → Teto: ${estimate.costCeilingLabel}; valores definidos no combinado)`,
     `Ritmo estimado: ${estimate.deadlineFull}`,
-    `Áreas Yuko: ${solution.extensions.join(' · ')}`,
+    `Extensões Yuko: ${solution.extensions.join(' · ')}`,
     `Canal Discord: ${solution.discordChannel}`,
-    'Rede de entrega: 4+ membros (1 executor, 2+ revisores independentes e 1 responsável de suporte)',
-    `Proteção LGPD: ${lgpdSummary}`,
-    'Continuidade (regra de 5 dias úteis): código e histórico ficam no espaço central; após 5 dias úteis sem resposta nem aviso, outro profissional assume sem perda.',
-    'Ressalva Manual v1.0: participação comunitária sem vínculo empregatício; condições comerciais e valores finais são combinados apenas em contrato direto entre as partes após a escuta.',
+    'Rede do ciclo: executor, 2+ revisores independentes e responsável de suporte',
+    `LGPD: ${lgpdSummary}`,
+    'Continuidade (regra dos 5 dias úteis): envio (push) e transferência de contexto ficam no repositório central; após 5 dias úteis sem resposta nem justificativa, registra-se vacância, os acessos são revogados e outro participante assume.',
+    'Triagem e Manual v1.0: após o envio, o pedido passa por triagem e pode ser recusado ou repriorizado com orientação (demandas desproporcionais não são atendidas). Chancela coletiva sem vínculo nem responsabilidade solidária (cada participante responde por seus atos); condições e valores são definidos em combinado direto e acordo bilateral autônomo.',
   ].join('\n');
 }
 
@@ -747,8 +747,8 @@ export default function YukoOrderSimulator({
         new CustomEvent('yuko:toast', {
           detail: {
             message: copied
-              ? `${recordNoun} ${orderCode} pronta e copiada para o Discord.`
-              : `${recordNoun} ${orderCode} gerada. Abra o Discord para iniciar.`,
+              ? `${recordNoun} ${orderCode} copiada para triagem no Discord.`
+              : `${recordNoun} ${orderCode} gerada. Envie no Discord para triagem.`,
           },
         })
       );
@@ -783,7 +783,7 @@ export default function YukoOrderSimulator({
         : devRole === 'revisor'
           ? '2+ revisores'
           : 'Apoio · 5d'
-      : '4+ pessoas';
+      : '1 + 2 pares';
 
   const primaryCtaLabel =
     perspective === 'empresa'
@@ -931,7 +931,7 @@ export default function YukoOrderSimulator({
                       disabled={isDisabled}
                       aria-pressed={isActive}
                       className={`sim-chip${isActive ? ' is-active' : ''}`}
-                      title={isDisabled ? 'Resgate atua sempre no modo Resgatar' : undefined}
+                      title={isDisabled ? 'A categoria Resgate usa o modo Resgatar' : undefined}
                       onClick={() => setSituation(opt.id)}
                     >
                       {opt.label}
@@ -1121,7 +1121,7 @@ export default function YukoOrderSimulator({
             )}
 
             <p className="sim-footer-note">
-              Sem taxas ocultas · <a href="/manual/">Manual v1.0 ↗</a>
+              Faixa indicativa · <a href="/manual/">Manual v1.0 ↗</a>
             </p>
           </section>
         </div>
