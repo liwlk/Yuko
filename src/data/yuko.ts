@@ -822,3 +822,408 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
       'Envio obrigatório do código e anotações antes de qualquer afastamento; após 5 dias úteis sem resposta nem justificativa, a ficha registra vacância e outro colega assume na hora.',
   },
 ];
+
+/* ==========================================================================
+   Simulador Prático de Pedido & Atuação na Yuko (#simulador)
+   ========================================================================== */
+
+export type SimulatorPerspective = 'empresa' | 'desenvolvedor';
+export type SimulatorScopeSize = 'essencial' | 'completo';
+export type SimulatorSituation = 'zero' | 'existente' | 'resgate';
+export type SimulatorDevRole = 'executor' | 'revisor' | 'suporte';
+export type SimulatorSolutionId =
+  | 'site-presenca'
+  | 'agenda-pedidos'
+  | 'cadastro-rotina'
+  | 'automacao-ferramentas'
+  | 'casa-em-ordem'
+  | 'resgate-sistema';
+
+export interface SimulatorSolutionItem {
+  id: SimulatorSolutionId;
+  title: string;
+  shortTag: string;
+  popularSummary: string;
+  clientDeliverable: string;
+  devFocus: string;
+  extensions: string[];
+  discordFocus: string;
+  baseDaysMin: number;
+  baseDaysMax: number;
+  basePriceMin: number;
+  basePriceMax: number;
+  clientNeeds: string[];
+  runningNote: string;
+  teamSummary: string;
+}
+
+export interface SimulatorStageBlueprint {
+  step: number;
+  title: string;
+  extensionTag: string;
+  discordChannel: string;
+  empresaAction: string;
+  devActionByRole: Record<SimulatorDevRole, string>;
+  manualRule: string;
+  manualHref: string;
+  manualLinkLabel: string;
+}
+
+export interface SimulatorStressScenario {
+  id: 'ausencia' | 'dados-reais';
+  buttonLabel: string;
+  alertTitle: string;
+  responseText: string;
+  guaranteeBadge: string;
+  ruleHref: string;
+  ruleLabel: string;
+}
+
+export const SIMULATOR_EXTENSION_LABELS: Record<string, string> = {
+  'Yuko Field': 'Yuko Field (escuta)',
+  'Yuko Make': 'Yuko Make (telas)',
+  'Yuko Dev': 'Yuko Dev (construção)',
+  'Yuko Work': 'Yuko Work (organização)',
+  'Yuko Inline': 'Yuko Inline (automações)',
+  'Yuko Place': 'Yuko Place (comunidade)',
+  Governança: 'Qualidade & LGPD',
+};
+
+export const SIMULATOR_SOLUTIONS: SimulatorSolutionItem[] = [
+  {
+    id: 'site-presenca',
+    title: 'Site da Empresa & Presença Segura',
+    shortTag: 'Vitrine & Contato',
+    popularSummary:
+      'Página clara da microempresa para ser encontrada na internet, apresentar serviços e receber contatos no WhatsApp ou formulário protegido.',
+    clientDeliverable:
+      'Site rápido no celular e no computador, com cadeado de segurança (HTTPS), formulário protegido contra mensagens automáticas indesejadas, guia simples de edição e acessos no nome da empresa.',
+    devFocus:
+      'Montar telas leves e acessíveis com tecnologia conhecida e segura, registrar cada mudança na ficha de acompanhamento e validar tudo em ambiente separado de testes antes da entrega.',
+    extensions: ['Yuko Field', 'Yuko Make', 'Yuko Dev', 'Yuko Work'],
+    discordFocus: '#projetos-ativos (Operacionais e de Projetos) · #conhecimento-tecnico',
+    baseDaysMin: 5,
+    baseDaysMax: 10,
+    basePriceMin: 1200,
+    basePriceMax: 2600,
+    clientNeeds: [
+      'Logotipo, fotos reais do negócio ou autorização para usar imagens livres;',
+      'Textos simples com endereço, horário de atendimento e principais serviços;',
+      'Acesso ao nome do site (domínio) em conta da própria microempresa;',
+      'Nenhuma lista real de clientes para testes — usamos apenas informações inventadas de exemplo.',
+    ],
+    runningNote:
+      'Após ir ao ar, o endereço oficial segue com cadeado de segurança (HTTPS), cópias de segurança periódicas e pessoa definida para o suporte para ajustes iniciais.',
+    teamSummary:
+      '1 desenvolvedor executor organiza e constrói, pelo menos 2 revisores conferem clareza e segurança, e 1 responsável de suporte acompanha os primeiros dias.',
+  },
+  {
+    id: 'agenda-pedidos',
+    title: 'Agenda & Pedidos sem Confusão',
+    shortTag: 'Horários & Pedidos',
+    popularSummary:
+      'Sistema direto para marcar horários, registrar pedidos do dia a dia e avisar cliente e equipe sem perder recados em conversas soltas.',
+    clientDeliverable:
+      'Painel simples de agenda e pedidos funcionando no celular, com senhas protegidas, registro apenas dos dados necessários e treinamento prático para a equipe usar no balcão.',
+    devFocus:
+      'Desenhar fluxo enxuto com rascunhos visuais aprovados antes, construir em espaço central com tecnologia conhecida e segura e testar cada regra com informações inventadas de exemplo.',
+    extensions: ['Yuko Field', 'Yuko Make', 'Yuko Dev', 'Yuko Work'],
+    discordFocus: '#projetos-ativos (Operacionais e de Projetos)',
+    baseDaysMin: 10,
+    baseDaysMax: 20,
+    basePriceMin: 2800,
+    basePriceMax: 5400,
+    clientNeeds: [
+      'Regras reais de horário, duração dos atendimentos e forma de confirmação;',
+      'Lista dos campos estritamente necessários no pedido (sem pedir dados extras sem motivo);',
+      'Definição de quem da empresa será a pessoa dona das decisões sobre os dados (Controladora);',
+      'Exemplos inventados de serviços e horários para validar o ambiente separado de testes.',
+    ],
+    runningNote:
+      'A empresa continua dona do cadastro e das regras, com rotina de cópia de segurança e responsável de suporte registrado para ajustes rápidos.',
+    teamSummary:
+      '1 executor conduz o combinado e a construção, 2+ revisores independentes checam proteção contra falhas e LGPD, e 1 responsável de suporte acompanha a estabilização.',
+  },
+  {
+    id: 'cadastro-rotina',
+    title: 'Cadastro & Controle da Rotina',
+    shortTag: 'Gestão Interna',
+    popularSummary:
+      'Organiza clientes, serviços, estoque ou tarefas internas em um único lugar seguro, substituindo planilhas espalhadas e cadernos.',
+    clientDeliverable:
+      'Sistema interno com controle de quem pode ver ou editar cada área, busca rápida, histórico de alterações importantes, guia de uso e lista de conferência final validada.',
+    devFocus:
+      'Estruturar banco de informações estável com tecnologia conhecida e segura, separar acessos por perfil, manter registro organizado das mudanças e passar por conferência dupla de segurança.',
+    extensions: ['Yuko Field', 'Yuko Make', 'Yuko Dev', 'Yuko Work', 'Yuko Place'],
+    discordFocus: '#projetos-ativos (Operacionais e de Projetos) · #conhecimento-tecnico',
+    baseDaysMin: 15,
+    baseDaysMax: 28,
+    basePriceMin: 3800,
+    basePriceMax: 7800,
+    clientNeeds: [
+      'Modelo das planilhas ou fichas usadas hoje (em branco ou com informações inventadas de exemplo);',
+      'Definição clara de quem pode cadastrar, alterar ou apagar registros na empresa;',
+      'Regras para atender pedidos de cópia ou exclusão de dados quando uma pessoa solicitar (LGPD);',
+      'Disponibilidade para aprovar cada etapa no ambiente separado de testes.',
+    ],
+    runningNote:
+      'Inclui rotina combinada de cópias de segurança, cadeado de segurança (HTTPS), registro de acessos e guia de transição para que a empresa nunca fique refém de uma pessoa.',
+    teamSummary:
+      'Trabalho coordenado na ficha de acompanhamento: 1 executor, 2+ revisores obrigatórios focados em segurança e clareza, e 1 responsável de suporte pós-entrega.',
+  },
+  {
+    id: 'automacao-ferramentas',
+    title: 'Conexão entre Ferramentas & Automações',
+    shortTag: 'Menos Retrabalho',
+    popularSummary:
+      'Liga formulários, planilhas, alertas e sistemas que a empresa já usa para evitar digitar a mesma informação duas vezes.',
+    clientDeliverable:
+      'Rotina automática testada com avisos de falha, senhas e códigos de ligação guardados em cofre seguro (fora do programa), painel ou registro simples de execução e manual direto de manutenção.',
+    devFocus:
+      'Usar tecnologia conhecida e segura para conectar ferramentas com menor dependência externa possível, proteger senhas e códigos de ligação guardados em cofre seguro (fora do programa) e validar cenários de erro no ambiente separado de testes.',
+    extensions: ['Yuko Field', 'Yuko Inline', 'Yuko Dev', 'Yuko Work'],
+    discordFocus: '#projetos-ativos (Operacionais e de Projetos) · #conhecimento-tecnico',
+    baseDaysMin: 5,
+    baseDaysMax: 14,
+    basePriceMin: 1500,
+    basePriceMax: 3600,
+    clientNeeds: [
+      'Lista das ferramentas atuais e de quais dados realmente precisam passar de uma para outra;',
+      'Contas de teste separadas (sem usar dados reais de clientes durante a montagem);',
+      'Indicação do que deve acontecer caso alguma ferramenta externa fique fora do ar;',
+      'Contato da pessoa que receberá os alertas de acompanhamento.',
+    ],
+    runningNote:
+      'As senhas e códigos de ligação guardados em cofre seguro (fora do programa) ficam sob guarda da empresa em local seguro, com monitoramento básico de falhas e pessoa definida para o suporte no período combinado.',
+    teamSummary:
+      '1 executor monta as ligações com apoio da frente de automações, 2+ revisores checam riscos externos e sigilo, e 1 responsável de suporte acompanha os primeiros ciclos.',
+  },
+  {
+    id: 'casa-em-ordem',
+    title: 'Casa em Ordem: Cópias, Senhas & LGPD',
+    shortTag: 'Proteção & LGPD',
+    popularSummary:
+      'Revisão prática para organizar senhas, ativar cadeado de segurança (HTTPS), garantir cópias de reserva e adequar cadastros às regras da LGPD.',
+    clientDeliverable:
+      'Cofre de acessos no nome da empresa, cópias automáticas testadas na prática, redução de dados coletados sem necessidade e cartilha simples de sigilo e resposta rápida a incidentes.',
+    devFocus:
+      'Auditar permissões, retirar senhas soltas de arquivos ou conversas, reforçar proteção de login e conferir coleta mínima conforme o enquadramento Controladora e Operadores.',
+    extensions: ['Yuko Field', 'Yuko Dev', 'Yuko Work', 'Yuko Place'],
+    discordFocus: '#conhecimento-tecnico · #projetos-ativos (Operacionais e de Projetos)',
+    baseDaysMin: 5,
+    baseDaysMax: 10,
+    basePriceMin: 1200,
+    basePriceMax: 3000,
+    clientNeeds: [
+      'Lista completa dos sites, contas, e-mails e sistemas onde a empresa guarda dados hoje;',
+      'Permissão temporária para o trabalho técnico com sigilo registrado;',
+      'Definição do canal oficial para avisos rápidos caso ocorra algum incidente com dados;',
+      'Tempo curto da gestão para trocar senhas mestras e guardar os acessos no cofre da empresa.',
+    ],
+    runningNote:
+      'Ao final, todas as senhas definitivas pertencem apenas à microempresa, com teste comprovado de recuperação de cópia de segurança e guia objetivo de boas práticas.',
+    teamSummary:
+      '1 executor conduz a organização e os testes de recuperação, 2+ revisores auditam os pontos críticos e 1 responsável de suporte acompanha a adaptação da equipe.',
+  },
+  {
+    id: 'resgate-sistema',
+    title: 'Resgate de Sistema Parado ou sem Apoio',
+    shortTag: 'Continuidade Real',
+    popularSummary:
+      'Retomada segura de um site ou sistema que ficou parado, sem manutenção ou preso com quem não responde mais.',
+    clientDeliverable:
+      'Levantamento honesto do que funciona e do que precisa de ajuste, código salvo em espaço central acessível à empresa, correções prioritárias e novo responsável de suporte definido.',
+    devFocus:
+      'Centralizar arquivos e acessos em espaço compartilhado, criar registro organizado das mudanças, estabilizar riscos urgentes em ambiente separado de testes e documentar tudo para não repetir o bloqueio.',
+    extensions: ['Yuko Field', 'Yuko Dev', 'Yuko Work', 'Yuko Inline'],
+    discordFocus: '#projetos-ativos (Operacionais e de Projetos) · #recepcao-e-avisos (Institucionais e Gerais)',
+    baseDaysMin: 7,
+    baseDaysMax: 18,
+    basePriceMin: 1800,
+    basePriceMax: 4800,
+    clientNeeds: [
+      'Acessos disponíveis para onde o site fica guardado (servidor), nome do site (domínio) ou arquivos antigos do sistema;',
+      'Relato dos problemas que mais atrapalham o funcionamento hoje;',
+      'Cópia de segurança ou ambiente separado de testes antes de mexer no sistema no ar;',
+      'Compromisso de aprovar primeiro o resgate essencial antes de pedir novidades grandes.',
+    ],
+    runningNote:
+      'Após estabilizar, o projeto passa a seguir o registro completo da Yuko, com guia de transição pronto e proteção da regra de 5 dias úteis contra novo abandono.',
+    teamSummary:
+      '1 executor realiza o diagnóstico e a recuperação, 2+ revisores validam estabilidade e segurança antes de publicar, e 1 responsável de suporte assume a continuidade.',
+  },
+];
+
+export const SIMULATOR_STAGES: SimulatorStageBlueprint[] = [
+  {
+    step: 1,
+    title: 'Pedido & Viabilidade',
+    extensionTag: 'Yuko Field',
+    discordChannel: '#projetos-ativos · Operacionais e de Projetos',
+    empresaAction:
+      'Conta o problema da rotina sem precisar usar termos técnicos e confere se a solução traz ganho real para o dia a dia.',
+    devActionByRole: {
+      executor:
+        'Escuta a necessidade com clareza e checa os 4 critérios de viabilidade: impacto real, equipe disponível, urgência e baixo risco externo.',
+      revisor:
+        'Confirma no canal de projetos se há pelo menos 2 revisores disponíveis que dominem a tecnologia conhecida e segura escolhida.',
+      suporte:
+        'Avalia desde o início o que será simples ou trabalhoso de manter depois que o sistema estiver no ar.',
+    },
+    manualRule:
+      'Todo pedido passa por triagem de impacto, capacidade real da equipe (executor + 2+ revisores) e menor dependência possível de serviços externos.',
+    manualHref: '/extensoes/#extensoes',
+    manualLinkLabel: 'Ver áreas Yuko Field e extensões →',
+  },
+  {
+    step: 2,
+    title: 'Combinado & Escopo Enxuto',
+    extensionTag: 'Yuko Make · Yuko Work',
+    discordChannel: '#projetos-ativos · Operacionais e de Projetos',
+    empresaAction:
+      'Aprova o combinado por escrito com o que entra, o que fica para depois, prazos, condições claras de aprovação e contrato direto entre as partes.',
+    devActionByRole: {
+      executor:
+        'Transforma o pedido em um combinado enxuto, mostra rascunhos simples de tela e abre a ficha de acompanhamento com todos os nomes.',
+      revisor:
+        'Valida se as condições de aprovação estão objetivas e fáceis de testar, sem promessas vagas ou burocracia inútil.',
+      suporte:
+        'Confirma seu nome na ficha de acompanhamento e alinha desde já o período e a forma do suporte pós-entrega.',
+    },
+    manualRule:
+      'A participação comunitária não gera vínculo empregatício; relações comerciais exigem contrato direto entre as partes e ficha de acompanhamento oficial.',
+    manualHref: '/ciclo/#registro',
+    manualLinkLabel: 'Ver ficha de acompanhamento →',
+  },
+  {
+    step: 3,
+    title: 'Construção Organizada',
+    extensionTag: 'Yuko Dev · Yuko Inline',
+    discordChannel: '#conhecimento-tecnico · Conhecimento Técnico',
+    empresaAction:
+      'Acompanha o progresso pelo combinado e fornece apenas informações inventadas de exemplo — nunca dados reais de clientes nesta fase.',
+    devActionByRole: {
+      executor:
+        'Constrói no espaço central compartilhado com tecnologia conhecida e segura, mantendo registro organizado das mudanças e zero código preso no computador pessoal.',
+      revisor:
+        'Tira dúvidas pontuais no Discord e acompanha o histórico organizado para facilitar a conferência final.',
+      suporte:
+        'Lê as anotações de construção e já rascunha o guia simples de uso junto com o executor.',
+    },
+    manualRule:
+      'É proibido reter código ou senhas apenas no computador pessoal, e é proibido usar dados reais de clientes durante a construção (LGPD).',
+    manualHref: '/governanca/#engenharia',
+    manualLinkLabel: 'Ver padrões de qualidade →',
+  },
+  {
+    step: 4,
+    title: 'Conferência por 2+ Revisores',
+    extensionTag: 'Yuko Dev · Yuko Work',
+    discordChannel: '#projetos-ativos · Operacionais e de Projetos',
+    empresaAction:
+      'Tem a tranquilidade de saber que o sistema não depende da opinião de uma pessoa só antes de chegar à empresa.',
+    devActionByRole: {
+      executor:
+        'Envia a entrega para conferência, responde aos apontamentos dos colegas e registra os ajustes na ficha de acompanhamento.',
+      revisor:
+        'Pelo menos 2 profissionais independentes conferem segurança, proteção de senhas, coleta mínima de dados e fidelidade ao combinado.',
+      suporte:
+        'Confere se o guia de uso e as anotações de transição estão claros o bastante para atender a empresa sem depender do executor.',
+    },
+    manualRule:
+      'Nenhuma entrega vai ao ar revisada por apenas uma pessoa: é obrigatória a aprovação registrada de pelo menos 2 revisores independentes.',
+    manualHref: '/ciclo/#papeis',
+    manualLinkLabel: 'Ver papéis e revisão por 2+ colegas →',
+  },
+  {
+    step: 5,
+    title: 'Testes no Ambiente Separado',
+    extensionTag: 'Yuko Inline · Yuko Make',
+    discordChannel: '#projetos-ativos · Operacionais e de Projetos',
+    empresaAction:
+      'Testa as telas no celular e no computador usando o ambiente separado de testes com informações inventadas de exemplo e confirma se atende à rotina.',
+    devActionByRole: {
+      executor:
+        'Publica no ambiente separado de testes, verifica cadeado de segurança (HTTPS), protege contra invasões comuns e fecha a lista de conferência final.',
+      revisor:
+        'Confirma que todos os itens da lista de conferência final passaram sem falhas graves ou riscos de segurança em aberto.',
+      suporte:
+        'Simula o dia a dia do atendimento no ambiente separado de testes para garantir que o guia de uso bate com a prática.',
+    },
+    manualRule:
+      'Antes de ir para a empresa, tudo passa por ambiente separado de testes com informações inventadas de exemplo e lista de conferência final completa.',
+    manualHref: '/governanca/#seguranca',
+    manualLinkLabel: 'Ver segurança e conferência final →',
+  },
+  {
+    step: 6,
+    title: 'Entrega, Guia & Suporte',
+    extensionTag: 'Yuko Place · Yuko Work',
+    discordChannel: '#recepcao-e-avisos · Institucionais e Gerais',
+    empresaAction:
+      'Recebe o sistema no ar, os acessos em seu nome e o guia simples de uso, mantendo o controle total dos dados como Controladora.',
+    devActionByRole: {
+      executor:
+        'Libera a versão final aprovada, entrega as anotações completas de transição e encerra a etapa de construção na ficha.',
+      revisor:
+        'Registra a aprovação final na ficha de acompanhamento e verifica se não sobrou nenhuma pendência oculta.',
+      suporte:
+        'Assume o acompanhamento por pessoa definida na ficha pós-entrega como Operador técnico sob instruções da empresa, protegido pela regra anti-abandono de 5 dias úteis.',
+    },
+    manualRule:
+      'A microempresa decide sobre os dados (Controladora), os desenvolvedores seguem instruções com sigilo (Operadores) e a regra de 5 dias úteis protege contra abandono.',
+    manualHref: '/manual/#origem',
+    manualLinkLabel: 'Ler regras no Manual v1.0 →',
+  },
+];
+
+export const SIMULATOR_STRESS_SCENARIOS: SimulatorStressScenario[] = [
+  {
+    id: 'ausencia',
+    buttonLabel: 'E se quem desenvolveu sumir ou precisar se afastar?',
+    alertTitle: 'Proteção automática contra abandono (5 dias úteis)',
+    responseText:
+      'Em afastamento avisado, o participante envia todo o código, acessos e pendências para o espaço central antes de sair. Se houver ausência sem resposta nem justificativa por 5 dias úteis, a ficha de acompanhamento registra vaga aberta, os acessos da pessoa ausente são bloqueados imediatamente e outro profissional da rede assume com o histórico já organizado — sem deixar a microempresa na mão.',
+    guaranteeBadge: 'Regra anti-abandono · 5 dias úteis',
+    ruleHref: '/ciclo/#papeis',
+    ruleLabel: 'Ver transição e proteção no Ciclo →',
+  },
+  {
+    id: 'dados-reais',
+    buttonLabel: 'Posso enviar minha planilha real de clientes para testar?',
+    alertTitle: 'Bloqueio obrigatório de dados reais em testes (LGPD)',
+    responseText:
+      'Não. Durante a construção e no ambiente separado de testes, é proibido usar nomes, telefones, documentos ou valores reais de clientes. A equipe usa apenas informações inventadas de exemplo ou disfarçadas (sem nomes nem telefones reais). Sua microempresa é a dona das decisões sobre os dados reais (Controladora), e os desenvolvedores atuam como Operadores técnicos com sigilo e coleta mínima.',
+    guaranteeBadge: 'LGPD · Apenas informações inventadas de exemplo',
+    ruleHref: '/governanca/#privacidade',
+    ruleLabel: 'Ver regras de privacidade e LGPD →',
+  },
+];
+
+export const SIMULATOR_DEV_ROLE_META: Record<
+  SimulatorDevRole,
+  { label: string; summary: string; contractNote: string }
+> = {
+  executor: {
+    label: 'Desenvolvedor Executor',
+    summary:
+      'Transforma o pedido em um combinado enxuto, constrói a solução em espaço central com tecnologia conhecida e segura e mantém a ficha de acompanhamento atualizada.',
+    contractNote:
+      'Participação autônoma na comunidade, sem vínculo empregatício ou societário. Contratações pagas exigem contrato direto entre as partes.',
+  },
+  revisor: {
+    label: 'Desenvolvedor Revisor (conferência por 2+ revisores)',
+    summary:
+      'Faz a conferência independente junto com pelo menos mais um colega antes da entrega: verifica clareza, proteção contra invasões, LGPD e lista de conferência final.',
+    contractNote:
+      'Nenhuma entrega vai ao ar com uma revisão só. Cada profissional responde pelos seus próprios atos com autonomia e ética.',
+  },
+  suporte: {
+    label: 'Responsável de Suporte',
+    summary:
+      'Tem nome registrado na ficha para acompanhar os primeiros dias de uso, fazer ajustes imediatos combinados e manter o guia de transição sempre em dia.',
+    contractNote:
+      'Atua como Operador técnico sob instruções da microempresa (Controladora), com sigilo e substituição garantida se houver ausência por 5 dias úteis.',
+  },
+};
+

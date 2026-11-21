@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import SplitButton from '../components/SplitButton';
 import HeroSculpture from '../components/HeroSculpture';
 import YukoContinuityStage from '../components/YukoContinuityStage';
+import YukoOrderSimulator from '../components/YukoOrderSimulator';
 import {
   AUDIENCE_CARDS,
   CONTINUITY_LENS_LABELS,
@@ -162,6 +163,23 @@ import {
           </article>
         ))}
       </div>
+    </div>
+  </section>
+
+  <!-- Simulador Prático de Pedido & Atuação na Comunidade -->
+  <section id="simulador" class="section" aria-labelledby="simuladorHeading">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Teste na prática</div>
+        <h2 id="simuladorHeading" class="section-title">
+          Simule um pedido real na Yuko
+        </h2>
+        <p class="section-desc">
+          Veja como uma microempresa, cliente ou desenvolvedor acompanha prazos, valores de referência, equipe da comunidade e proteção de dados antes mesmo de começar.
+        </p>
+      </div>
+
+      <YukoOrderSimulator client:load />
     </div>
   </section>
 
