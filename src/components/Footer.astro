@@ -1,5 +1,5 @@
 ---
-import { NAV_ITEMS } from '../data/yuko';
+import { DISCORD_INVITE_URL, NAV_ITEMS } from '../data/yuko';
 
 export interface Props {
   variant?: 'monument' | 'compact';
@@ -36,10 +36,10 @@ const PAGE_ANCHORS: Record<string, Array<{ href: string; label: string }>> = {
   '/ciclo/': [
     { href: '#etapas', label: '6 Etapas' },
     { href: '#papeis', label: 'Papéis & Continuidade' },
-    { href: '#registro', label: 'Registro Formal' },
+    { href: '#registro', label: 'Ficha do Projeto' },
   ],
   '/governanca/': [
-    { href: '#engenharia', label: 'Engenharia & DoD' },
+    { href: '#engenharia', label: 'Qualidade & Conferência' },
     { href: '#seguranca', label: 'Segurança' },
     { href: '#privacidade', label: 'LGPD & Mediação' },
   ],
@@ -54,8 +54,8 @@ const resolvedAnchors = PAGE_ANCHORS[normalizedPath] ?? PAGE_ANCHORS['/'];
 
 const defaultSummary =
   variant === 'monument'
-    ? 'Comunidade técnica brasileira que fortalece microempresas e desenvolvedores independentes com entrega assistida e suporte compartilhado.'
-    : 'Comunidade técnica brasileira de desenvolvimento colaborativo e sustentação para microempresas.';
+    ? 'Comunidade brasileira de desenvolvedores que cria software sob medida para microempresas, com revisão em equipe e acompanhamento após o lançamento.'
+    : 'Comunidade brasileira que conecta desenvolvedores e microempresas para criar sistemas confiáveis e com suporte contínuo.';
 
 const resolvedSummary = summary ?? defaultSummary;
 const isMonument = variant === 'monument';
@@ -91,6 +91,13 @@ const isMonument = variant === 'monument';
                 {item.label}
               </a>
             ))}
+            <a
+              href={DISCORD_INVITE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Discord Oficial ↗
+            </a>
           </nav>
         </div>
 

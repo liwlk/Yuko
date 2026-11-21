@@ -800,6 +800,13 @@ main {
     filter: brightness(1.04);
   }
 
+  .plan-card.featured .btn-tonal,
+  .cta-banner .btn-tonal {
+    background-color: var(--md-surface-container-lowest);
+    color: var(--md-on-surface);
+    border: 1px solid color-mix(in srgb, var(--md-outline-variant) 80%, transparent);
+  }
+
   .btn-outline {
     background-color: transparent;
     color: var(--md-on-surface);
@@ -1134,14 +1141,14 @@ main {
   }
 
   /* ==========================================================================
-     Yukon (Canadá) — Panorâmico Full-Bleed + Cards Translúcidos por Rolagem
+     Yukon (Canadá) — Panorâmico Livre de Cards + Título Emergente + Cards Abaixo
      Zero overflow: hidden on sticky ancestors!
      ========================================================================== */
   .yukon-section {
     padding-block: 16px 56px;
   }
 
-  @media (min-width: 960px) {
+  @media (min-width: 920px) {
     .yukon-section .container {
       width: min(1320px, calc(100vw - 36px));
     }
@@ -1149,24 +1156,43 @@ main {
 
   .yukon-scrolly {
     position: relative;
-    min-height: 205svh;
-  }
-
-  @media (min-width: 960px) {
-    .yukon-scrolly {
-      min-height: 255vh;
-    }
+    min-height: 0;
   }
 
   .yukon-sticky-stage {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-width: 0;
+  }
+
+  .yukon-panorama-shell {
     position: sticky;
-    top: 132px;
+    top: 118px;
+    z-index: 6;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: var(--md-surface);
+    padding-top: 8px;
+    padding-bottom: 6px;
     min-width: 0;
   }
 
   @media (min-width: 920px) {
+    .yukon-scrolly {
+      min-height: 245vh;
+    }
+
     .yukon-sticky-stage {
+      position: sticky;
       top: 82px;
+      gap: 14px;
+    }
+
+    .yukon-panorama-shell {
+      display: contents;
     }
   }
 
@@ -1179,27 +1205,30 @@ main {
     --yukon-mx: 0;
     --yukon-my: 0;
     position: relative;
+    z-index: 1;
     width: 100%;
+    height: clamp(276px, 40svh, 345px);
     border-radius: 28px;
     overflow: hidden;
-    min-height: clamp(470px, calc(100svh - 136px), 580px);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: 12px;
-    padding: clamp(14px, 2.4vw, 28px);
+    gap: 10px;
+    padding: clamp(14px, 2.4vw, 22px);
     background-color: var(--md-surface-container-low);
     border: 1px solid var(--md-outline-variant);
-    box-shadow: 0 32px 80px -36px var(--md-shadow-tint);
+    box-shadow: 0 28px 70px -34px var(--md-shadow-tint);
   }
 
-  @media (min-width: 960px) {
+  @media (min-width: 920px) {
     .yukon-panorama {
+      position: relative;
+      top: auto;
+      z-index: 1;
       border-radius: 36px;
-      height: clamp(490px, calc(100vh - 108px), 740px);
-      min-height: 490px;
-      gap: 16px;
-      padding: clamp(22px, 2.6vw, 32px);
+      height: clamp(320px, 46vh, 450px);
+      gap: 14px;
+      padding: clamp(18px, 2.4vw, 28px);
     }
   }
 
@@ -1248,9 +1277,9 @@ main {
     pointer-events: none;
     background: linear-gradient(
       180deg,
-      transparent 54%,
-      color-mix(in srgb, var(--md-surface-container-lowest) 28%, transparent) 78%,
-      color-mix(in srgb, var(--md-surface-container-low) 56%, transparent) 100%
+      transparent 38%,
+      color-mix(in srgb, var(--md-surface-container-low) 78%, transparent) 68%,
+      color-mix(in srgb, var(--md-surface-container-low) 95%, transparent) 100%
     );
   }
 
@@ -1365,6 +1394,10 @@ main {
     );
   }
 
+  [data-mode="dark"] .yukon-pines {
+    opacity: 0.48;
+  }
+
   .yukon-particles {
     transform: translate3d(
       calc(var(--yukon-progress, 0) * -24px + var(--yukon-mx, 0) * 18px),
@@ -1381,13 +1414,15 @@ main {
     flex-wrap: wrap;
     align-items: flex-start;
     justify-content: space-between;
-    gap: 14px;
+    gap: 12px;
   }
 
   .yukon-intro {
-    max-width: 490px;
-    padding: 12px 16px;
-    border-radius: 22px;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 9px 15px;
+    border-radius: 18px;
     background: color-mix(in srgb, var(--md-surface-container-low) 74%, transparent);
     border: 1px solid color-mix(in srgb, var(--md-outline-variant) 58%, transparent);
     backdrop-filter: blur(14px) saturate(140%);
@@ -1397,35 +1432,20 @@ main {
   .yukon-kicker {
     display: inline-block;
     font-family: var(--font-display);
-    font-size: 0.76rem;
+    font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--md-primary);
-    margin-bottom: 4px;
   }
 
   .yukon-title {
-    font-size: clamp(1.22rem, 2.3vw, 1.85rem);
+    font-size: clamp(1.06rem, 1.8vw, 1.42rem);
     font-weight: 700;
-    letter-spacing: -0.028em;
-    line-height: 1.14;
+    letter-spacing: -0.024em;
+    line-height: 1.15;
     color: var(--md-on-surface);
-    margin-bottom: 6px;
-  }
-
-  .yukon-lead {
     margin: 0;
-    font-size: 0.88rem;
-    line-height: 1.45;
-    color: var(--md-on-surface-variant);
-    max-width: 44ch;
-  }
-
-  @media (max-width: 639.98px) {
-    .yukon-lead {
-      display: none;
-    }
   }
 
   .yukon-hud-cluster {
@@ -1549,14 +1569,56 @@ main {
     }
   }
 
-  /* Translucent Chapter Deck Overlay Inside Yukon Image */
-  .yukon-dock-wrap {
+  /* Rising Chapter Name at Bottom of Open Yukon Landscape */
+  .yukon-rising-stage {
     position: relative;
     z-index: 3;
     margin-top: auto;
+    min-height: 44px;
+    display: flex;
+    align-items: flex-end;
+    pointer-events: none;
+  }
+
+  .yukon-rising-title {
+    display: inline-flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    max-width: min(100%, 46ch);
+    padding: 2px 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+  }
+
+  .yukon-rising-ref {
+    font-family: var(--font-mono);
+    font-size: clamp(0.78rem, 1.1vw, 0.92rem);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--md-on-primary-container);
+    text-shadow: 0 1px 10px color-mix(in srgb, var(--md-surface-container-lowest) 75%, transparent);
+  }
+
+  .yukon-rising-name {
+    font-family: var(--font-display);
+    font-size: clamp(1.12rem, 2.2vw, 1.76rem);
+    font-weight: 700;
+    letter-spacing: -0.028em;
+    line-height: 1.18;
+    color: var(--md-on-surface);
+    text-shadow: 0 1px 12px color-mix(in srgb, var(--md-surface-container-lowest) 65%, transparent);
+  }
+
+  /* 4 Numbered Chapter Cards Placed Outside & Below Yukon Panorama */
+  .yukon-below-wrap {
+    position: relative;
+    z-index: 2;
     display: flex;
     flex-direction: column;
     gap: 10px;
+    min-width: 0;
   }
 
   .yukon-mobile-tabs {
@@ -1565,7 +1627,7 @@ main {
     gap: 8px;
   }
 
-  @media (min-width: 960px) {
+  @media (min-width: 920px) {
     .yukon-mobile-tabs {
       display: none;
     }
@@ -1577,10 +1639,8 @@ main {
     flex: 1 1 0%;
     padding: 7px 10px;
     border-radius: var(--shape-pill);
-    border: 1px solid color-mix(in srgb, var(--md-outline-variant) 75%, transparent);
-    background: color-mix(in srgb, var(--md-surface-container-lowest) 52%, transparent);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--md-outline-variant);
+    background: var(--md-surface-container-low);
     color: var(--md-on-surface-variant);
     font-family: var(--font-mono);
     font-size: 0.76rem;
@@ -1597,18 +1657,20 @@ main {
     border-color: transparent;
   }
 
-  .yukon-chapters {
-    display: flex;
-    flex-direction: column;
+  .yukon-chapters,
+  .yukon-below-cards {
+    display: grid;
+    grid-template-columns: 1fr;
     gap: 12px;
     min-width: 0;
   }
 
-  @media (min-width: 960px) {
-    .yukon-chapters {
-      flex-direction: row;
+  @media (min-width: 920px) {
+    .yukon-chapters,
+    .yukon-below-cards {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       align-items: stretch;
-      gap: 12px;
+      gap: 14px;
     }
   }
 
@@ -1617,58 +1679,33 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    gap: 8px;
+    gap: 7px;
     min-width: 0;
-    padding: 18px 20px;
-    border-radius: 24px;
-    background: color-mix(in srgb, var(--md-surface-container-lowest) 74%, transparent);
-    border: 1px solid color-mix(in srgb, var(--md-outline-variant) 76%, transparent);
-    backdrop-filter: blur(18px) saturate(155%);
-    -webkit-backdrop-filter: blur(18px) saturate(155%);
-    box-shadow: 0 18px 40px -24px var(--md-shadow-tint);
+    padding: 15px 16px;
+    border-radius: 22px;
+    background-color: var(--md-surface-container-low);
+    border: 1.5px solid var(--md-outline-variant);
+    box-shadow: 0 2px 10px -6px var(--md-shadow-tint);
     color: var(--md-on-surface);
     cursor: pointer;
     text-align: left;
-    overflow: hidden;
-    transition: flex 0.44s var(--ease-standard),
-                opacity var(--dur-med) var(--ease-standard),
+    transition: transform var(--dur-fast) var(--ease-spring),
                 background-color var(--dur-med) var(--ease-standard),
                 border-color var(--dur-med) var(--ease-standard),
                 box-shadow var(--dur-med) var(--ease-standard);
   }
 
-  @media (max-width: 959.98px) {
-    .yukon-chapter:not(.is-active) {
-      display: none;
-    }
-
-    .yukon-chapter.is-active {
-      background: color-mix(in srgb, var(--md-surface-container-lowest) 86%, transparent);
-      border-color: var(--md-primary);
-      padding: 16px 18px;
-      border-radius: 22px;
-    }
+  .yukon-chapter:hover:not(.is-active) {
+    background-color: var(--md-surface-container);
+    border-color: color-mix(in srgb, var(--md-primary) 50%, var(--md-outline-variant));
+    transform: translateY(-2px);
   }
 
-  @media (min-width: 960px) {
-    .yukon-chapter {
-      flex: 0.78 1 0%;
-      min-height: 158px;
-      padding: 18px 20px;
-    }
-
-    .yukon-chapter:hover:not(.is-active) {
-      background: color-mix(in srgb, var(--md-surface-container-lowest) 82%, transparent);
-      border-color: color-mix(in srgb, var(--md-primary) 50%, var(--md-outline-variant));
-    }
-
-    .yukon-chapter.is-active {
-      flex: 2.35 1 0%;
-      background: color-mix(in srgb, var(--md-surface-container-lowest) 88%, transparent);
-      border-color: var(--md-primary);
-      box-shadow: 0 24px 54px -24px var(--md-shadow-tint),
-                  inset 0 2px 0 0 var(--md-primary);
-    }
+  .yukon-chapter.is-active {
+    background-color: color-mix(in srgb, var(--md-primary-container) 28%, var(--md-surface-container-lowest));
+    border-color: var(--md-primary);
+    box-shadow: 0 18px 36px -22px var(--md-shadow-tint),
+                inset 0 2px 0 0 var(--md-primary);
   }
 
   .yukon-chapter-top {
@@ -1679,17 +1716,48 @@ main {
   }
 
   .yukon-chapter-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-width: 0;
+  }
+
+  .yukon-chapter-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 8px;
+    border-radius: var(--shape-pill);
+    background-color: var(--md-surface-container-highest);
+    color: var(--md-on-surface-variant);
     font-family: var(--font-mono);
     font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+    transition: background-color var(--dur-fast) var(--ease-standard),
+                color var(--dur-fast) var(--ease-standard);
+  }
+
+  .yukon-chapter.is-active .yukon-chapter-num {
+    background-color: var(--md-primary);
+    color: var(--md-on-primary);
+  }
+
+  .yukon-chapter-tag {
+    font-family: var(--font-mono);
+    font-size: 0.71rem;
     font-weight: 700;
     letter-spacing: 0.05em;
     text-transform: uppercase;
     color: var(--md-on-surface-variant);
     transition: color var(--dur-fast) var(--ease-standard);
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
-  .yukon-chapter.is-active .yukon-chapter-kicker {
+  .yukon-chapter.is-active .yukon-chapter-tag {
     color: var(--md-primary);
   }
 
@@ -1709,7 +1777,7 @@ main {
   }
 
   .yukon-chapter-title {
-    font-size: clamp(0.98rem, 1.35vw, 1.24rem);
+    font-size: clamp(0.95rem, 1.15vw, 1.06rem);
     font-weight: 700;
     letter-spacing: -0.02em;
     line-height: 1.24;
@@ -1741,34 +1809,29 @@ main {
   .yukon-chapter-body {
     margin: 0;
     color: var(--md-on-surface-variant);
-    font-size: 0.89rem;
-    line-height: 1.48;
-    max-width: 58ch;
-  }
-
-  @media (min-width: 960px) {
-    .yukon-chapter:not(.is-active) .yukon-chapter-body {
-      max-height: 0;
-      opacity: 0;
-      overflow: hidden;
-      margin: 0;
-      pointer-events: none;
-      transition: opacity 0.16s var(--ease-standard),
-                  max-height 0.24s var(--ease-standard);
-    }
-
-    .yukon-chapter.is-active .yukon-chapter-body {
-      max-height: 180px;
-      opacity: 1;
-      margin-top: 2px;
-      transition: opacity 0.34s var(--ease-standard) 0.12s,
-                  max-height 0.34s var(--ease-standard);
-    }
+    font-size: 0.84rem;
+    line-height: 1.46;
   }
 
   .yukon-chapter-actions {
     margin-top: auto;
-    padding-top: 6px;
+    padding-top: 4px;
+  }
+
+  .yukon-chapter-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--md-primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: opacity var(--dur-fast) var(--ease-standard);
+  }
+
+  .yukon-chapter-link:hover {
+    opacity: 0.82;
   }
 
 

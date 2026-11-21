@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import {
+  DISCORD_INVITE_URL,
   IDENTITY_PILLARS,
   VISUAL_RULES,
   EXTENSIONS,
@@ -15,8 +16,8 @@ const guidelineItems = DISCORD_CHANNELS.filter((item) => item.kind === 'guidelin
 ---
 
 <BaseLayout
-  title="Extensões, Frentes & Comunidade — Yuko"
-  description="Fundamentos da marca (Yukon, Oslo, Verona), as 6 extensões funcionais (Field, Dev, Make, Place, Work, Inline), as 6 frentes de atuação e a organização do servidor Discord."
+  title="Extensões, Frentes & Discord — Yuko"
+  description="Valores da marca Yuko (Yukon, Oslo, Verona), as 6 áreas de atuação (Field, Dev, Make, Place, Work, Inline), 6 frentes de trabalho e nosso servidor no Discord."
   currentPath="/extensoes/"
   footerVariant="compact"
   nextHref="/ciclo/"
@@ -24,16 +25,16 @@ const guidelineItems = DISCORD_CHANNELS.filter((item) => item.kind === 'guidelin
 >
   <section class="sub-hero">
     <div class="container">
-      <div class="section-kicker">Arquitetura da Marca</div>
+      <div class="section-kicker">Como a Yuko se organiza</div>
       <h1 class="sub-hero-title">
         Identidade, <span class="accent-word">Extensões</span> &amp; Frentes
       </h1>
       <p class="hero-lead">
-        Fundamentos visuais, seis extensões práticas, seis frentes de atuação e convivência no Discord.
+        Nossos valores visuais, seis áreas práticas de atuação, seis frentes de trabalho e o ponto de encontro da comunidade no Discord.
       </p>
       <div class="hero-actions" style="margin-bottom:0">
         <a href="#extensoes" class="btn btn-primary">6 Extensões</a>
-        <a href="#fundamentos" class="btn btn-tonal">Fundamentos</a>
+        <a href="#fundamentos" class="btn btn-tonal">Valores</a>
         <a href="#frentes" class="btn btn-tonal">6 Frentes</a>
         <a href="#discord" class="btn btn-outline">Discord</a>
       </div>
@@ -45,7 +46,7 @@ const guidelineItems = DISCORD_CHANNELS.filter((item) => item.kind === 'guidelin
     <div class="container">
       <div class="section-head">
         <div class="section-kicker">Fundamentos &amp; Identidade</div>
-        <h2 class="section-title">Princípios da marca e diretrizes visuais</h2>
+        <h2 class="section-title">De onde vem a Yuko e como nos apresentamos</h2>
       </div>
 
       <div class="lab-panel">
@@ -74,10 +75,10 @@ const guidelineItems = DISCORD_CHANNELS.filter((item) => item.kind === 'guidelin
   <section id="extensoes" class="section">
     <div class="container">
       <div class="section-head">
-        <div class="section-kicker">Extensões da Marca</div>
-        <h2 class="section-title">Seis extensões sob o prefixo Yuko</h2>
+        <div class="section-kicker">Áreas da Marca</div>
+        <h2 class="section-title">Seis extensões sob o nome Yuko</h2>
         <p class="section-desc">
-          Cada extensão identifica um campo de atuação sem fragmentar a marca principal.
+          Cada extensão identifica uma parte prática do nosso trabalho — da conversa com a empresa às automações.
         </p>
       </div>
 
@@ -102,7 +103,7 @@ const guidelineItems = DISCORD_CHANNELS.filter((item) => item.kind === 'guidelin
         <div class="section-kicker">Frentes de Atuação</div>
         <h2 class="section-title">Seis frentes integradas de trabalho</h2>
         <p class="section-desc">
-          Enquanto as extensões nomeiam campos públicos de atuação sob a marca Yuko, as frentes organizam as disciplinas internas aplicadas em cada projeto.
+          Enquanto as extensões dão nome às áreas visíveis ao público, as frentes organizam as disciplinas internas aplicadas em cada projeto.
         </p>
       </div>
 
@@ -136,10 +137,10 @@ const guidelineItems = DISCORD_CHANNELS.filter((item) => item.kind === 'guidelin
   <section id="discord" class="section">
     <div class="container">
       <div class="section-head">
-        <div class="section-kicker">Ambiente Comunitário</div>
+        <div class="section-kicker">Ponto de Encontro</div>
         <h2 class="section-title">Servidor Discord</h2>
         <p class="section-desc">
-          Alinhamento diário, troca técnica e acompanhamento de projetos em canais por função.
+          É no Discord que desenvolvedores independentes se reúnem para tirar dúvidas, combinar tarefas e acompanhar projetos ativos.
         </p>
       </div>
 
@@ -164,6 +165,17 @@ const guidelineItems = DISCORD_CHANNELS.filter((item) => item.kind === 'guidelin
               <p>{item.description}</p>
             </div>
           ))}
+        </div>
+
+        <div class="hero-actions" style="margin-top:8px;margin-bottom:0">
+          <a
+            href={DISCORD_INVITE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-primary"
+          >
+            Entrar no servidor do Discord ↗
+          </a>
         </div>
       </div>
     </div>

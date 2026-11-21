@@ -72,7 +72,7 @@ export default function GlossaryExplorer({ terms }: GlossaryExplorerProps) {
           type="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Filtrar termos do glossário (ex: Peer, DoD, Issue)..."
+          placeholder="Filtrar termos do glossário (ex: LGPD, DoD, Revisão, Issue)..."
           aria-label="Filtrar termos do glossário"
         />
       </div>

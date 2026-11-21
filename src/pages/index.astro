@@ -5,6 +5,7 @@ import HeroSculpture from '../components/HeroSculpture';
 import YukonExperience from '../components/YukonExperience';
 import {
   AUDIENCE_CARDS,
+  DISCORD_INVITE_URL,
   HERO_METRICS,
   HOME_PILLARS,
   SPLIT_SHORTCUTS,
@@ -14,8 +15,8 @@ import {
 ---
 
 <BaseLayout
-  title="Yuko — Comunidade Técnica Brasileira & Entrega Assistida"
-  description="A Yuko conecta desenvolvedores independentes e microempresas para criar software sob medida, validado por múltiplos pares e com suporte garantido após a entrega."
+  title="Yuko — Comunidade Técnica & Entrega Assistida para Microempresas"
+  description="A Yuko conecta desenvolvedores independentes e microempresas para criar sistemas sob medida, conferidos por 2+ profissionais e com suporte garantido após a entrega."
   currentPath="/"
   footerVariant="monument"
 >
@@ -28,7 +29,7 @@ import {
         </h1>
 
         <p class="hero-lead">
-          A Yuko conecta desenvolvedores independentes e microempresas para criar software sob medida, validado por múltiplos pares e com suporte garantido após a entrega.
+          A Yuko conecta desenvolvedores independentes e microempresas para criar sistemas sob medida, conferidos por mais de um profissional e com suporte garantido após a entrega.
         </p>
 
         <div class="hero-actions">
@@ -72,9 +73,9 @@ import {
     <div class="container">
       <div class="section-head">
         <div class="section-kicker">Como funciona</div>
-        <h2 id="pilaresHeading" class="section-title">Entrega profissional sem burocracia</h2>
+        <h2 id="pilaresHeading" class="section-title">Entrega profissional sem complicação</h2>
         <p class="section-desc">
-          Escopo claro, revisão por pares e suporte definido em um ciclo único.
+          Combinado claro, conferência por 2+ revisores e suporte definido em um processo único.
         </p>
       </div>
 
@@ -139,29 +140,51 @@ import {
                 ))}
               </ul>
             </div>
-            <a
-              href={card.ctaHref}
-              class={card.ctaVariant === 'primary' ? 'btn btn-primary' : 'btn btn-outline'}
-            >
-              {card.ctaLabel}
-            </a>
+            <div class="hero-actions" style="margin-bottom:0">
+              <a
+                href={card.ctaHref}
+                class={card.ctaVariant === 'primary' ? 'btn btn-primary' : 'btn btn-outline'}
+              >
+                {card.ctaLabel}
+              </a>
+              {card.secondaryCtaLabel && card.secondaryCtaHref && (
+                <a
+                  href={card.secondaryCtaHref}
+                  target={card.secondaryExternal ? '_blank' : undefined}
+                  rel={card.secondaryExternal ? 'noopener noreferrer' : undefined}
+                  class="btn btn-tonal"
+                >
+                  {card.secondaryCtaLabel}
+                </a>
+              )}
+            </div>
           </article>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- CTA Manual Institucional v1.0 -->
+  <!-- CTA Manual Institucional v1.0 & Discord -->
   <section id="manual" class="section" aria-labelledby="manualCtaHeading" style="padding-block:16px 24px">
     <div class="container">
       <div class="cta-banner">
         <div>
-          <h2 id="manualCtaHeading">Consulte o Manual Institucional da Yuko — v1.0</h2>
+          <h2 id="manualCtaHeading">Consulte o Manual v1.0 ou entre no Discord</h2>
           <p>
-            Controle documental, diretrizes operacionais, glossário pesquisável e compromissos públicos da comunidade.
+            Veja todas as regras da comunidade, cuidados com seus dados (LGPD) e nosso glossário, ou converse diretamente com os membros no Discord.
           </p>
         </div>
-        <a href="/manual/" class="btn btn-primary">Abrir Manual v1.0</a>
+        <div class="hero-actions" style="margin-bottom:0">
+          <a href="/manual/" class="btn btn-primary">Abrir Manual v1.0</a>
+          <a
+            href={DISCORD_INVITE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-tonal"
+          >
+            Entrar no Discord ↗
+          </a>
+        </div>
       </div>
     </div>
   </section>

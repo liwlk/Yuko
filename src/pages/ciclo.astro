@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import {
   CYCLE_STAGES,
+  DISCORD_INVITE_URL,
   TRIAGE_CRITERIA,
   ROLES,
   CONTINUITY_RULES,
@@ -13,8 +14,8 @@ const triageColB = TRIAGE_CRITERIA.slice(2);
 ---
 
 <BaseLayout
-  title="Ciclo de Entrega Assistida, Papéis & Rastreabilidade — Yuko"
-  description="As 6 etapas do Ciclo de Entrega Assistida, papéis operacionais, regras de continuidade e registro formal rastreável da Yuko."
+  title="Ciclo de Entrega Assistida, Papéis & Registro — Yuko"
+  description="Os 6 passos do Ciclo de Entrega Assistida, quem faz o quê, regra de continuidade contra abandono e ficha formal de acompanhamento na Yuko."
   currentPath="/ciclo/"
   footerVariant="compact"
   nextHref="/governanca/"
@@ -22,17 +23,17 @@ const triageColB = TRIAGE_CRITERIA.slice(2);
 >
   <section class="sub-hero">
     <div class="container">
-      <div class="section-kicker">Núcleo Operacional</div>
+      <div class="section-kicker">Do Pedido ao Suporte</div>
       <h1 class="sub-hero-title">
         O <span class="accent-word">Ciclo</span> de Entrega Assistida
       </h1>
       <p class="hero-lead">
-        Escopo claro, revisão por múltiplos pares, homologação e suporte nominal em seis etapas contínuas.
+        Combinado claro, conferência por 2+ desenvolvedores, testes antes de ir ao ar e suporte garantido em seis etapas contínuas.
       </p>
       <div class="hero-actions" style="margin-bottom:0">
         <a href="#etapas" class="btn btn-primary">As 6 Etapas</a>
         <a href="#papeis" class="btn btn-tonal">Papéis &amp; Continuidade</a>
-        <a href="#registro" class="btn btn-outline">Registro Formal</a>
+        <a href="#registro" class="btn btn-outline">Ficha do Projeto</a>
       </div>
     </div>
   </section>
@@ -41,8 +42,8 @@ const triageColB = TRIAGE_CRITERIA.slice(2);
   <section id="etapas" class="section" style="padding-top:24px">
     <div class="container">
       <div class="section-head">
-        <div class="section-kicker">Fluxo de Ponta a Ponta</div>
-        <h2 class="section-title">Seis etapas do acolhimento à entrega</h2>
+        <div class="section-kicker">Passo a Passo</div>
+        <h2 class="section-title">Seis etapas do primeiro contato à entrega</h2>
       </div>
 
       <div class="grid-3 pipeline-grid">
@@ -58,7 +59,7 @@ const triageColB = TRIAGE_CRITERIA.slice(2);
       </div>
 
       <div class="lab-panel" style="margin-top:24px">
-        <h3 style="margin-bottom:14px">Critérios de Triagem e Priorização</h3>
+        <h3 style="margin-bottom:14px">Como avaliamos e priorizamos cada pedido</h3>
         <div class="grid-2">
           <ul class="clean-list">
             {triageColA.map((criterion) => (
@@ -87,10 +88,10 @@ const triageColB = TRIAGE_CRITERIA.slice(2);
   <section id="papeis" class="section">
     <div class="container">
       <div class="section-head">
-        <div class="section-kicker">Modelo Operacional</div>
-        <h2 class="section-title">Papéis funcionais e continuidade</h2>
+        <div class="section-kicker">Quem Faz o Quê</div>
+        <h2 class="section-title">Papéis funcionais e garantia contra abandono</h2>
         <p class="section-desc">
-          Atribuições distribuídas por iniciativa para garantir respaldo técnico sem sobrecarga gerencial.
+          Cada projeto divide responsabilidades de forma clara para dar respaldo técnico à microempresa sem sobrecarregar ninguém.
         </p>
       </div>
 
@@ -111,6 +112,18 @@ const triageColB = TRIAGE_CRITERIA.slice(2);
           </article>
         ))}
       </div>
+
+      <div class="hero-actions" style="margin-top:24px;margin-bottom:0">
+        <a
+          href={DISCORD_INVITE_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn btn-primary"
+        >
+          Acompanhar projetos no Discord ↗
+        </a>
+        <a href="/governanca/" class="btn btn-tonal">Ver qualidade &amp; segurança</a>
+      </div>
     </div>
   </section>
 
@@ -118,15 +131,15 @@ const triageColB = TRIAGE_CRITERIA.slice(2);
   <section id="registro" class="section">
     <div class="container">
       <div class="section-head">
-        <div class="section-kicker">Rastreabilidade</div>
-        <h2 class="section-title">Registro formal obrigatório</h2>
+        <div class="section-kicker">Tudo Documentado</div>
+        <h2 class="section-title">Nada fica só no combinado de boca</h2>
         <p class="section-desc">
-          É vedado assumir projetos sob a bandeira da Yuko apenas por alinhamento verbal; toda iniciativa exige registro rastreável.
+          É proibido assumir projetos com o nome da Yuko apenas por conversa informal; toda iniciativa precisa de uma ficha oficial de acompanhamento.
         </p>
       </div>
 
       <div class="m3-card">
-        <h3>Elementos Mínimos de Cada Issue</h3>
+        <h3>O que precisa constar em cada ficha do projeto</h3>
         <div class="grid-2">
           <ul class="clean-list">
             {REGISTRY_COL_A.map((item) => (

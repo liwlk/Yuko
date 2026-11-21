@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { motion, useMotionValue, useSpring } from 'motion/react';
+import { AnimatePresence, motion, useMotionValue, useSpring } from 'motion/react';
 import { scrollToTarget } from '../scripts/lenis-manager';
 
 export type YukonMood = 'alvorada' | 'travessia' | 'boreal';
@@ -41,7 +41,7 @@ function getAutoMoodForIndex(index: number, chapter?: YukonChapter): YukonMood {
 
 function getStickyTop(): number {
   if (typeof window === 'undefined') return 82;
-  return window.innerWidth >= 920 ? 82 : 132;
+  return window.innerWidth >= 920 ? 82 : 118;
 }
 
 function isMotionPaused(): boolean {
@@ -60,8 +60,10 @@ export default function YukonExperience({ chapters, moodLabels }: YukonExperienc
   const [motionPaused, setMotionPaused] = useState(false);
 
   const scrollyRef = useRef<HTMLDivElement>(null);
+  const shellRef = useRef<HTMLDivElement>(null);
   const panoramaRef = useRef<HTMLDivElement>(null);
   const ringFillRef = useRef<SVGCircleElement>(null);
+  const cardRefs = useRef<(HTMLElement | null)[]>([]);
   const moodManuallyLockedRef = useRef(false);
   const clickLockUntilRef = useRef(0);
 
@@ -269,9 +271,29 @@ export default function YukonExperience({ chapters, moodLabels }: YukonExperienc
 
     if (shouldScroll && typeof window !== 'undefined') {
       const { startY, travel } = getScrollRange();
-      if (travel > 120) {
+      const paused = isMotionPaused();
+      const isDesktop = window.innerWidth >= 920;
+      const cardEl = cardRefs.current[clampedIdx];
+      const shellEl = shellRef.current;
+
+      if (!isDesktop && cardEl && shellEl) {
+        const cardRect = cardEl.getBoundingClientRect();
+        const shellRect = shellEl.getBoundingClientRect();
+        const stickyTop = getStickyTop();
+        const stickyBottom =
+          shellRect.top <= stickyTop + 1 && shellRect.top >= stickyTop - 1
+            ? shellRect.bottom
+            : stickyTop + shellRect.height;
+        const offsetBelowShell = stickyBottom + 12;
+        const rawTargetY = window.scrollY + cardRect.top - offsetBelowShell;
+        const maxY = Math.max(0, startY + travel);
+        const targetY = clamp(rawTargetY, Math.max(0, startY), maxY);
+        scrollToTarget(targetY, {
+          duration: paused ? 0 : 0.75,
+          immediate: paused,
+        });
+      } else if (travel > 120) {
         const targetY = Math.max(0, startY + targetProgress * travel);
-        const paused = isMotionPaused();
         scrollToTarget(targetY, {
           duration: paused ? 0 : 0.85,
           immediate: paused,
@@ -298,19 +320,22 @@ export default function YukonExperience({ chapters, moodLabels }: YukonExperienc
 
   const totalCount = Math.max(chapters.length, 1);
   const stepBadgeText = `${String(activeIdx + 1).padStart(2, '0')} / ${String(totalCount).padStart(2, '0')}`;
+  const activeChapter = chapters[activeIdx] ?? chapters[0];
+  const activeStepLabel = String(activeIdx + 1).padStart(2, '0');
 
   return (
     <div ref={scrollyRef} className="yukon-scrolly">
       <div className="yukon-sticky-stage" aria-label="Cenário atmosférico e etapas em Yukon">
-        <div
-          ref={panoramaRef}
-          id="yukonPanorama"
-          className="yukon-panorama"
-          data-yukon-mood={mood}
-          onPointerMove={handlePointerMove}
-          onPointerLeave={handlePointerLeave}
-          onPointerCancel={handlePointerLeave}
-        >
+        <div ref={shellRef} className="yukon-panorama-shell">
+          <div
+            ref={panoramaRef}
+            id="yukonPanorama"
+            className="yukon-panorama"
+            data-yukon-mood={mood}
+            onPointerMove={handlePointerMove}
+            onPointerLeave={handlePointerLeave}
+            onPointerCancel={handlePointerLeave}
+          >
           {/* Full-Bleed Animated Yukon Panoramic Illustration (Material You Token-Driven) */}
           <svg
             className="yukon-svg-bg"
@@ -568,11 +593,8 @@ export default function YukonExperience({ chapters, moodLabels }: YukonExperienc
             <div className="yukon-intro">
               <span className="yukon-kicker">Yukon, Canadá</span>
               <h2 id="yukonHeading" className="yukon-title">
-                Experiência em Yukon: resiliência em território aberto
+                Experiência em Yukon
               </h2>
-              <p className="yukon-lead">
-                Vastidão exploratória, sobriedade e software sólido para ambientes reais.
-              </p>
             </div>
 
             <div className="yukon-hud-cluster">
@@ -639,87 +661,116 @@ export default function YukonExperience({ chapters, moodLabels }: YukonExperienc
             </div>
           </div>
 
-          {/* Dock Inferior de Cards Translúcidos Incorporados à Imagem de Yukon */}
-          <div className="yukon-dock-wrap">
-            {/* Seletor compacto mobile para navegar rapidamente entre os 4 marcos */}
-            <div className="yukon-mobile-tabs" role="group" aria-label="Selecionar etapa em Yukon">
-              {chapters.map((chapter, idx) => {
-                const isActive = idx === activeIdx;
-                const stepLabel = String(idx + 1).padStart(2, '0');
-                return (
-                  <button
-                    key={`tab-${chapter.id ?? chapter.index ?? idx}`}
-                    type="button"
-                    aria-pressed={isActive}
-                    aria-label={`Etapa ${stepLabel}: ${chapter.title}`}
-                    className={`yukon-mobile-tab${isActive ? ' is-active' : ''}`}
-                    onClick={() => handleSelectChapter(idx, true)}
-                  >
-                    {stepLabel}
-                  </button>
-                );
-              })}
-            </div>
+          {/* Nome simples do ponto atual surgindo de baixo para cima na base da paisagem */}
+          <div className="yukon-rising-stage">
+            <AnimatePresence mode="wait" initial={false}>
+              {activeChapter && (
+                <motion.div
+                  key={activeIdx}
+                  className="yukon-rising-title"
+                  initial={motionPaused ? { opacity: 1, y: 0 } : { opacity: 0, y: 26 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={motionPaused ? { opacity: 0, y: 0 } : { opacity: 0, y: -16 }}
+                  transition={{
+                    duration: motionPaused ? 0 : 0.34,
+                    ease: [0.2, 0, 0, 1],
+                  }}
+                >
+                  <span className="yukon-rising-ref">{activeStepLabel}</span>
+                  <span className="yukon-rising-name">{activeChapter.title}</span>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+          </div>
 
-            <div className="yukon-chapters" aria-label="Marcos da jornada em Yukon">
-              {chapters.map((chapter, idx) => {
-                const isActive = idx === activeIdx;
-                const isLast = idx === chapters.length - 1;
-                const kickerText =
-                  chapter.kicker ?? chapter.tag ?? `${String(idx + 1).padStart(2, '0')}`;
+          <div className="yukon-mobile-tabs" role="group" aria-label="Selecionar etapa em Yukon">
+            {chapters.map((chapter, idx) => {
+              const isActive = idx === activeIdx;
+              const stepLabel = String(idx + 1).padStart(2, '0');
+              return (
+                <button
+                  key={`tab-${chapter.id ?? chapter.index ?? idx}`}
+                  type="button"
+                  aria-pressed={isActive}
+                  aria-label={`Etapa ${stepLabel}: ${chapter.title}`}
+                  className={`yukon-mobile-tab${isActive ? ' is-active' : ''}`}
+                  onClick={() => handleSelectChapter(idx, true)}
+                >
+                  {stepLabel}
+                </button>
+              );
+            })}
+          </div>
+        </div>
 
-                return (
-                  <motion.article
-                    key={chapter.id ?? chapter.index ?? chapter.title}
-                    className={`yukon-chapter${isActive ? ' is-active' : ''}`}
-                    data-yukon-chapter={idx}
-                    aria-current={isActive ? 'step' : undefined}
-                    initial={false}
-                    animate={{
-                      opacity: 1,
-                      y: isActive || motionPaused ? 0 : 3,
-                    }}
-                    transition={{
-                      duration: motionPaused ? 0 : 0.34,
-                      ease: [0.2, 0, 0, 1],
-                    }}
-                    onClick={(e) => {
-                      if ((e.target as HTMLElement).closest('a, button')) return;
-                      handleSelectChapter(idx, true);
-                    }}
-                  >
-                    <div className="yukon-chapter-top">
-                      <span className="yukon-chapter-kicker">{kickerText}</span>
-                      <span className="yukon-chapter-pulse" aria-hidden="true" />
-                    </div>
+        {/* Faixa abaixo da paisagem: 4 cards numerados */}
+        <div className="yukon-below-wrap">
+          <div
+            className="yukon-chapters yukon-below-cards"
+            aria-label="Marcos da jornada em Yukon"
+          >
+            {chapters.map((chapter, idx) => {
+              const isActive = idx === activeIdx;
+              const isLast = idx === chapters.length - 1;
+              const stepLabel = String(idx + 1).padStart(2, '0');
+              const rawKicker = chapter.kicker ?? chapter.tag ?? '';
+              const kickerParts = rawKicker.split('·').map((part) => part.trim());
+              const kickerSuffix =
+                kickerParts.length > 1
+                  ? kickerParts.slice(1).join(' · ')
+                  : rawKicker && rawKicker !== stepLabel
+                    ? rawKicker
+                    : '';
 
-                    <h3 className="yukon-chapter-title">
-                      <button
-                        type="button"
-                        className="yukon-chapter-trigger"
-                        aria-pressed={isActive}
-                        onClick={() => handleSelectChapter(idx, true)}
+              return (
+                <article
+                  key={chapter.id ?? chapter.index ?? chapter.title}
+                  ref={(el) => {
+                    cardRefs.current[idx] = el;
+                  }}
+                  className={`yukon-chapter${isActive ? ' is-active' : ''}`}
+                  data-yukon-chapter={idx}
+                  aria-current={isActive ? 'step' : undefined}
+                  onClick={(e) => {
+                    if ((e.target as HTMLElement).closest('a, button')) return;
+                    handleSelectChapter(idx, true);
+                  }}
+                >
+                  <div className="yukon-chapter-top">
+                    <span className="yukon-chapter-kicker">
+                      <span className="yukon-chapter-num">{stepLabel}</span>
+                      {kickerSuffix && <span className="yukon-chapter-tag">{kickerSuffix}</span>}
+                    </span>
+                    <span className="yukon-chapter-pulse" aria-hidden="true" />
+                  </div>
+
+                  <h3 className="yukon-chapter-title">
+                    <button
+                      type="button"
+                      className="yukon-chapter-trigger"
+                      aria-pressed={isActive}
+                      onClick={() => handleSelectChapter(idx, true)}
+                    >
+                      {chapter.title}
+                    </button>
+                  </h3>
+
+                  <p className="yukon-chapter-body">{chapter.body}</p>
+
+                  {isLast && isActive && (
+                    <div className="yukon-chapter-actions">
+                      <a
+                        href={chapter.ctaHref ?? '/extensoes/'}
+                        className="yukon-chapter-link"
                       >
-                        {chapter.title}
-                      </button>
-                    </h3>
-
-                    <p className="yukon-chapter-body">{chapter.body}</p>
-
-                    {isLast && isActive && (
-                      <div className="yukon-chapter-actions">
-                        <a
-                          href={chapter.ctaHref ?? '/extensoes/'}
-                          className="btn btn-tonal btn-sm"
-                        >
-                          {chapter.ctaLabel ?? 'Explorar Extensões →'}
-                        </a>
-                      </div>
-                    )}
-                  </motion.article>
-                );
-              })}
-            </div>
+                        {chapter.ctaLabel ?? 'Explorar Extensões →'}
+                      </a>
+                    </div>
+                  )}
+                </article>
+              );
+            })}
           </div>
         </div>
       </div>

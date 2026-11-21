@@ -9,10 +9,13 @@ import {
 } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
-export interface SplitButtonItem {
+export interface NavItem {
   label: string;
   href: string;
+  external?: boolean;
 }
+
+export type SplitButtonItem = NavItem;
 
 export interface SplitButtonProps {
   mainLabel: string;
@@ -220,6 +223,8 @@ export default function SplitButton({ mainLabel, mainHref, items }: SplitButtonP
                       itemRefs.current[idx] = el;
                     }}
                     href={item.href}
+                    target={item.external ? '_blank' : undefined}
+                    rel={item.external ? 'noopener noreferrer' : undefined}
                     onClick={() => closeMenu(false)}
                   >
                     {item.label}
