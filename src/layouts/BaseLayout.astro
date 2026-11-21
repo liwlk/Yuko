@@ -29,7 +29,7 @@ const {
 
 const siteOrigin = Astro.site?.toString().replace(/\/$/, '') ?? 'https://yuko-one.vercel.app';
 const canonicalUrl = new URL(currentPath || '/', `${siteOrigin}/`).toString();
-const ogImageUrl = new URL('/assets/og-preview.png', `${siteOrigin}/`).toString();
+const ogImageUrl = new URL('/assets/og-yuko-v2.png', `${siteOrigin}/`).toString();
 ---
 
 <!DOCTYPE html>
