@@ -74,6 +74,23 @@ function clamp(value: number, min: number, max: number): number {
   return Math.max(min, Math.min(max, value));
 }
 
+function buildLinearWavyPath(
+  startX: number,
+  endX: number,
+  cy: number,
+  amplitude: number,
+  wavelength: number
+): string {
+  const parts: string[] = [];
+  for (let x = startX; x < endX; x += 2) {
+    const y = cy + Math.sin(((x - startX) / wavelength) * Math.PI * 2) * amplitude;
+    parts.push(`${parts.length === 0 ? 'M' : 'L'}${x.toFixed(1)} ${y.toFixed(2)}`);
+  }
+  const endY = cy + Math.sin(((endX - startX) / wavelength) * Math.PI * 2) * amplitude;
+  parts.push(`L${endX.toFixed(1)} ${endY.toFixed(2)}`);
+  return parts.join(' ');
+}
+
 function formatDeadlineRange(minDays: number, maxDays: number): { short: string; full: string } {
   const daysFull = `${minDays}–${maxDays} dias úteis`;
   if (maxDays <= 15) {
@@ -476,6 +493,8 @@ export default function YukoOrderSimulator({
     'resgate-sistema': null,
   });
   const copyTimerRef = useRef<number | null>(null);
+  const wavyTrackRef = useRef<HTMLDivElement | null>(null);
+  const [wavyWidth, setWavyWidth] = useState<number>(420);
 
   useEffect(() => {
     return () => {
@@ -492,6 +511,92 @@ export default function YukoOrderSimulator({
   const estimate = useMemo(() => {
     return calculateEstimate(selectedSolution, scopeSize, situation, involvesClientData);
   }, [selectedSolution, scopeSize, situation, involvesClientData]);
+
+  const targetWavePct = clamp(Math.round((estimate.floorPct + estimate.ceilingPct) / 2), 22, 82);
+  const [animatedWavePct, setAnimatedWavePct] = useState<number>(targetWavePct);
+  const wavePctRef = useRef<number>(targetWavePct);
+
+  useEffect(() => {
+    const el = wavyTrackRef.current;
+    if (!el || typeof window === 'undefined') {
+      return;
+    }
+    const updateWidth = () => {
+      if (el.clientWidth > 0) {
+        setWavyWidth(el.clientWidth);
+      }
+    };
+    updateWidth();
+    if (typeof ResizeObserver === 'undefined') {
+      return;
+    }
+    const ro = new ResizeObserver(updateWidth);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [perspective]);
+
+  useEffect(() => {
+    const startPct = wavePctRef.current;
+    if (startPct === targetWavePct) {
+      return;
+    }
+    if (typeof window === 'undefined') {
+      wavePctRef.current = targetWavePct;
+      setAnimatedWavePct(targetWavePct);
+      return;
+    }
+    const calmMode =
+      document.documentElement.dataset.motion === 'calm' ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (calmMode) {
+      wavePctRef.current = targetWavePct;
+      setAnimatedWavePct(targetWavePct);
+      return;
+    }
+
+    let rafId = 0;
+    const duration = 260;
+    const startTime = performance.now();
+
+    const step = (now: number) => {
+      const t = Math.min(1, (now - startTime) / duration);
+      const eased = 1 - Math.pow(1 - t, 3);
+      const next = startPct + (targetWavePct - startPct) * eased;
+      wavePctRef.current = next;
+      setAnimatedWavePct(next);
+      if (t < 1) {
+        rafId = window.requestAnimationFrame(step);
+      }
+    };
+
+    rafId = window.requestAnimationFrame(step);
+    return () => window.cancelAnimationFrame(rafId);
+  }, [targetWavePct]);
+
+  const wavyGeometry = useMemo(() => {
+    const stroke = 4.6;
+    const height = 18;
+    const cy = height / 2;
+    const startX = stroke / 2;
+    const endCapX = Math.max(startX + 60, wavyWidth - stroke / 2);
+    const gap = 12;
+    const waveEndX = clamp(
+      startX + ((endCapX - startX) * animatedWavePct) / 100,
+      startX + 40,
+      endCapX - gap - 22
+    );
+    const trackStartX = waveEndX + gap;
+    const wavePath = buildLinearWavyPath(startX, waveEndX, cy, 3.8, 48);
+    return {
+      width: Math.max(120, wavyWidth),
+      height,
+      cy,
+      stroke,
+      wavePath,
+      trackStartX,
+      endCapX,
+    };
+  }, [wavyWidth, animatedWavePct]);
 
   const orderCode = useMemo(() => {
     return buildOrderCode(selectedSolution.id, scopeSize, estimate.costLevel);
@@ -896,20 +1001,40 @@ export default function YukoOrderSimulator({
                   <span className="sim-cost-end">Teto</span>
                 </div>
                 <div
-                  className="sim-cost-track"
+                  ref={wavyTrackRef}
+                  className="sim-cost-wavy"
                   role="img"
                   aria-label={`Faixa do nível de custo de ${estimate.costFloorLabel} até ${estimate.costCeilingLabel}`}
                 >
-                  <div
-                    className="sim-cost-range"
-                    style={{
-                      left: `${estimate.floorPct}%`,
-                      width: `${Math.max(18, estimate.ceilingPct - estimate.floorPct)}%`,
-                    }}
+                  <svg
+                    className="sim-wavy-svg"
+                    viewBox={`0 0 ${wavyGeometry.width} ${wavyGeometry.height}`}
+                    aria-hidden="true"
                   >
-                    <span className="sim-cost-dot is-floor" aria-hidden="true" />
-                    <span className="sim-cost-dot is-ceiling" aria-hidden="true" />
-                  </div>
+                    <line
+                      className="sim-wavy-track"
+                      x1={wavyGeometry.trackStartX}
+                      y1={wavyGeometry.cy}
+                      x2={wavyGeometry.endCapX}
+                      y2={wavyGeometry.cy}
+                      strokeWidth={wavyGeometry.stroke}
+                      strokeLinecap="round"
+                    />
+                    <path
+                      className="sim-wavy-active"
+                      d={wavyGeometry.wavePath}
+                      fill="none"
+                      strokeWidth={wavyGeometry.stroke}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <circle
+                      className="sim-wavy-stop"
+                      cx={wavyGeometry.endCapX}
+                      cy={wavyGeometry.cy}
+                      r={wavyGeometry.stroke / 2}
+                    />
+                  </svg>
                 </div>
               </div>
             )}
