@@ -3,6 +3,7 @@ import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
+  site: 'https://yuko-one.vercel.app',
   integrations: [react()],
   output: 'static',
   build: {
