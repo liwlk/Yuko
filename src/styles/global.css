@@ -2869,12 +2869,12 @@ main {
     min-width: 0;
   }
 
-  /* Cards compactos horizontais de solução em grade 2 colunas */
+  /* Cards informativos de solução em grade 2 colunas (1 coluna no mobile) */
   .sim-solutions-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-auto-rows: 1fr;
-    gap: 8px;
+    gap: 10px;
     min-width: 0;
   }
 
@@ -2883,13 +2883,14 @@ main {
     -webkit-appearance: none;
     width: 100%;
     height: 100%;
-    min-height: 48px;
+    min-height: 76px;
     text-align: left;
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
-    padding: 9px 12px;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 7px;
+    padding: 11px 13px;
     border-radius: 16px;
     background-color: var(--md-surface-container-lowest);
     border: 1.5px solid var(--md-outline-variant);
@@ -2906,8 +2907,8 @@ main {
 
   .sim-solution-card:hover:not(.is-selected):not([aria-pressed="true"]) {
     transform: translateY(-2px);
-    background-color: var(--md-surface-container);
-    border-color: color-mix(in srgb, var(--md-primary) 48%, var(--md-outline-variant));
+    background-color: color-mix(in srgb, var(--md-primary-container) 16%, var(--md-surface-container-lowest));
+    border-color: color-mix(in srgb, var(--md-primary) 54%, var(--md-outline-variant));
     box-shadow: 0 10px 22px -16px var(--md-shadow-tint);
   }
 
@@ -2925,8 +2926,17 @@ main {
   }
 
   .sim-solution-card:focus-visible {
-    outline: 2px solid var(--md-primary);
+    outline: 2.5px solid var(--md-primary);
     outline-offset: 2px;
+    border-color: var(--md-primary);
+  }
+
+  .sim-solution-head {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 9px;
+    min-width: 0;
   }
 
   .sim-solution-icon {
@@ -2943,6 +2953,10 @@ main {
                 transform var(--dur-med) var(--ease-spring);
   }
 
+  .sim-solution-card:hover:not(.is-selected):not([aria-pressed="true"]) .sim-solution-icon {
+    background-color: color-mix(in srgb, var(--md-primary-container) 55%, var(--md-surface-container));
+  }
+
   .sim-solution-card.is-selected .sim-solution-icon,
   .sim-solution-card[aria-pressed="true"] .sim-solution-icon {
     background-color: var(--md-primary);
@@ -2956,22 +2970,46 @@ main {
     min-width: 0;
     margin: 0;
     font-family: var(--font-display);
-    font-size: 0.86rem;
+    font-size: 0.87rem;
     font-weight: 700;
     letter-spacing: -0.015em;
-    line-height: 1.22;
+    line-height: 1.24;
     color: inherit;
     overflow-wrap: break-word;
   }
 
-  @media (max-width: 480px) {
+  .sim-solution-desc {
+    display: block;
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 0.775rem;
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--md-on-surface-variant);
+    overflow-wrap: break-word;
+    transition: color var(--dur-fast) var(--ease-standard);
+  }
+
+  .sim-solution-card:hover:not(.is-selected):not([aria-pressed="true"]) .sim-solution-desc {
+    color: var(--md-on-surface);
+  }
+
+  .sim-solution-card.is-selected .sim-solution-desc,
+  .sim-solution-card[aria-pressed="true"] .sim-solution-desc {
+    color: color-mix(in srgb, var(--md-on-primary-container) 88%, transparent);
+  }
+
+  @media (max-width: 599.98px) {
     .sim-solutions-grid {
-      gap: 7px;
+      grid-template-columns: minmax(0, 1fr);
+      grid-auto-rows: auto;
+      gap: 8px;
     }
 
     .sim-solution-card {
-      gap: 8px;
-      padding: 8px 10px;
+      min-height: 64px;
+      gap: 6px;
+      padding: 11px 13px;
       border-radius: 14px;
     }
 
@@ -2982,7 +3020,12 @@ main {
     }
 
     .sim-solution-title {
-      font-size: 0.81rem;
+      font-size: 0.86rem;
+    }
+
+    .sim-solution-desc {
+      font-size: 0.78rem;
+      line-height: 1.42;
     }
   }
 

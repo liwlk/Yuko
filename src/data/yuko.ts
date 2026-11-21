@@ -843,6 +843,7 @@ export type SimulatorSolutionId =
 export interface SimulatorSolutionCard {
   id: SimulatorSolutionId;
   shortTitle: string;
+  categoryDescription: string;
   profileTitle: string;
   profileBadge: string;
   shortSummary: string;
@@ -878,6 +879,7 @@ export const SIMULATOR_SOLUTIONS: SimulatorSolutionCard[] = [
   {
     id: 'site-presenca',
     shortTitle: 'Site & Presença',
+    categoryDescription: 'Crie ou melhore seu site e fortaleça sua presença digital.',
     profileTitle: 'Presença com Respaldo',
     profileBadge: 'Acolhimento Digital',
     shortSummary: 'Negócio no ar, rápido e no seu domínio.',
@@ -896,6 +898,7 @@ export const SIMULATOR_SOLUTIONS: SimulatorSolutionCard[] = [
   {
     id: 'agenda-pedidos',
     shortTitle: 'Agenda & Pedidos',
+    categoryDescription: 'Organize agendamentos, reservas e pedidos em um fluxo mais simples.',
     profileTitle: 'Atendimento sem Atrito',
     profileBadge: 'Ritmo de Balcão',
     shortSummary: 'Horários e pedidos organizados sem perder mensagens.',
@@ -914,6 +917,7 @@ export const SIMULATOR_SOLUTIONS: SimulatorSolutionCard[] = [
   {
     id: 'cadastro-rotina',
     shortTitle: 'Rotina Interna',
+    categoryDescription: 'Simplifique tarefas, processos e controles do dia a dia.',
     profileTitle: 'Rotina Leve & Segura',
     profileBadge: 'Gestão Central',
     shortSummary: 'Clientes, ordens e estoque em um só lugar.',
@@ -932,6 +936,7 @@ export const SIMULATOR_SOLUTIONS: SimulatorSolutionCard[] = [
   {
     id: 'automacao-ferramentas',
     shortTitle: 'Automações',
+    categoryDescription: 'Conecte ferramentas e automatize tarefas repetitivas.',
     profileTitle: 'Operação Conectada',
     profileBadge: 'Ponte Enxuta',
     shortSummary: 'Conecta formulários, planilhas e avisos sem retrabalho.',
@@ -950,6 +955,7 @@ export const SIMULATOR_SOLUTIONS: SimulatorSolutionCard[] = [
   {
     id: 'casa-em-ordem',
     shortTitle: 'Segurança & LGPD',
+    categoryDescription: 'Proteja informações, acessos e práticas de tratamento de dados.',
     profileTitle: 'Base Protegida (LGPD)',
     profileBadge: 'Cuidado & Sigilo',
     shortSummary: 'Senhas, cópias de segurança e coleta sob LGPD.',
@@ -968,6 +974,8 @@ export const SIMULATOR_SOLUTIONS: SimulatorSolutionCard[] = [
   {
     id: 'resgate-sistema',
     shortTitle: 'Resgate',
+    categoryDescription:
+      'Recupere ou estabilize soluções digitais que apresentam problemas ou precisam de continuidade.',
     profileTitle: 'Retomada Assistida',
     profileBadge: 'Continuidade Ativa',
     shortSummary: 'Retoma o sistema parado com suporte contínuo.',

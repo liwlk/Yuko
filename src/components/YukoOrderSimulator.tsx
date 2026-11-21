@@ -466,6 +466,15 @@ export default function YukoOrderSimulator({
     cliente: null,
     desenvolvedor: null,
   });
+  const solutionsGridRef = useRef<HTMLDivElement | null>(null);
+  const solutionRefs = useRef<Record<SimulatorSolutionId, HTMLButtonElement | null>>({
+    'site-presenca': null,
+    'agenda-pedidos': null,
+    'cadastro-rotina': null,
+    'automacao-ferramentas': null,
+    'casa-em-ordem': null,
+    'resgate-sistema': null,
+  });
   const copyTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
@@ -522,6 +531,49 @@ export default function YukoOrderSimulator({
       setSituation('resgate');
     } else if (nextId === 'casa-em-ordem') {
       setInvolvesClientData(true);
+    }
+  };
+
+  const handleSolutionKeyDown = (e: KeyboardEvent<HTMLButtonElement>, currentIndex: number) => {
+    if (
+      e.key !== 'ArrowRight' &&
+      e.key !== 'ArrowLeft' &&
+      e.key !== 'ArrowDown' &&
+      e.key !== 'ArrowUp' &&
+      e.key !== 'Home' &&
+      e.key !== 'End'
+    ) {
+      return;
+    }
+    e.preventDefault();
+    const total = SIMULATOR_SOLUTIONS.length;
+    let columns = 2;
+    if (solutionsGridRef.current && typeof window !== 'undefined') {
+      const colTemplate = window
+        .getComputedStyle(solutionsGridRef.current)
+        .gridTemplateColumns.trim();
+      const count = colTemplate ? colTemplate.split(/\s+/).length : 2;
+      if (count >= 1 && count <= total) {
+        columns = count;
+      }
+    }
+
+    const nextIndex =
+      e.key === 'Home'
+        ? 0
+        : e.key === 'End'
+          ? total - 1
+          : e.key === 'ArrowRight'
+            ? (currentIndex + 1) % total
+            : e.key === 'ArrowLeft'
+              ? (currentIndex - 1 + total) % total
+              : e.key === 'ArrowDown'
+                ? (currentIndex + columns) % total
+                : (currentIndex - columns + total) % total;
+
+    const nextItem = SIMULATOR_SOLUTIONS[nextIndex];
+    if (nextItem) {
+      solutionRefs.current[nextItem.id]?.focus();
     }
   };
 
@@ -683,24 +735,40 @@ export default function YukoOrderSimulator({
         {/* Esquerda: Cards horizontais compactos + faixa única de ajuste */}
         <div className="sim-controls">
           <div
+            ref={solutionsGridRef}
             className="sim-solutions-grid"
             role="group"
-            aria-label="Escolha o que deseja simular"
+            aria-label="Escolha a categoria de serviço"
           >
-            {SIMULATOR_SOLUTIONS.map((item) => {
+            {SIMULATOR_SOLUTIONS.map((item, idx) => {
               const isSelected = item.id === solutionId;
+              const titleId = `sim-sol-title-${item.id}-${uid}`;
+              const descId = `sim-sol-desc-${item.id}-${uid}`;
               return (
                 <button
                   key={item.id}
+                  ref={(el) => {
+                    solutionRefs.current[item.id] = el;
+                  }}
                   type="button"
                   aria-pressed={isSelected}
+                  aria-labelledby={titleId}
+                  aria-describedby={descId}
                   className={`sim-solution-card${isSelected ? ' is-selected' : ''}`}
                   onClick={() => handleSelectSolution(item.id)}
+                  onKeyDown={(e) => handleSolutionKeyDown(e, idx)}
                 >
-                  <span className="sim-solution-icon" aria-hidden="true">
-                    <SolutionIcon id={item.id} size={18} />
+                  <span className="sim-solution-head">
+                    <span className="sim-solution-icon" aria-hidden="true">
+                      <SolutionIcon id={item.id} size={18} />
+                    </span>
+                    <strong id={titleId} className="sim-solution-title">
+                      {item.shortTitle}
+                    </strong>
                   </span>
-                  <strong className="sim-solution-title">{item.shortTitle}</strong>
+                  <span id={descId} className="sim-solution-desc">
+                    {item.categoryDescription}
+                  </span>
                 </button>
               );
             })}
