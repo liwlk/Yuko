@@ -16,7 +16,7 @@ function clamp(val: number, min: number, max: number): number {
 }
 
 export default function HeroSculpture() {
-  const cardRef = useRef<HTMLElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
   const [isCalm, setIsCalm] = useState(false);
 
@@ -32,14 +32,9 @@ export default function HeroSculpture() {
   const lastScrollProgressRef = useRef(0);
 
   const writeCssVar = useCallback((name: string, value: number) => {
-    const formatted = value.toFixed(4);
     const card = cardRef.current;
     if (!card) return;
-    card.style.setProperty(name, formatted);
-    const heroEl = card.closest<HTMLElement>('.hero');
-    if (heroEl) {
-      heroEl.style.setProperty(name, formatted);
-    }
+    card.style.setProperty(name, value.toFixed(4));
   }, []);
 
   useMotionValueEvent(smoothMx, 'change', (v) => {
@@ -79,6 +74,12 @@ export default function HeroSculpture() {
     rawScroll.set(lastScrollProgressRef.current * amp);
   }, [getAmplitude, rawMx, rawMy, rawScroll, writeCssVar]);
 
+  const handleResetPointer = useCallback(() => {
+    rawPointerRef.current = { mx: 0, my: 0 };
+    rawMx.set(0);
+    rawMy.set(0);
+  }, [rawMx, rawMy]);
+
   useEffect(() => {
     if (typeof window === 'undefined' || typeof document === 'undefined') return;
 
@@ -90,10 +91,25 @@ export default function HeroSculpture() {
 
     syncMotionAttr();
 
+    if (prefersReducedMotion) {
+      return;
+    }
+
     const cardEl = cardRef.current;
-    const triggerEl = cardEl?.closest<HTMLElement>('.hero') ?? cardEl;
+    const heroEl = cardEl?.closest<HTMLElement>('.hero') ?? null;
+    const triggerEl = heroEl ?? cardEl;
 
     let stInstance: ScrollTrigger | null = null;
+    let usingNativeScrollFallback = false;
+
+    const handleNativeScroll = () => {
+      if (!triggerEl) return;
+      const rect = triggerEl.getBoundingClientRect();
+      const progress = clamp(window.scrollY / Math.max(1, rect.height), 0, 1);
+      lastScrollProgressRef.current = progress;
+      const amp = getAmplitude();
+      rawScroll.set(amp === 0 ? 0 : progress * amp);
+    };
 
     if (triggerEl) {
       try {
@@ -108,41 +124,54 @@ export default function HeroSculpture() {
             rawScroll.set(amp === 0 ? 0 : lastScrollProgressRef.current * amp);
           },
         });
+        ScrollTrigger.refresh();
       } catch {
         // Fallback safely in headless/JSDOM environments
+        usingNativeScrollFallback = true;
+        window.addEventListener('scroll', handleNativeScroll, { passive: true });
+        handleNativeScroll();
       }
     }
 
-    const handleNativeScroll = () => {
-      if (!triggerEl) return;
-      const rect = triggerEl.getBoundingClientRect();
-      const progress = clamp(window.scrollY / Math.max(1, rect.height), 0, 1);
-      lastScrollProgressRef.current = progress;
+    const handleHeroPointerMove = (e: globalThis.PointerEvent) => {
+      if (prefersReducedMotion || e.pointerType === 'touch' || !heroEl) return;
+      if (cardEl && e.target instanceof Node && cardEl.contains(e.target)) return;
+      const rect = heroEl.getBoundingClientRect();
+      const mx = clamp(((e.clientX - rect.left) / Math.max(1, rect.width)) * 2 - 1, -1, 1);
+      const my = clamp(((e.clientY - rect.top) / Math.max(1, rect.height)) * 2 - 1, -1, 1);
+      rawPointerRef.current = { mx, my };
       const amp = getAmplitude();
-      rawScroll.set(amp === 0 ? 0 : progress * amp);
+      rawMx.set(mx * amp);
+      rawMy.set(my * amp);
     };
 
-    const handleResetPointer = () => {
-      rawPointerRef.current = { mx: 0, my: 0 };
-      rawMx.set(0);
-      rawMy.set(0);
-    };
+    if (heroEl && heroEl !== cardEl) {
+      heroEl.addEventListener('pointermove', handleHeroPointerMove, { passive: true });
+      heroEl.addEventListener('pointerleave', handleResetPointer);
+      heroEl.addEventListener('pointercancel', handleResetPointer);
+    }
 
-    window.addEventListener('scroll', handleNativeScroll, { passive: true });
     window.addEventListener('blur', handleResetPointer);
     window.addEventListener('yuko:motion-change', syncMotionAttr);
     document.addEventListener('astro:after-swap', syncMotionAttr);
 
     return () => {
       stInstance?.kill();
-      window.removeEventListener('scroll', handleNativeScroll);
+      if (heroEl && heroEl !== cardEl) {
+        heroEl.removeEventListener('pointermove', handleHeroPointerMove);
+        heroEl.removeEventListener('pointerleave', handleResetPointer);
+        heroEl.removeEventListener('pointercancel', handleResetPointer);
+      }
+      if (usingNativeScrollFallback) {
+        window.removeEventListener('scroll', handleNativeScroll);
+      }
       window.removeEventListener('blur', handleResetPointer);
       window.removeEventListener('yuko:motion-change', syncMotionAttr);
       document.removeEventListener('astro:after-swap', syncMotionAttr);
     };
-  }, [getAmplitude, rawMx, rawMy, rawScroll, syncTargets]);
+  }, [getAmplitude, handleResetPointer, prefersReducedMotion, rawMx, rawMy, rawScroll, syncTargets]);
 
-  const handlePointerMove = (e: PointerEvent<HTMLElement>) => {
+  const handlePointerMove = (e: PointerEvent<HTMLDivElement>) => {
     if (prefersReducedMotion || e.pointerType === 'touch') return;
     const card = cardRef.current;
     if (!card) return;
@@ -155,16 +184,18 @@ export default function HeroSculpture() {
     rawMy.set(my * amp);
   };
 
-  const handlePointerLeave = () => {
-    rawPointerRef.current = { mx: 0, my: 0 };
-    rawMx.set(0);
-    rawMy.set(0);
+  const handlePointerLeave = (e: PointerEvent<HTMLDivElement>) => {
+    const heroEl = cardRef.current?.closest<HTMLElement>('.hero');
+    if (heroEl && e.relatedTarget instanceof Node && heroEl.contains(e.relatedTarget)) {
+      return;
+    }
+    handleResetPointer();
   };
 
   const disableCardHover = Boolean(prefersReducedMotion) || isCalm;
 
   return (
-    <motion.aside
+    <motion.div
       ref={cardRef}
       className="hero-art-card"
       aria-label="Ilustração institucional da Yuko"
@@ -172,7 +203,7 @@ export default function HeroSculpture() {
       transition={{ type: 'spring', stiffness: 360, damping: 28 }}
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
-      onPointerCancel={handlePointerLeave}
+      onPointerCancel={handleResetPointer}
     >
       <figure className="hero-art-frame">
         <svg
@@ -213,6 +244,33 @@ export default function HeroSculpture() {
 
           <rect width="640" height="480" fill="url(#heroBgGrad)" />
 
+          {/* Minimalist Architectural Grid Lines */}
+          <g
+            className="hero-minimal-grid"
+            style={{
+              transformBox: 'fill-box',
+              transformOrigin: 'center',
+              willChange: 'transform',
+              transition: 'transform 220ms var(--ease-standard)',
+              transform: disableCardHover
+                ? 'none'
+                : 'translate3d(calc(var(--hero-mx, 0) * 3px), calc(var(--hero-my, 0) * 3px + var(--hero-scroll, 0) * -8px), 0)',
+            }}
+          >
+            <g stroke="var(--md-outline-variant)" strokeWidth="1" opacity="0.38">
+              <line x1="160" y1="28" x2="160" y2="452" />
+              <line x1="320" y1="20" x2="320" y2="460" strokeDasharray="3 7" />
+              <line x1="480" y1="28" x2="480" y2="452" />
+              <line x1="36" y1="120" x2="604" y2="120" />
+              <line x1="28" y1="221" x2="612" y2="221" strokeDasharray="3 7" />
+              <line x1="36" y1="322" x2="604" y2="322" />
+            </g>
+            <g stroke="var(--md-primary)" strokeWidth="1.25" opacity="0.28">
+              <path d="M154 120H166M160 114V126" />
+              <path d="M474 322H486M480 316V328" />
+            </g>
+          </g>
+
           {/* Subtle Architectural Arches */}
           <path
             className="hero-arch-left"
@@ -238,6 +296,50 @@ export default function HeroSculpture() {
             fill="var(--md-secondary-container)"
             opacity="0.52"
           />
+
+          {/* Subtle Outer Geometric Orbit */}
+          <g transform="translate(320 221)">
+            <g
+              className="hero-outer-orbit"
+              style={{
+                transformBox: 'fill-box',
+                transformOrigin: 'center',
+                willChange: 'transform',
+                transition: 'transform 220ms var(--ease-standard)',
+                transform: disableCardHover
+                  ? 'none'
+                  : 'translate3d(calc(var(--hero-mx, 0) * -5px), calc(var(--hero-my, 0) * -5px + var(--hero-scroll, 0) * -12px), 0) rotate(calc(var(--hero-scroll, 0) * 24deg + var(--hero-mx, 0) * 6deg))',
+              }}
+            >
+              <circle
+                className="hero-ambient-ring"
+                cx="0"
+                cy="0"
+                r="154"
+                stroke="var(--md-outline-variant)"
+                strokeWidth="1.25"
+              />
+              <path
+                d="M-126 -116A171 171 0 0 1 118 -124M132 108A171 171 0 0 1 -116 125"
+                stroke="var(--md-outline)"
+                strokeWidth="1"
+                strokeLinecap="round"
+                opacity="0.34"
+              />
+              <circle cx="110" cy="-108" r="4.5" fill="var(--md-primary)" opacity="0.72" />
+              <circle cx="-136" cy="72" r="3.5" fill="var(--md-tertiary)" opacity="0.72" />
+              <rect
+                x="-3"
+                y="-157"
+                width="6"
+                height="6"
+                rx="1.5"
+                transform="rotate(45 0 -154)"
+                fill="var(--md-secondary)"
+                opacity="0.6"
+              />
+            </g>
+          </g>
 
           {/* Central 12-Petal Scalloped Medallion */}
           <g transform="translate(320 228)">
@@ -388,6 +490,6 @@ export default function HeroSculpture() {
           Yuko Dev &amp; Make
         </a>
       </div>
-    </motion.aside>
+    </motion.div>
   );
 }

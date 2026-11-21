@@ -8,6 +8,8 @@ import {
   REGISTRY_COL_A,
   REGISTRY_COL_B,
 } from '../data/yuko';
+const triageColA = TRIAGE_CRITERIA.slice(0, 2);
+const triageColB = TRIAGE_CRITERIA.slice(2);
 ---
 
 <BaseLayout
@@ -20,16 +22,12 @@ import {
 >
   <section class="sub-hero">
     <div class="container">
-      <div class="hero-eyebrow">
-        <span>Núcleo Operacional</span>
-        <span aria-hidden="true">·</span>
-        <span>Entrega Assistida</span>
-      </div>
+      <div class="section-kicker">Núcleo Operacional</div>
       <h1 class="sub-hero-title">
         O <span class="accent-word">Ciclo</span> de Entrega Assistida
       </h1>
       <p class="hero-lead">
-        Nenhuma solução chega à microempresa sem passar por escopo claro, revisão por múltiplos pares, homologação em testes e suporte nominal definido.
+        Escopo claro, revisão por múltiplos pares, homologação e suporte nominal em seis etapas contínuas.
       </p>
       <div class="hero-actions" style="margin-bottom:0">
         <a href="#etapas" class="btn btn-primary">As 6 Etapas</a>
@@ -47,29 +45,40 @@ import {
         <h2 class="section-title">Seis etapas do acolhimento à entrega</h2>
       </div>
 
-      <div class="grid-3">
+      <div class="grid-3 pipeline-grid">
         {CYCLE_STAGES.map((stage) => (
           <article class={stage.tone === 'default' ? 'm3-card' : `m3-card ${stage.tone}`}>
+            <span class="stage-step-badge">{stage.code}</span>
             <div>
-              <h3>{stage.title}</h3>
+              <h3 style="margin-bottom:8px">{stage.title}</h3>
               <p>{stage.description}</p>
             </div>
-            <span class="card-code">{stage.code}</span>
           </article>
         ))}
       </div>
 
       <div class="lab-panel" style="margin-top:24px">
         <h3 style="margin-bottom:14px">Critérios de Triagem e Priorização</h3>
-        <ul class="clean-list">
-          {TRIAGE_CRITERIA.map((criterion) => (
-            <li>
-              <span>
-                <strong>{criterion.title}:</strong> {criterion.description}
-              </span>
-            </li>
-          ))}
-        </ul>
+        <div class="grid-2">
+          <ul class="clean-list">
+            {triageColA.map((criterion) => (
+              <li>
+                <span>
+                  <strong>{criterion.title}:</strong> {criterion.description}
+                </span>
+              </li>
+            ))}
+          </ul>
+          <ul class="clean-list">
+            {triageColB.map((criterion) => (
+              <li>
+                <span>
+                  <strong>{criterion.title}:</strong> {criterion.description}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   </section>

@@ -60,7 +60,7 @@ export default function GlossaryExplorer({ terms }: GlossaryExplorerProps) {
 
   const disableSpring = Boolean(prefersReducedMotion) || isCalm;
   const cardTransition = disableSpring
-    ? { duration: 0.14 }
+    ? { duration: 0 }
     : { type: 'spring' as const, stiffness: 380, damping: 30 };
 
   return (
@@ -82,7 +82,7 @@ export default function GlossaryExplorer({ terms }: GlossaryExplorerProps) {
       </p>
 
       <div className="grid-2">
-        <AnimatePresence initial={false} mode="popLayout">
+        <AnimatePresence initial={false}>
           {filteredTerms.map((item) => {
             const toneClass =
               item.tone && item.tone !== 'default'
@@ -95,12 +95,12 @@ export default function GlossaryExplorer({ terms }: GlossaryExplorerProps) {
               <motion.article
                 key={item.term}
                 layout={!disableSpring}
-                initial={disableSpring ? { opacity: 0 } : { opacity: 0, scale: 0.96 }}
+                initial={disableSpring ? { opacity: 1 } : { opacity: 0, scale: 0.96 }}
                 animate={disableSpring ? { opacity: 1 } : { opacity: 1, scale: 1 }}
-                exit={disableSpring ? { opacity: 0 } : { opacity: 0, scale: 0.96 }}
+                exit={disableSpring ? { opacity: 1 } : { opacity: 0, scale: 0.96 }}
                 transition={cardTransition}
                 className={`m3-card${toneClass}`}
-                data-glossary-item=""
+                data-glossary-item="true"
               >
                 <h3>{item.term}</h3>
                 <p>{item.definition}</p>

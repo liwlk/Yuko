@@ -89,11 +89,13 @@ const {
     </script>
   </head>
   <body>
+    <div id="topo-pagina" aria-hidden="true"></div>
+    <div id="yukoScrollProgress" class="scroll-progress-bar" aria-hidden="true"></div>
     <a class="skip-link" href="#topo">Pular para o conteúdo</a>
 
     <TopBar currentPath={currentPath} />
 
-    <main id="topo" transition:name="yuko-stage">
+    <main id="topo" tabindex="-1" transition:name="yuko-stage">
       <slot />
     </main>
 
@@ -109,10 +111,12 @@ const {
 
     <script>
       import { initLenis } from '../scripts/lenis-manager';
+      import { initChoreography } from '../scripts/scroll-choreography';
 
       declare global {
         interface Window {
           __yukoToastReady?: boolean;
+          __yukoLifecycleBooted?: boolean;
         }
       }
 
@@ -143,13 +147,24 @@ const {
       if (!window.__yukoToastReady) {
         window.__yukoToastReady = true;
         window.addEventListener('yuko:toast', handleToastEvent);
-        document.addEventListener('yuko:toast', handleToastEvent);
-        document.addEventListener('astro:page-load', () => {
-          initLenis();
-        });
       }
 
-      initLenis();
+      if (!window.__yukoLifecycleBooted) {
+        window.__yukoLifecycleBooted = true;
+        if (document.readyState !== 'loading') {
+          initLenis();
+          initChoreography();
+        } else {
+          document.addEventListener(
+            'DOMContentLoaded',
+            () => {
+              initLenis();
+              initChoreography();
+            },
+            { once: true }
+          );
+        }
+      }
     </script>
   </body>
 </html>

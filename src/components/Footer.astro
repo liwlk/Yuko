@@ -17,12 +17,15 @@ const {
   summary,
 } = Astro.props;
 
+const normalizedPath =
+  currentPath === '/' ? '/' : currentPath.endsWith('/') ? currentPath : `${currentPath}/`;
+
 const PAGE_ANCHORS: Record<string, Array<{ href: string; label: string }>> = {
   '/': [
     { href: '#yukon', label: 'Experiência Yukon' },
     { href: '#pilares', label: 'Como funciona' },
     { href: '#atuacao', label: 'Para quem é' },
-    { href: '/manual/#glossario', label: 'Glossário' },
+    { href: '#manual', label: 'Manual v1.0' },
   ],
   '/extensoes/': [
     { href: '#fundamentos', label: 'Fundamentos' },
@@ -36,7 +39,8 @@ const PAGE_ANCHORS: Record<string, Array<{ href: string; label: string }>> = {
     { href: '#registro', label: 'Registro Formal' },
   ],
   '/governanca/': [
-    { href: '#engenharia', label: 'Engenharia & Segurança' },
+    { href: '#engenharia', label: 'Engenharia & DoD' },
+    { href: '#seguranca', label: 'Segurança' },
     { href: '#privacidade', label: 'LGPD & Mediação' },
   ],
   '/manual/': [
@@ -46,11 +50,11 @@ const PAGE_ANCHORS: Record<string, Array<{ href: string; label: string }>> = {
   ],
 };
 
-const resolvedAnchors = PAGE_ANCHORS[currentPath] ?? PAGE_ANCHORS['/'];
+const resolvedAnchors = PAGE_ANCHORS[normalizedPath] ?? PAGE_ANCHORS['/'];
 
 const defaultSummary =
   variant === 'monument'
-    ? 'Compromisso coletivo de valorização do talento técnico independente e de fortalecimento das microempresas brasileiras por meio de entrega assistida e sustentação compartilhada.'
+    ? 'Comunidade técnica brasileira que fortalece microempresas e desenvolvedores independentes com entrega assistida e suporte compartilhado.'
     : 'Comunidade técnica brasileira de desenvolvimento colaborativo e sustentação para microempresas.';
 
 const resolvedSummary = summary ?? defaultSummary;
@@ -62,41 +66,41 @@ const isMonument = variant === 'monument';
     <div class="footer-top">
       <div>
         <a href="/" class="brand">
-          <span class="brand-mark">
-            <img src="/assets/yuko-logo.jpg" alt="Logotipo da Yuko" />
-          </span>
           <span>Yuko</span>
         </a>
         <p class="footer-summary">{resolvedSummary}</p>
         {nextHref && nextLabel ? (
           <a href={nextHref} class="btn btn-primary btn-sm">{nextLabel}</a>
         ) : (
-          <a href="#topo" class="btn btn-tonal btn-sm">Voltar ao topo</a>
+          <a href="#topo-pagina" class="btn btn-tonal btn-sm">Voltar ao topo</a>
         )}
       </div>
 
       <div class="footer-cols">
         <div>
           <div class="footer-col-title">{isMonument ? 'Navegação' : 'Subpáginas'}</div>
-          <div class="footer-col-links">
+          <nav
+            class="footer-col-links"
+            aria-label={isMonument ? 'Navegação institucional' : 'Subpáginas'}
+          >
             {NAV_ITEMS.map((item) => (
               <a
                 href={item.href}
-                aria-current={currentPath === item.href ? 'page' : undefined}
+                aria-current={normalizedPath === item.href ? 'page' : undefined}
               >
                 {item.label}
               </a>
             ))}
-          </div>
+          </nav>
         </div>
 
         <div>
           <div class="footer-col-title">Nesta Página</div>
-          <div class="footer-col-links">
+          <nav class="footer-col-links" aria-label="Âncoras desta página">
             {resolvedAnchors.map((anchor) => (
               <a href={anchor.href}>{anchor.label}</a>
             ))}
-          </div>
+          </nav>
         </div>
       </div>
     </div>
@@ -126,17 +130,18 @@ const isMonument = variant === 'monument';
       <span><strong>Yuko</strong> · Manual Institucional v1.0</span>
       <div class="footer-links">
         {isMonument ? (
-          <a href="#topo">Topo</a>
+          <a href="#topo-pagina">Topo</a>
         ) : (
           <>
             {NAV_ITEMS.map((item) => (
               <a
                 href={item.href}
-                aria-current={currentPath === item.href ? 'page' : undefined}
+                aria-current={normalizedPath === item.href ? 'page' : undefined}
               >
                 {item.label}
               </a>
             ))}
+            <a href="#topo-pagina">Topo</a>
           </>
         )}
       </div>

@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from 'react';
-import { motion, useReducedMotion } from 'motion/react';
 
 export type SeedId = 'terracota' | 'botanico' | 'oceanico' | 'ameixa';
 export type ModeId = 'light' | 'dark';
@@ -58,7 +57,6 @@ function dispatchMotionChange(detail: MotionMode): void {
 }
 
 export default function ThemeControls({ seeds }: ThemeControlsProps) {
-  const prefersReducedMotion = useReducedMotion();
   const [seed, setSeed] = useState<SeedId>('terracota');
   const [mode, setMode] = useState<ModeId>('light');
   const [motionMode, setMotionMode] = useState<MotionMode>('expressive');
@@ -147,10 +145,7 @@ export default function ThemeControls({ seeds }: ThemeControlsProps) {
     );
   };
 
-  const disableSpring = Boolean(prefersReducedMotion) || motionMode === 'calm';
-  const springTransition = disableSpring
-    ? { duration: 0.16 }
-    : { type: 'spring' as const, stiffness: 460, damping: 26 };
+  const motionLabel = motionMode === 'expressive' ? 'Mola' : 'Calmo';
 
   return (
     <div className="bar-controls">
@@ -158,7 +153,7 @@ export default function ThemeControls({ seeds }: ThemeControlsProps) {
         {seeds.map((item) => {
           const isSelected = seed === item.id;
           return (
-            <motion.button
+            <button
               key={item.id}
               className="seed-dot"
               type="button"
@@ -167,25 +162,19 @@ export default function ThemeControls({ seeds }: ThemeControlsProps) {
               title={item.label}
               aria-label={`Tema ${item.label}`}
               style={{ backgroundColor: item.swatch }}
-              whileHover={disableSpring ? undefined : { scale: 1.15 }}
-              whileTap={disableSpring ? undefined : { scale: 0.92 }}
-              transition={springTransition}
               onClick={() => handleSelectSeed(item.id, item.label)}
             />
           );
         })}
       </div>
 
-      <motion.button
+      <button
         id="modeToggleBtn"
         className="icon-btn"
         type="button"
         aria-label="Alternar modo claro e escuro"
         title="Alternar Claro/Escuro"
         aria-pressed={mode === 'dark'}
-        whileHover={disableSpring ? undefined : { scale: 1.06 }}
-        whileTap={disableSpring ? undefined : { scale: 0.92 }}
-        transition={springTransition}
         onClick={handleToggleMode}
       >
         {mode === 'dark' ? (
@@ -217,48 +206,23 @@ export default function ThemeControls({ seeds }: ThemeControlsProps) {
             <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
           </svg>
         )}
-      </motion.button>
+      </button>
 
-      <motion.button
+      <button
         id="motionToggleBtn"
         className="motion-toggle-btn"
         type="button"
         aria-pressed={motionMode === 'calm'}
-        aria-label="Alternar física de movimento entre Mola e Calmo"
+        aria-label={`${motionLabel} — alternar física de movimento`}
         title={
           motionMode === 'expressive'
             ? 'Física: Mola Expressiva (clique para Calmo)'
             : 'Física: Linear Calmo (clique para Mola)'
         }
-        whileHover={disableSpring ? undefined : { scale: 1.04 }}
-        whileTap={disableSpring ? undefined : { scale: 0.94 }}
-        transition={springTransition}
         onClick={handleToggleMotion}
-        style={{
-          height: '32px',
-          padding: '0 10px',
-          borderRadius: '9999px',
-          border: '1px solid var(--md-outline-variant)',
-          backgroundColor:
-            motionMode === 'calm'
-              ? 'var(--md-secondary-container)'
-              : 'var(--md-surface-container-lowest)',
-          color:
-            motionMode === 'calm'
-              ? 'var(--md-on-secondary-container)'
-              : 'var(--md-on-surface-variant)',
-          fontSize: '0.74rem',
-          fontWeight: 700,
-          letterSpacing: '0.01em',
-          cursor: 'pointer',
-          whiteSpace: 'nowrap',
-          display: 'inline-flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
       >
-        {motionMode === 'expressive' ? 'Mola' : 'Calmo'}
-      </motion.button>
+        {motionLabel}
+      </button>
     </div>
   );
 }

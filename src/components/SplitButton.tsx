@@ -1,4 +1,12 @@
-import { useCallback, useEffect, useRef, useState, type FocusEvent, type KeyboardEvent } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  type FocusEvent,
+  type KeyboardEvent,
+} from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
 export interface SplitButtonItem {
@@ -13,6 +21,10 @@ export interface SplitButtonProps {
 }
 
 export default function SplitButton({ mainLabel, mainHref, items }: SplitButtonProps) {
+  const uid = useId();
+  const btnId = `splitMenuBtn-${uid}`;
+  const menuId = `splitMenu-${uid}`;
+
   const [isOpen, setIsOpen] = useState(false);
   const [isCalm, setIsCalm] = useState(false);
   const prefersReducedMotion = useReducedMotion();
@@ -152,12 +164,11 @@ export default function SplitButton({ mainLabel, mainHref, items }: SplitButtonP
 
       <button
         ref={triggerRef}
-        id="splitMenuBtn"
+        id={btnId}
         className="btn btn-primary split-btn-side"
         type="button"
-        aria-haspopup="menu"
         aria-expanded={isOpen}
-        aria-controls="splitMenu"
+        aria-controls={menuId}
         aria-label="Abrir atalhos das subpáginas"
         onClick={(e) => {
           e.stopPropagation();
@@ -189,10 +200,8 @@ export default function SplitButton({ mainLabel, mainHref, items }: SplitButtonP
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            id="splitMenu"
+            id={menuId}
             className="split-menu open"
-            role="menu"
-            aria-labelledby="splitMenuBtn"
             style={{ display: 'grid', animation: 'none', transformOrigin: 'top right' }}
             initial={disableSpring ? { opacity: 0 } : { opacity: 0, y: -8, scale: 0.94 }}
             animate={disableSpring ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
@@ -200,19 +209,24 @@ export default function SplitButton({ mainLabel, mainHref, items }: SplitButtonP
             transition={menuTransition}
             onKeyDown={handleMenuKeyDown}
           >
-            {items.map((item, idx) => (
-              <a
-                key={item.href + item.label}
-                ref={(el) => {
-                  itemRefs.current[idx] = el;
-                }}
-                href={item.href}
-                role="menuitem"
-                onClick={() => closeMenu(false)}
-              >
-                {item.label}
-              </a>
-            ))}
+            <ul
+              aria-labelledby={btnId}
+              style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: '4px' }}
+            >
+              {items.map((item, idx) => (
+                <li key={item.href + item.label}>
+                  <a
+                    ref={(el) => {
+                      itemRefs.current[idx] = el;
+                    }}
+                    href={item.href}
+                    onClick={() => closeMenu(false)}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </motion.div>
         )}
       </AnimatePresence>

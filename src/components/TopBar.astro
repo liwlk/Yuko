@@ -7,11 +7,13 @@ export interface Props {
 }
 
 const { currentPath } = Astro.props;
+const normalizedPath =
+  currentPath === '/' ? '/' : currentPath.endsWith('/') ? currentPath : `${currentPath}/`;
 ---
 
 <div class="top-bar-wrap">
   <header class="top-bar" aria-label="Navegação principal" transition:name="yuko-topbar">
-    <a href="/" class="brand">
+    <a href="/" class="brand" aria-label="Yuko — Página inicial">
       <span class="brand-mark" transition:name="yuko-logo">
         <img src="/assets/yuko-logo.jpg" alt="Logotipo da Yuko" />
       </span>
@@ -22,7 +24,7 @@ const { currentPath } = Astro.props;
       {NAV_ITEMS.map((item) => (
         <a
           href={item.href}
-          aria-current={currentPath === item.href ? 'page' : undefined}
+          aria-current={normalizedPath === item.href ? 'page' : undefined}
         >
           {item.label}
         </a>
@@ -36,7 +38,7 @@ const { currentPath } = Astro.props;
     {NAV_ITEMS.map((item) => (
       <a
         href={item.href}
-        aria-current={currentPath === item.href ? 'page' : undefined}
+        aria-current={normalizedPath === item.href ? 'page' : undefined}
       >
         {item.label}
       </a>

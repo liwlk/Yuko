@@ -35,6 +35,8 @@ function shouldDisableSmoothScroll(): boolean {
 }
 
 export function destroyLenis(): void {
+  const hadActiveLenis = Boolean(lenisInstance || tickerCallback);
+
   if (tickerCallback) {
     gsap.ticker.remove(tickerCallback);
     tickerCallback = null;
@@ -43,6 +45,10 @@ export function destroyLenis(): void {
   if (lenisInstance) {
     lenisInstance.destroy();
     lenisInstance = null;
+  }
+
+  if (hadActiveLenis) {
+    gsap.ticker.lagSmoothing(500, 33);
   }
 }
 
@@ -120,13 +126,17 @@ export function scrollToTarget(
     return;
   }
 
+  const immediate = Boolean(options?.immediate || shouldDisableSmoothScroll());
+
   if (lenisInstance && !shouldDisableSmoothScroll()) {
-    lenisInstance.scrollTo(elOrY, options);
+    lenisInstance.scrollTo(elOrY, {
+      ...options,
+      immediate,
+    });
     return;
   }
 
-  const behavior: ScrollBehavior =
-    options?.immediate || isReducedMotion() ? 'auto' : 'smooth';
+  const behavior: ScrollBehavior = immediate ? 'auto' : 'smooth';
   const offset = options?.offset ?? 0;
 
   if (typeof elOrY === 'number') {

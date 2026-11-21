@@ -10,13 +10,7 @@ import {
 const glossaryTerms = GLOSSARY_TERMS.map((item) => ({
   term: item.term,
   definition: item.definition,
-  tone: (item.tone === 'tonal-primary'
-    ? 'primary'
-    : item.tone === 'tonal-secondary'
-      ? 'secondary'
-      : item.tone === 'tonal-tertiary'
-        ? 'tertiary'
-        : 'default') as 'default' | 'primary' | 'secondary' | 'tertiary',
+  tone: item.tone ?? 'default',
 }));
 ---
 
@@ -30,16 +24,12 @@ const glossaryTerms = GLOSSARY_TERMS.map((item) => ({
 >
   <section class="sub-hero">
     <div class="container">
-      <div class="hero-eyebrow">
-        <span>Documento Institucional Aberto</span>
-        <span aria-hidden="true">·</span>
-        <span>Versão 1.0</span>
-      </div>
+      <div class="section-kicker">Documento Institucional Aberto · v1.0</div>
       <h1 class="sub-hero-title">
         Manual Institucional da <span class="accent-word">Yuko</span> — v1.0
       </h1>
       <p class="hero-lead">
-        Referência normativa, metodológica e operacional de uso comunitário para os projetos e iniciativas em implantação na Yuko.
+        Diretrizes públicas, ressalvas jurídicas, evolução institucional e glossário oficial da Yuko.
       </p>
       <div class="hero-actions" style="margin-bottom:0">
         <a href="#controle" class="btn btn-primary">Quadro de Controle</a>
@@ -58,15 +48,15 @@ const glossaryTerms = GLOSSARY_TERMS.map((item) => ({
       </div>
 
       <div class="control-table-wrap">
-        <table class="control-table">
+        <table class="control-table" role="table">
           <caption class="sr-only">
             Metadados normativos e de versão do Manual Institucional da Yuko v1.0
           </caption>
-          <tbody>
+          <tbody role="rowgroup">
             {CONTROL_TABLE.map((row) => (
-              <tr>
-                <th scope="row">{row.label}</th>
-                <td>{row.value}</td>
+              <tr role="row">
+                <th scope="row" role="rowheader">{row.label}</th>
+                <td role="cell">{row.value}</td>
               </tr>
             ))}
           </tbody>

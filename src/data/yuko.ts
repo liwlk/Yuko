@@ -148,7 +148,7 @@ export const COLOR_SEEDS: ColorSeed[] = [
 
 export const SPLIT_SHORTCUTS: NavItem[] = [
   { label: 'Extensões & Frentes', href: '/extensoes/' },
-  { label: 'Papéis & Rastreabilidade', href: '/ciclo/#papeis' },
+  { label: 'Papéis & Continuidade', href: '/ciclo/#papeis' },
   { label: 'Qualidade & LGPD', href: '/governanca/' },
   { label: 'Glossário Institucional', href: '/manual/#glossario' },
 ];
@@ -170,28 +170,28 @@ export const YUKON_CHAPTERS: YukonChapter[] = [
     index: 0,
     kicker: '01 · Território',
     title: 'Resiliência em ambientes exigentes',
-    body: 'Assim como o território de Yukon impõe preparo e ausência de excessos, a Yuko rejeita pilhas complexas e lock-in. Cada solução nasce enxuta, em ecossistemas maduros e testada antes da entrega.',
+    body: 'Assim como Yukon exige preparo sem excessos, a Yuko rejeita pilhas complexas e lock-in. Cada solução nasce enxuta, em ecossistemas maduros e testada antes da entrega.',
     mood: 'alvorada',
   },
   {
     index: 1,
     kicker: '02 · Campo',
     title: 'Vastidão exploratória com Yuko Field',
-    body: 'Pela frente Yuko Field, a comunidade realiza visitas, entrevistas e validação contextual das dores reais da microempresa antes de escrever qualquer linha de código.',
+    body: 'Com o Yuko Field, a comunidade conduz visitas, entrevistas e validação contextual das dores da microempresa antes da primeira linha de código.',
     mood: 'alvorada',
   },
   {
     index: 2,
     kicker: '03 · Forma',
     title: 'Sobriedade e gestão enxuta',
-    body: 'Minimalismo instrumental e zero ruído: documentação útil, commits semânticos rastreáveis e zero burocracia para manter o ciclo produtivo ágil.',
+    body: 'Minimalismo instrumental e foco: documentação útil, commits semânticos rastreáveis e fluxo produtivo ágil sem burocracia.',
     mood: 'travessia',
   },
   {
     index: 3,
     kicker: '04 · Chancela',
     title: 'Construção em rede',
-    body: 'Nenhuma entrega atravessa o território sozinha. Todo projeto passa por revisão cruzada por 2+ pares, suporte definido e transição segura para proteger a microempresa.',
+    body: 'Nenhuma entrega atravessa o território sozinha. Todo projeto conta com revisão coletiva, transição segura e continuidade para a microempresa.',
     mood: 'boreal',
     ctaLabel: 'Explorar Extensões →',
     ctaHref: '/extensoes/',
@@ -204,7 +204,7 @@ export const HOME_PILLARS: HomePillar[] = [
     href: '/extensoes/',
     title: 'Extensões & Frentes',
     description:
-      'Field, Dev, Make, Place, Work e Inline organizam cada entrega em conjunto com as seis frentes de atuação — da prospecção à segurança.',
+      'Field, Dev, Make, Place, Work e Inline articulam cada entrega com as seis frentes de atuação — da prospecção à segurança.',
     tag: 'Explorar extensões →',
   },
   {
@@ -220,7 +220,7 @@ export const HOME_PILLARS: HomePillar[] = [
     href: '/governanca/',
     title: 'Qualidade, Segurança & LGPD',
     description:
-      'Critérios de pronto, commits semânticos, proteção contra falhas comuns, sigilo técnico, dados sintéticos em testes e conformidade com a LGPD.',
+      'Critérios de pronto, commits semânticos, defesa contra falhas comuns, sigilo técnico, dados sintéticos em testes e conformidade LGPD.',
     tag: 'Ver qualidade e LGPD →',
   },
 ];
@@ -231,12 +231,12 @@ export const AUDIENCE_CARDS: AudienceCard[] = [
     badge: 'Microempresas Parceiras',
     title: 'Continuidade & Respaldo',
     description:
-      'Elimina a volatilidade e entregas sem documentação por meio de critérios claros, validação coletiva e sustentação pós-entrega.',
+      'Elimina volatilidade e entregas sem documentação com critérios claros, validação coletiva e sustentação pós-entrega.',
     bullets: [
       'Prospecção contextual via Yuko Field ou acolhimento direto',
       'Escopo sintético com critérios objetivos de aceitação',
-      'Proteção contra abandono: transição assistida e chancela coletiva',
-      'Responsável de suporte designado e sigilo técnico conforme LGPD',
+      'Transição assistida e chancela coletiva contra abandono',
+      'Suporte nominal designado e sigilo técnico conforme LGPD',
     ],
     ctaLabel: 'Ver fluxo completo do ciclo',
     ctaHref: '/ciclo/',
@@ -248,9 +248,9 @@ export const AUDIENCE_CARDS: AudienceCard[] = [
     badge: 'Desenvolvedores Independentes',
     title: 'Autonomia com Pares',
     description:
-      'Supera o isolamento na sustentação e a sobrecarga em revisões críticas sem vínculo empregatício ou burocracia corporativa.',
+      'Supera o isolamento técnico e a sobrecarga em revisões críticas, sem vínculo empregatício nem burocracia corporativa.',
     bullets: [
-      'Liberdade de stack em ecossistemas maduros e consolidados',
+      'Liberdade de stack em ecossistemas maduros',
       'Revisão por 2+ pares antes de qualquer liberação',
       'Operação coordenada no Discord e issues rastreáveis',
       'Reaproveitamento aberto de utilitários, bibliotecas e boas práticas',
@@ -275,7 +275,7 @@ export const IDENTITY_PILLARS: IdentityItem[] = [
   {
     title: 'Oslo (Noruega)',
     description:
-      'Referência de minimalismo, clareza nominal, ausência de ruído e precisão objetiva em cada entrega.',
+      'Referência de minimalismo, clareza nominal e precisão objetiva em cada entrega.',
   },
   {
     title: 'Verona (Itália)',
@@ -288,17 +288,17 @@ export const VISUAL_RULES: IdentityItem[] = [
   {
     title: 'Logotipo & Tipografia',
     description:
-      'Composto pela palavra "Yuko" em tipografia contemporânea e equilibrada, acompanhada do símbolo da comunidade.',
+      'Palavra "Yuko" em tipografia contemporânea e equilibrada, acompanhada do símbolo da comunidade.',
   },
   {
     title: 'Simplicidade Visual',
     description:
-      'A marca dispensa ornamentos excessivos ou ilustrações que limitem sua leitura ou aplicação em diferentes contextos.',
+      'A marca dispensa ornamentos excessivos que limitem sua leitura ou aplicação em diferentes contextos.',
   },
   {
     title: 'Alto Contraste & Clareza',
     description:
-      'Aplicação em preto, branco e tons neutros de alto contraste para garantir legibilidade consistente.',
+      'Aplicação em preto, branco e neutros de alto contraste para legibilidade consistente.',
   },
 ];
 
@@ -306,14 +306,14 @@ export const EXTENSIONS: ExtensionItem[] = [
   {
     name: 'Yuko Field',
     description:
-      'Prospecção, relacionamento institucional e validação de problemas reais junto às microempresas.',
+      'Prospecção, relacionamento institucional e validação de problemas reais com microempresas.',
     code: 'prospecção',
     tone: 'default',
   },
   {
     name: 'Yuko Dev',
     description:
-      'Engenharia de software, arquitetura de código, desenvolvimento colaborativo e integração técnica.',
+      'Engenharia de software, arquitetura, desenvolvimento colaborativo e integração técnica.',
     code: 'engenharia',
     tone: 'tonal-primary',
   },
@@ -341,7 +341,7 @@ export const EXTENSIONS: ExtensionItem[] = [
   {
     name: 'Yuko Inline',
     description:
-      'Ferramentas de fluxo contínuo, automações internas, pipelines e utilitários técnicos.',
+      'Fluxo contínuo, automações internas, pipelines e utilitários técnicos.',
     code: 'automações',
     tone: 'tonal-tertiary',
   },
@@ -351,7 +351,7 @@ export const FRONTS: FrontItem[] = [
   {
     title: 'Organização e Execução',
     description:
-      'Enquadramento de demandas, definição de cronogramas básicos e cumprimento dos prazos pactuados.',
+      'Enquadramento de demandas, cronogramas básicos e cumprimento dos prazos pactuados.',
   },
   {
     title: 'Tecnologia e Desenvolvimento',
@@ -402,7 +402,7 @@ export const DISCORD_CHANNELS: DiscordChannelItem[] = [
   {
     title: 'Comunicação Construtiva',
     description:
-      'Toda interação é pautada por respeito profissional, objetividade técnica e colaboração mútua — sendo vedados comportamentos tóxicos ou autopromoção abusiva.',
+      'Interações pautadas por respeito profissional, objetividade técnica e colaboração mútua — vedados comportamentos tóxicos ou autopromoção abusiva.',
     kind: 'guideline',
   },
 ];
@@ -415,42 +415,42 @@ export const CYCLE_STAGES: CycleStage[] = [
   {
     title: 'Demanda & Priorização',
     description:
-      'A demanda entra por prospecção ativa (Yuko Field) ou acolhimento direto e passa por triagem de aderência, capacidade e impacto.',
+      'Entrada por prospecção ativa (Yuko Field) ou acolhimento direto, com triagem de aderência, capacidade e impacto.',
     code: 'etapa 01 · viabilidade',
     tone: 'tonal-primary',
   },
   {
     title: 'Escopo & Critérios',
     description:
-      'O executor converte a necessidade em um escopo enxuto com critérios objetivos que definem quando a entrega está pronta.',
+      'O executor converte a necessidade em escopo enxuto com critérios objetivos de aceitação.',
     code: 'etapa 02 · contrato técnico',
     tone: 'default',
   },
   {
     title: 'Construção Modular',
     description:
-      'Desenvolvimento com versionamento central, commits semânticos e documentação objetiva para leitura rápida por outros pares.',
+      'Desenvolvimento com versionamento central, commits semânticos e documentação objetiva para leitura pelos pares.',
     code: 'etapa 03 · engenharia',
     tone: 'default',
   },
   {
     title: 'Peer Review Obrigatório',
     description:
-      'Revisão independente por pelo menos 2 desenvolvedores avaliando legibilidade, segurança, aderência ao escopo e débitos críticos.',
+      'Revisão independente por pelo menos 2 desenvolvedores avaliando legibilidade, segurança, escopo e débitos críticos.',
     code: 'etapa 04 · 2+ revisores',
     tone: 'tonal-secondary',
   },
   {
-    title: 'Testes & Homologação',
+    title: 'Testes & Staging',
     description:
-      'Validação funcional, responsividade, desempenho e integridade em ambiente de staging antes de liberar para o parceiro.',
+      'Validação funcional, responsividade, desempenho e integridade em staging antes da liberação ao parceiro.',
     code: 'etapa 05 · staging',
     tone: 'default',
   },
   {
     title: 'Entrega & Suporte',
     description:
-      'Homologação com a microempresa e abertura da janela de acompanhamento com responsável técnico definido em registro.',
+      'Aceite final com a microempresa e abertura da janela de suporte com responsável técnico registrado.',
     code: 'etapa 06 · liberação',
     tone: 'tonal-tertiary',
   },
@@ -475,7 +475,7 @@ export const TRIAGE_CRITERIA: IdentityItem[] = [
   {
     title: 'Baixo Risco Externo',
     description:
-      'preferência por menor dependência de serviços de terceiros ou integrações instáveis.',
+      'menor dependência de serviços de terceiros ou integrações instáveis.',
   },
 ];
 
@@ -483,34 +483,34 @@ export const ROLES: RoleItem[] = [
   {
     title: 'Desenvolvedor Executor',
     description:
-      'Lidera a entrega na prática: levanta o escopo inicial, implementa a solução e alinha ajustes com revisores e parceiro.',
+      'Lidera a entrega na prática: define o escopo inicial, implementa a solução e alinha ajustes com revisores e parceiro.',
     tone: 'default',
   },
   {
     title: 'Desenvolvedores Revisores',
     description:
-      'Múltiplos pares avaliam criticamente os artefatos. Nenhuma entrega é chancelada com apenas um parecer técnico.',
+      'Pelo menos 2 pares avaliam código, segurança e escopo; nenhuma entrega é liberada com revisão única.',
     tone: 'tonal-primary',
   },
   {
     title: 'Responsável de Suporte',
     description:
-      'Assume a estabilização pós-lançamento, corrige ajustes imediatos e zela pela operação contínua na janela acordada.',
+      'Assume a estabilização pós-lançamento, corrige ajustes imediatos e zela pela operação na janela acordada.',
     tone: 'tonal-secondary',
   },
 ];
 
 export const CONTINUITY_RULES: ContinuityRule[] = [
   {
-    title: 'Transição de Contexto Compulsória',
+    title: 'Transição Obrigatória de Contexto',
     description:
-      'Antes de qualquer afastamento, o integrante sincroniza o código no repositório remoto e documenta tarefas, decisões e impedimentos. É vedado reter código ou credenciais localmente.',
+      'Antes de se afastar, o integrante sincroniza o código no repositório remoto e documenta tarefas, decisões e impedimentos. É vedado reter código ou credenciais localmente.',
     tone: 'default',
   },
   {
     title: 'Abandono (5 dias úteis) & Proteção',
     description:
-      'Após 5 dias úteis de inércia sem justificativa, registra-se vacância na issue com revogação de acessos e reatribuição imediata pelos pares para proteger a microempresa.',
+      'Após 5 dias úteis de inércia sem justificativa, registra-se vacância na issue, revogação de acessos e reatribuição imediata pelos pares para proteger a microempresa.',
     tone: 'tonal-tertiary',
   },
 ];
@@ -523,7 +523,7 @@ export const REGISTRY_COL_A: string[] = [
 
 export const REGISTRY_COL_B: string[] = [
   'Designação nominal do responsável pelo suporte;',
-  'Pareceres de aprovação técnica da revisão por pares;',
+  'Aprovações técnicas da revisão por 2+ pares;',
   'Datas, links de repositórios e guia de transição.',
 ];
 
@@ -534,7 +534,7 @@ export const REGISTRY_COL_B: string[] = [
 export const DOD_ITEMS: string[] = [
   'Escopo inicial validado em operação;',
   'Commits organizados no repositório central;',
-  'Revisão por múltiplos pares registrada;',
+  'Revisão por 2+ pares registrada;',
   'Guia básico de uso para a microempresa;',
   'Sem falhas críticas ou riscos abertos.',
 ];
@@ -562,13 +562,13 @@ export const SECURITY_CARDS: SecurityCard[] = [
   {
     title: 'Prevenção de Falhas',
     description:
-      'Uso obrigatório de prepared statements/ORM contra SQL Injection e sanitização consistente contra XSS.',
+      'Prepared statements/ORM obrigatórios contra SQL Injection e sanitização consistente contra XSS.',
     code: 'sqli & xss',
   },
   {
     title: 'Segredos & Criptografia',
     description:
-      'Segredos nunca no Git (apenas .env.example); tráfego protegido por HTTPS/TLS e senhas em Argon2 ou bcrypt.',
+      'Segredos fora do Git (apenas .env.example); tráfego em HTTPS/TLS e senhas em Argon2 ou bcrypt.',
     code: 'tls & argon2/bcrypt',
   },
   {
@@ -582,11 +582,11 @@ export const SECURITY_CARDS: SecurityCard[] = [
 export const LGPD_ITEMS: IdentityItem[] = [
   {
     title: 'Papéis',
-    description: 'microempresa Controladora; devs como operadores técnicos.',
+    description: 'Microempresa como Controladora; desenvolvedores como Operadores técnicos.',
   },
   {
     title: 'Privacy by Design',
-    description: 'coleta mínima estrita à finalidade.',
+    description: 'coleta mínima, restrita à finalidade da solução.',
   },
   {
     title: 'Dev/Staging',
@@ -594,7 +594,8 @@ export const LGPD_ITEMS: IdentityItem[] = [
   },
   {
     title: 'Titulares & Incidentes',
-    description: 'exportação, exclusão e reporte imediato na issue.',
+    description:
+      'suporte à exportação e exclusão pelo titular; notificação imediata de incidentes à microempresa em registro restrito.',
   },
 ];
 
@@ -611,11 +612,12 @@ export const CONFLICT_STEPS: IdentityItem[] = [
     title: '3. Deliberação Coletiva',
     description: 'revisores priorizam menor complexidade e escopo.',
   },
-  {
-    title: 'Autonomia',
-    description: 'cada participante responde por seus atos profissionais.',
-  },
 ];
+
+export const CONFLICT_PRINCIPLE: IdentityItem = {
+  title: 'Autonomia',
+  description: 'cada participante responde por seus atos profissionais.',
+};
 
 /* ==========================================================================
    Manual Institucional da Yuko — v1.0 & Glossário (/manual/)
@@ -645,7 +647,7 @@ export const MANUAL_ORIGINS: ManualOriginCard[] = [
     title: '1. Ressalvas Jurídicas & Ausência de Vínculo',
     tone: 'default',
     paragraphs: [
-      'Este manual tem caráter orientativo e comunitário, sem substituir contratos formais, estatutos sociais ou pareceres jurídicos.',
+      'Manual de caráter orientativo e comunitário; não substitui contratos formais, estatutos sociais ou pareceres jurídicos.',
       'A participação voluntária não gera vínculo empregatício, societário ou representação legal. Relações comerciais exigem contrato bilateral autônomo.',
     ],
   },
@@ -671,8 +673,8 @@ export const MANUAL_ORIGINS: ManualOriginCard[] = [
     title: '3. Implantação Gradual & Gestão Enxuta',
     tone: 'tonal-tertiary',
     paragraphs: [
-      'Estruturas, papéis e extensões estão em consolidação progressiva, sem pressupor carteira fixa de clientes ou equipe corporativa permanente.',
-      'Todo fluxo que se mostrar lento frente ao benefício real deve ser simplificado; qualquer membro ativo pode propor revisões.',
+      'Estruturas, papéis e extensões evoluem de forma progressiva, sem pressupor carteira fixa de clientes ou equipe permanente.',
+      'Qualquer etapa burocrática que atrase a entrega sem ganho real deve ser simplificada; qualquer membro ativo pode propor revisões.',
     ],
   },
   {
@@ -682,7 +684,7 @@ export const MANUAL_ORIGINS: ManualOriginCard[] = [
       {
         label: 'Início',
         href: '/',
-        description: 'propósito, experiência Yukon e temas dinâmicos.',
+        description: 'propósito, experiência Yukon, ciclo em resumo e públicos atendidos.',
       },
       {
         label: 'Extensões',
@@ -697,7 +699,7 @@ export const MANUAL_ORIGINS: ManualOriginCard[] = [
       {
         label: 'Qualidade & LGPD',
         href: '/governanca/',
-        description: 'DoD, stack, segurança e mediação.',
+        description: 'DoD, stack, segurança, conformidade LGPD e mediação.',
       },
     ],
   },
@@ -705,44 +707,81 @@ export const MANUAL_ORIGINS: ManualOriginCard[] = [
 
 export const GLOSSARY_TERMS: GlossaryTerm[] = [
   {
+    term: 'Ambiente de Staging',
+    definition:
+      'Ambiente pré-produção destinado à validação funcional, responsividade, desempenho e integridade com dados sintéticos antes da liberação ao parceiro.',
+  },
+  {
     term: 'Ciclo de Entrega Assistida',
     definition:
-      'Fluxo em seis etapas no qual toda solução passa por escopo, revisão cruzada por pares e testes antes da entrega.',
+      'Fluxo em seis etapas no qual toda solução passa por escopo, construção modular, revisão por 2+ pares, staging e suporte definido antes e após a entrega.',
+  },
+  {
+    term: 'Commits Semânticos',
+    definition:
+      'Padrão de mensagens de versionamento (feat, fix, refactor, chore e docs) vinculadas à issue para manter o histórico técnico legível e rastreável.',
+  },
+  {
+    term: 'Conformidade LGPD (Controlador & Operador)',
+    definition:
+      'Enquadramento sob a Lei nº 13.709/2018 em que a microempresa atua como Controladora dos dados e os desenvolvedores como Operadores técnicos, com coleta mínima e sigilo.',
+    tone: 'tertiary',
+  },
+  {
+    term: 'Critério de Pronto (DoD · Definition of Done)',
+    definition:
+      'Checklist técnico obrigatório que atesta escopo validado em operação, commits no repositório central, revisão por 2+ pares registrada, guia básico de uso e ausência de falhas críticas.',
+    tone: 'primary',
   },
   {
     term: 'Critérios de Aceitação',
     definition:
-      'Parâmetros técnicos e funcionais definidos previamente para validar quando a solução atende ao acordado.',
+      'Parâmetros técnicos e funcionais definidos previamente no escopo enxuto para validar objetivamente quando a entrega atende ao acordado.',
   },
   {
-    term: 'Definition of Done (DoD)',
+    term: 'Dados Sintéticos',
     definition:
-      'Checklist técnico obrigatório que atesta funcionalidade, versionamento, revisão aprovada, guia básico e segurança.',
+      'Dados artificiais ou anonimizados utilizados exclusivamente em desenvolvimento e staging para proteger informações reais da microempresa.',
   },
   {
     term: 'Desenvolvedor Executor',
     definition:
-      'Integrante responsável pela liderança prática do escopo, implementação técnica e alinhamento da entrega.',
+      'Integrante que lidera a entrega na prática: converte a necessidade em escopo enxuto, implementa a solução no repositório e alinha ajustes com revisores e parceiro.',
+  },
+  {
+    term: 'Desenvolvedores Revisores',
+    definition:
+      'Pelo menos dois pares independentes que avaliam código, segurança, escopo e débitos críticos; nenhuma entrega é liberada com revisão única.',
   },
   {
     term: 'Extensões da Marca',
     definition:
-      'Ramificações funcionais sob o prefixo Yuko (Field, Dev, Make, Place, Work e Inline) para frentes específicas.',
+      'Campos públicos de atuação sob o prefixo Yuko (Field, Dev, Make, Place, Work e Inline) que articulam prospecção, engenharia, prototipagem, comunidade, operações e automações.',
+  },
+  {
+    term: 'Frentes de Atuação',
+    definition:
+      'Seis disciplinas internas aplicadas em cada projeto: Organização e Execução, Tecnologia e Desenvolvimento, Inteligência e Avaliação, Gestão Multidisciplinar, Integridade Informacional e Governança e Segurança.',
   },
   {
     term: 'Issue de Registro',
     definition:
-      'Registro oficial rastreável que centraliza escopo, responsáveis, pareceres de revisão, links e decisões do projeto.',
-  },
-  {
-    term: 'Peer Review Obrigatório',
-    definition:
-      'Etapa em que pelo menos dois desenvolvedores independentes revisam código e segurança antes da homologação.',
+      'Registro formal obrigatório no sistema oficial de issues que centraliza identificador, escopo validado, responsáveis, aprovações de revisão por 2+ pares, links de repositório e guia de transição.',
   },
   {
     term: 'Responsável de Suporte',
     definition:
-      'Desenvolvedor designado para acompanhar a estabilização pós-entrega e correções iniciais junto à microempresa.',
+      'Desenvolvedor designado nominalmente na entrega para acompanhar a estabilização pós-lançamento e realizar ajustes imediatos na janela acordada.',
     tone: 'secondary',
+  },
+  {
+    term: 'Revisão por Pares (Peer Review)',
+    definition:
+      'Etapa obrigatória em que pelo menos dois desenvolvedores independentes avaliam legibilidade, segurança e aderência ao escopo antes da etapa de staging.',
+  },
+  {
+    term: 'Transição de Contexto & Regra de Abandono',
+    definition:
+      'Sincronização obrigatória de código e decisões antes de qualquer afastamento; após 5 dias úteis de inércia sem justificativa, registra-se vacância na issue com reatribuição imediata pelos pares.',
   },
 ];

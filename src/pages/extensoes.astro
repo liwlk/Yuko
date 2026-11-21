@@ -24,19 +24,16 @@ const guidelineItems = DISCORD_CHANNELS.filter((item) => item.kind === 'guidelin
 >
   <section class="sub-hero">
     <div class="container">
-      <div class="hero-eyebrow">
-        <span>Arquitetura da Marca</span>
-        <span aria-hidden="true">·</span>
-        <span>Extensões &amp; Frentes</span>
-      </div>
+      <div class="section-kicker">Arquitetura da Marca</div>
       <h1 class="sub-hero-title">
         Identidade, <span class="accent-word">Extensões</span> &amp; Frentes
       </h1>
       <p class="hero-lead">
-        Estrutura funcional sob uma marca única: fundamentos de design, seis extensões práticas, seis frentes de trabalho e convivência organizada no Discord.
+        Fundamentos visuais, seis extensões práticas, seis frentes de atuação e convivência no Discord.
       </p>
       <div class="hero-actions" style="margin-bottom:0">
         <a href="#extensoes" class="btn btn-primary">6 Extensões</a>
+        <a href="#fundamentos" class="btn btn-tonal">Fundamentos</a>
         <a href="#frentes" class="btn btn-tonal">6 Frentes</a>
         <a href="#discord" class="btn btn-outline">Discord</a>
       </div>
@@ -54,7 +51,7 @@ const guidelineItems = DISCORD_CHANNELS.filter((item) => item.kind === 'guidelin
       <div class="lab-panel">
         <div class="grid-3">
           {IDENTITY_PILLARS.map((pillar) => (
-            <div class="control-group">
+            <div>
               <h3 style="margin-bottom:8px">{pillar.title}</h3>
               <p style="margin:0">{pillar.description}</p>
             </div>
@@ -88,7 +85,7 @@ const guidelineItems = DISCORD_CHANNELS.filter((item) => item.kind === 'guidelin
         {EXTENSIONS.map((ext) => (
           <article class={ext.tone === 'default' ? 'm3-card' : `m3-card ${ext.tone}`}>
             <div>
-              <h3>{ext.name}</h3>
+              <h3 style="margin-bottom:8px">{ext.name}</h3>
               <p>{ext.description}</p>
             </div>
             <span class="card-code">{ext.code}</span>
@@ -105,7 +102,7 @@ const guidelineItems = DISCORD_CHANNELS.filter((item) => item.kind === 'guidelin
         <div class="section-kicker">Frentes de Atuação</div>
         <h2 class="section-title">Seis frentes integradas de trabalho</h2>
         <p class="section-desc">
-          Enquanto as extensões nomeiam áreas e produtos da marca, as frentes organizam as disciplinas internas aplicadas em cada projeto.
+          Enquanto as extensões nomeiam campos públicos de atuação sob a marca Yuko, as frentes organizam as disciplinas internas aplicadas em cada projeto.
         </p>
       </div>
 
@@ -140,9 +137,9 @@ const guidelineItems = DISCORD_CHANNELS.filter((item) => item.kind === 'guidelin
     <div class="container">
       <div class="section-head">
         <div class="section-kicker">Ambiente Comunitário</div>
-        <h2 class="section-title">Comunidade e Servidor Discord</h2>
+        <h2 class="section-title">Servidor Discord</h2>
         <p class="section-desc">
-          A convivência diária e o alinhamento técnico acontecem no Discord em canais organizados por função.
+          Alinhamento diário, troca técnica e acompanhamento de projetos em canais por função.
         </p>
       </div>
 
@@ -162,7 +159,7 @@ const guidelineItems = DISCORD_CHANNELS.filter((item) => item.kind === 'guidelin
           </div>
 
           {guidelineItems.map((item) => (
-            <div class="control-group">
+            <div>
               <h3 style="margin-bottom:8px">{item.title}</h3>
               <p>{item.description}</p>
             </div>

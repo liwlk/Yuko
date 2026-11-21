@@ -39,6 +39,11 @@ function getAutoMoodForIndex(index: number, chapter?: YukonChapter): YukonMood {
   return 'boreal';
 }
 
+function getStickyTop(): number {
+  if (typeof window === 'undefined') return 82;
+  return window.innerWidth >= 920 ? 82 : 132;
+}
+
 function isMotionPaused(): boolean {
   if (typeof window === 'undefined' || typeof document === 'undefined') return false;
   const calm = document.documentElement.getAttribute('data-motion') === 'calm';
@@ -51,6 +56,8 @@ function isMotionPaused(): boolean {
 export default function YukonExperience({ chapters, moodLabels }: YukonExperienceProps) {
   const [activeIdx, setActiveIdx] = useState(0);
   const [mood, setMood] = useState<YukonMood>(() => getAutoMoodForIndex(0, chapters[0]));
+  const [moodAnnouncement, setMoodAnnouncement] = useState('');
+  const [motionPaused, setMotionPaused] = useState(false);
 
   const scrollyRef = useRef<HTMLDivElement>(null);
   const panoramaRef = useRef<HTMLDivElement>(null);
@@ -64,6 +71,15 @@ export default function YukonExperience({ chapters, moodLabels }: YukonExperienc
   const springMy = useSpring(rawMy, { stiffness: 120, damping: 24, mass: 0.6 });
 
   useEffect(() => {
+    const resetPointerVars = () => {
+      rawMx.set(0);
+      rawMy.set(0);
+      const el = panoramaRef.current;
+      if (!el) return;
+      el.style.setProperty('--yukon-mx', '0');
+      el.style.setProperty('--yukon-my', '0');
+    };
+
     const syncPointerVars = () => {
       const el = panoramaRef.current;
       if (!el) return;
@@ -76,13 +92,38 @@ export default function YukonExperience({ chapters, moodLabels }: YukonExperienc
       el.style.setProperty('--yukon-my', springMy.get().toFixed(4));
     };
 
+    const syncMotionState = () => {
+      setMotionPaused(isMotionPaused());
+    };
+
+    const handleMotionChange = () => {
+      syncMotionState();
+      resetPointerVars();
+    };
+
+    syncMotionState();
+
     const unsubX = springMx.on('change', syncPointerVars);
     const unsubY = springMy.on('change', syncPointerVars);
+    window.addEventListener('yuko:motion-change', handleMotionChange);
+    window.addEventListener('blur', resetPointerVars);
+    document.addEventListener('astro:after-swap', handleMotionChange);
+
+    let mq: MediaQueryList | null = null;
+    if (typeof window !== 'undefined' && typeof window.matchMedia === 'function') {
+      mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+      mq.addEventListener?.('change', handleMotionChange);
+    }
+
     return () => {
       unsubX();
       unsubY();
+      window.removeEventListener('yuko:motion-change', handleMotionChange);
+      window.removeEventListener('blur', resetPointerVars);
+      document.removeEventListener('astro:after-swap', handleMotionChange);
+      mq?.removeEventListener?.('change', handleMotionChange);
     };
-  }, [springMx, springMy]);
+  }, [rawMx, rawMy, springMx, springMy]);
 
   const applyProgress = useCallback((progress: number) => {
     const p = clamp(progress, 0, 1);
@@ -118,7 +159,7 @@ export default function YukonExperience({ chapters, moodLabels }: YukonExperienc
     }
     const rect = scrollyEl.getBoundingClientRect();
     const vh = window.innerHeight || 800;
-    const stickyTop = window.innerWidth >= 960 ? 82 : 72;
+    const stickyTop = getStickyTop();
     const scrollyAbsTop = window.scrollY + rect.top;
     const startY = scrollyAbsTop - stickyTop;
     const endY = scrollyAbsTop + rect.height - vh;
@@ -155,24 +196,7 @@ export default function YukonExperience({ chapters, moodLabels }: YukonExperienc
 
     const scrollyEl = scrollyRef.current;
     let stInstance: ScrollTrigger | null = null;
-
-    if (scrollyEl) {
-      try {
-        gsap.registerPlugin(ScrollTrigger);
-        const stickyTop = window.innerWidth >= 960 ? 82 : 72;
-        stInstance = ScrollTrigger.create({
-          trigger: scrollyEl,
-          start: `top ${stickyTop}px`,
-          end: 'bottom bottom',
-          onUpdate: (self) => {
-            applyProgress(self.progress);
-            updateActiveFromProgress(self.progress);
-          },
-        });
-      } catch {
-        // Fallback handled by scroll listener
-      }
-    }
+    let fallbackCleanup: (() => void) | null = null;
 
     const handleNativeSync = () => {
       const p = getScrollRange().progress;
@@ -180,19 +204,40 @@ export default function YukonExperience({ chapters, moodLabels }: YukonExperienc
       updateActiveFromProgress(p);
     };
 
-    window.addEventListener('scroll', handleNativeSync, { passive: true });
-    window.addEventListener('resize', handleNativeSync, { passive: true });
+    if (scrollyEl) {
+      try {
+        gsap.registerPlugin(ScrollTrigger);
+        stInstance = ScrollTrigger.create({
+          trigger: scrollyEl,
+          start: () => `top ${getStickyTop()}px`,
+          end: 'bottom bottom',
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            applyProgress(self.progress);
+            updateActiveFromProgress(self.progress);
+          },
+        });
+        ScrollTrigger.refresh();
+      } catch {
+        window.addEventListener('scroll', handleNativeSync, { passive: true });
+        window.addEventListener('resize', handleNativeSync, { passive: true });
+        fallbackCleanup = () => {
+          window.removeEventListener('scroll', handleNativeSync);
+          window.removeEventListener('resize', handleNativeSync);
+        };
+      }
+    }
 
     return () => {
       stInstance?.kill();
-      window.removeEventListener('scroll', handleNativeSync);
-      window.removeEventListener('resize', handleNativeSync);
+      fallbackCleanup?.();
     };
   }, [applyProgress, getScrollRange, updateActiveFromProgress]);
 
   const handleSelectMood = (nextMood: YukonMood) => {
     moodManuallyLockedRef.current = true;
     setMood(nextMood);
+    setMoodAnnouncement(`Momento atmosférico em Yukon: ${moodLabels[nextMood]}`);
   };
 
   const handleCycleMood = () => {
@@ -206,7 +251,7 @@ export default function YukonExperience({ chapters, moodLabels }: YukonExperienc
     const clampedIdx = clamp(Math.trunc(idx), 0, chapters.length - 1);
 
     if (typeof performance !== 'undefined') {
-      clickLockUntilRef.current = performance.now() + 720;
+      clickLockUntilRef.current = performance.now() + 920;
     }
 
     activateChapter(clampedIdx);
@@ -226,14 +271,17 @@ export default function YukonExperience({ chapters, moodLabels }: YukonExperienc
       const { startY, travel } = getScrollRange();
       if (travel > 120) {
         const targetY = Math.max(0, startY + targetProgress * travel);
+        const paused = isMotionPaused();
         scrollToTarget(targetY, {
-          duration: isMotionPaused() ? 0 : 0.85,
+          duration: paused ? 0 : 0.85,
+          immediate: paused,
         });
       }
     }
   };
 
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType === 'touch') return;
     if (isMotionPaused() || !panoramaRef.current) return;
     const rect = panoramaRef.current.getBoundingClientRect();
     if (!rect.width || !rect.height) return;
@@ -261,6 +309,7 @@ export default function YukonExperience({ chapters, moodLabels }: YukonExperienc
           data-yukon-mood={mood}
           onPointerMove={handlePointerMove}
           onPointerLeave={handlePointerLeave}
+          onPointerCancel={handlePointerLeave}
         >
           {/* Full-Bleed Animated Yukon Panoramic Illustration (Material You Token-Driven) */}
           <svg
@@ -578,12 +627,14 @@ export default function YukonExperience({ chapters, moodLabels }: YukonExperienc
                   id="yukonMoodLabel"
                   className="yukon-mood-label"
                   type="button"
-                  aria-live="polite"
                   onClick={handleCycleMood}
                   title="Alternar momento atmosférico em Yukon"
                 >
                   {moodLabels[mood]}
                 </button>
+                <span className="sr-only" aria-live="polite">
+                  {moodAnnouncement}
+                </span>
               </div>
             </div>
           </div>
@@ -591,19 +642,20 @@ export default function YukonExperience({ chapters, moodLabels }: YukonExperienc
           {/* Dock Inferior de Cards Translúcidos Incorporados à Imagem de Yukon */}
           <div className="yukon-dock-wrap">
             {/* Seletor compacto mobile para navegar rapidamente entre os 4 marcos */}
-            <div className="yukon-mobile-tabs" role="tablist" aria-label="Selecionar etapa em Yukon">
+            <div className="yukon-mobile-tabs" role="group" aria-label="Selecionar etapa em Yukon">
               {chapters.map((chapter, idx) => {
                 const isActive = idx === activeIdx;
+                const stepLabel = String(idx + 1).padStart(2, '0');
                 return (
                   <button
                     key={`tab-${chapter.id ?? chapter.index ?? idx}`}
                     type="button"
-                    role="tab"
-                    aria-selected={isActive}
+                    aria-pressed={isActive}
+                    aria-label={`Etapa ${stepLabel}: ${chapter.title}`}
                     className={`yukon-mobile-tab${isActive ? ' is-active' : ''}`}
                     onClick={() => handleSelectChapter(idx, true)}
                   >
-                    {String(idx + 1).padStart(2, '0')}
+                    {stepLabel}
                   </button>
                 );
               })}
@@ -624,11 +676,11 @@ export default function YukonExperience({ chapters, moodLabels }: YukonExperienc
                     aria-current={isActive ? 'step' : undefined}
                     initial={false}
                     animate={{
-                      opacity: isActive ? 1 : 0.78,
-                      y: isActive ? 0 : 4,
+                      opacity: 1,
+                      y: isActive || motionPaused ? 0 : 3,
                     }}
                     transition={{
-                      duration: 0.34,
+                      duration: motionPaused ? 0 : 0.34,
                       ease: [0.2, 0, 0, 1],
                     }}
                     onClick={(e) => {

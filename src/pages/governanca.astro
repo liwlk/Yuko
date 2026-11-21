@@ -6,6 +6,7 @@ import {
   SECURITY_CARDS,
   LGPD_ITEMS,
   CONFLICT_STEPS,
+  CONFLICT_PRINCIPLE,
 } from '../data/yuko';
 ---
 
@@ -19,16 +20,12 @@ import {
 >
   <section class="sub-hero">
     <div class="container">
-      <div class="hero-eyebrow">
-        <span>Engenharia &amp; Ética</span>
-        <span aria-hidden="true">·</span>
-        <span>Diretrizes Técnicas</span>
-      </div>
+      <div class="section-kicker">Engenharia &amp; Ética</div>
       <h1 class="sub-hero-title">
         Qualidade, <span class="accent-word">Segurança</span> &amp; Conformidade LGPD
       </h1>
       <p class="hero-lead">
-        Critérios técnicos de aceitação, stack sustentável, proteção de aplicações, conformidade com a Lei Geral de Proteção de Dados e mediação comunitária.
+        Checklist de entrega (DoD), stack sustentável, proteção de aplicações, conformidade LGPD e mediação comunitária.
       </p>
       <div class="hero-actions" style="margin-bottom:0">
         <a href="#engenharia" class="btn btn-primary">Engenharia &amp; DoD</a>
@@ -42,7 +39,7 @@ import {
   <section id="engenharia" class="section" style="padding-top:24px">
     <div class="container">
       <div class="section-head">
-        <div class="section-kicker">Bloco 01 · Engenharia &amp; Segurança</div>
+        <div class="section-kicker">Base Técnica</div>
         <h2 class="section-title">Padrões de Engenharia &amp; Segurança</h2>
         <p class="section-desc">
           Soluções proporcionais à microempresa, com código limpo, pilhas maduras e proteção desde a base.
@@ -85,7 +82,7 @@ import {
         {SECURITY_CARDS.map((card, idx) => (
           <article class={idx === 1 ? 'm3-card tonal-secondary' : 'm3-card'}>
             <div>
-              <h3>{card.title}</h3>
+              <h3 style="margin-bottom:8px">{card.title}</h3>
               <p>{card.description}</p>
             </div>
             <span class="card-code">{card.code}</span>
@@ -99,7 +96,7 @@ import {
   <section id="privacidade" class="section">
     <div class="container">
       <div class="section-head">
-        <div class="section-kicker">Bloco 02 · Lei nº 13.709/2018 e Conduta</div>
+        <div class="section-kicker">Lei nº 13.709/2018 &amp; Conduta</div>
         <h2 class="section-title">Privacidade (LGPD) &amp; Mediação</h2>
       </div>
 
@@ -132,6 +129,9 @@ import {
                 </li>
               ))}
             </ul>
+            <p style="margin-top:14px">
+              <strong>{CONFLICT_PRINCIPLE.title}:</strong> {CONFLICT_PRINCIPLE.description}
+            </p>
           </div>
           <span class="card-code">ética · resolução</span>
         </article>
