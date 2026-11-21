@@ -2871,13 +2871,16 @@ main {
   @media (min-width: 960px) {
     .sim-workspace {
       grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+      align-items: stretch;
     }
   }
 
   .sim-controls {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     gap: 14px;
+    height: 100%;
     min-width: 0;
   }
 
@@ -3061,6 +3064,19 @@ main {
     min-width: 0;
   }
 
+  .sim-tuning-pair {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px 16px;
+    min-width: 0;
+  }
+
+  @media (min-width: 580px) {
+    .sim-tuning-pair {
+      grid-template-columns: auto minmax(0, 1fr);
+    }
+  }
+
   .sim-tuning-group {
     display: flex;
     flex-direction: column;
@@ -3222,14 +3238,10 @@ main {
   .sim-results {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     gap: 12px;
+    height: 100%;
     min-width: 0;
-  }
-
-  @media (min-width: 960px) {
-    .sim-results {
-      align-self: start;
-    }
   }
 
   .sim-profile-card {
@@ -3239,7 +3251,9 @@ main {
     padding: clamp(16px, 2.2vw, 22px);
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     gap: 14px;
+    height: 100%;
     min-width: 0;
     box-shadow: 0 16px 36px -26px var(--md-shadow-tint);
   }
@@ -3385,195 +3399,7 @@ main {
     color: var(--md-on-primary-container);
   }
 
-  /* Jornada em 6 Etapas */
-  .sim-journey-block {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    min-width: 0;
-  }
-
-  .sim-journey-tabs {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 5px;
-    padding: 5px;
-    border-radius: 18px;
-    background-color: var(--md-surface-container-low);
-    border: 1px solid var(--md-outline-variant);
-    min-width: 0;
-  }
-
-  @media (min-width: 640px) {
-    .sim-journey-tabs {
-      grid-template-columns: repeat(6, minmax(0, 1fr));
-    }
-  }
-
-  .sim-journey-tab {
-    appearance: none;
-    -webkit-appearance: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    min-height: 34px;
-    padding: 6px 6px;
-    border-radius: var(--shape-pill);
-    border: 1.5px solid transparent;
-    background-color: transparent;
-    color: var(--md-on-surface-variant);
-    font-family: var(--font-display);
-    font-size: 0.74rem;
-    font-weight: 700;
-    line-height: 1.2;
-    text-align: center;
-    white-space: nowrap;
-    max-width: 100%;
-    cursor: pointer;
-    transition: background-color var(--dur-fast) var(--ease-standard),
-                color var(--dur-fast) var(--ease-standard),
-                border-color var(--dur-fast) var(--ease-standard),
-                transform var(--dur-med) var(--ease-spring);
-  }
-
-  .sim-journey-tab:hover:not(.is-active):not([aria-selected="true"]):not([aria-pressed="true"]) {
-    background-color: var(--md-surface-container-lowest);
-    border-color: var(--md-outline-variant);
-    color: var(--md-on-surface);
-  }
-
-  .sim-journey-tab:active {
-    transform: scale(0.96);
-  }
-
-  .sim-journey-tab.is-active,
-  .sim-journey-tab[aria-selected="true"],
-  .sim-journey-tab[aria-pressed="true"] {
-    background-color: var(--md-primary-container);
-    color: var(--md-on-primary-container);
-    border-color: var(--md-primary);
-  }
-
-  .sim-journey-tab:focus-visible {
-    outline: 2px solid var(--md-primary);
-    outline-offset: 2px;
-  }
-
-  .sim-journey-note {
-    padding: 12px 14px;
-    border-radius: 16px;
-    background-color: var(--md-surface-container-low);
-    border: 1px solid var(--md-outline-variant);
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    font-size: 0.86rem;
-    line-height: 1.48;
-    color: var(--md-on-surface);
-    min-width: 0;
-  }
-
-  .sim-journey-note p {
-    margin: 0;
-    color: var(--md-on-surface-variant);
-  }
-
-  .sim-journey-note strong {
-    color: var(--md-on-surface);
-  }
-
-  /* Proteções Rápidas (Shields) */
-  .sim-shields-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 7px;
-    min-width: 0;
-  }
-
-  .sim-shield-pill {
-    appearance: none;
-    -webkit-appearance: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    min-height: 36px;
-    padding: 7px 13px;
-    border-radius: var(--shape-pill);
-    border: 1.5px solid var(--md-outline-variant);
-    background-color: var(--md-surface-container-lowest);
-    color: var(--md-on-surface);
-    font-family: var(--font-body);
-    font-size: 0.81rem;
-    font-weight: 600;
-    line-height: 1.25;
-    text-align: left;
-    max-width: 100%;
-    cursor: pointer;
-    transition: background-color var(--dur-fast) var(--ease-standard),
-                color var(--dur-fast) var(--ease-standard),
-                border-color var(--dur-fast) var(--ease-standard),
-                transform var(--dur-med) var(--ease-spring);
-  }
-
-  .sim-shield-pill svg {
-    flex-shrink: 0;
-    color: var(--md-tertiary);
-  }
-
-  .sim-shield-pill:hover:not(.is-active):not([aria-pressed="true"]):not([aria-expanded="true"]) {
-    background-color: var(--md-surface-container);
-    border-color: color-mix(in srgb, var(--md-tertiary) 55%, var(--md-outline-variant));
-  }
-
-  .sim-shield-pill:active {
-    transform: scale(0.96);
-  }
-
-  .sim-shield-pill.is-active,
-  .sim-shield-pill[aria-pressed="true"],
-  .sim-shield-pill[aria-expanded="true"] {
-    background-color: var(--md-tertiary-container);
-    color: var(--md-on-tertiary-container);
-    border-color: var(--md-tertiary);
-    font-weight: 700;
-  }
-
-  .sim-shield-pill.is-active svg,
-  .sim-shield-pill[aria-pressed="true"] svg,
-  .sim-shield-pill[aria-expanded="true"] svg {
-    color: currentColor;
-  }
-
-  .sim-shield-pill:focus-visible {
-    outline: 2px solid var(--md-primary);
-    outline-offset: 2px;
-  }
-
-  .sim-shield-caption {
-    margin: 0;
-    padding: 11px 14px;
-    border-radius: 16px;
-    background-color: var(--md-tertiary-container);
-    color: var(--md-on-tertiary-container);
-    border: 1px solid color-mix(in srgb, var(--md-tertiary) 36%, transparent);
-    font-size: 0.84rem;
-    line-height: 1.48;
-    min-width: 0;
-  }
-
-  .sim-shield-caption.is-secondary {
-    background-color: var(--md-secondary-container);
-    color: var(--md-on-secondary-container);
-    border-color: color-mix(in srgb, var(--md-secondary) 36%, transparent);
-  }
-
-  .sim-shield-caption p {
-    margin: 0;
-  }
-
   /* Links nítidos com contraste AAA (sobrescreve Tailwind Preflight) */
-  .sim-journey-note a,
   .sim-footer-note a {
     color: color-mix(in srgb, var(--md-primary) 42%, var(--md-on-surface));
     font-weight: 700;
@@ -3588,41 +3414,14 @@ main {
                 text-underline-offset var(--dur-fast) var(--ease-standard);
   }
 
-  .sim-journey-note a:hover,
   .sim-footer-note a:hover {
     color: var(--md-on-surface);
     text-decoration-thickness: 2px;
     text-underline-offset: 4px;
   }
 
-  .sim-shield-caption a {
-    color: inherit;
-    font-weight: 700;
-    text-decoration: underline;
-    text-decoration-line: underline;
-    text-decoration-color: currentColor;
-    text-decoration-thickness: 1.5px;
-    text-underline-offset: 3px;
-    border-radius: 4px;
-    transition: opacity var(--dur-fast) var(--ease-standard),
-                text-decoration-thickness var(--dur-fast) var(--ease-standard),
-                text-underline-offset var(--dur-fast) var(--ease-standard);
-  }
-
-  .sim-shield-caption a:hover {
-    opacity: 0.88;
-    text-decoration-thickness: 2px;
-    text-underline-offset: 4px;
-  }
-
-  .sim-journey-note a:focus-visible,
   .sim-footer-note a:focus-visible {
     outline: 2px solid var(--md-primary);
-    outline-offset: 2px;
-  }
-
-  .sim-shield-caption a:focus-visible {
-    outline: 2px solid currentColor;
     outline-offset: 2px;
   }
 
@@ -4126,10 +3925,6 @@ main {
 [data-motion="calm"] .sim-chip,
 [data-motion="calm"] .sim-toggle-btn,
 [data-motion="calm"] .sim-profile-emblem,
-[data-motion="calm"] .sim-journey-tab,
-[data-motion="calm"] .sim-journey-note a,
-[data-motion="calm"] .sim-shield-pill,
-[data-motion="calm"] .sim-shield-caption a,
 [data-motion="calm"] .sim-footer-note a,
 [data-motion="calm"] .sim-cost-range,
 [data-motion="calm"] .sim-order-close,
@@ -4144,8 +3939,6 @@ main {
 [data-motion="calm"] .sim-perspective-btn:active,
 [data-motion="calm"] .sim-chip:active,
 [data-motion="calm"] .sim-toggle-btn:active,
-[data-motion="calm"] .sim-journey-tab:active,
-[data-motion="calm"] .sim-shield-pill:active,
 [data-motion="calm"] .sim-order-close:hover,
 [data-motion="calm"] .sim-order-close:active,
 [data-motion="calm"] .sim-shell .btn:hover,
@@ -4222,8 +4015,6 @@ main {
   .sim-perspective-btn:active,
   .sim-chip:active,
   .sim-toggle-btn:active,
-  .sim-journey-tab:active,
-  .sim-shield-pill:active,
   .sim-order-close:hover,
   .sim-order-close:active,
   .sim-shell .btn:hover,

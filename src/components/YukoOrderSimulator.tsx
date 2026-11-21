@@ -2,9 +2,7 @@ import { useEffect, useId, useMemo, useRef, useState, type KeyboardEvent } from 
 import {
   DISCORD_INVITE_URL,
   SIMULATOR_DEV_PROFILES,
-  SIMULATOR_JOURNEY_STEPS,
   SIMULATOR_PERSPECTIVE_OPTIONS,
-  SIMULATOR_SHIELDS,
   SIMULATOR_SOLUTIONS,
   type SimulatorDevRole,
   type SimulatorPerspective,
@@ -188,16 +186,10 @@ function buildOrderCode(
 function resolveHumanProfile(
   perspective: SimulatorPerspective,
   solution: SimulatorSolutionCard,
-  scopeSize: SimulatorScopeSize,
   situation: SimulatorSituation,
   involvesClientData: boolean,
   devRole: SimulatorDevRole
 ): HumanProfile {
-  const scopePhrase =
-    scopeSize === 'essencial'
-      ? 'Começando pelo essencial e validado por 2+ revisores antes de ir ao ar.'
-      : 'Cobrindo a rotina completa com conferência coletiva e guia de uso.';
-
   if (perspective === 'desenvolvedor') {
     const devMeta = SIMULATOR_DEV_PROFILES[devRole];
     const situationSuffix =
@@ -209,9 +201,7 @@ function resolveHumanProfile(
     return {
       badge: `${devMeta.profileBadge} · ${solution.shortTitle}`,
       title: `${devMeta.profileTitle}${situationSuffix}`,
-      summary: `${devMeta.humanSummary} Frente "${solution.shortTitle}" em ritmo ${
-        scopeSize === 'essencial' ? 'enxuto' : 'completo'
-      }.`,
+      summary: devMeta.humanSummary,
     };
   }
 
@@ -221,22 +211,11 @@ function resolveHumanProfile(
       situation === 'resgate' && solution.id !== 'resgate-sistema'
         ? `${baseClientTitle} · Retomada`
         : baseClientTitle;
-    const clientScopePhrase =
-      scopeSize === 'essencial'
-        ? 'Caminho direto no celular, sem etapas sobrando.'
-        : 'Experiência completa do atendimento ao retorno.';
-    const clientRescuePhrase =
-      situation === 'resgate' && solution.id !== 'resgate-sistema'
-        ? ' Em modo de retomada para estabilizar o atendimento sem sustos.'
-        : '';
-    const clientLgpdPhrase = involvesClientData
-      ? 'Seus dados ficam protegidos com coleta mínima e sigilo.'
-      : 'Sem exigir cadastro extra nem expor seu contato.';
 
     return {
       badge: `${solution.profileBadge} · Experiência do cliente`,
       title: clientTitle,
-      summary: `${solution.clientProfileHook} ${clientScopePhrase}${clientRescuePhrase} ${clientLgpdPhrase}`,
+      summary: solution.clientProfileHook,
     };
   }
 
@@ -250,7 +229,7 @@ function resolveHumanProfile(
   return {
     badge: involvesClientData ? `${solution.profileBadge} · LGPD` : solution.profileBadge,
     title: companyTitle,
-    summary: `${solution.humanSummary} ${scopePhrase}`,
+    summary: solution.humanSummary,
   };
 }
 
@@ -457,8 +436,6 @@ export default function YukoOrderSimulator({
   const [situation, setSituation] = useState<SimulatorSituation>('zero');
   const [involvesClientData, setInvolvesClientData] = useState<boolean>(false);
   const [devRole, setDevRole] = useState<SimulatorDevRole>('executor');
-  const [activeJourneyStep, setActiveJourneyStep] = useState<number>(1);
-  const [activeShieldId, setActiveShieldId] = useState<'continuidade' | 'lgpd' | null>(null);
   const [orderGenerated, setOrderGenerated] = useState<boolean>(false);
   const [copyNonce, setCopyNonce] = useState<number>(0);
   const [copiedRecently, setCopiedRecently] = useState<boolean>(false);
@@ -468,7 +445,6 @@ export default function YukoOrderSimulator({
     cliente: null,
     desenvolvedor: null,
   });
-  const journeyRefs = useRef<Record<number, HTMLButtonElement | null>>({});
   const copyTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
@@ -495,24 +471,11 @@ export default function YukoOrderSimulator({
     return resolveHumanProfile(
       perspective,
       selectedSolution,
-      scopeSize,
       situation,
       involvesClientData,
       devRole
     );
-  }, [perspective, selectedSolution, scopeSize, situation, involvesClientData, devRole]);
-
-  const activeStep = useMemo(() => {
-    return (
-      SIMULATOR_JOURNEY_STEPS.find((step) => step.step === activeJourneyStep) ??
-      SIMULATOR_JOURNEY_STEPS[0]
-    );
-  }, [activeJourneyStep]);
-
-  const activeShield = useMemo(() => {
-    if (!activeShieldId) return null;
-    return SIMULATOR_SHIELDS.find((shield) => shield.id === activeShieldId) ?? null;
-  }, [activeShieldId]);
+  }, [perspective, selectedSolution, situation, involvesClientData, devRole]);
 
   const hiddenOrderRecord = useMemo(() => {
     return buildHiddenOrderRecord({
@@ -569,28 +532,6 @@ export default function YukoOrderSimulator({
     if (nextOption) {
       setPerspective(nextOption.id);
       perspectiveRefs.current[nextOption.id]?.focus();
-    }
-  };
-
-  const handleJourneyKeyDown = (e: KeyboardEvent<HTMLButtonElement>, currentIndex: number) => {
-    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft' && e.key !== 'Home' && e.key !== 'End') {
-      return;
-    }
-    e.preventDefault();
-    const total = SIMULATOR_JOURNEY_STEPS.length;
-    const nextIndex =
-      e.key === 'Home'
-        ? 0
-        : e.key === 'End'
-          ? total - 1
-          : e.key === 'ArrowRight'
-            ? (currentIndex + 1) % total
-            : (currentIndex - 1 + total) % total;
-
-    const nextStep = SIMULATOR_JOURNEY_STEPS[nextIndex];
-    if (nextStep) {
-      setActiveJourneyStep(nextStep.step);
-      journeyRefs.current[nextStep.step]?.focus();
     }
   };
 
@@ -670,7 +611,7 @@ export default function YukoOrderSimulator({
         : devRole === 'revisor'
           ? 'Revisar (2+ pares)'
           : 'Apoio · 5 dias'
-      : '4+ membros';
+      : '4+ pessoas';
 
   const networkKpiSub =
     perspective === 'desenvolvedor' ? 'atuação na rede' : '1 cria · 2+ revisam · suporte';
@@ -683,7 +624,6 @@ export default function YukoOrderSimulator({
         : 'Gerar ficha de atuação';
 
   const panelId = `sim-workspace-${uid}`;
-  const journeyPanelId = `sim-journey-note-${uid}`;
 
   return (
     <div className="sim-shell" aria-labelledby={headingId}>
@@ -779,48 +719,50 @@ export default function YukoOrderSimulator({
               </div>
             )}
 
-            <div className="sim-tuning-group">
-              <span className="sim-tuning-label">Alcance</span>
-              <div className="sim-chip-row" role="group" aria-label="Alcance da entrega">
-                {SCOPE_OPTIONS.map((opt) => {
-                  const isActive = scopeSize === opt.id;
-                  return (
-                    <button
-                      key={opt.id}
-                      type="button"
-                      aria-pressed={isActive}
-                      className={`sim-chip${isActive ? ' is-active' : ''}`}
-                      onClick={() => setScopeSize(opt.id)}
-                    >
-                      {opt.label}
-                    </button>
-                  );
-                })}
+            <div className="sim-tuning-pair">
+              <div className="sim-tuning-group">
+                <span className="sim-tuning-label">Alcance</span>
+                <div className="sim-chip-row" role="group" aria-label="Alcance da entrega">
+                  {SCOPE_OPTIONS.map((opt) => {
+                    const isActive = scopeSize === opt.id;
+                    return (
+                      <button
+                        key={opt.id}
+                        type="button"
+                        aria-pressed={isActive}
+                        className={`sim-chip${isActive ? ' is-active' : ''}`}
+                        onClick={() => setScopeSize(opt.id)}
+                      >
+                        {opt.label}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
 
-            <div className="sim-tuning-group">
-              <span className="sim-tuning-label">Momento</span>
-              <div className="sim-chip-row" role="group" aria-label="Momento atual">
-                {SITUATION_OPTIONS.map((opt) => {
-                  const isActive = situation === opt.id;
-                  const isDisabled = solutionId === 'resgate-sistema' && opt.id !== 'resgate';
-                  return (
-                    <button
-                      key={opt.id}
-                      type="button"
-                      disabled={isDisabled}
-                      aria-pressed={isActive}
-                      className={`sim-chip${isActive ? ' is-active' : ''}`}
-                      title={
-                        isDisabled ? 'Resgate & Apoio atua sempre no modo Resgatar' : undefined
-                      }
-                      onClick={() => setSituation(opt.id)}
-                    >
-                      {opt.label}
-                    </button>
-                  );
-                })}
+              <div className="sim-tuning-group">
+                <span className="sim-tuning-label">Momento</span>
+                <div className="sim-chip-row" role="group" aria-label="Momento atual">
+                  {SITUATION_OPTIONS.map((opt) => {
+                    const isActive = situation === opt.id;
+                    const isDisabled = solutionId === 'resgate-sistema' && opt.id !== 'resgate';
+                    return (
+                      <button
+                        key={opt.id}
+                        type="button"
+                        disabled={isDisabled}
+                        aria-pressed={isActive}
+                        className={`sim-chip${isActive ? ' is-active' : ''}`}
+                        title={
+                          isDisabled ? 'Resgate & Apoio atua sempre no modo Resgatar' : undefined
+                        }
+                        onClick={() => setSituation(opt.id)}
+                      >
+                        {opt.label}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
             </div>
 
@@ -978,123 +920,6 @@ export default function YukoOrderSimulator({
               </div>
             )}
 
-            {/* Trilha visual das 6 etapas */}
-            <div className="sim-journey-block">
-              <div
-                className="sim-journey-tabs"
-                role="tablist"
-                aria-label="Trilha das 6 etapas Yuko"
-              >
-                {SIMULATOR_JOURNEY_STEPS.map((step, idx) => {
-                  const isActive = step.step === activeStep.step;
-                  const stepTabId = `sim-journey-tab-${step.step}-${uid}`;
-                  return (
-                    <button
-                      key={step.step}
-                      ref={(el) => {
-                        journeyRefs.current[step.step] = el;
-                      }}
-                      id={stepTabId}
-                      type="button"
-                      role="tab"
-                      aria-selected={isActive}
-                      aria-controls={journeyPanelId}
-                      tabIndex={isActive ? 0 : -1}
-                      className={`sim-journey-tab${isActive ? ' is-active' : ''}`}
-                      onClick={() => setActiveJourneyStep(step.step)}
-                      onKeyDown={(e) => handleJourneyKeyDown(e, idx)}
-                    >
-                      {step.label}
-                    </button>
-                  );
-                })}
-              </div>
-
-              <div
-                id={journeyPanelId}
-                className="sim-journey-note"
-                role="tabpanel"
-                aria-labelledby={`sim-journey-tab-${activeStep.step}-${uid}`}
-              >
-                <p>
-                  {perspective === 'desenvolvedor'
-                    ? activeStep.devLine
-                    : perspective === 'cliente'
-                      ? (activeStep.clientLine ?? activeStep.humanLine)
-                      : activeStep.humanLine}
-                </p>
-                {perspective === 'desenvolvedor' ? (
-                  <p>
-                    <strong>{activeStep.area}</strong> · {selectedSolution.discordChannel}{' '}
-                    <a href={activeStep.href}>Ver etapa →</a>
-                  </p>
-                ) : (
-                  <p>
-                    <a href={activeStep.href}>Entender essa etapa →</a>
-                  </p>
-                )}
-              </div>
-            </div>
-
-            {/* Pílulas de cuidado */}
-            <div className="sim-shields-row" role="group" aria-label="Garantias de cuidado">
-              {SIMULATOR_SHIELDS.map((shield) => {
-                const isOpen = activeShieldId === shield.id;
-                return (
-                  <button
-                    key={shield.id}
-                    type="button"
-                    aria-pressed={isOpen}
-                    aria-expanded={isOpen}
-                    className={`sim-shield-pill${isOpen ? ' is-active' : ''}`}
-                    onClick={() =>
-                      setActiveShieldId((prev) => (prev === shield.id ? null : shield.id))
-                    }
-                  >
-                    <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.1"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      aria-hidden="true"
-                    >
-                      {shield.id === 'continuidade' ? (
-                        <>
-                          <circle cx="12" cy="12" r="9" />
-                          <path d="M12 7v5l3 2" />
-                        </>
-                      ) : (
-                        <>
-                          <rect x="5" y="11" width="14" height="9" rx="2.5" />
-                          <path d="M8 11V8a4 4 0 0 1 8 0v3" />
-                        </>
-                      )}
-                    </svg>
-                    <span>{shield.label}</span>
-                  </button>
-                );
-              })}
-            </div>
-
-            {activeShield && (
-              <div
-                className={`sim-shield-caption${
-                  activeShield.id === 'lgpd' ? ' is-secondary' : ''
-                }`}
-              >
-                <p>
-                  {activeShield.microNote}{' '}
-                  <a href={activeShield.href}>
-                    {activeShield.id === 'continuidade' ? 'Ver Ciclo →' : 'Ver LGPD →'}
-                  </a>
-                </p>
-              </div>
-            )}
-
             {/* Ações estratégicas / Ticket gerado (sem duplicação) */}
             {!orderGenerated ? (
               <div className="sim-actions-row">
@@ -1187,8 +1012,7 @@ export default function YukoOrderSimulator({
             )}
 
             <p className="sim-footer-note">
-              Sem vínculo empregatício nem taxas ocultas · alinhamento direto pelo{' '}
-              <a href="/manual/">Manual v1.0</a>
+              Sem vínculo nem taxas ocultas · regras no <a href="/manual/">Manual v1.0</a>
             </p>
           </section>
         </div>

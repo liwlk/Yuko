@@ -856,28 +856,11 @@ export interface SimulatorSolutionCard {
   basePriceMax: number;
 }
 
-export interface SimulatorJourneyStep {
-  step: number;
-  label: string;
-  humanLine: string;
-  clientLine: string;
-  devLine: string;
-  area: string;
-  href: string;
-}
-
 export interface SimulatorDevProfileMeta {
   label: string;
   profileTitle: string;
   profileBadge: string;
   humanSummary: string;
-}
-
-export interface SimulatorShieldPill {
-  id: 'continuidade' | 'lgpd';
-  label: string;
-  microNote: string;
-  href: string;
 }
 
 export const SIMULATOR_PERSPECTIVE_OPTIONS: {
@@ -897,9 +880,9 @@ export const SIMULATOR_SOLUTIONS: SimulatorSolutionCard[] = [
     profileTitle: 'Presença com Respaldo',
     profileBadge: 'Acolhimento Digital',
     humanSummary:
-      'Seu negócio encontrado com clareza, contato protegido contra robôs e acessos sempre no nome da sua empresa.',
+      'Seu negócio no ar com contato direto, rápido no celular e domínio no seu nome.',
     clientProfileHook:
-      'Encontra horários, serviços e WhatsApp oficial com cadeado de segurança no celular.',
+      'Horários, serviços e WhatsApp oficial com acesso rápido e seguro no celular.',
     extensions: ['Yuko Field', 'Yuko Make', 'Yuko Dev', 'Yuko Work'],
     discordChannel: '#projetos-ativos',
     baseDaysMin: 5,
@@ -914,9 +897,9 @@ export const SIMULATOR_SOLUTIONS: SimulatorSolutionCard[] = [
     profileTitle: 'Atendimento sem Atrito',
     profileBadge: 'Ritmo de Balcão',
     humanSummary:
-      'Horários e pedidos organizados no celular, sem recados perdidos e com coleta mínima respeitando a LGPD.',
+      'Horários e pedidos organizados sem perder mensagens ou pedir cadastros extras.',
     clientProfileHook:
-      'Marca horário ou faz pedido rápido no celular, com confirmação clara e sem dados extras.',
+      'Agendamento ou pedido direto em poucos toques, sem preencher formulários longos.',
     extensions: ['Yuko Field', 'Yuko Make', 'Yuko Dev', 'Yuko Work'],
     discordChannel: '#projetos-ativos',
     baseDaysMin: 10,
@@ -931,9 +914,9 @@ export const SIMULATOR_SOLUTIONS: SimulatorSolutionCard[] = [
     profileTitle: 'Rotina Leve & Segura',
     profileBadge: 'Gestão Central',
     humanSummary:
-      'Substitui planilhas soltas por um lugar seguro, com permissões por pessoa e histórico simples de acompanhar.',
+      'Clientes, ordens ou estoque em um só lugar, substituindo planilhas soltas.',
     clientProfileHook:
-      'Atendimento ágil no dia a dia e facilidade para pedir cópia ou exclusão de dados.',
+      'Atendimento mais ágil porque a equipe encontra seu histórico sem demora.',
     extensions: ['Yuko Field', 'Yuko Make', 'Yuko Dev', 'Yuko Work', 'Yuko Place'],
     discordChannel: '#projetos-ativos',
     baseDaysMin: 15,
@@ -948,9 +931,9 @@ export const SIMULATOR_SOLUTIONS: SimulatorSolutionCard[] = [
     profileTitle: 'Operação Conectada',
     profileBadge: 'Ponte Enxuta',
     humanSummary:
-      'Liga formulários e planilhas que você já usa, evitando digitação repetida e guardando senhas em cofre seguro.',
+      'Liga formulário, planilha e avisos da equipe para acabar com o retrabalho manual.',
     clientProfileHook:
-      'Recebe retorno automático sem atrasos nem erro de digitação entre ferramentas.',
+      'Confirmação imediata e respostas consistentes assim que você envia um pedido.',
     extensions: ['Yuko Field', 'Yuko Inline', 'Yuko Dev', 'Yuko Work'],
     discordChannel: '#conhecimento-tecnico',
     baseDaysMin: 5,
@@ -965,9 +948,9 @@ export const SIMULATOR_SOLUTIONS: SimulatorSolutionCard[] = [
     profileTitle: 'Base Protegida (LGPD)',
     profileBadge: 'Cuidado & Sigilo',
     humanSummary:
-      'Organiza senhas no nome da empresa, ativa cópias de reserva testadas e ajusta cadastros à LGPD.',
+      'Organiza senhas, cópias de segurança e coleta de dados conforme a LGPD.',
     clientProfileHook:
-      'Sente confiança em deixar seus dados sabendo que há sigilo e cuidado de verdade.',
+      'Seus dados ficam protegidos, com acesso restrito e sem coleta desnecessária.',
     extensions: ['Yuko Field', 'Yuko Dev', 'Yuko Work', 'Yuko Place'],
     discordChannel: '#conhecimento-tecnico',
     baseDaysMin: 5,
@@ -982,9 +965,9 @@ export const SIMULATOR_SOLUTIONS: SimulatorSolutionCard[] = [
     profileTitle: 'Retomada Assistida',
     profileBadge: 'Continuidade Ativa',
     humanSummary:
-      'Recupera sites parados ou presos sem apoio, trazendo tudo para espaço central com suporte garantido.',
+      'Retoma seu sistema parado, coloca tudo em espaço central e garante suporte contínuo.',
     clientProfileHook:
-      'Volta a usar um serviço estável e confiável, sem interrupções inesperadas no atendimento.',
+      'O serviço volta a funcionar de forma estável, sem interrupções para você.',
     extensions: ['Yuko Field', 'Yuko Dev', 'Yuko Work', 'Yuko Inline'],
     discordChannel: '#projetos-ativos',
     baseDaysMin: 7,
@@ -994,120 +977,26 @@ export const SIMULATOR_SOLUTIONS: SimulatorSolutionCard[] = [
   },
 ];
 
-export const SIMULATOR_JOURNEY_STEPS: SimulatorJourneyStep[] = [
-  {
-    step: 1,
-    label: '1. Escuta',
-    humanLine:
-      'Você conta a rotina sem jargões e a rede avalia o impacto real antes de começar.',
-    clientLine:
-      'Sua necessidade vira ponto de partida para um atendimento mais simples e rápido.',
-    devLine:
-      'Triagem no #projetos-ativos avalia ganho real, urgência, baixa dependência externa e 2+ revisores.',
-    area: 'Yuko Field',
-    href: '/extensoes/#extensoes',
-  },
-  {
-    step: 2,
-    label: '2. Acordo',
-    humanLine:
-      'Combinado enxuto por escrito, com prazos claros, critérios de aprovação e contrato direto.',
-    clientLine:
-      'O serviço nasce focado no que resolve seu dia a dia, sem excesso de telas ou cadastros.',
-    devLine:
-      'Ficha oficial registra escopo, contrato bilateral autônomo e nomes de executor, revisores e suporte.',
-    area: 'Yuko Make · Yuko Work',
-    href: '/ciclo/#registro',
-  },
-  {
-    step: 3,
-    label: '3. Criação',
-    humanLine:
-      'Sistema feito em espaço central compartilhado, sem depender de um único computador.',
-    clientLine:
-      'Cada tela é preparada para abrir leve no celular e proteger seus dados desde o início.',
-    devLine:
-      'Construção no espaço central com apoio em #conhecimento-tecnico; proibido reter código no computador pessoal.',
-    area: 'Yuko Dev · Yuko Inline',
-    href: '/governanca/#engenharia',
-  },
-  {
-    step: 4,
-    label: '4. Revisão',
-    humanLine:
-      'Pelo menos dois profissionais independentes conferem tudo antes de você precisar aprovar qualquer tela.',
-    clientLine:
-      'Mais de um par confere segurança e clareza antes de o serviço chegar até você.',
-    devLine:
-      'Revisão obrigatória por 2+ colegas no #projetos-ativos valida segurança, LGPD e fidelidade ao acordo.',
-    area: 'Yuko Dev · Yuko Work',
-    href: '/ciclo/#papeis',
-  },
-  {
-    step: 5,
-    label: '5. Testes',
-    humanLine:
-      'Você testa no celular em ambiente separado, usando só dados fictícios.',
-    clientLine:
-      'Os testes acontecem só com exemplos fictícios, preservando a privacidade de clientes reais.',
-    devLine:
-      'Ambiente separado com dados fictícios fecha a lista final de entrega e cadeado HTTPS ativo.',
-    area: 'Yuko Inline · Yuko Make',
-    href: '/governanca/#seguranca',
-  },
-  {
-    step: 6,
-    label: '6. Apoio',
-    humanLine:
-      'Tudo vai ao ar no seu nome, com guia simples e suporte protegido contra abandono.',
-    clientLine:
-      'Tudo funciona de forma estável e com suporte pronto se precisar de ajuste.',
-    devLine:
-      'Entrega registrada em #recepcao-e-avisos; empresa é Controladora e suporte segue regra de 5 dias.',
-    area: 'Yuko Place · Yuko Work',
-    href: '/manual/#origem',
-  },
-];
-
 export const SIMULATOR_DEV_PROFILES: Record<SimulatorDevRole, SimulatorDevProfileMeta> = {
   executor: {
     label: 'Executar',
     profileTitle: 'Par Executor em Rede',
     profileBadge: 'Autonomia & Ficha',
     humanSummary:
-      'Transforma a conversa em combinado simples e constrói em espaço central compartilhado.',
+      'Fecha o acordo por escrito e constrói tudo no espaço central compartilhado.',
   },
   revisor: {
     label: 'Revisar (2+)',
     profileTitle: 'Guardião de Revisão (2+)',
     profileBadge: 'Olhar Independente',
     humanSummary:
-      'Confere segurança, clareza e LGPD junto com outro revisor antes de liberar.',
+      'Valida segurança, LGPD e clareza com outro colega antes de liberar.',
   },
   suporte: {
     label: 'Apoiar',
     profileTitle: 'Referência de Continuidade',
     profileBadge: 'Pós-Entrega Ativo',
     humanSummary:
-      'Acompanha os primeiros dias no ar e garante troca segura em até 5 dias úteis.',
+      'Acompanha o sistema no ar e garante transição segura se houver ausência.',
   },
 };
-
-export const SIMULATOR_SHIELDS: SimulatorShieldPill[] = [
-  {
-    id: 'continuidade',
-    label: 'Continuidade · 5 dias',
-    microNote:
-      'Se houver ausência por 5 dias úteis sem aviso, outro profissional assume com o histórico completo.',
-    href: '/ciclo/#papeis',
-  },
-  {
-    id: 'lgpd',
-    label: 'Sigilo LGPD · Dados fictícios',
-    microNote:
-      'Testes usam só dados inventados; sua empresa decide tudo sobre os dados reais (LGPD).',
-    href: '/governanca/#privacidade',
-  },
-];
-
-
