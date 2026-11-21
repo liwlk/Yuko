@@ -19,15 +19,20 @@ export interface YukoOrderSimulatorProps {
   headingId?: string;
 }
 
+type CostLevelNumber = 1 | 2 | 3 | 4;
+
 interface EstimateResult {
   daysMin: number;
   daysMax: number;
   deadlineShort: string;
   deadlineFull: string;
-  priceMin: number;
-  priceMax: number;
-  priceFriendly: string;
-  priceFull: string;
+  costLevel: CostLevelNumber;
+  costLevelTitle: string;
+  costTierShort: string;
+  costFloorLabel: string;
+  costCeilingLabel: string;
+  floorPct: number;
+  ceilingPct: number;
 }
 
 interface HumanProfile {
@@ -49,6 +54,15 @@ const SITUATION_OPTIONS: ReadonlyArray<{ id: SimulatorSituation; label: string }
 
 const DEV_ROLE_ORDER: readonly SimulatorDevRole[] = ['executor', 'revisor', 'suporte'];
 
+const SOLUTION_ORDER_CODES: Record<SimulatorSolutionId, string> = {
+  'site-presenca': 'PR',
+  'agenda-pedidos': 'AG',
+  'cadastro-rotina': 'RT',
+  'automacao-ferramentas': 'CX',
+  'casa-em-ordem': 'LG',
+  'resgate-sistema': 'RG',
+};
+
 const CLIENT_PROFILE_TITLES: Record<SimulatorSolutionId, string> = {
   'site-presenca': 'Visita Clara & Segura',
   'agenda-pedidos': 'Pedido Rápido no Balcão',
@@ -58,26 +72,8 @@ const CLIENT_PROFILE_TITLES: Record<SimulatorSolutionId, string> = {
   'resgate-sistema': 'Serviço Estável de Volta',
 };
 
-function roundToNearestFifty(value: number): number {
-  return Math.round(value / 50) * 50;
-}
-
-function formatBrl(value: number): string {
-  return new Intl.NumberFormat('pt-BR', {
-    style: 'currency',
-    currency: 'BRL',
-    maximumFractionDigits: 0,
-  }).format(value);
-}
-
-function formatPlainNumber(value: number): string {
-  return new Intl.NumberFormat('pt-BR', {
-    maximumFractionDigits: 0,
-  }).format(value);
-}
-
-function formatFriendlyPriceRange(min: number, max: number): string {
-  return `R$ ${formatPlainNumber(min)}–${formatPlainNumber(max)}`;
+function clamp(value: number, min: number, max: number): number {
+  return Math.max(min, Math.min(max, value));
 }
 
 function formatDeadlineRange(minDays: number, maxDays: number): { short: string; full: string } {
@@ -132,12 +128,35 @@ function calculateEstimate(
     Math.round(solution.baseDaysMax * scopeDaysMult * situationMult) + lgpdExtraDays
   );
 
-  const priceMin = roundToNearestFifty(
-    solution.basePriceMin * scopePriceMult * situationMult * lgpdPriceMult
-  );
-  const priceMax = roundToNearestFifty(
-    solution.basePriceMax * scopePriceMult * situationMult * lgpdPriceMult
-  );
+  // Peso interno relativo para posicionar Piso e Teto na barra (sem expor valores diretos)
+  const rawMin = solution.basePriceMin * scopePriceMult * situationMult * lgpdPriceMult;
+  const rawMax = solution.basePriceMax * scopePriceMult * situationMult * lgpdPriceMult;
+
+  const floorPct = clamp(Math.round(((rawMin - 1000) / 11500) * 78 + 8), 8, 62);
+  const ceilingPct = clamp(Math.round(((rawMax - 1200) / 13500) * 82 + 14), floorPct + 20, 94);
+  const midPct = (floorPct + ceilingPct) / 2;
+
+  let costLevel: CostLevelNumber = 1;
+  let costTierShort = 'Base';
+  let costFloorLabel = 'Enxuto';
+  let costCeilingLabel = 'Essencial';
+
+  if (midPct > 68) {
+    costLevel = 4;
+    costTierShort = 'Completo';
+    costFloorLabel = 'Estruturado';
+    costCeilingLabel = 'Sob medida';
+  } else if (midPct > 48) {
+    costLevel = 3;
+    costTierShort = 'Estruturado';
+    costFloorLabel = 'Moderado';
+    costCeilingLabel = 'Amplo';
+  } else if (midPct > 30) {
+    costLevel = 2;
+    costTierShort = 'Moderado';
+    costFloorLabel = 'Base simples';
+    costCeilingLabel = 'Equilibrado';
+  }
 
   const deadline = formatDeadlineRange(daysMin, daysMax);
 
@@ -146,11 +165,24 @@ function calculateEstimate(
     daysMax,
     deadlineShort: deadline.short,
     deadlineFull: deadline.full,
-    priceMin,
-    priceMax,
-    priceFriendly: formatFriendlyPriceRange(priceMin, priceMax),
-    priceFull: `${formatBrl(priceMin)} a ${formatBrl(priceMax)}`,
+    costLevel,
+    costLevelTitle: `Nível ${costLevel} · ${costTierShort}`,
+    costTierShort,
+    costFloorLabel,
+    costCeilingLabel,
+    floorPct,
+    ceilingPct,
   };
+}
+
+function buildOrderCode(
+  solutionId: SimulatorSolutionId,
+  scopeSize: SimulatorScopeSize,
+  costLevel: CostLevelNumber
+): string {
+  const solCode = SOLUTION_ORDER_CODES[solutionId];
+  const scopeCode = scopeSize === 'essencial' ? 'E' : 'C';
+  return `YK-${solCode}-${scopeCode}${costLevel}`;
 }
 
 function resolveHumanProfile(
@@ -214,7 +246,8 @@ function resolveHumanProfile(
   };
 }
 
-function buildHiddenProfileBrief(params: {
+function buildHiddenOrderRecord(params: {
+  orderCode: string;
   perspective: SimulatorPerspective;
   profile: HumanProfile;
   solution: SimulatorSolutionCard;
@@ -225,6 +258,7 @@ function buildHiddenProfileBrief(params: {
   estimate: EstimateResult;
 }): string {
   const {
+    orderCode,
     perspective,
     profile,
     solution,
@@ -251,18 +285,18 @@ function buildHiddenProfileBrief(params: {
     : 'Informações públicas (sem coleta sensível e testes exclusivos com dados fictícios)';
 
   return [
-    'PERFIL SIMULADO · YUKO',
-    `Modo: ${perspectiveLabel}`,
-    `Perfil: ${profile.title} (${profile.badge})`,
-    `Frente escolhida: ${solution.shortTitle} · ${scopeLabel} · ${situationLabel}`,
+    `SOLICITAÇÃO YUKO · PROTOCOLO ${orderCode}`,
+    `Origem: ${perspectiveLabel}`,
+    `Perfil associado: ${profile.title} (${profile.badge})`,
+    `Frente solicitada: ${solution.shortTitle} · ${scopeLabel} · ${situationLabel}`,
+    `Nível de custo: ${estimate.costLevelTitle} (Piso: ${estimate.costFloorLabel} → Teto: ${estimate.costCeilingLabel}, sem valor fechado prévio)`,
+    `Ritmo estimado: ${estimate.deadlineFull}`,
     `Áreas Yuko: ${solution.extensions.join(' · ')}`,
-    `Canal Discord sugerido: ${solution.discordChannel}`,
-    `Estimativa de prazo: ${estimate.deadlineFull}`,
-    `Faixa de referência: ${estimate.priceFriendly} (${estimate.priceFull} — estimativa aberta)`,
+    `Canal Discord: ${solution.discordChannel}`,
     'Rede de entrega: 4+ membros (1 executor, 2+ revisores independentes e 1 responsável de suporte)',
     `Proteção LGPD: ${lgpdSummary}`,
     'Continuidade (regra de 5 dias úteis): código e histórico ficam no espaço central; após 5 dias úteis sem resposta nem aviso, outro profissional assume sem perda.',
-    'Ressalva Manual v1.0: participação comunitária sem vínculo empregatício; relações comerciais exigem contrato direto entre as partes, sem taxas ocultas.',
+    'Ressalva Manual v1.0: participação comunitária sem vínculo empregatício; condições comerciais e valores finais são combinados apenas em contrato direto entre as partes após a escuta.',
   ].join('\n');
 }
 
@@ -388,6 +422,8 @@ export default function YukoOrderSimulator({
   const [devRole, setDevRole] = useState<SimulatorDevRole>('executor');
   const [activeJourneyStep, setActiveJourneyStep] = useState<number>(1);
   const [activeShieldId, setActiveShieldId] = useState<'continuidade' | 'lgpd' | null>(null);
+  const [orderGenerated, setOrderGenerated] = useState<boolean>(false);
+  const [copyNonce, setCopyNonce] = useState<number>(0);
   const [copiedRecently, setCopiedRecently] = useState<boolean>(false);
 
   const perspectiveRefs = useRef<Record<SimulatorPerspective, HTMLButtonElement | null>>({
@@ -414,6 +450,10 @@ export default function YukoOrderSimulator({
     return calculateEstimate(selectedSolution, scopeSize, situation, involvesClientData);
   }, [selectedSolution, scopeSize, situation, involvesClientData]);
 
+  const orderCode = useMemo(() => {
+    return buildOrderCode(selectedSolution.id, scopeSize, estimate.costLevel);
+  }, [selectedSolution.id, scopeSize, estimate.costLevel]);
+
   const profile = useMemo(() => {
     return resolveHumanProfile(
       perspective,
@@ -437,8 +477,9 @@ export default function YukoOrderSimulator({
     return SIMULATOR_SHIELDS.find((shield) => shield.id === activeShieldId) ?? null;
   }, [activeShieldId]);
 
-  const hiddenProfileBrief = useMemo(() => {
-    return buildHiddenProfileBrief({
+  const hiddenOrderRecord = useMemo(() => {
+    return buildHiddenOrderRecord({
+      orderCode,
       perspective,
       profile,
       solution: selectedSolution,
@@ -449,6 +490,7 @@ export default function YukoOrderSimulator({
       estimate,
     });
   }, [
+    orderCode,
     perspective,
     profile,
     selectedSolution,
@@ -515,11 +557,11 @@ export default function YukoOrderSimulator({
     }
   };
 
-  const handleCopyProfile = async () => {
+  const copyOrderToClipboard = async () => {
     let copied = false;
     if (typeof navigator !== 'undefined' && navigator.clipboard?.writeText) {
       try {
-        await navigator.clipboard.writeText(hiddenProfileBrief);
+        await navigator.clipboard.writeText(hiddenOrderRecord);
         copied = true;
       } catch {
         copied = false;
@@ -529,7 +571,7 @@ export default function YukoOrderSimulator({
     if (!copied && typeof document !== 'undefined') {
       try {
         const textarea = document.createElement('textarea');
-        textarea.value = hiddenProfileBrief;
+        textarea.value = hiddenOrderRecord;
         textarea.setAttribute('readonly', 'true');
         textarea.style.position = 'fixed';
         textarea.style.opacity = '0';
@@ -548,8 +590,8 @@ export default function YukoOrderSimulator({
         new CustomEvent('yuko:toast', {
           detail: {
             message: copied
-              ? 'Perfil copiado! Cole no Discord para começar sua conversa.'
-              : 'Não foi possível copiar automaticamente. Abra o Discord para conversar com a rede.',
+              ? `Solicitação ${orderCode} pronta e copiada para o Discord.`
+              : `Solicitação ${orderCode} gerada. Abra o Discord para iniciar.`,
           },
         })
       );
@@ -564,6 +606,17 @@ export default function YukoOrderSimulator({
         }, 2400);
       }
     }
+  };
+
+  useEffect(() => {
+    if (copyNonce > 0) {
+      void copyOrderToClipboard();
+    }
+  }, [copyNonce]);
+
+  const handleGenerateOrder = () => {
+    setOrderGenerated(true);
+    setCopyNonce((prev) => prev + 1);
   };
 
   const networkKpiValue =
@@ -827,13 +880,15 @@ export default function YukoOrderSimulator({
                       strokeLinejoin="round"
                       aria-hidden="true"
                     >
-                      <path d="M12 3v18" />
-                      <path d="M16.5 7.5a4 4 0 0 0-4.5-2c-2.3 0-4 1.3-4 3.2 0 4 8.5 2 8.5 6.3 0 2-1.8 3.5-4.5 3.5a4.6 4.6 0 0 1-4.5-2.2" />
+                      <path d="M4 17l5-5 4 4 7-8" />
+                      <path d="M16 8h4v4" />
                     </svg>
-                    <span>Referência</span>
+                    <span>Nível de custo</span>
                   </span>
-                  <strong className="sim-kpi-value">{estimate.priceFriendly}</strong>
-                  <span className="sim-kpi-sub">estimativa aberta</span>
+                  <strong className="sim-kpi-value">{estimate.costLevelTitle}</strong>
+                  <span className="sim-kpi-sub">
+                    {estimate.costFloorLabel} → {estimate.costCeilingLabel}
+                  </span>
                 </div>
               )}
 
@@ -861,6 +916,32 @@ export default function YukoOrderSimulator({
                 <span className="sim-kpi-sub">{networkKpiSub}</span>
               </div>
             </div>
+
+            {perspective !== 'cliente' && (
+              <div className="sim-cost-meter" aria-label="Linha de nível de custo entre piso e teto">
+                <div className="sim-cost-meter-head">
+                  <span className="sim-cost-end">Piso · {estimate.costFloorLabel}</span>
+                  <span className="sim-cost-mid">{estimate.costLevelTitle}</span>
+                  <span className="sim-cost-end">Teto · {estimate.costCeilingLabel}</span>
+                </div>
+                <div
+                  className="sim-cost-track"
+                  role="img"
+                  aria-label={`Faixa do nível de custo de ${estimate.costFloorLabel} até ${estimate.costCeilingLabel}`}
+                >
+                  <div
+                    className="sim-cost-range"
+                    style={{
+                      left: `${estimate.floorPct}%`,
+                      width: `${Math.max(18, estimate.ceilingPct - estimate.floorPct)}%`,
+                    }}
+                  >
+                    <span className="sim-cost-dot is-floor" aria-hidden="true" />
+                    <span className="sim-cost-dot is-ceiling" aria-hidden="true" />
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* Trilha visual das 6 etapas */}
             <div className="sim-journey-block">
@@ -977,19 +1058,79 @@ export default function YukoOrderSimulator({
 
             {/* Ações estratégicas */}
             <div className="sim-actions-row">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={handleGenerateOrder}
+                aria-expanded={orderGenerated}
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.1"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M7 3h10a2 2 0 0 1 2 2v14l-3.5-2-3.5 2-3.5-2L5 19V5a2 2 0 0 1 2-2z" />
+                  <path d="M9 8h6M9 12h4" />
+                </svg>
+                <span>{orderGenerated ? 'Atualizar solicitação' : 'Gerar solicitação'}</span>
+              </button>
+
               <a
                 href={DISCORD_INVITE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn btn-primary"
+                className="btn btn-tonal"
               >
                 Conversar no Discord ↗
               </a>
-
-              <button type="button" className="btn btn-tonal" onClick={handleCopyProfile}>
-                {copiedRecently ? 'Perfil copiado ✓' : 'Copiar meu perfil'}
-              </button>
             </div>
+
+            {orderGenerated && (
+              <div className="sim-order-ticket" role="region" aria-label="Solicitação gerada">
+                <div className="sim-order-head">
+                  <div className="sim-order-code-wrap">
+                    <span className="sim-order-code">{orderCode}</span>
+                    <span className="sim-order-level">{estimate.costLevelTitle}</span>
+                  </div>
+                  <button
+                    type="button"
+                    className="sim-order-close"
+                    onClick={() => setOrderGenerated(false)}
+                    aria-label="Fechar solicitação gerada"
+                  >
+                    Fechar
+                  </button>
+                </div>
+                <p className="sim-order-summary">
+                  <strong>{profile.title}</strong> · {estimate.deadlineShort} · Piso{' '}
+                  {estimate.costFloorLabel.toLowerCase()} até teto{' '}
+                  {estimate.costCeilingLabel.toLowerCase()}.
+                </p>
+                <div className="sim-order-actions">
+                  <button
+                    type="button"
+                    className="btn btn-tonal"
+                    onClick={() => void copyOrderToClipboard()}
+                  >
+                    {copiedRecently ? 'Protocolo copiado ✓' : `Copiar protocolo (${orderCode})`}
+                  </button>
+                  <a
+                    href={DISCORD_INVITE_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-primary"
+                  >
+                    Enviar no Discord ↗
+                  </a>
+                </div>
+              </div>
+            )}
 
             <p className="sim-footer-note">
               <a href="/manual/">Manual v1.0</a> · sem vínculo nem taxas ocultas

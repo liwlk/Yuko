@@ -3696,6 +3696,169 @@ main {
     }
   }
 
+  /* Linha de Nível de Custo (Piso ↔ Teto) */
+  .sim-cost-meter {
+    padding: 11px 14px 12px;
+    border-radius: 16px;
+    background-color: var(--md-surface-container-low);
+    border: 1px solid var(--md-outline-variant);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .sim-cost-meter-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px 10px;
+    font-size: 0.76rem;
+    line-height: 1.25;
+  }
+
+  .sim-cost-end {
+    color: var(--md-on-surface-variant);
+    font-weight: 600;
+  }
+
+  .sim-cost-mid {
+    padding: 2px 9px;
+    border-radius: var(--shape-pill);
+    background-color: var(--md-primary-container);
+    color: var(--md-on-primary-container);
+    font-family: var(--font-display);
+    font-size: 0.74rem;
+    font-weight: 700;
+  }
+
+  .sim-cost-track {
+    position: relative;
+    width: 100%;
+    height: 10px;
+    border-radius: var(--shape-pill);
+    background-color: var(--md-surface-container-highest);
+    border: 1px solid color-mix(in srgb, var(--md-outline-variant) 70%, transparent);
+  }
+
+  .sim-cost-range {
+    position: absolute;
+    top: 1px;
+    bottom: 1px;
+    border-radius: var(--shape-pill);
+    background: linear-gradient(90deg, var(--md-primary), var(--md-tertiary));
+    transition: left var(--dur-med) var(--ease-spring),
+                width var(--dur-med) var(--ease-spring);
+  }
+
+  .sim-cost-dot {
+    position: absolute;
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    border-radius: 999px;
+    background-color: var(--md-surface-container-lowest);
+    border: 2.5px solid var(--md-primary);
+    transform: translateY(-50%);
+    box-shadow: 0 2px 6px var(--md-shadow-tint);
+  }
+
+  .sim-cost-dot.is-floor {
+    left: -2px;
+  }
+
+  .sim-cost-dot.is-ceiling {
+    right: -2px;
+    border-color: var(--md-tertiary);
+  }
+
+  /* Solicitação Gerada (Protocolo Padrão) */
+  .sim-order-ticket {
+    padding: 14px 16px;
+    border-radius: 20px;
+    background-color: color-mix(in srgb, var(--md-primary-container) 28%, var(--md-surface-container-low));
+    border: 1.5px solid color-mix(in srgb, var(--md-primary) 42%, var(--md-outline-variant));
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .sim-order-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .sim-order-code-wrap {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .sim-order-code {
+    padding: 3px 10px;
+    border-radius: var(--shape-pill);
+    background-color: var(--md-primary);
+    color: var(--md-on-primary);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  .sim-order-level {
+    padding: 3px 10px;
+    border-radius: var(--shape-pill);
+    background-color: var(--md-secondary-container);
+    color: var(--md-on-secondary-container);
+    font-family: var(--font-display);
+    font-size: 0.74rem;
+    font-weight: 700;
+  }
+
+  .sim-order-close {
+    appearance: none;
+    -webkit-appearance: none;
+    border: 1px solid var(--md-outline-variant);
+    background-color: var(--md-surface-container-lowest);
+    color: var(--md-on-surface-variant);
+    border-radius: var(--shape-pill);
+    padding: 4px 10px;
+    font-family: var(--font-display);
+    font-size: 0.74rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .sim-order-close:hover {
+    background-color: var(--md-surface-container);
+    color: var(--md-on-surface);
+  }
+
+  .sim-order-summary {
+    margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.45;
+    color: var(--md-on-surface);
+  }
+
+  .sim-order-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .sim-order-actions .btn {
+    min-height: 38px;
+    padding: 8px 14px;
+    font-size: 0.82rem;
+  }
+
   .sim-micro-footnote,
   .sim-footer-note {
     margin: 0;
@@ -4003,7 +4166,8 @@ main {
 [data-motion="calm"] .sim-shield-caption a,
 [data-motion="calm"] .sim-manual-link,
 [data-motion="calm"] .sim-micro-footnote a,
-[data-motion="calm"] .sim-footer-note a {
+[data-motion="calm"] .sim-footer-note a,
+[data-motion="calm"] .sim-cost-range {
   transition-duration: 160ms !important;
 }
 
