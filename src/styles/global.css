@@ -2734,21 +2734,23 @@ main {
   }
 
   #simulador .section-head {
-    max-width: 760px;
+    max-width: 640px;
+    margin-bottom: 24px;
   }
 
   .sim-shell {
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: clamp(18px, 2.5vw, 26px);
-    padding: clamp(18px, 3vw, 32px);
-    border-radius: 36px;
+    gap: clamp(14px, 2vw, 20px);
+    padding: clamp(14px, 2.4vw, 26px);
+    border-radius: 32px;
     background-color: var(--md-surface-container-low);
     border: 1px solid var(--md-outline-variant);
-    box-shadow: 0 22px 54px -32px var(--md-shadow-tint),
-                inset 0 1px 0 0 color-mix(in srgb, var(--md-surface-container-lowest) 60%, transparent);
+    box-shadow: 0 20px 48px -32px var(--md-shadow-tint),
+                inset 0 1px 0 0 color-mix(in srgb, var(--md-surface-container-lowest) 65%, transparent);
     min-width: 0;
+    max-width: 100%;
   }
 
   .sim-top-bar {
@@ -2756,14 +2758,15 @@ main {
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: 12px 18px;
-    padding-bottom: 18px;
+    gap: 10px 16px;
+    padding-bottom: 14px;
     border-bottom: 1px solid color-mix(in srgb, var(--md-outline-variant) 68%, transparent);
+    min-width: 0;
   }
 
   .sim-top-label {
     font-family: var(--font-display);
-    font-size: 0.88rem;
+    font-size: 0.85rem;
     font-weight: 700;
     letter-spacing: 0.01em;
     color: var(--md-on-surface-variant);
@@ -2777,7 +2780,7 @@ main {
     flex-wrap: wrap;
     align-items: center;
     gap: 4px;
-    padding: 5px;
+    padding: 4px;
     border-radius: var(--shape-pill);
     background-color: var(--md-surface-container-highest);
     border: 1px solid color-mix(in srgb, var(--md-outline-variant) 70%, transparent);
@@ -2790,11 +2793,11 @@ main {
     border: none;
     background: transparent;
     color: var(--md-on-surface-variant);
-    min-height: 40px;
-    padding: 8px 16px;
+    min-height: 36px;
+    padding: 7px 14px;
     border-radius: var(--shape-pill);
     font-family: var(--font-display);
-    font-size: 0.85rem;
+    font-size: 0.83rem;
     font-weight: 700;
     line-height: 1.2;
     display: inline-flex;
@@ -2803,14 +2806,15 @@ main {
     gap: 6px;
     cursor: pointer;
     white-space: nowrap;
+    min-width: 0;
     transition: background-color var(--dur-fast) var(--ease-standard),
                 color var(--dur-fast) var(--ease-standard),
                 box-shadow var(--dur-fast) var(--ease-standard),
-                transform var(--dur-fast) var(--ease-spring);
+                transform var(--dur-med) var(--ease-spring);
   }
 
   .sim-perspective-btn:hover:not(.is-active):not([aria-pressed="true"]):not([aria-selected="true"]) {
-    background-color: color-mix(in srgb, var(--md-surface-container-lowest) 65%, transparent);
+    background-color: color-mix(in srgb, var(--md-surface-container-lowest) 70%, transparent);
     color: var(--md-on-surface);
   }
 
@@ -2832,15 +2836,22 @@ main {
   }
 
   @media (max-width: 560px) {
+    .sim-shell {
+      border-radius: 26px;
+    }
+
     .sim-perspective-switch {
       width: 100%;
-      border-radius: 22px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border-radius: var(--shape-pill);
     }
 
     .sim-perspective-btn {
-      flex: 1 1 auto;
-      padding: 8px 12px;
-      font-size: 0.8rem;
+      padding: 7px 8px;
+      font-size: 0.78rem;
+      gap: 4px;
+      text-align: center;
     }
   }
 
@@ -2848,56 +2859,45 @@ main {
   .sim-workspace {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    gap: clamp(18px, 2.8vw, 28px);
+    gap: clamp(16px, 2.4vw, 24px);
     align-items: start;
     min-width: 0;
   }
 
-  @media (min-width: 980px) {
+  @media (min-width: 960px) {
     .sim-workspace {
-      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
     }
   }
 
-  .sim-controls {
+  .sim-controls,
+  .sim-control-block {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 14px;
     min-width: 0;
   }
 
-  .sim-step-block {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    min-width: 0;
-  }
-
-  .sim-step-title {
+  .sim-step-label {
     margin: 0;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     gap: 8px;
     font-family: var(--font-display);
-    font-size: 1.04rem;
+    font-size: 0.94rem;
     font-weight: 700;
     letter-spacing: -0.015em;
     line-height: 1.25;
     color: var(--md-on-surface);
   }
 
+  /* Cards compactos de solução em grade 2 colunas */
   .sim-solutions-grid {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 12px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
     min-width: 0;
-  }
-
-  @media (min-width: 560px) {
-    .sim-solutions-grid {
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-    }
   }
 
   .sim-solution-card {
@@ -2907,19 +2907,20 @@ main {
     text-align: left;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    padding: 18px;
-    border-radius: 24px;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 13px 14px;
+    border-radius: 20px;
     background-color: var(--md-surface-container-lowest);
     border: 1.5px solid var(--md-outline-variant);
     color: var(--md-on-surface);
     cursor: pointer;
     min-width: 0;
-    box-shadow: 0 2px 10px -8px var(--md-shadow-tint);
-    transition: transform var(--dur-fast) var(--ease-spring),
-                background-color var(--dur-med) var(--ease-standard),
+    box-shadow: 0 2px 8px -6px var(--md-shadow-tint);
+    transition: transform var(--dur-med) var(--ease-spring),
+                background-color var(--dur-fast) var(--ease-standard),
                 border-color var(--dur-fast) var(--ease-standard),
-                box-shadow var(--dur-med) var(--ease-standard),
+                box-shadow var(--dur-fast) var(--ease-standard),
                 color var(--dur-fast) var(--ease-standard);
   }
 
@@ -2927,11 +2928,11 @@ main {
     transform: translateY(-2px);
     background-color: var(--md-surface-container);
     border-color: color-mix(in srgb, var(--md-primary) 48%, var(--md-outline-variant));
-    box-shadow: 0 12px 26px -18px var(--md-shadow-tint);
+    box-shadow: 0 10px 22px -16px var(--md-shadow-tint);
   }
 
   .sim-solution-card:active {
-    transform: scale(0.985);
+    transform: scale(0.98);
   }
 
   .sim-solution-card.is-selected,
@@ -2939,8 +2940,8 @@ main {
     background-color: var(--md-primary-container);
     color: var(--md-on-primary-container);
     border-color: var(--md-primary);
-    box-shadow: 0 14px 30px -20px var(--md-shadow-tint),
-                inset 0 1px 0 0 color-mix(in srgb, var(--md-primary) 26%, transparent);
+    box-shadow: 0 12px 26px -18px var(--md-shadow-tint),
+                inset 0 1px 0 0 color-mix(in srgb, var(--md-primary) 24%, transparent);
   }
 
   .sim-solution-card:focus-visible {
@@ -2948,145 +2949,139 @@ main {
     outline-offset: 2px;
   }
 
-  .sim-solution-card h3,
-  .sim-solution-card h4,
-  .sim-solution-card strong {
-    margin: 0;
-    font-family: var(--font-display);
-    font-size: 1rem;
-    font-weight: 700;
-    letter-spacing: -0.015em;
-    line-height: 1.25;
-    color: inherit;
-  }
-
-  .sim-solution-card p {
-    margin: 0;
-    font-size: 0.86rem;
-    line-height: 1.46;
-    color: var(--md-on-surface-variant);
-  }
-
-  .sim-solution-card.is-selected p,
-  .sim-solution-card[aria-pressed="true"] p {
-    color: var(--md-on-primary-container);
-    opacity: 0.9;
-  }
-
-  .sim-solution-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    width: 100%;
-  }
-
   .sim-solution-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 14px;
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
     display: grid;
     place-items: center;
     flex-shrink: 0;
     background-color: var(--md-surface-container);
     color: var(--md-primary);
-    font-size: 1.1rem;
     transition: background-color var(--dur-fast) var(--ease-standard),
                 color var(--dur-fast) var(--ease-standard),
-                transform var(--dur-fast) var(--ease-spring);
+                transform var(--dur-med) var(--ease-spring);
   }
 
   .sim-solution-card.is-selected .sim-solution-icon,
   .sim-solution-card[aria-pressed="true"] .sim-solution-icon {
     background-color: var(--md-primary);
     color: var(--md-on-primary);
-    transform: scale(1.04);
+    transform: scale(1.06);
   }
 
-  .sim-solution-tag {
-    display: inline-flex;
-    align-items: center;
-    padding: 4px 10px;
-    border-radius: var(--shape-pill);
-    background-color: var(--md-surface-container);
-    color: var(--md-on-surface-variant);
-    font-family: var(--font-mono);
-    font-size: 0.71rem;
-    font-weight: 700;
-    letter-spacing: 0.03em;
-    line-height: 1.2;
-    white-space: nowrap;
-  }
-
-  .sim-solution-card.is-selected .sim-solution-tag,
-  .sim-solution-card[aria-pressed="true"] .sim-solution-tag {
-    background-color: color-mix(in srgb, var(--md-surface-container-lowest) 72%, transparent);
-    color: var(--md-on-primary-container);
-  }
-
-  .sim-ext-chips {
+  .sim-solution-meta {
     display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: auto;
-    padding-top: 4px;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
   }
 
-  .sim-ext-chip {
+  .sim-solution-title {
+    display: block;
+    margin: 2px 0 0;
+    font-family: var(--font-display);
+    font-size: 0.94rem;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    line-height: 1.22;
+    color: inherit;
+    overflow-wrap: break-word;
+  }
+
+  .sim-solution-tag,
+  .sim-solution-mood {
     display: inline-flex;
     align-items: center;
     padding: 3px 9px;
     border-radius: var(--shape-pill);
-    background-color: var(--md-secondary-container);
-    color: var(--md-on-secondary-container);
+    background-color: var(--md-surface-container);
+    color: var(--md-on-surface-variant);
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: 0.69rem;
     font-weight: 700;
     letter-spacing: 0.02em;
-    line-height: 1.3;
+    line-height: 1.25;
+    max-width: 100%;
+    overflow-wrap: break-word;
   }
 
-  .sim-solution-card.is-selected .sim-ext-chip,
-  .sim-solution-card[aria-pressed="true"] .sim-ext-chip {
-    background-color: color-mix(in srgb, var(--md-surface-container-lowest) 78%, transparent);
+  .sim-solution-card.is-selected .sim-solution-tag,
+  .sim-solution-card[aria-pressed="true"] .sim-solution-tag,
+  .sim-solution-card.is-selected .sim-solution-mood,
+  .sim-solution-card[aria-pressed="true"] .sim-solution-mood {
+    background-color: color-mix(in srgb, var(--md-surface-container-lowest) 82%, transparent);
     color: var(--md-on-surface);
   }
 
+  @media (max-width: 479.98px) {
+    .sim-solutions-grid {
+      gap: 8px;
+    }
+
+    .sim-solution-card {
+      gap: 5px;
+      padding: 11px 12px;
+      border-radius: 18px;
+    }
+
+    .sim-solution-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+    }
+
+    .sim-solution-title {
+      font-size: 0.86rem;
+    }
+
+    .sim-solution-tag,
+    .sim-solution-mood {
+      font-size: 0.66rem;
+      padding: 2px 8px;
+    }
+  }
+
   /* Ajustes & Chips de Filtro M3 */
-  .sim-tuning-card {
+  .sim-tuning-row,
+  .sim-tuning-stack {
     background-color: var(--md-surface-container-lowest);
     border: 1px solid var(--md-outline-variant);
-    border-radius: 26px;
-    padding: clamp(16px, 2.4vw, 22px);
+    border-radius: 22px;
+    padding: clamp(14px, 2vw, 18px);
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 12px;
     min-width: 0;
   }
 
   .sim-tuning-group {
     display: flex;
     flex-direction: column;
-    gap: 9px;
+    gap: 6px;
     min-width: 0;
   }
 
   .sim-tuning-label {
     font-family: var(--font-display);
-    font-size: 0.86rem;
+    font-size: 0.8rem;
     font-weight: 700;
-    color: var(--md-on-surface);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    line-height: 1.3;
+    color: var(--md-on-surface-variant);
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 6px 10px;
+    gap: 4px 10px;
   }
 
   .sim-chip-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 7px;
+    min-width: 0;
   }
 
   .sim-chip {
@@ -3096,22 +3091,24 @@ main {
     align-items: center;
     justify-content: center;
     gap: 6px;
-    min-height: 40px;
-    padding: 8px 15px;
+    min-height: 36px;
+    padding: 7px 13px;
     border-radius: var(--shape-pill);
     border: 1.5px solid var(--md-outline-variant);
     background-color: var(--md-surface-container-low);
     color: var(--md-on-surface-variant);
     font-family: var(--font-body);
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     font-weight: 600;
     line-height: 1.2;
+    max-width: 100%;
+    text-align: left;
     cursor: pointer;
     transition: background-color var(--dur-fast) var(--ease-standard),
                 color var(--dur-fast) var(--ease-standard),
                 border-color var(--dur-fast) var(--ease-standard),
                 box-shadow var(--dur-fast) var(--ease-standard),
-                transform var(--dur-fast) var(--ease-spring);
+                transform var(--dur-med) var(--ease-spring);
   }
 
   .sim-chip:hover:not(.is-active):not([aria-pressed="true"]) {
@@ -3121,7 +3118,7 @@ main {
   }
 
   .sim-chip:active {
-    transform: scale(0.97);
+    transform: scale(0.96);
   }
 
   .sim-chip.is-active,
@@ -3130,7 +3127,7 @@ main {
     color: var(--md-on-secondary-container);
     border-color: var(--md-primary);
     font-weight: 700;
-    box-shadow: 0 6px 14px -10px var(--md-shadow-tint);
+    box-shadow: 0 4px 12px -8px var(--md-shadow-tint);
   }
 
   .sim-chip:focus-visible {
@@ -3145,23 +3142,36 @@ main {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
-    min-height: 44px;
-    padding: 12px 16px;
-    border-radius: 18px;
+    gap: 10px;
+    min-height: 42px;
+    padding: 9px 14px;
+    border-radius: 16px;
     border: 1.5px solid var(--md-outline-variant);
     background-color: var(--md-surface-container-low);
     color: var(--md-on-surface);
     font-family: var(--font-body);
-    font-size: 0.88rem;
+    font-size: 0.84rem;
     font-weight: 600;
-    line-height: 1.35;
+    line-height: 1.3;
     text-align: left;
     cursor: pointer;
+    min-width: 0;
     transition: background-color var(--dur-fast) var(--ease-standard),
                 color var(--dur-fast) var(--ease-standard),
                 border-color var(--dur-fast) var(--ease-standard),
-                transform var(--dur-fast) var(--ease-spring);
+                transform var(--dur-med) var(--ease-spring);
+  }
+
+  .sim-toggle-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .sim-toggle-label svg {
+    flex-shrink: 0;
+    color: var(--md-primary);
   }
 
   .sim-toggle-btn:hover:not(.is-active):not([aria-pressed="true"]) {
@@ -3177,8 +3187,19 @@ main {
   .sim-toggle-btn[aria-pressed="true"] {
     background-color: var(--md-tertiary-container);
     color: var(--md-on-tertiary-container);
-    border-color: color-mix(in srgb, var(--md-tertiary) 55%, var(--md-outline-variant));
+    border-color: color-mix(in srgb, var(--md-tertiary) 60%, var(--md-outline-variant));
     font-weight: 700;
+  }
+
+  .sim-toggle-btn.is-active .sim-toggle-label svg,
+  .sim-toggle-btn[aria-pressed="true"] .sim-toggle-label svg {
+    color: currentColor;
+  }
+
+  .sim-toggle-btn.is-active .sim-solution-tag,
+  .sim-toggle-btn[aria-pressed="true"] .sim-solution-tag {
+    background-color: color-mix(in srgb, var(--md-surface-container-lowest) 84%, transparent);
+    color: var(--md-on-surface);
   }
 
   .sim-toggle-btn:focus-visible {
@@ -3186,491 +3207,508 @@ main {
     outline-offset: 2px;
   }
 
-  .sim-role-note {
-    padding: 14px 16px;
-    border-radius: 20px;
-    background-color: var(--md-surface-container);
-    border: 1px solid color-mix(in srgb, var(--md-outline-variant) 80%, transparent);
-    font-size: 0.88rem;
-    line-height: 1.52;
-    color: var(--md-on-surface-variant);
-  }
-
-  .sim-role-note strong,
-  .sim-role-note b {
-    color: var(--md-on-surface);
-  }
-
   /* Coluna de Resultados */
   .sim-results {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
     min-width: 0;
   }
 
-  @media (min-width: 980px) {
+  @media (min-width: 960px) {
     .sim-results {
       align-self: start;
     }
   }
 
-  .sim-summary-card,
-  .sim-cycle-card,
-  .sim-stress-card,
-  .sim-actions-card {
+  .sim-profile-card {
     background-color: var(--md-surface-container-lowest);
-    border: 1px solid var(--md-outline-variant);
-    border-radius: 28px;
-    padding: clamp(18px, 2.5vw, 24px);
+    border: 1.5px solid color-mix(in srgb, var(--md-primary) 34%, var(--md-outline-variant));
+    border-radius: 26px;
+    padding: clamp(16px, 2.2vw, 22px);
     display: flex;
     flex-direction: column;
     gap: 14px;
     min-width: 0;
-    box-shadow: 0 2px 12px -8px var(--md-shadow-tint);
+    box-shadow: 0 16px 36px -26px var(--md-shadow-tint);
   }
 
-  .sim-summary-card {
-    border: 1.5px solid color-mix(in srgb, var(--md-primary) 30%, var(--md-outline-variant));
-    box-shadow: 0 18px 40px -28px var(--md-shadow-tint);
-  }
-
-  .sim-summary-head {
+  .sim-profile-head {
     display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 10px 14px;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
   }
 
-  .sim-summary-head h3,
-  .sim-cycle-card h3,
-  .sim-stress-card h3,
-  .sim-actions-card h3 {
+  .sim-profile-head-top {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .sim-profile-emblem {
+    width: 40px;
+    height: 40px;
+    border-radius: 13px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    background-color: var(--md-primary-container);
+    color: var(--md-on-primary-container);
+    transition: transform var(--dur-med) var(--ease-spring),
+                background-color var(--dur-fast) var(--ease-standard);
+  }
+
+  .sim-profile-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 11px;
+    border-radius: var(--shape-pill);
+    background-color: var(--md-secondary-container);
+    color: var(--md-on-secondary-container);
+    font-family: var(--font-mono);
+    font-size: 0.71rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    line-height: 1.25;
+    width: fit-content;
+    max-width: 100%;
+  }
+
+  .sim-profile-title {
     margin: 0;
     font-family: var(--font-display);
-    font-size: 1.12rem;
+    font-size: clamp(1.12rem, 1.7vw, 1.3rem);
     font-weight: 700;
     letter-spacing: -0.02em;
-    line-height: 1.25;
+    line-height: 1.22;
     color: var(--md-on-surface);
   }
 
+  .sim-profile-summary {
+    margin: 0;
+    font-size: 0.88rem;
+    line-height: 1.48;
+    color: var(--md-on-surface-variant);
+  }
+
+  .sim-profile-summary strong,
+  .sim-profile-summary b {
+    color: var(--md-on-surface);
+  }
+
+  /* KPI Grid */
   .sim-kpi-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 10px;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
     min-width: 0;
+  }
+
+  @media (min-width: 560px) {
+    .sim-kpi-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
   }
 
   .sim-kpi-box {
     background-color: var(--md-surface-container-low);
     border: 1px solid var(--md-outline-variant);
-    border-radius: 20px;
-    padding: 14px 15px;
+    border-radius: 18px;
+    padding: 12px 13px;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 3px;
     min-width: 0;
   }
 
   .sim-kpi-box:first-child {
-    background-color: color-mix(in srgb, var(--md-primary-container) 34%, var(--md-surface-container-low));
-    border-color: color-mix(in srgb, var(--md-primary) 34%, var(--md-outline-variant));
+    background-color: color-mix(in srgb, var(--md-primary-container) 38%, var(--md-surface-container-low));
+    border-color: color-mix(in srgb, var(--md-primary) 36%, var(--md-outline-variant));
+  }
+
+  .sim-kpi-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 9px;
+    display: grid;
+    place-items: center;
+    background-color: var(--md-surface-container);
+    color: var(--md-primary);
+    margin-bottom: 3px;
+    flex-shrink: 0;
+  }
+
+  .sim-kpi-box:first-child .sim-kpi-icon {
+    background-color: var(--md-primary);
+    color: var(--md-on-primary);
   }
 
   .sim-kpi-label {
-    font-size: 0.74rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     color: var(--md-on-surface-variant);
+    line-height: 1.25;
+  }
+
+  .sim-kpi-label svg {
+    flex-shrink: 0;
+    color: var(--md-primary);
   }
 
   .sim-kpi-value {
     font-family: var(--font-display);
-    font-size: clamp(1.06rem, 1.5vw, 1.26rem);
+    font-size: clamp(0.98rem, 1.35vw, 1.1rem);
     font-weight: 700;
     font-variant-numeric: tabular-nums;
     letter-spacing: -0.02em;
     line-height: 1.22;
     color: var(--md-on-surface);
-    word-break: break-word;
+    overflow-wrap: anywhere;
   }
 
   .sim-kpi-sub {
     display: block;
-    margin-top: 4px;
-    font-size: 0.78rem;
-    line-height: 1.35;
+    margin-top: 1px;
+    font-size: 0.74rem;
+    line-height: 1.32;
     color: var(--md-on-surface-variant);
     font-weight: 500;
   }
 
-  .sim-transparency-note {
-    padding: 12px 14px;
-    border-radius: 16px;
-    background-color: color-mix(in srgb, var(--md-secondary-container) 56%, var(--md-surface-container-low));
-    border: 1px solid color-mix(in srgb, var(--md-outline-variant) 75%, transparent);
-    font-size: 0.84rem;
-    line-height: 1.48;
-    color: var(--md-on-surface);
-  }
-
-  .sim-breakdown-btn {
-    appearance: none;
-    -webkit-appearance: none;
-    align-self: flex-start;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    min-height: 38px;
-    padding: 8px 15px;
-    border-radius: var(--shape-pill);
-    border: 1px solid var(--md-outline-variant);
-    background-color: var(--md-surface-container);
-    color: var(--md-primary);
-    font-family: var(--font-display);
-    font-size: 0.83rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background-color var(--dur-fast) var(--ease-standard),
-                color var(--dur-fast) var(--ease-standard),
-                border-color var(--dur-fast) var(--ease-standard),
-                transform var(--dur-fast) var(--ease-spring);
-  }
-
-  .sim-breakdown-btn:hover {
-    background-color: var(--md-primary-container);
+  .sim-kpi-box:first-child .sim-kpi-label,
+  .sim-kpi-box:first-child .sim-kpi-label svg,
+  .sim-kpi-box:first-child .sim-kpi-value,
+  .sim-kpi-box:first-child .sim-kpi-sub {
     color: var(--md-on-primary-container);
-    border-color: transparent;
   }
 
-  .sim-breakdown-btn:active {
-    transform: scale(0.97);
-  }
-
-  .sim-breakdown-btn:focus-visible {
-    outline: 2px solid var(--md-primary);
-    outline-offset: 2px;
-  }
-
-  .sim-breakdown-panel {
-    padding: 14px 16px;
-    border-radius: 20px;
-    background-color: var(--md-surface-container-low);
-    border: 1px solid var(--md-outline-variant);
+  /* Jornada em 6 Etapas */
+  .sim-journey-block {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-  }
-
-  .sim-breakdown-bars {
-    display: flex;
-    align-items: stretch;
-    width: 100%;
-    height: 12px;
-    padding: 2px;
-    gap: 3px;
-    border-radius: var(--shape-pill);
-    background-color: var(--md-surface-container-highest);
-    overflow: hidden;
-  }
-
-  .sim-breakdown-bars > * {
-    height: 100%;
-    min-width: 6px;
-    border-radius: var(--shape-pill);
-    background-color: var(--md-primary);
-    transition: width var(--dur-med) var(--ease-standard),
-                flex-grow var(--dur-med) var(--ease-standard);
-  }
-
-  .sim-breakdown-bars > *:nth-child(2) {
-    background-color: var(--md-secondary);
-  }
-
-  .sim-breakdown-bars > *:nth-child(3) {
-    background-color: var(--md-tertiary);
-  }
-
-  .sim-breakdown-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
     gap: 8px;
-    font-size: 0.84rem;
-    color: var(--md-on-surface-variant);
+    min-width: 0;
   }
 
-  .sim-breakdown-list li {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 4px 12px;
-    font-variant-numeric: tabular-nums;
-  }
-
-  .sim-breakdown-list strong {
-    color: var(--md-on-surface);
-    font-weight: 700;
-  }
-
-  /* 6 Etapas do Ciclo no Simulador */
-  .sim-stage-tabs {
+  .sim-journey-tabs {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 8px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 5px;
+    padding: 5px;
+    border-radius: 18px;
+    background-color: var(--md-surface-container-low);
+    border: 1px solid var(--md-outline-variant);
+    min-width: 0;
   }
 
-  @media (min-width: 540px) {
-    .sim-stage-tabs {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+  @media (min-width: 640px) {
+    .sim-journey-tabs {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
     }
   }
 
-  .sim-stage-tab {
+  .sim-journey-pill,
+  .sim-journey-tab {
     appearance: none;
     -webkit-appearance: none;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    display: inline-flex;
+    align-items: center;
     justify-content: center;
-    gap: 2px;
-    min-height: 44px;
-    padding: 10px 12px;
-    border-radius: 16px;
-    border: 1.5px solid var(--md-outline-variant);
-    background-color: var(--md-surface-container-low);
+    gap: 4px;
+    min-height: 34px;
+    padding: 6px 6px;
+    border-radius: var(--shape-pill);
+    border: 1.5px solid transparent;
+    background-color: transparent;
     color: var(--md-on-surface-variant);
     font-family: var(--font-display);
-    font-size: 0.78rem;
+    font-size: 0.74rem;
     font-weight: 700;
-    line-height: 1.25;
-    text-align: left;
+    line-height: 1.2;
+    text-align: center;
+    white-space: nowrap;
+    max-width: 100%;
     cursor: pointer;
-    min-width: 0;
     transition: background-color var(--dur-fast) var(--ease-standard),
                 color var(--dur-fast) var(--ease-standard),
                 border-color var(--dur-fast) var(--ease-standard),
-                transform var(--dur-fast) var(--ease-spring);
+                transform var(--dur-med) var(--ease-spring);
   }
 
-  .sim-stage-tab:hover:not(.is-active):not([aria-selected="true"]):not([aria-pressed="true"]) {
-    background-color: var(--md-surface-container);
-    border-color: color-mix(in srgb, var(--md-primary) 45%, var(--md-outline-variant));
+  .sim-journey-pill:hover:not(.is-active):not([aria-selected="true"]):not([aria-pressed="true"]),
+  .sim-journey-tab:hover:not(.is-active):not([aria-selected="true"]):not([aria-pressed="true"]) {
+    background-color: var(--md-surface-container-lowest);
+    border-color: var(--md-outline-variant);
     color: var(--md-on-surface);
   }
 
-  .sim-stage-tab:active {
-    transform: scale(0.97);
+  .sim-journey-pill:active,
+  .sim-journey-tab:active {
+    transform: scale(0.96);
   }
 
-  .sim-stage-tab.is-active,
-  .sim-stage-tab[aria-selected="true"],
-  .sim-stage-tab[aria-pressed="true"] {
+  .sim-journey-pill.is-active,
+  .sim-journey-pill[aria-selected="true"],
+  .sim-journey-pill[aria-pressed="true"],
+  .sim-journey-tab.is-active,
+  .sim-journey-tab[aria-selected="true"],
+  .sim-journey-tab[aria-pressed="true"] {
     background-color: var(--md-primary-container);
     color: var(--md-on-primary-container);
     border-color: var(--md-primary);
   }
 
-  .sim-stage-tab:focus-visible {
+  .sim-journey-pill:focus-visible,
+  .sim-journey-tab:focus-visible {
     outline: 2px solid var(--md-primary);
     outline-offset: 2px;
   }
 
-  .sim-stage-detail {
-    padding: 15px 16px;
-    border-radius: 20px;
+  .sim-journey-note {
+    padding: 12px 14px;
+    border-radius: 16px;
     background-color: var(--md-surface-container-low);
     border: 1px solid var(--md-outline-variant);
     display: flex;
     flex-direction: column;
     gap: 8px;
-    font-size: 0.9rem;
-    line-height: 1.5;
+    font-size: 0.86rem;
+    line-height: 1.48;
     color: var(--md-on-surface);
+    min-width: 0;
   }
 
-  .sim-stage-detail p {
+  .sim-journey-note p {
     margin: 0;
     color: var(--md-on-surface-variant);
   }
 
-  .sim-stage-meta {
+  .sim-journey-note strong {
+    color: var(--md-on-surface);
+  }
+
+  .sim-journey-meta {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 8px;
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    color: var(--md-primary);
+    justify-content: space-between;
+    gap: 8px 12px;
+    min-width: 0;
   }
 
-  /* Teste de Imprevistos (Stress Test) */
-  .sim-stress-btns {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+  /* Proteções Rápidas (Shields) */
+  .sim-shields-block {
+    display: flex;
+    flex-direction: column;
     gap: 8px;
+    min-width: 0;
   }
 
-  .sim-stress-btn {
+  .sim-shields-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    min-width: 0;
+  }
+
+  .sim-shield-pill {
     appearance: none;
     -webkit-appearance: none;
     display: inline-flex;
     align-items: center;
-    justify-content: flex-start;
-    gap: 8px;
-    min-height: 44px;
-    padding: 10px 14px;
-    border-radius: 16px;
+    gap: 6px;
+    min-height: 36px;
+    padding: 7px 13px;
+    border-radius: var(--shape-pill);
     border: 1.5px solid var(--md-outline-variant);
-    background-color: var(--md-surface-container-low);
+    background-color: var(--md-surface-container-lowest);
     color: var(--md-on-surface);
     font-family: var(--font-body);
-    font-size: 0.84rem;
+    font-size: 0.81rem;
     font-weight: 600;
-    line-height: 1.3;
+    line-height: 1.25;
     text-align: left;
+    max-width: 100%;
     cursor: pointer;
     transition: background-color var(--dur-fast) var(--ease-standard),
                 color var(--dur-fast) var(--ease-standard),
                 border-color var(--dur-fast) var(--ease-standard),
-                transform var(--dur-fast) var(--ease-spring);
+                transform var(--dur-med) var(--ease-spring);
   }
 
-  .sim-stress-btn:hover:not(.is-active):not([aria-pressed="true"]) {
+  .sim-shield-pill svg {
+    flex-shrink: 0;
+    color: var(--md-tertiary);
+  }
+
+  .sim-shield-pill:hover:not(.is-active):not([aria-pressed="true"]):not([aria-expanded="true"]) {
     background-color: var(--md-surface-container);
     border-color: color-mix(in srgb, var(--md-tertiary) 55%, var(--md-outline-variant));
   }
 
-  .sim-stress-btn:active {
-    transform: scale(0.98);
+  .sim-shield-pill:active {
+    transform: scale(0.96);
   }
 
-  .sim-stress-btn.is-active,
-  .sim-stress-btn[aria-pressed="true"] {
+  .sim-shield-pill.is-active,
+  .sim-shield-pill[aria-pressed="true"],
+  .sim-shield-pill[aria-expanded="true"] {
     background-color: var(--md-tertiary-container);
     color: var(--md-on-tertiary-container);
     border-color: var(--md-tertiary);
     font-weight: 700;
   }
 
-  .sim-stress-btn:focus-visible {
+  .sim-shield-pill.is-active svg,
+  .sim-shield-pill[aria-pressed="true"] svg,
+  .sim-shield-pill[aria-expanded="true"] svg {
+    color: currentColor;
+  }
+
+  .sim-shield-pill:focus-visible {
     outline: 2px solid var(--md-primary);
     outline-offset: 2px;
   }
 
-  .sim-stress-result {
-    padding: 14px 16px;
-    border-radius: 20px;
+  .sim-shield-caption {
+    margin: 0;
+    padding: 11px 14px;
+    border-radius: 16px;
     background-color: var(--md-tertiary-container);
     color: var(--md-on-tertiary-container);
     border: 1px solid color-mix(in srgb, var(--md-tertiary) 36%, transparent);
-    font-size: 0.88rem;
-    line-height: 1.52;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
+    font-size: 0.84rem;
+    line-height: 1.48;
+    min-width: 0;
   }
 
-  .sim-stress-result.is-secondary {
+  .sim-shield-caption.is-secondary {
     background-color: var(--md-secondary-container);
     color: var(--md-on-secondary-container);
     border-color: color-mix(in srgb, var(--md-secondary) 36%, transparent);
   }
 
-  .sim-stress-result p {
+  .sim-shield-caption p {
     margin: 0;
-    opacity: 0.94;
   }
 
-  .sim-stress-result .sim-solution-tag {
-    align-self: flex-start;
-    white-space: normal;
-    max-width: 100%;
-    line-height: 1.35;
-  }
-
-  .sim-stage-detail a,
-  .sim-stress-result a {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    color: var(--md-primary);
+  /* Links nítidos com contraste AAA (sobrescreve Tailwind Preflight) */
+  .sim-journey-note a,
+  .sim-manual-link,
+  .sim-micro-footnote a,
+  .sim-footer-note a {
+    color: color-mix(in srgb, var(--md-primary) 42%, var(--md-on-surface));
     font-weight: 700;
     text-decoration: underline;
-    text-underline-offset: 3px;
+    text-decoration-line: underline;
+    text-decoration-color: var(--md-primary);
     text-decoration-thickness: 1.5px;
-    width: fit-content;
-    transition: color var(--dur-fast) var(--ease-standard),
-                text-decoration-color var(--dur-fast) var(--ease-standard),
-                opacity var(--dur-fast) var(--ease-standard);
-  }
-
-  .sim-stage-detail a:hover {
-    color: color-mix(in srgb, var(--md-primary) 78%, var(--md-on-surface));
-    text-decoration-thickness: 2px;
-    text-underline-offset: 4px;
-  }
-
-  .sim-stress-result a,
-  .sim-stress-result.is-tertiary a {
-    color: var(--md-on-tertiary-container);
-  }
-
-  .sim-stress-result.is-secondary a {
-    color: var(--md-on-secondary-container);
-  }
-
-  .sim-stress-result a:hover {
-    text-decoration-thickness: 2px;
-    text-underline-offset: 4px;
-    opacity: 0.88;
-  }
-
-  .sim-stage-detail a:focus-visible,
-  .sim-stress-result a:focus-visible {
-    outline: 2px solid currentColor;
-    outline-offset: 3px;
+    text-underline-offset: 3px;
     border-radius: 4px;
+    transition: color var(--dur-fast) var(--ease-standard),
+                text-decoration-thickness var(--dur-fast) var(--ease-standard),
+                text-underline-offset var(--dur-fast) var(--ease-standard);
   }
 
-  /* Prévia da Ficha & Ações Finais */
-  .sim-ficha-preview {
-    margin: 0;
-    padding: 14px 16px;
-    border-radius: 18px;
-    background-color: var(--md-surface-container-low);
-    border: 1px solid var(--md-outline-variant);
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    line-height: 1.56;
+  .sim-journey-note a:hover,
+  .sim-manual-link:hover,
+  .sim-micro-footnote a:hover,
+  .sim-footer-note a:hover {
     color: var(--md-on-surface);
-    white-space: pre-wrap;
-    word-break: break-word;
-    overflow-x: auto;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
   }
 
+  .sim-shield-caption a {
+    color: inherit;
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-line: underline;
+    text-decoration-color: currentColor;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 3px;
+    border-radius: 4px;
+    transition: opacity var(--dur-fast) var(--ease-standard),
+                text-decoration-thickness var(--dur-fast) var(--ease-standard),
+                text-underline-offset var(--dur-fast) var(--ease-standard);
+  }
+
+  .sim-shield-caption a:hover {
+    opacity: 0.88;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+  }
+
+  .sim-journey-note a:focus-visible,
+  .sim-manual-link:focus-visible,
+  .sim-micro-footnote a:focus-visible,
+  .sim-footer-note a:focus-visible {
+    outline: 2px solid var(--md-primary);
+    outline-offset: 2px;
+  }
+
+  .sim-shield-caption a:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+
+  /* Ações Finais & Rodapé do Simulador */
   .sim-actions-row {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 10px;
+    gap: 8px 12px;
+    min-width: 0;
   }
 
   .sim-actions-row .btn {
-    min-height: 44px;
+    min-height: 42px;
+    padding: 10px 18px;
+    font-size: 0.88rem;
+  }
+
+  .sim-manual-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 36px;
+    padding: 6px 4px;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
   }
 
   @media (max-width: 520px) {
     .sim-actions-row .btn {
       width: 100%;
     }
+
+    .sim-actions-row .sim-manual-link {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  .sim-micro-footnote,
+  .sim-footer-note {
+    margin: 0;
+    padding: 9px 13px;
+    border-radius: 14px;
+    background-color: color-mix(in srgb, var(--md-secondary-container) 42%, var(--md-surface-container));
+    border: 1px solid color-mix(in srgb, var(--md-outline-variant) 72%, transparent);
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    font-weight: 600;
+    line-height: 1.45;
+    color: var(--md-on-surface);
+    min-width: 0;
   }
 
   /* ==========================================================================
@@ -3957,13 +3995,16 @@ main {
 [data-motion="calm"] .sim-solution-icon,
 [data-motion="calm"] .sim-chip,
 [data-motion="calm"] .sim-toggle-btn,
-[data-motion="calm"] .sim-breakdown-btn,
-[data-motion="calm"] .sim-breakdown-bars > *,
-[data-motion="calm"] .sim-stage-tab,
-[data-motion="calm"] .sim-stage-detail a,
-[data-motion="calm"] .sim-stress-btn,
-[data-motion="calm"] .sim-stress-result a {
-  transition-duration: 180ms !important;
+[data-motion="calm"] .sim-profile-emblem,
+[data-motion="calm"] .sim-journey-pill,
+[data-motion="calm"] .sim-journey-tab,
+[data-motion="calm"] .sim-journey-note a,
+[data-motion="calm"] .sim-shield-pill,
+[data-motion="calm"] .sim-shield-caption a,
+[data-motion="calm"] .sim-manual-link,
+[data-motion="calm"] .sim-micro-footnote a,
+[data-motion="calm"] .sim-footer-note a {
+  transition-duration: 160ms !important;
 }
 
 [data-motion="calm"] .sim-solution-card:hover,
@@ -3973,9 +4014,9 @@ main {
 [data-motion="calm"] .sim-perspective-btn:active,
 [data-motion="calm"] .sim-chip:active,
 [data-motion="calm"] .sim-toggle-btn:active,
-[data-motion="calm"] .sim-breakdown-btn:active,
-[data-motion="calm"] .sim-stage-tab:active,
-[data-motion="calm"] .sim-stress-btn:active {
+[data-motion="calm"] .sim-journey-pill:active,
+[data-motion="calm"] .sim-journey-tab:active,
+[data-motion="calm"] .sim-shield-pill:active {
   transform: none !important;
 }
 
@@ -4048,9 +4089,9 @@ main {
   .sim-perspective-btn:active,
   .sim-chip:active,
   .sim-toggle-btn:active,
-  .sim-breakdown-btn:active,
-  .sim-stage-tab:active,
-  .sim-stress-btn:active {
+  .sim-journey-pill:active,
+  .sim-journey-tab:active,
+  .sim-shield-pill:active {
     transform: none !important;
   }
 }
