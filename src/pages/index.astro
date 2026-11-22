@@ -104,7 +104,19 @@ import {
                 )}
               </div>
               <h3>{pillar.title}</h3>
-              <p>{pillar.description}</p>
+              <p class={pillar.topics?.length ? 'feature-intro' : undefined}>{pillar.description}</p>
+              {pillar.topics && pillar.topics.length > 0 && (
+                <ul class="feature-topics">
+                  {pillar.topics.map((topic) => (
+                    <li>
+                      <span class="feature-topic-dot" aria-hidden="true" />
+                      <span>
+                        <strong>{topic.title}</strong> — {topic.detail}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
             <span class="feature-tag">{pillar.tag}</span>
           </a>

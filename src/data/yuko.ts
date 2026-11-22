@@ -36,11 +36,17 @@ export interface ContinuityStageItem {
   ctaHref?: string;
 }
 
+export interface HomePillarTopic {
+  title: string;
+  detail: string;
+}
+
 export interface HomePillar {
   variant: 'arch' | 'xl' | 'soft';
   href: string;
   title: string;
   description: string;
+  topics?: HomePillarTopic[];
   tag: string;
 }
 
@@ -237,7 +243,13 @@ export const HOME_PILLARS: HomePillar[] = [
     href: '/extensoes/',
     title: 'Extensões & Discord',
     description:
-      'Seis extensões — Field (escuta), Dev (código), Make (prototipagem), Place (espaço), Work (governança) e Inline (automações) — além de seis frentes internas e convivência diária voluntária no Discord.',
+      'Portas públicas sob a marca Yuko integradas às seis frentes internas:',
+    topics: [
+      { title: 'Field & Make', detail: 'escuta em campo e prototipagem ágil' },
+      { title: 'Dev & Work', detail: 'código modular e acompanhamento claro' },
+      { title: 'Place & Inline', detail: 'espaço coletivo e automações internas' },
+      { title: 'Discord diário', detail: 'convivência voluntária e autônoma' },
+    ],
     tag: 'Ver 6 extensões e Discord →',
   },
   {
@@ -245,7 +257,15 @@ export const HOME_PILLARS: HomePillar[] = [
     href: '/ciclo/',
     title: 'Ciclo de Entrega Assistida',
     description:
-      'Seis etapas engrenadas: 1) Demanda e Triagem, 2) Escopo e Critérios, 3) Construção centralizada, 4) Revisão por 2+ pares, 5) Testes em staging (se falhar, volta ao executor) e 6) Entrega com Responsável de Suporte.',
+      'Fluxo engrenado e transparente, sem caixa-preta:',
+    topics: [
+      { title: 'Demanda & Triagem', detail: 'viabilidade, proporcionalidade e impacto' },
+      { title: 'Escopo sintético', detail: 'critérios objetivos do pronto' },
+      { title: 'Construção central', detail: 'versionamento em repositório da rede' },
+      { title: 'Revisão por 2+ pares', detail: 'nenhuma entrega com 1 parecer só' },
+      { title: 'Testes em staging', detail: 'se falhar, volta ao executor' },
+      { title: 'Entrega & Suporte', detail: 'homologação e responsável nomeado' },
+    ],
     tag: 'Explorar as 6 etapas →',
   },
   {
@@ -253,7 +273,13 @@ export const HOME_PILLARS: HomePillar[] = [
     href: '/governanca/',
     title: 'Simplicidade, Segurança & LGPD',
     description:
-      'Tecnologias maduras contra lock-in e nuvem cara, revisão contra SQLi/XSS, HTTPS/TLS, Argon2/bcrypt e zero segredos no código. Na LGPD: empresa Controladora, dev Operador, Privacy by Design e proibição de dados reais em dev/staging.',
+      'Arquitetura enxuta e proteção desde o desenho:',
+    topics: [
+      { title: 'Sem lock-in caro', detail: 'tecnologias maduras e acessíveis' },
+      { title: 'Defesa no código', detail: 'SQLi/XSS, HTTPS/TLS e Argon2/bcrypt' },
+      { title: 'Zero segredos fixos', detail: 'chaves e senhas fora do código-fonte' },
+      { title: 'LGPD & Privacy by Design', detail: 'empresa Controladora, dev Operador e zero dados reais em testes' },
+    ],
     tag: 'Ver padrões e LGPD →',
   },
 ];
